@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="725dp"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".View.UploadPostDetailFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Spinner
+            android:id="@+id/UPDSpinnerCity"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDestination" />
+
+        <EditText
+            android:id="@+id/UPDEDTCarDetail"
+            android:layout_width="325dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="110dp"
+            android:ems="10"
+            android:hint="Araç hakkında detaylı bilgi"
+            android:inputType="textMultiLine|textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UPDDate" />
+
+        <EditText
+            android:id="@+id/UPDEDTDescription"
+            android:layout_width="325dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:ems="10"
+            android:hint="Yolculuk hakkında detaylı bilgi"
+            android:inputType="textMultiLine|textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTCarDetail"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/UPDDate"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="71dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Tarih"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UPDSpinnerCity" />
+
+        <Spinner
+            android:id="@+id/UPDSpinnerPassengerCount"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toEndOf="@+id/UPDSpinnerCity"
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDestination" />
+
+        <EditText
+            android:id="@+id/UPDTime"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="71dp"
+            android:layout_marginEnd="59dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Saat"
+            android:inputType="textPersonName"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/UPDDate"
+            app:layout_constraintTop_toBottomOf="@+id/UPDSpinnerPassengerCount" />
+
+        <EditText
+            android:id="@+id/UPDEDTDestination"
+            android:layout_width="325dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="70dp"
+            android:ems="10"
+            android:hint="Kalkış"
+            android:inputType="textMultiLine|textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

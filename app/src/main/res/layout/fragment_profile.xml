@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".View.ProfileFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CLFPProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarPF"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="194dp"
+            android:layout_height="196dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CLFPMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/ImageViewFragment"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toTopOf="@+id/EDTNameSurnameFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_gallery"
+            tools:src="@tools:sample/avatars" />
+
+        <EditText
+            android:id="@+id/EDTNameSurnameFragment"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="29dp"
+            android:ems="10"
+            android:hint="Adınız Soyadınız"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toTopOf="@+id/EDTEmailFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment" />
+
+        <EditText
+            android:id="@+id/EDTEmailFragment"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="25dp"
+            android:ems="10"
+            android:hint="E-mail Adresiniz"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/BirthdayFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment" />
+
+        <TextView
+            android:id="@+id/BirthdayFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Doğum Tarihiniz"
+            android:inputType="date"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/GenderFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment" />
+
+        <Button
+            android:id="@+id/btnUpdateFragment"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="112dp"
+            android:text="Güncelle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/GenderFragment" />
+
+        <TextView
+            android:id="@+id/GenderFragment"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="69dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnUpdateFragment"
+            app:layout_constraintStart_toStartOf="@+id/BirthdayFragment"
+            app:layout_constraintTop_toBottomOf="@+id/BirthdayFragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
