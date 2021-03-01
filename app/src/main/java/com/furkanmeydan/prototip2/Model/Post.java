@@ -2,9 +2,7 @@ package com.furkanmeydan.prototip2.Model;
 
 public class Post {
     private String city,
-                    ownerid,
-                    date,
-                    time,
+                    ownerId,
                     passengerCount,
                     destination,
                     description,
@@ -15,15 +13,17 @@ public class Post {
                     fromLat,
                     fromLng;
 
-    private Object request;
+    public Post(){
 
-    public Post(String city, String ownerid, String date, String time, String passengerCount,
+    }
+
+
+
+    public Post(String city, String ownerId,String passengerCount,
                 String destination, String description, String timestamp, String carDetail,
-                String toLat, String toLng, String fromLat, String fromLng, Object request) {
+                String toLat, String toLng, String fromLat, String fromLng) {
         this.city = city;
-        this.ownerid = ownerid;
-        this.date = date;
-        this.time = time;
+        this.ownerId = ownerId;
         this.passengerCount = passengerCount;
         this.destination = destination;
         this.description = description;
@@ -33,7 +33,7 @@ public class Post {
         this.toLng = toLng;
         this.fromLat = fromLat;
         this.fromLng = fromLng;
-        this.request = request;
+
     }
 
 
@@ -41,16 +41,12 @@ public class Post {
         return city;
     }
 
-    public String getOwnerid() {
-        return ownerid;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getPassengerCount() {
@@ -89,7 +85,5 @@ public class Post {
         return fromLng;
     }
 
-    public Object getRequest() {
-        return request;
-    }
+
 }

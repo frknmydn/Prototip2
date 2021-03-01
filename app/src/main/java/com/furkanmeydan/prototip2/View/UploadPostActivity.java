@@ -26,14 +26,14 @@ public class UploadPostActivity extends AppCompatActivity {
 
     public void changeFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.addToBackStack("PostCallback");
+        //fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.replace(R.id.postUploadFrameLayout,fragment);
         fragmentTransaction.commit();
     }
 
     public void AUPDetailFragment(View view){
-        //changeFragment(new UploadPostDetailFragment());
-        onBackPressed();
+        changeFragment(new UploadPostDetailFragment());
+        //onBackPressed();
     }
 
     public void AUPMapFragment(View view){
@@ -42,7 +42,18 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
     public void AUPUploadPost(View view){
-        Log.d("Tag",localDataManager.getSharedPreference(getApplicationContext(),"lat_1","YOK"));
+        String sharedPrefString = localDataManager.getSharedPreference(this,"marker1city",null);
+
+        String sharedPrefDropString = localDataManager.getSharedPreference(this,"city",null);
+
+
+        Log.d("Tag","sharedPrefString: "+ sharedPrefString);
+        Log.d("Tag","sharedPrefDropString: "+ sharedPrefDropString);
+
+        if(sharedPrefString.equals(sharedPrefDropString)){
+            Log.d("Tag","sharedPrefString: "+ sharedPrefString);
+            Log.d("Tag","sharedPrefDropString: "+ sharedPrefDropString);
+        }
 
 
     }

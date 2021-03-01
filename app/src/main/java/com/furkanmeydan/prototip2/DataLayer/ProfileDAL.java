@@ -14,12 +14,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class ProfileDAL {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    EmailValidator validator = EmailValidator.getInstance();
 
+
+    //İsim soyisimde Alphanumeric karakter olup olmadığının kontrolü için
+    Pattern pattern = Pattern.compile("[^a-zA-Z\\s]");
 
     String userid= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
 
@@ -57,7 +64,7 @@ public class ProfileDAL {
 
     public void uploadProfile(String nameSurname, String email, String birthday
             , String gender, String picURI, Context context,ProfileCallback profileCallback){
-        nameSurname=nameSurname.trim();
+        nameSurname=nameSurname.trim().replaceAll(" +"," ");
         email=email.trim();
 
 
@@ -65,10 +72,15 @@ public class ProfileDAL {
         if(nameSurname.equals("")){
             Toast.makeText(context,"Lütfen Adınızı Soyadınızı Eksiksiz Girin",Toast.LENGTH_LONG).show();
         }
-
-        else if (email.equals("")){
-            Toast.makeText(context,"Lütfen Mail Adresinizi Eksiksiz Girin",Toast.LENGTH_LONG).show();
+        else if(pattern.matcher(nameSurname).find()){
+            Toast.makeText(context,"Lütfen Geçerli Bilgi Girin",Toast.LENGTH_LONG).show();
         }
+
+        else if (!validator.isValid(email)){
+            Toast.makeText(context,"Lütfen Geçerli bir Email Adresi Girin",Toast.LENGTH_LONG).show();
+        }
+
+
         else if (birthday.equals("")){
             Toast.makeText(context,"Lütfen Doğum Tarihinizi Girin",Toast.LENGTH_LONG).show();
         }

@@ -43,12 +43,13 @@ public class UploadMapFragment extends Fragment {
     Button btnMapClear;
     LocalDataManager localDataManager;
     int counter = 0;
-    Double lat1,lat2,lng1,lng2;
-    String cord1="";
-    String cord2="";
-    String cord3="";
-    String cord4="";
+    Double lat1, lat2, lng1, lng2;
+    String cord1 = "";
+    String cord2 = "";
+    String cord3 = "";
+    String cord4 = "";
     ArrayList<String> addressArray;
+    List<Address> addressList;
 
     LocationManager locationManager;
     private GoogleMap mMap;
@@ -64,7 +65,8 @@ public class UploadMapFragment extends Fragment {
                 @Override
                 public void onMapLongClick(LatLng latLng) {
 
-                addMarker(latLng);
+
+                    addMarker(latLng);
 
                 }
             });
@@ -104,13 +106,28 @@ public class UploadMapFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     mMap.clear();
-                    localDataManager.clearSharedPreference(getActivity());
+                    localDataManager.removeSharedPreference(postActivity, "lat_1");
+                    localDataManager.removeSharedPreference(postActivity, "lng_2");
+                    localDataManager.removeSharedPreference(postActivity, "lat_1");
+                    localDataManager.removeSharedPreference(postActivity, "lng_2");
                     counter = 0;
+                    addressArray.clear();
                 }
             });
 
-        }
+            String sharedLat1 = localDataManager.getSharedPreference(postActivity, "lat_1", null);
+            String sharedLng1 = localDataManager.getSharedPreference(postActivity, "lng_1", null);
+            String sharedLat2 = localDataManager.getSharedPreference(postActivity, "lat_2", null);
+            String sharedLng2 = localDataManager.getSharedPreference(postActivity, "lng_2", null);
 
+            if (sharedLat1 != null && sharedLat2 != null && sharedLng1 != null && sharedLng2 != null) {
+                LatLng latlng1 = new LatLng(Double.parseDouble(sharedLat1), Double.parseDouble(sharedLng1));
+                mMap.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
+                LatLng latln2 = new LatLng(Double.parseDouble(sharedLat2), Double.parseDouble(sharedLng2));
+                mMap.addMarker(new MarkerOptions().title("Varış").position(latln2));
+            }
+
+        }
 
 
     };
@@ -139,7 +156,7 @@ public class UploadMapFragment extends Fragment {
 
             btnMapClear = view.findViewById(R.id.btnMapClear);
 
-            addressArray=new ArrayList<>();
+            addressArray = new ArrayList<>();
 
             mapFragment.getMapAsync(callback);
 
@@ -147,37 +164,37 @@ public class UploadMapFragment extends Fragment {
         }
     }
 
-    public void addMarker(LatLng latLng){
+    public void addMarker(LatLng latLng) {
 
-        String address= "";
+        String address = "";
 
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
-        if(counter<2) {
+        if (counter < 2) {
 
             try {
 
-                List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
 
                 if (addressList != null && addressList.size() > 0) {
-                    if (addressList.get(0).getThoroughfare() != null) {
+                    if (addressList.get(0).getThoroughfare() != null && !addressList.get(0).getThoroughfare().equals("Unnamed Road")) {
                         address += addressList.get(0).getThoroughfare();
-                        if (addressList.get(0).getSubThoroughfare() != null) {
-                            address += addressList.get(0).getSubThoroughfare();
+                        address += " " + addressList.get(0).getAdminArea();
+                        //address += addressList.get(0).getSubAdminArea();
+                        //address += addressList.get(0).getPostalCode();
+                        addressArray.add(address);
 
-                            addressArray.add(address);
-
-
-                        }
-
+                    } else {
+                        address += addressList.get(0).getAdminArea();
+                        addressArray.add(address);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
-            if(counter == 0){
+            if (counter == 0) {
                 lat1 = latLng.latitude;
                 lng1 = latLng.longitude;
 
@@ -185,12 +202,15 @@ public class UploadMapFragment extends Fragment {
                 cord2 = lng1.toString();
 
 
+                localDataManager.setSharedPreference(postActivity, "lat_1", cord1);
+                localDataManager.setSharedPreference(postActivity, "lng_1", cord2);
+                localDataManager.setSharedPreference(postActivity, "marker1city", addressList.get(0).getAdminArea());
+
+                mMap.addMarker(new MarkerOptions().title("Kalkış: " + addressArray.get(0)).position(latLng));
+                addressArray.clear();
 
 
-
-
-            }
-            else if(counter ==1){
+            } else if (counter == 1) {
                 lat2 = latLng.latitude;
                 lng2 = latLng.longitude;
 
@@ -198,24 +218,25 @@ public class UploadMapFragment extends Fragment {
                 cord4 = lng2.toString();
 
 
-                localDataManager.setSharedPreference(postActivity,"lat_1",cord1);
-                localDataManager.setSharedPreference(postActivity,"lng_1",cord2);
-                localDataManager.setSharedPreference(postActivity,"lat_2",cord3);
-                localDataManager.setSharedPreference(postActivity,"lng_2",cord4);
+                localDataManager.setSharedPreference(postActivity, "lat_2", cord3);
+                localDataManager.setSharedPreference(postActivity, "lng_2", cord4);
+                localDataManager.setSharedPreference(postActivity, "marker2city", addressList.get(0).getAdminArea());
 
-                Log.d("Tag",localDataManager.getSharedPreference(postActivity,"lat_1","YOK"));
-                Log.d("Tag",localDataManager.getSharedPreference(postActivity,"lng_1","YOK"));
-                Log.d("Tag",localDataManager.getSharedPreference(postActivity,"lat_2","YOK"));
-                Log.d("Tag",localDataManager.getSharedPreference(postActivity,"lng_2","YOK"));
+                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lat_1", "YOK"));
+                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lng_1", "YOK"));
+                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lat_2", "YOK"));
+                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lng_2", "YOK"));
 
+                mMap.addMarker(new MarkerOptions().title("Varış: " + addressArray.get(0)).position(latLng));
                 addressArray.clear();
 
 
             }
 
-            mMap.addMarker(new MarkerOptions().title(address).position(latLng));
 
             counter++;
+
+
         }
 
 
