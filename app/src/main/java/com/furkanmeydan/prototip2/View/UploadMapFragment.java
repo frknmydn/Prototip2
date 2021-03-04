@@ -112,6 +112,13 @@ public class UploadMapFragment extends Fragment {
                     localDataManager.removeSharedPreference(postActivity, "lng_2");
                     counter = 0;
                     addressArray.clear();
+
+                }
+            });
+            postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    postActivity.AUPUploadPost(view);
                 }
             });
 
@@ -155,6 +162,7 @@ public class UploadMapFragment extends Fragment {
         if (mapFragment != null) {
 
             btnMapClear = view.findViewById(R.id.btnMapClear);
+
 
             addressArray = new ArrayList<>();
 
@@ -206,6 +214,7 @@ public class UploadMapFragment extends Fragment {
                 localDataManager.setSharedPreference(postActivity, "lng_1", cord2);
                 localDataManager.setSharedPreference(postActivity, "marker1city", addressList.get(0).getAdminArea());
 
+
                 mMap.addMarker(new MarkerOptions().title("Kalkış: " + addressArray.get(0)).position(latLng));
                 addressArray.clear();
 
@@ -240,6 +249,8 @@ public class UploadMapFragment extends Fragment {
         }
 
 
+
     }
+    
 
 }

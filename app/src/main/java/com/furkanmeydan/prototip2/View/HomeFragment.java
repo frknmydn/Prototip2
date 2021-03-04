@@ -25,7 +25,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
 
-    private Button btnAddPost;
+    private Button btnAddPost, btnSearchPost;
     MainActivity mainActivity;
 
     Dialog dialog;
@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
         userid = Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid();
         Log.d("TAG", "userid " + userid);
         btnAddPost = view.findViewById(R.id.btnAddPostFragmentH);
+        btnSearchPost = view.findViewById(R.id.btnSearchPost);
 
         btnAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +111,16 @@ public class HomeFragment extends Fragment {
                 });
 
 
+            }
+        });
+
+
+        // Search Sayfasına gitme
+        btnSearchPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(),PostActivity.class);
+                startActivity(i);
             }
         });
     }

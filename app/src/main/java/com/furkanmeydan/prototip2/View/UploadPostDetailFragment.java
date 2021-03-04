@@ -151,7 +151,7 @@ public class UploadPostDetailFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 
                 calendar.set(Calendar.YEAR, i);
-                calendar.set(Calendar.MONTH, i1 + 1);
+                calendar.set(Calendar.MONTH, i1);
                 calendar.set(Calendar.DAY_OF_MONTH, i2);
 
 
@@ -239,6 +239,16 @@ public class UploadPostDetailFragment extends Fragment {
             }
         });
 
+        postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveDetails();
+                postActivity.AUPUploadPost(view);
+
+
+            }
+        });
+
     }
 
     public void saveDetails(){
@@ -247,7 +257,8 @@ public class UploadPostDetailFragment extends Fragment {
 
 
        if(timeStamp !=null){
-           localDataManager.setSharedPreference(postActivity,"timestamp",timeStamp.toString());
+           String timestampString = String.valueOf(timeStamp.getSeconds());
+           localDataManager.setSharedPreference(postActivity,"timestamp",timestampString);
            if(!dateString.equals("")){
                localDataManager.setSharedPreference(postActivity,"date",dateString);
            }
@@ -261,16 +272,16 @@ public class UploadPostDetailFragment extends Fragment {
        if(passengerCountString !=null ){
            localDataManager.setSharedPreference(postActivity,"passengercount",passengerCountString);
        }
-       if(!cardet.equals("")){
+       //if(!cardet.equals("")){
            localDataManager.setSharedPreference(postActivity,"cardetail",cardet);
 
-       }
-       if(!edtDescription.getText().toString().equals("")){
+       //}
+       //if(!edtDescription.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
-       }
-       if(!edtDestination.getText().toString().equals("")){
+       //}
+       //if(!edtDestination.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"destination",edtDestination.getText().toString());
-       }
+       //}
 
 
     }

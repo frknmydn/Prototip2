@@ -20,6 +20,14 @@
 
     </string-array>
 
+    <string-array name="search_genders_array">
+        <item>Cinsiyet</item>
+        <item>Kadın</item>
+        <item>Erkek</item>
+        <item>Diğer</item>
+        <item>Fark Etmez</item>
+    </string-array>
+
     <string-array name="city_array">
         <item>İzmir</item>
         <item>İstanbul</item>
