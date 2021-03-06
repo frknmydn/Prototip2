@@ -2,6 +2,7 @@ package com.furkanmeydan.prototip2.View;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.R;
 import com.google.firebase.Timestamp;
 
@@ -33,6 +36,7 @@ public class PostSearchFragment extends Fragment {
 
     EditText edtSearchDate, edtSearchTime1, edtSearchTime2;
     Spinner spnSearchCity, spnSearchGender;
+    Button btnSearch;
 
     String cityString, genderString;
     String dateString;
@@ -50,7 +54,8 @@ public class PostSearchFragment extends Fragment {
     ArrayAdapter<CharSequence> searchGenderSpinnerAdapter;
 
 
-
+    PostActivity postActivity;
+    PostDAL postDAL;
 
 
 
@@ -58,6 +63,11 @@ public class PostSearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        postActivity = (PostActivity) getActivity();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,7 @@ public class PostSearchFragment extends Fragment {
         dateTimeFormat = new SimpleDateFormat("HH:mm");
         dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         calendar = Calendar.getInstance();
-
+        postDAL = new PostDAL();
 
 
     }
@@ -77,8 +87,6 @@ public class PostSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_post_search, container, false);
-
-
 
 
     }
@@ -93,6 +101,8 @@ public class PostSearchFragment extends Fragment {
 
         spnSearchCity = view.findViewById(R.id.spinnerSearchCityFS);
         spnSearchGender = view.findViewById(R.id.spinnerSearchGenderFS);
+
+        btnSearch = view.findViewById(R.id.btnSearchPost);
 
 
         //city spinner
@@ -149,6 +159,8 @@ public class PostSearchFragment extends Fragment {
                 dateCombined1 = dateString;
                 dateCombined2 = dateString;
                 edtSearchDate.setText(dateString);
+                edtSearchTime1.setVisibility(View.VISIBLE);
+                edtSearchTime2.setVisibility(View.VISIBLE);
 
             }
         };
@@ -182,6 +194,7 @@ public class PostSearchFragment extends Fragment {
                         timeString1 = dateTimeFormat.format(calendar.getTime());
                         edtSearchTime1.setText(timeString1);
 
+                        dateCombined1 = dateString;
                         dateCombined1 = dateCombined1 + " "+ timeString1;
 
                         try{
@@ -220,6 +233,8 @@ public class PostSearchFragment extends Fragment {
                         timeString2 = dateTimeFormat.format(calendar.getTime());
                         edtSearchTime2.setText(timeString2);
 
+
+                        dateCombined2 = dateString;
                         dateCombined2 = dateCombined2 + " " + timeString2;
 
                         try{
@@ -230,6 +245,7 @@ public class PostSearchFragment extends Fragment {
                         }
                         assert dateDate2 != null;
                         timestamp2 = new Timestamp(dateDate2);
+                        Log.d("TAG datecombined2",dateCombined2);
                         Log.d("TAG timestamp2",timestamp2.toString());
                     }
                 },hour,minutes,true);
@@ -239,6 +255,17 @@ public class PostSearchFragment extends Fragment {
         });
 
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
+                if(args !=null){
+                    postActivity.changeFragmentArgs(new PostSearchResultFragment(),args);
+                }
+
+            }
+        });
 
     }
 }

@@ -28,6 +28,7 @@ import com.google.firebase.Timestamp;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,16 +36,20 @@ public class UploadPostDetailFragment extends Fragment {
 
     EditText edtcarDetail,edtDestination,edtDescription,edtTime,edtDate;
     Spinner spinnerCity,spinnerPassengerCount;
-    ArrayAdapter<CharSequence> spinnerAdapterCity,spinnerAdapterPassanger;
+    ArrayAdapter<CharSequence> spinnerAdapterCity;
+    ArrayAdapter<Integer> spinnerAdapterPassanger;
     UploadPostActivity postActivity;
     String cardet;
+
+    Integer[] items = new Integer[]{1,2,3,4,5};
+
 
     //SharedPreference classı
     LocalDataManager localDataManager;
 
     PostDetailDataPasser dataPasser;
-    String cityString,passengerCountString,timeString,dateCombined;
-
+    String cityString,timeString,dateCombined;
+    int passengerCountString = -1;
     //Tarih ile ilgili
     private String dateString = "";
     private SimpleDateFormat dateFormat,dateTimeFormat,dateCombinedFormat;
@@ -72,6 +77,7 @@ public class UploadPostDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //Doğum tarihi seçmek için telefonun takvim uygulamasını açmak için
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -107,7 +113,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
         //spinner
-        spinnerCity = (Spinner) view.findViewById(R.id.UPDSpinnerCity);
+        spinnerCity =view.findViewById(R.id.UPDSpinnerCity);
         spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
         spinnerAdapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCity.setAdapter(spinnerAdapterCity);
@@ -127,8 +133,9 @@ public class UploadPostDetailFragment extends Fragment {
             }
         });
 
-        spinnerPassengerCount = (Spinner) view.findViewById(R.id.UPDSpinnerPassengerCount);
-        spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), R.array.passanger_count_array, android.R.layout.simple_spinner_item);
+        spinnerPassengerCount =view.findViewById(R.id.UPDSpinnerPassengerCount);
+        //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
+        spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
         spinnerAdapterPassanger.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPassengerCount.setAdapter(spinnerAdapterPassanger);
 
@@ -136,7 +143,7 @@ public class UploadPostDetailFragment extends Fragment {
         spinnerPassengerCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                passengerCountString = adapterView.getItemAtPosition(i).toString();
+                passengerCountString = (int) adapterView.getItemAtPosition(i);
             }
 
             @Override
@@ -197,6 +204,7 @@ public class UploadPostDetailFragment extends Fragment {
                         edtTime.setText(timeString);
                         Log.d("Tag",timeString);
 
+                        dateCombined = dateString;
                         dateCombined = dateCombined + " " + timeString;
                         Log.d("Tag",dateCombined);
 
@@ -257,8 +265,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
        if(timeStamp !=null){
-           String timestampString = String.valueOf(timeStamp.getSeconds());
-           localDataManager.setSharedPreference(postActivity,"timestamp",timestampString);
+           localDataManager.setSharedPreferenceForLong(postActivity,"timestamp",timeStamp.getSeconds());
            if(!dateString.equals("")){
                localDataManager.setSharedPreference(postActivity,"date",dateString);
            }
@@ -269,8 +276,8 @@ public class UploadPostDetailFragment extends Fragment {
        if(cityString !=null){
            localDataManager.setSharedPreference(postActivity,"city",cityString);
        }
-       if(passengerCountString !=null ){
-           localDataManager.setSharedPreference(postActivity,"passengercount",passengerCountString);
+       if(passengerCountString != -1){
+           localDataManager.setSharedPreferenceForInt(postActivity,"passengercount",passengerCountString);
        }
        //if(!cardet.equals("")){
            localDataManager.setSharedPreference(postActivity,"cardetail",cardet);
@@ -302,18 +309,31 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
+
         cityString = localDataManager.getSharedPreference(postActivity,"city",null);
-        passengerCountString = localDataManager.getSharedPreference(postActivity,"passengercount",null);
+        passengerCountString = localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",-1);
         String carDetail = localDataManager.getSharedPreference(postActivity,"cardetail",null);
         String description = localDataManager.getSharedPreference(postActivity,"description",null);
         String destination = localDataManager.getSharedPreference(postActivity,"destination",null);
 
         //saat seçildiyse geri geldiğinde seçilmiş saatin timetext'inde görünmesi için
-        if(time!=null){
-            edtTime.setVisibility(View.VISIBLE);
-            edtTime.setText(time);
+        if(date!=null){
+            if(time!=null){
+                edtTime.setVisibility(View.VISIBLE);
+                edtTime.setText(time);
+                String combinedDate = date + " " + time;
+
+                try {
+                    dateTimeStamp = dateCombinedFormat.parse(combinedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                calendar.setTime(dateTimeStamp);
+
+            }
+            edtDate.setText(date);
         }
-        edtDate.setText(date);
+
         edtDestination.setText(destination);
         edtcarDetail.setText(carDetail);
         edtDescription.setText(description);

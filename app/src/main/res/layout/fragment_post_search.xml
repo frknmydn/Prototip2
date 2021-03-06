@@ -27,8 +27,8 @@
         android:layout_marginTop="340dp"
         android:ems="10"
         android:focusable="false"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="Tarih"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/edtSearchTime1FS"
@@ -38,8 +38,9 @@
         android:layout_marginTop="430dp"
         android:ems="10"
         android:focusable="false"
+        android:hint="Saat"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/edtSearchTime2FS"
@@ -49,6 +50,15 @@
         android:layout_marginTop="430dp"
         android:ems="10"
         android:focusable="false"
+        android:hint="Saat"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnSearchPost"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="530dp"
+        android:text="ARA" />
 </FrameLayout>

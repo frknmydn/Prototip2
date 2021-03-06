@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
 import com.furkanmeydan.prototip2.Model.User;
 import com.furkanmeydan.prototip2.R;
@@ -41,18 +42,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ConstraintLayout constraintLayout;
     private Fragment fragment;
 
+    private String genderString, nameSurnameString, eMailString,profilePic,birthDate;
+
     //For profile fragment
      FirebaseAuth firebaseAuth;
      FirebaseFirestore firebaseFirestore;
      StorageReference storageReference;
      FirebaseStorage firebaseStorage;
+     LocalDataManager localDataManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         initializing();
@@ -77,6 +80,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initializing(){
+        localDataManager = new LocalDataManager();
+
+        // sharedPrefte kullanıcı bilgileri var ise çekmek için
+        nameSurnameString = localDataManager.getSharedPreference(this,"sharedNameSurname",null);
+        eMailString = localDataManager.getSharedPreference(this,"sharedEmail",null);
+        birthDate = localDataManager.getSharedPreference(this,"sharedBirthdate",null);
+        genderString = localDataManager.getSharedPreference(this,"sharedGender",null);
+        profilePic = localDataManager.getSharedPreference(this,"sharedImageURL",null);
+
+
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -85,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.bringToFront();
         drawerLayout = findViewById(R.id.DrawerLayoutMain);
         mainFrameLayout=findViewById(R.id.consLayout);
+
+
+        if(genderString==null){
+
+        }
+
+
         //constraintLayout=findViewById(R.id.consLayout);
     }
 

@@ -35,13 +35,13 @@
         <item>Eskişehir</item>
     </string-array>
 
-    <string-array name="passanger_count_array">
+    <integer-array name="passanger_count_array">
         <item>5</item>
         <item>4</item>
         <item>3</item>
         <item>2</item>
         <item>1</item>
-    </string-array>
+    </integer-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_page">Ana Sayfa</string>

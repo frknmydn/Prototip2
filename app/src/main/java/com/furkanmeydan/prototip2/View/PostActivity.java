@@ -18,9 +18,16 @@ public class PostActivity extends AppCompatActivity {
         changeFragment(new PostSearchFragment());
     }
 
-    private void changeFragment(Fragment fragment) {
+    public void changeFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //fragmentTransaction.addToBackStack("PostCallback");
+        fragmentTransaction.replace(R.id.postContainerLayout,fragment);
+        fragmentTransaction.commit();
+    }
+
+    public void changeFragmentArgs(Fragment fragment,Bundle args){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(args);
         fragmentTransaction.replace(R.id.postContainerLayout,fragment);
         fragmentTransaction.commit();
     }

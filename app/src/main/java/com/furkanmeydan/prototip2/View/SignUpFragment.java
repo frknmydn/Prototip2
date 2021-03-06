@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
@@ -49,6 +50,8 @@ import static android.content.Context.LOCATION_SERVICE;
 
 
 public class SignUpFragment extends Fragment {
+
+    LocalDataManager localDataManager;
 
     ProfileDAL profileDAL;
 
@@ -87,6 +90,7 @@ public class SignUpFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        localDataManager = new LocalDataManager();
         profileDAL = new ProfileDAL();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -245,9 +249,19 @@ public class SignUpFragment extends Fragment {
 
 
         profileDAL.uploadProfile(nameSurnameString, eMailString, dateString, genderString, imageURL, getActivity(), new ProfileCallback() {
+
+
             @Override
             public void uploadProfile() {
                 super.uploadProfile();
+
+                localDataManager.setSharedPreference(mainActivity,"sharedNameSurname",nameSurnameString);
+                localDataManager.setSharedPreference(mainActivity,"sharedEmail",eMailString);
+                localDataManager.setSharedPreference(mainActivity,"sharedBirthdate",dateString);
+                localDataManager.setSharedPreference(mainActivity,"sharedGender",genderString);
+                localDataManager.setSharedPreference(mainActivity,"sharedImageURL",imageURL);
+
+
                 Intent i = new Intent(mainActivity, MainActivity.class);
                 startActivity(i);
                 mainActivity.finish();

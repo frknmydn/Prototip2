@@ -2,28 +2,27 @@ package com.furkanmeydan.prototip2.Model;
 
 public class Post {
     private String city,
-                    ownerId,
-                    passengerCount,
                     destination,
                     description,
-                    timestamp,
                     carDetail,
                     toLat,
                     toLng,
                     fromLat,
-                    fromLng;
-
+                    fromLng,
+                    userGender;
+    private long timestamp;
+    private int status; /// 0--> not active, 1--> active, 3--> full
+    private int passengerCount;
     public Post(){
 
     }
 
 
 
-    public Post(String city, String ownerId,String passengerCount,
-                String destination, String description, String timestamp, String carDetail,
-                String toLat, String toLng, String fromLat, String fromLng) {
+    public Post(String city, int passengerCount,
+                String destination, String description, long timestamp, String carDetail,
+                String toLat, String toLng, String fromLat, String fromLng, int status, String userGender) {
         this.city = city;
-        this.ownerId = ownerId;
         this.passengerCount = passengerCount;
         this.destination = destination;
         this.description = description;
@@ -33,6 +32,8 @@ public class Post {
         this.toLng = toLng;
         this.fromLat = fromLat;
         this.fromLng = fromLng;
+        this.status = status;
+        this.userGender = userGender;
 
     }
 
@@ -41,15 +42,7 @@ public class Post {
         return city;
     }
 
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public String getPassengerCount() {
+    public int getPassengerCount() {
         return passengerCount;
     }
 
@@ -61,7 +54,7 @@ public class Post {
         return description;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
@@ -85,5 +78,11 @@ public class Post {
         return fromLng;
     }
 
+    public String getUserGender() {
+        return userGender;
+    }
 
+    public int getStatus() {
+        return status;
+    }
 }
