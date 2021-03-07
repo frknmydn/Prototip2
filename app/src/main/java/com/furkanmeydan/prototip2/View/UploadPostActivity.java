@@ -72,7 +72,20 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
     public void AUPClearSharedPref(){
-        localDataManager.clearSharedPreference(getApplicationContext());
+        //Clearsharedpref bütün sharedpref bilgilerini sildiğinden user'ın silinmemesi için teker teker post detaylarını siliyoruz
+        localDataManager.removeSharedPreference(getApplicationContext(), "lat_1");
+        localDataManager.removeSharedPreference(getApplicationContext(), "lat_2");
+        localDataManager.removeSharedPreference(getApplicationContext(), "lng_1");
+        localDataManager.removeSharedPreference(getApplicationContext(), "lng_2");
+        localDataManager.removeSharedPreference(getApplicationContext(), "cardetail");
+        localDataManager.removeSharedPreference(getApplicationContext(), "description");
+        localDataManager.removeSharedPreference(getApplicationContext(), "destination");
+        localDataManager.removeSharedPreference(getApplicationContext(), "city");
+        localDataManager.removeSharedPreference(getApplicationContext(), "passengercount");
+        localDataManager.removeSharedPreference(getApplicationContext(), "timestamp");
+        localDataManager.removeSharedPreference(getApplicationContext(), "date");
+        localDataManager.removeSharedPreference(getApplicationContext(), "time");
+
     }
 
 }

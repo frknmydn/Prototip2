@@ -52,6 +52,7 @@ import static android.content.Context.LOCATION_SERVICE;
 public class SignUpFragment extends Fragment {
 
     LocalDataManager localDataManager;
+    LocalDataManager localDataManagerUser;
 
     ProfileDAL profileDAL;
 
@@ -91,6 +92,7 @@ public class SignUpFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         localDataManager = new LocalDataManager();
+        localDataManagerUser = new LocalDataManager();
         profileDAL = new ProfileDAL();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -255,11 +257,11 @@ public class SignUpFragment extends Fragment {
             public void uploadProfile() {
                 super.uploadProfile();
 
-                localDataManager.setSharedPreference(mainActivity,"sharedNameSurname",nameSurnameString);
-                localDataManager.setSharedPreference(mainActivity,"sharedEmail",eMailString);
-                localDataManager.setSharedPreference(mainActivity,"sharedBirthdate",dateString);
-                localDataManager.setSharedPreference(mainActivity,"sharedGender",genderString);
-                localDataManager.setSharedPreference(mainActivity,"sharedImageURL",imageURL);
+                localDataManagerUser.setSharedPreference(mainActivity,"sharedNameSurname",nameSurnameString);
+                localDataManagerUser.setSharedPreference(mainActivity,"sharedEmail",eMailString);
+                localDataManagerUser.setSharedPreference(mainActivity,"sharedBirthdate",dateString);
+                localDataManagerUser.setSharedPreference(mainActivity,"sharedGender",genderString);
+                localDataManagerUser.setSharedPreference(mainActivity,"sharedImageURL",imageURL);
 
 
                 Intent i = new Intent(mainActivity, MainActivity.class);

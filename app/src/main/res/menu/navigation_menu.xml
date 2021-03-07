@@ -13,4 +13,10 @@
         android:id="@+id/signOut"
         android:icon="@drawable/ic_baseline_close"
         android:title="@string/SignOut"></item>
+
+    <item
+        android:id="@+id/myPosts"
+        android:icon="@drawable/ic_baseline_folder"
+        android:title="Postlarım"
+        ></item>
 </menu>

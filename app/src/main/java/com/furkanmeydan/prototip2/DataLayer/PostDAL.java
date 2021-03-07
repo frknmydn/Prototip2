@@ -30,6 +30,7 @@ public class PostDAL {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private String userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
     LocalDataManager localDataManager = new LocalDataManager();
+    LocalDataManager localDataManagerUser = new LocalDataManager();
 
 
     public void uploadPost(String ownerId, Context context, PostCallback postCallback){
@@ -48,7 +49,7 @@ public class PostDAL {
         String toLat = localDataManager.getSharedPreference(context,"lat_2",null);
         String fromLng = localDataManager.getSharedPreference(context,"lng_1",null);
         String toLng = localDataManager.getSharedPreference(context,"lng_2",null);
-        String userGender = localDataManager.getSharedPreference(context,"sharedGender",null);
+        String userGender = localDataManagerUser.getSharedPreference(context,"sharedGender",null);
 
 
 
@@ -162,31 +163,41 @@ public class PostDAL {
 
     public void getPosts(long timestamp1, long timestamp2, String genderString, String cityString, Context context, final PostCallback postCallback){
 
-        firestore.collectionGroup(CollectionHelper.POST_COLLECTION).whereGreaterThan(CollectionHelper.POST_TIMESTAMP,timestamp1)
-                .whereLessThan(CollectionHelper.POST_TIMESTAMP,timestamp2)
-                .whereEqualTo(CollectionHelper.USER_GENDER,genderString).
-                whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString).
+        firestore.collectionGroup(CollectionHelper.POST_COLLECTION).whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString).whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+
+                    if (task.getResult() != null) {
+                        List<Post> list = task.getResult().toObjects(Post.class);
+                        System.out.println("Gelen liste boyutu: "+ list.size());
+                        postCallback.getPosts(list);
+
+                    }
+                }
+            }
+        });
+
+
+    }
+
+
+    public void getMyPosts(final PostCallback postCallback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).
                 get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
                 if(task.isSuccessful()){
-                    if(task.getResult() !=null){
-                        Log.d("TagPostGetOnComplete", "For Loop Öncesi");
-                        List<Post> list= new ArrayList<>();
-                        list = task.getResult().toObjects(Post.class);
-
-                        Log.d("TagPostGetOnComplete", list.get(0).getCity());
-                        postCallback.getPosts(list);
-
-
-                    }else{
-                        Log.d("TagPostGetOnComplete","NULL GELİY");
+                    if(task.getResult()!=null){
+                        List<Post> list = task.getResult().toObjects(Post.class);
+                        System.out.println("dddd" + list.size());
+                        postCallback.getMyPosts(list);
                     }
 
-                }else{
 
-                    Log.d("TagPostGetOnComplete","SUCCESSFUL DEĞİL");
                 }
             }
         });

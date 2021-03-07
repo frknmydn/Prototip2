@@ -30,7 +30,7 @@ public class CollectionHelper {
 
     final public static String POSTSEARCH_COLLECTIONGROUP = "PostSearch";
     final public static String POSTSEARCH_COLLECTIONGROUP_TIMESTAMP = "timestamp";
-    final public static String POSTSEARCH_COLLECTIONGROUP_GENDER = "gender";
+    final public static String POSTSEARCH_COLLECTIONGROUP_GENDER = "userGender";
     final public static String POSTSEARCH_COLLECTIONGROUP_CITY = "city";
 
 }

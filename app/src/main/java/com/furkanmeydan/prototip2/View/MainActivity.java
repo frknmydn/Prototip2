@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      StorageReference storageReference;
      FirebaseStorage firebaseStorage;
      LocalDataManager localDataManager;
+     LocalDataManager localDataManagerUser;
 
 
     @Override
@@ -81,13 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initializing(){
         localDataManager = new LocalDataManager();
+        localDataManagerUser = new LocalDataManager();
 
         // sharedPrefte kullanıcı bilgileri var ise çekmek için
-        nameSurnameString = localDataManager.getSharedPreference(this,"sharedNameSurname",null);
-        eMailString = localDataManager.getSharedPreference(this,"sharedEmail",null);
-        birthDate = localDataManager.getSharedPreference(this,"sharedBirthdate",null);
-        genderString = localDataManager.getSharedPreference(this,"sharedGender",null);
-        profilePic = localDataManager.getSharedPreference(this,"sharedImageURL",null);
+        nameSurnameString = localDataManagerUser.getSharedPreference(this,"sharedNameSurname",null);
+        eMailString = localDataManagerUser.getSharedPreference(this,"sharedEmail",null);
+        birthDate = localDataManagerUser.getSharedPreference(this,"sharedBirthdate",null);
+        genderString = localDataManagerUser.getSharedPreference(this,"sharedGender",null);
+        profilePic = localDataManagerUser.getSharedPreference(this,"sharedImageURL",null);
 
 
 
@@ -137,6 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(MainActivity.this,LoginRegisterActivity.class);
             startActivity(i);
             finish();
+        }
+
+        else if(item.getItemId()== R.id.myPosts){
+            changeFragment(new MyPostFragment());
         }
         return true;
     }

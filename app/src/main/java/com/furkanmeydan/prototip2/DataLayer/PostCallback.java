@@ -19,6 +19,9 @@ public abstract class PostCallback {
     }
 
 
+    public void getMyPosts(List<Post> list){
+
+    }
 
     public void onPostDeleted(){
 

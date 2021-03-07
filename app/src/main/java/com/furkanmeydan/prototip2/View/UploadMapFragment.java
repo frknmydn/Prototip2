@@ -107,8 +107,8 @@ public class UploadMapFragment extends Fragment {
                 public void onClick(View view) {
                     mMap.clear();
                     localDataManager.removeSharedPreference(postActivity, "lat_1");
-                    localDataManager.removeSharedPreference(postActivity, "lng_2");
-                    localDataManager.removeSharedPreference(postActivity, "lat_1");
+                    localDataManager.removeSharedPreference(postActivity, "lng_1");
+                    localDataManager.removeSharedPreference(postActivity, "lat_2");
                     localDataManager.removeSharedPreference(postActivity, "lng_2");
                     counter = 0;
                     addressArray.clear();

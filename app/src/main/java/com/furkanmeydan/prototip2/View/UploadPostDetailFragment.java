@@ -260,6 +260,7 @@ public class UploadPostDetailFragment extends Fragment {
     }
 
     public void saveDetails(){
+
         cardet = edtcarDetail.getText().toString();
         Log.d("Tag","cardet" +cardet);
 
@@ -317,21 +318,23 @@ public class UploadPostDetailFragment extends Fragment {
         String destination = localDataManager.getSharedPreference(postActivity,"destination",null);
 
         //saat seçildiyse geri geldiğinde seçilmiş saatin timetext'inde görünmesi için
-        if(date!=null){
+       if(date!=null){
             if(time!=null){
-                edtTime.setVisibility(View.VISIBLE);
-                edtTime.setText(time);
-                String combinedDate = date + " " + time;
-
-                try {
-                    dateTimeStamp = dateCombinedFormat.parse(combinedDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                calendar.setTime(dateTimeStamp);
-
+//                edtTime.setVisibility(View.VISIBLE);
+//                edtTime.setText(time);
+//                String combinedDate = date + " " + time;
+//
+//                try {
+//                    dateTimeStamp = dateCombinedFormat.parse(combinedDate);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                calendar.setTime(dateTimeStamp);
+//
+                edtDate.setHint(date + " " + time);
             }
-            edtDate.setText(date);
+           // edtDate.setText(date);
+
         }
 
         edtDestination.setText(destination);
