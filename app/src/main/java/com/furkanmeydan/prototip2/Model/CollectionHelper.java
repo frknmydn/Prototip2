@@ -25,6 +25,7 @@ public class CollectionHelper {
     final public static String POST_TIMESTAMP = "timestamp";
     final public static String POST_TOLAT = "toLat";
     final public static String POST_TOLNG = "toLng";
+    final public static String POST_DIRECTION = "direction";
 
 
 
@@ -32,5 +33,6 @@ public class CollectionHelper {
     final public static String POSTSEARCH_COLLECTIONGROUP_TIMESTAMP = "timestamp";
     final public static String POSTSEARCH_COLLECTIONGROUP_GENDER = "userGender";
     final public static String POSTSEARCH_COLLECTIONGROUP_CITY = "city";
+    final public static String POSTSEARCH_COLLECTIONGROUP_STATUS = "status";
 
 }

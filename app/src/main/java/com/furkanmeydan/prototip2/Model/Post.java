@@ -1,18 +1,23 @@
 package com.furkanmeydan.prototip2.Model;
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
     private String city,
                     destination,
                     description,
                     carDetail,
-                    toLat,
-                    toLng,
-                    fromLat,
-                    fromLng,
                     userGender;
+    private Double toLat,
+            toLng,
+            fromLat,
+            fromLng;
+
+    private int direction; // 0-->kuzey doğu 1-->güney doğu 2-->güney batı 3--> kuzey batı
     private long timestamp;
     private int status; /// 0--> not active, 1--> active, 3--> full
     private int passengerCount;
+
     public Post(){
 
     }
@@ -21,7 +26,7 @@ public class Post {
 
     public Post(String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
-                String toLat, String toLng, String fromLat, String fromLng, int status, String userGender) {
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction) {
         this.city = city;
         this.passengerCount = passengerCount;
         this.destination = destination;
@@ -34,6 +39,7 @@ public class Post {
         this.fromLng = fromLng;
         this.status = status;
         this.userGender = userGender;
+        this.direction = direction;
 
     }
 
@@ -62,19 +68,19 @@ public class Post {
         return carDetail;
     }
 
-    public String getToLat() {
+    public Double getToLat() {
         return toLat;
     }
 
-    public String getToLng() {
+    public Double getToLng() {
         return toLng;
     }
 
-    public String getFromLat() {
+    public Double getFromLat() {
         return fromLat;
     }
 
-    public String getFromLng() {
+    public Double getFromLng() {
         return fromLng;
     }
 
@@ -84,5 +90,9 @@ public class Post {
 
     public int getStatus() {
         return status;
+    }
+
+    public int getDirection() {
+        return direction;
     }
 }

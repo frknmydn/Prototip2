@@ -85,7 +85,6 @@ public class UploadPostActivity extends AppCompatActivity {
         localDataManager.removeSharedPreference(getApplicationContext(), "timestamp");
         localDataManager.removeSharedPreference(getApplicationContext(), "date");
         localDataManager.removeSharedPreference(getApplicationContext(), "time");
-
     }
 
 }

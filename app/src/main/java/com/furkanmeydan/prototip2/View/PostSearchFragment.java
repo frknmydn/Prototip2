@@ -259,9 +259,10 @@ public class PostSearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+
                 Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
                 if(args !=null){
-                    postActivity.changeFragmentArgs(new PostSearchResultFragment(),args);
+                    postActivity.changeFragmentArgs(new PostSearchUserLocationMapFragment(),args);
                 }
 
             }

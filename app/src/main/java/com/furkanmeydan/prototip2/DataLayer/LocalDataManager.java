@@ -20,7 +20,15 @@ public class LocalDataManager {
 
     }
 
-    public void setSharedPreferenceForInt(Context context,String key, int value){
+    public void setSharedPreferenceForDouble(Context context,String key, Double value){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(key,Double.doubleToLongBits(value));
+        editor.commit();
+
+    }
+
+    public void setSharedPreferenceForInt(Context context,String key, Integer value){
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(key,value);
@@ -28,7 +36,7 @@ public class LocalDataManager {
 
     }
 
-    public int getSharedPreferenceForInt(Context context, String key, int defaultValue){
+    public int getSharedPreferenceForInt(Context context, String key, Integer defaultValue){
         return context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE).getInt(key,defaultValue);
     }
 
@@ -36,6 +44,9 @@ public class LocalDataManager {
         return context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE).getLong(key,defaultValue);
     }
 
+    public double getSharedPreferenceForDouble(Context context, String key, Double defaultValue){
+        return Double.longBitsToDouble(context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE).getLong(key,Double.doubleToLongBits(defaultValue)));
+    }
 
 
     public String getSharedPreference(Context context, String key, String defaultValue){

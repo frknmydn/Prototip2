@@ -49,7 +49,7 @@ public class UploadPostDetailFragment extends Fragment {
 
     PostDetailDataPasser dataPasser;
     String cityString,timeString,dateCombined;
-    int passengerCountString = -1;
+    Integer passengerCountString = -1;
     //Tarih ile ilgili
     private String dateString = "";
     private SimpleDateFormat dateFormat,dateTimeFormat,dateCombinedFormat;
@@ -112,7 +112,7 @@ public class UploadPostDetailFragment extends Fragment {
         edtDate = view.findViewById(R.id.UPDDate);
 
 
-        //spinner
+        //spinner city
         spinnerCity =view.findViewById(R.id.UPDSpinnerCity);
         spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
         spinnerAdapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,6 +133,7 @@ public class UploadPostDetailFragment extends Fragment {
             }
         });
 
+        //spinner passenger count. bu classın içinde adapterı yazılı
         spinnerPassengerCount =view.findViewById(R.id.UPDSpinnerPassengerCount);
         //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
         spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
@@ -143,7 +144,7 @@ public class UploadPostDetailFragment extends Fragment {
         spinnerPassengerCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                passengerCountString = (int) adapterView.getItemAtPosition(i);
+                passengerCountString = (Integer) adapterView.getItemAtPosition(i);
             }
 
             @Override
@@ -312,7 +313,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
         cityString = localDataManager.getSharedPreference(postActivity,"city",null);
-        passengerCountString = localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",-1);
+        passengerCountString = (int)localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",Integer.parseInt("-1"));
         String carDetail = localDataManager.getSharedPreference(postActivity,"cardetail",null);
         String description = localDataManager.getSharedPreference(postActivity,"description",null);
         String destination = localDataManager.getSharedPreference(postActivity,"destination",null);

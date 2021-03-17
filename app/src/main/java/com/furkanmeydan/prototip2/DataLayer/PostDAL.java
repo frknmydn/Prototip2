@@ -24,156 +24,306 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class PostDAL {
-    Pattern pattern1= Pattern.compile("[^A-Za-z0-9\\sğĞüÜşŞiİöÖçÇı.:,;()']");
+    Pattern pattern1 = Pattern.compile("[^A-Za-z0-9\\sğĞüÜşŞiİöÖçÇı.:,;()']");
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private String userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+    private String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
     LocalDataManager localDataManager = new LocalDataManager();
     LocalDataManager localDataManagerUser = new LocalDataManager();
 
 
-    public void uploadPost(String ownerId, Context context, PostCallback postCallback){
+    public void uploadPost(String ownerId, Context context, PostCallback postCallback) {
 
         Timestamp nowTimestamp = Timestamp.now();
 
-        String citySharedPrefSpinner = localDataManager.getSharedPreference(context,"city",null);
-        String marker1City = localDataManager.getSharedPreference(context,"marker1city",null);
-        String marker2City = localDataManager.getSharedPreference(context,"marker2city",null);
-        long timestamp = localDataManager.getSharedPreferenceForLong(context,"timestamp",0L);
-        int passengerCount = localDataManager.getSharedPreferenceForInt(context,"passengercount",-1);
-        String carDetail = localDataManager.getSharedPreference(context,"cardetail",null);
-        String description = localDataManager.getSharedPreference(context,"description",null);
-        String destination = localDataManager.getSharedPreference(context,"destination",null);
-        String fromLat = localDataManager.getSharedPreference(context,"lat_1",null);
-        String toLat = localDataManager.getSharedPreference(context,"lat_2",null);
-        String fromLng = localDataManager.getSharedPreference(context,"lng_1",null);
-        String toLng = localDataManager.getSharedPreference(context,"lng_2",null);
-        String userGender = localDataManagerUser.getSharedPreference(context,"sharedGender",null);
+        String citySharedPrefSpinner = localDataManager.getSharedPreference(context, "city", null);
+        String marker1City = localDataManager.getSharedPreference(context, "marker1city", null);
+        String marker2City = localDataManager.getSharedPreference(context, "marker2city", null);
+        long timestamp = localDataManager.getSharedPreferenceForLong(context, "timestamp", 0L);
+        int passengerCount = localDataManager.getSharedPreferenceForInt(context, "passengercount", -1);
+        String carDetail = localDataManager.getSharedPreference(context, "cardetail", null);
+        String description = localDataManager.getSharedPreference(context, "description", null);
+        String destination = localDataManager.getSharedPreference(context, "destination", null);
+
+        double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
+        double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
+        double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
+        double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+
+        String userGender = localDataManagerUser.getSharedPreference(context, "sharedGender", null);
 
 
-
-
-        if(userId.equals(ownerId)){
+        if (userId.equals(ownerId)) {
 
             String errors = "";
 
 
-            if(destination==null || destination.equals("")){
-                Toast.makeText(context,"Lütfen Geçerli İlan Başlığı Girin",Toast.LENGTH_LONG).show();
+            if (destination == null || destination.equals("")) {
+                Toast.makeText(context, "Lütfen Geçerli İlan Başlığı Girin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
-            if(passengerCount==-1){
-                Toast.makeText(context,"Lütfen Kaç Yol Arkadaşı Alabileceğiniz Seçin",Toast.LENGTH_LONG).show();
+            if (passengerCount == -1) {
+                Toast.makeText(context, "Lütfen Kaç Yol Arkadaşı Alabileceğiniz Seçin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
-            if(toLat==null || toLng==null || fromLat==null || fromLng == null || marker1City==null || marker2City ==null){
-                Toast.makeText(context,"Lütfen Haritadan Kalkış ve Varış Noktalarını Belirtin",Toast.LENGTH_LONG).show();
-                errors += "HATA";
-            }
-
-            if(citySharedPrefSpinner==null){
-                Toast.makeText(context,"Lütfen İlanın Şehrini Seçiniz.",Toast.LENGTH_LONG).show();
+            if (toLat == 0 || toLng == 0 || fromLat == 0 || fromLng == 0 || marker1City == null || marker2City == null) {
+                Toast.makeText(context, "Lütfen Haritadan Kalkış ve Varış Noktalarını Belirtin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
 
             }
 
-            if(marker1City!=null && !marker1City.equals(marker2City)){
-                Toast.makeText(context,"Lütfen Haridata Varış ve Kalkış Noktalarını Aynı Şehir İçin Belirtin",Toast.LENGTH_LONG).show();
+            if (citySharedPrefSpinner == null) {
+                Toast.makeText(context, "Lütfen İlanın Şehrini Seçiniz.", Toast.LENGTH_LONG).show();
+                errors += "HATA";
+
+            }
+
+            if (marker1City != null && !marker1City.equals(marker2City)) {
+                Toast.makeText(context, "Lütfen Haridata Varış ve Kalkış Noktalarını Aynı Şehir İçin Belirtin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
 
-            if(marker1City!=null && marker1City.equals(marker2City) && citySharedPrefSpinner!=null){
-                if(!citySharedPrefSpinner.equals(marker1City)){
-                    Toast.makeText(context,"Lütfen Haridata Varış ve Kalkış Noktalarını Aynı Şehir İçin Belirtin",Toast.LENGTH_LONG).show();
+            if (marker1City != null && marker1City.equals(marker2City) && citySharedPrefSpinner != null) {
+                if (!citySharedPrefSpinner.equals(marker1City)) {
+                    Toast.makeText(context, "Lütfen Haridata Varış ve Kalkış Noktalarını Aynı Şehir İçin Belirtin", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
             }
-            if(carDetail == null || carDetail.equals("")  ){
-                Toast.makeText(context,"Lütfen Araç Hakkında Bilgi Verin",Toast.LENGTH_LONG).show();
+            if (carDetail == null || carDetail.equals("")) {
+                Toast.makeText(context, "Lütfen Araç Hakkında Bilgi Verin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
 
-            if(carDetail!=null && !carDetail.equals("")){
-                if(carDetail.length()<15){
-                    Toast.makeText(context,"Lütfen Araç Hakkında Detaylı Bilgi Verin",Toast.LENGTH_LONG).show();
+            if (carDetail != null && !carDetail.equals("")) {
+                if (carDetail.length() < 15) {
+                    Toast.makeText(context, "Lütfen Araç Hakkında Detaylı Bilgi Verin", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
-                if(pattern1.matcher(carDetail).find()){
-                    Toast.makeText(context,"Lütfen Araç Detayı İçin Geçerli Karakterler Kullanın",Toast.LENGTH_LONG).show();
+                if (pattern1.matcher(carDetail).find()) {
+                    Toast.makeText(context, "Lütfen Araç Detayı İçin Geçerli Karakterler Kullanın", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
             }
 
-            if(description==null || description.equals("")){
-                Toast.makeText(context,"Lütfen Yolculuk Hakkında Bilgi Verin",Toast.LENGTH_LONG).show();
+            if (description == null || description.equals("")) {
+                Toast.makeText(context, "Lütfen Yolculuk Hakkında Bilgi Verin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
 
             //if(description!=null && !description.equals("")) çalışmazsa diye burda duruyo
             else {
-                if(description.length()<15){
-                    Toast.makeText(context,"Lütfen Yolculuk Hakkında Detaylı Bilgi Verin",Toast.LENGTH_LONG).show();
+                if (description.length() < 15) {
+                    Toast.makeText(context, "Lütfen Yolculuk Hakkında Detaylı Bilgi Verin", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
-                if(pattern1.matcher(description).find()){
-                    Toast.makeText(context,"Lütfen Yolculuk Detayı İçin Geçerli Karakterler Kullanın",Toast.LENGTH_LONG).show();
+                if (pattern1.matcher(description).find()) {
+                    Toast.makeText(context, "Lütfen Yolculuk Detayı İçin Geçerli Karakterler Kullanın", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
             }
 
 
-            if(timestamp==0L){
-                Toast.makeText(context,"Lütfen Tarih ve Saati seçin",Toast.LENGTH_LONG).show();
+            if (timestamp == 0L) {
+                Toast.makeText(context, "Lütfen Tarih ve Saati seçin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
 
             }
-            if(timestamp!=0L){
+            if (timestamp != 0L) {
                 long secondsNowTimestamp = nowTimestamp.getSeconds();
                 long timestamp14Days = 1209600L;
-                if(timestamp<secondsNowTimestamp){
-                    Toast.makeText(context,"Geçmişe İlan Veremezsiniz :)",Toast.LENGTH_LONG).show();
+                if (timestamp < secondsNowTimestamp) {
+                    Toast.makeText(context, "Geçmişe İlan Veremezsiniz :)", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
-                if(timestamp>timestamp14Days+secondsNowTimestamp){
-                    Toast.makeText(context,"Sadece Gelecek İki Hafta İçin İlan Verebilirsiniz",Toast.LENGTH_LONG).show();
+                if (timestamp > timestamp14Days + secondsNowTimestamp) {
+                    Toast.makeText(context, "Sadece Gelecek İki Hafta İçin İlan Verebilirsiniz", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
             }
 
-            if(errors.isEmpty()){
 
-                Post post = new Post(citySharedPrefSpinner,passengerCount,destination,description,timestamp,carDetail,toLat,toLng,fromLat,fromLng,1,userGender);
+            if (errors.isEmpty()) {
+
+                int direction = findDirection(fromLat, fromLng, toLat, toLng);
+
+                Post post = new Post(citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction);
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).add(post);
                 postCallback.onPostAdded();
             }
-
-
-
 
 
         }
 
     }
 
-    public void getPosts(long timestamp1, long timestamp2, String genderString, String cityString, Context context, final PostCallback postCallback){
+    public int findDirection(double fromLat, double fromLng, double toLat, double toLng) {
+        int direction;
+        //Kuzey
+        if (toLat > fromLat) {
+            //Doğu
+            if (toLng > fromLng) {
+                direction = 0;
+            }
+            //Batı
+            else {
+                direction = 3;
+            }
 
-        firestore.collectionGroup(CollectionHelper.POST_COLLECTION).whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
-                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString).whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
-                .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+        }
+        //Güney
+        else {
+            //Doğu
+            if (toLng > fromLng) {
+                direction = 1;
+
+            } else {
+                direction = 2;
+            }
+
+        }
+
+        return direction;
+    }
+
+    public void getPostsWithGender(double userFromLat, double userToLat, double userFromLng, double userToLng, long timestamp1, long timestamp2, String genderString, String cityString, Context context, int direction, final PostCallback postCallback) {
+
+        double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
+        double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
+        double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
+        double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+
+        /*
+        if(userToLat > userFromLat){
+            if(userToLng > userFromLng){
+                firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString)
+                        .whereGreaterThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereGreaterThan(CollectionHelper.POST_TOLNG,userFromLng).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+
+            }else if(userToLng < userFromLng){
+                (firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString))
+                        .whereGreaterThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereLessThan(CollectionHelper.POST_TOLNG,userFromLng).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }
+        else if(userToLat < userFromLat){
+            if(userToLng> userFromLng){
+                (firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString))
+                        .whereLessThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereGreaterThan(CollectionHelper.POST_TOLNG,userFromLng)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+                    }
+                });
+
+
+
+            }else if(userToLng < userFromLng){
+                (firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER,genderString))
+                        .whereLessThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereLessThan(CollectionHelper.POST_TOLNG,userFromLng)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }
+
+         */
+
+
+        firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS, 1)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY, cityString)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER, genderString)
+                .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
+                .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
+                .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
                     if (task.getResult() != null) {
                         List<Post> list = task.getResult().toObjects(Post.class);
-                        System.out.println("Gelen liste boyutu: "+ list.size());
+                        System.out.println("Gelen liste boyutu: " + list.size());
                         postCallback.getPosts(list);
 
                     }
@@ -185,13 +335,152 @@ public class PostDAL {
     }
 
 
-    public void getMyPosts(final PostCallback postCallback){
+    public void getPostsWithOUTGender(double userFromLat, double userToLat, double userFromLng, double userToLng, long timestamp1, long timestamp2, String cityString, Context context, int direction, final PostCallback postCallback) {
+
+        double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
+        double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
+        double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
+        double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+
+        /*
+        if(userToLat > userFromLat){
+            if(userToLng > userFromLng){
+                firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereGreaterThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereGreaterThan(CollectionHelper.POST_TOLNG,userFromLng).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+
+            }else if(userToLng < userFromLng){
+                firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereGreaterThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereLessThan(CollectionHelper.POST_TOLNG,userFromLng).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }
+        else if(userToLat < userFromLat){
+            if(userToLng> userFromLng){
+                firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereLessThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereGreaterThan(CollectionHelper.POST_TOLNG,userFromLng)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+                    }
+                });
+
+
+
+            }else if(userToLng < userFromLng){
+                firestore.collectionGroup(CollectionHelper.POST_COLLECTION).
+                        whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS,1)
+                        .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY,cityString)
+                        .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp1)
+                        .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP,timestamp2)
+                        .whereLessThan(CollectionHelper.POST_TOLAT,userFromLat)
+                        .whereLessThan(CollectionHelper.POST_TOLNG,userFromLng)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+
+                            if (task.getResult() != null) {
+                                List<Post> list = task.getResult().toObjects(Post.class);
+                                System.out.println("Gelen liste boyutu: "+ list.size());
+                                postCallback.getPosts(list);
+
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }
+
+         */
+
+
+        firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS, 1)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY, cityString)
+                .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
+                .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
+                .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    if (task.getResult() != null) {
+                        List<Post> list = task.getResult().toObjects(Post.class);
+                        System.out.println("Gelen liste boyutu: " + list.size());
+                        postCallback.getPosts(list);
+
+                    }
+                }
+            }
+        });
+
+
+    }
+
+
+    public void getMyPosts(final PostCallback postCallback) {
         firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).
                 get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult()!=null){
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null) {
                         List<Post> list = task.getResult().toObjects(Post.class);
                         System.out.println("dddd" + list.size());
                         postCallback.getMyPosts(list);
@@ -203,31 +492,148 @@ public class PostDAL {
         });
     }
 
+    public List<Post> filterWithLTGLNG(List<Post> posts, double userToLat, double userToLng, double userFromLat, double userFromLng) {
+        List<Post> filteredList = new ArrayList<>();
 
-    public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context){
-        String error= "";
-        Bundle args = new Bundle();
 
-        if(timestamp1 == null || timestamp2 ==null){
-            Toast.makeText(context,"Lütfen Tarih ve Saat Aralığını Belirleyin",Toast.LENGTH_LONG).show();
-            error+= "HATA";
+        if (posts != null) {
+            int postDirection = posts.get(0).getDirection();
+            if (postDirection == 0) {
+                for (Post i : posts) {
+
+                    if (i.getToLat() + 0.003d > userToLat && i.getToLng() + 0.003d > userToLng && i.getFromLat() - 0.003d < userFromLat && i.getFromLng() - 0.003d < userFromLng) {
+                        filteredList.add(i);
+                    }
+
+
+                }
+
+            } else if (postDirection == 1) {
+                for (Post i : posts) {
+
+                    if (i.getToLat() - 0.003d < userToLat && i.getToLng() + 0.003d > userToLng && i.getFromLat() + 0.003d > userFromLat && i.getFromLng() - 0.003d < userFromLng) {
+                        filteredList.add(i);
+                    }
+
+
+                }
+
+            } else if (postDirection == 2) {
+                for (Post i : posts) {
+
+                    if (i.getToLat() - 0.003d < userToLat && i.getToLng() - 0.003d < userToLng && i.getFromLat() + 0.003d > userFromLat && i.getFromLng() + 0.003d > userFromLng) {
+                        filteredList.add(i);
+                    }
+
+
+                }
+
+            } else if (postDirection == 3) {
+                for (Post i : posts) {
+
+                    if (i.getToLat() + 0.003d > userToLat && i.getToLng() - 0.003d < userToLng && i.getFromLat() - 0.003d < userFromLat && i.getFromLng() + 0.003d > userFromLng) {
+                        filteredList.add(i);
+                    }
+
+
+                }
+
+            }
+
         }
 
-        if(cityString == null || cityString.equals("")){
-            Toast.makeText(context,"Lütfen Şehir Belirtin",Toast.LENGTH_LONG).show();
-            error+= "HATA";
-        }
-        if(genderString == null || genderString.equals("") || genderString.equals("Cinsiyet")){
-            Toast.makeText(context,"Lütfen Cinsiyet Belirtin",Toast.LENGTH_LONG).show();
-            error+= "HATA";
-        }
-        if(timestamp1 !=null && timestamp2 !=null){
-            if(timestamp1.getSeconds() >= timestamp2.getSeconds()){
-                Toast.makeText(context,"Lütfen Saat Aralığını Doğru Belirtin",Toast.LENGTH_LONG).show();
-                error+= "HATA";
+
+        /*
+        //Yukarı sağa
+        if(userToLat > userFromLat) { // yukarı gitmek istiyorsa
+            if(userToLng > userFromLng) { // sağa gitmek istiyorsa
+                for(Post i :posts ){
+                    if(i.getToLat()>userFromLat){
+                        if(i.getToLng()>userFromLng){
+                            //
+                            if(i.getToLat()+0.003d>userToLat && i.getToLng()+0.003d>userToLng && i.getFromLat()-0.003d<userFromLat && i.getFromLng()-0.003d<userFromLng){
+                                filteredList.add(i);
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            //Yukarı sola
+            else if(userToLng<userFromLng){
+                for(Post i : posts){
+                    if(i.getToLat()>userFromLat){
+                        if(i.getToLng()<userFromLng){
+                            if(i.getToLat()+0.003d>userToLat && i.getToLng()-0.003d<userToLng && i.getFromLat()-0.003d<userFromLat && i.getFromLng()+0.003d>userFromLng){
+                                filteredList.add(i);
+                            }
+
+                        }
+                    }
+                }
             }
         }
-        if(error.isEmpty()) {
+        //Aşağı sağa
+        else if(userToLat <= userFromLat){
+            if(userToLng > userFromLng) { // sağa gitmek istiyorsa
+                for(Post i :posts ){
+                    if(i.getToLat()<userFromLat){
+                        if(i.getToLng()>userFromLng){
+                            if(i.getToLat()-0.003d<userToLat && i.getToLng()+0.003d>userToLng && i.getFromLat()+0.003d>userFromLat && i.getFromLng()-0.003d<userFromLng){
+                                filteredList.add(i);
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            //Aşağı sola
+            else if(userToLng<userFromLng){
+                for(Post i : posts){
+                    if(i.getToLat()<userFromLat){
+                        if(i.getToLng()<userFromLng){
+                            if(i.getToLat()-0.003d<userToLat && i.getToLng()-0.003d<userToLng && i.getFromLat()+0.003d>userFromLat && i.getFromLng()+0.003d>userFromLng){
+                                filteredList.add(i);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+         */
+        return filteredList;
+    }
+
+
+    public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {
+        String error = "";
+        Bundle args = new Bundle();
+
+        if (timestamp1 == null || timestamp2 == null) {
+            Toast.makeText(context, "Lütfen Tarih ve Saat Aralığını Belirleyin", Toast.LENGTH_LONG).show();
+            error += "HATA";
+        }
+
+        if (cityString == null || cityString.equals("")) {
+            Toast.makeText(context, "Lütfen Şehir Belirtin", Toast.LENGTH_LONG).show();
+            error += "HATA";
+        }
+        if (genderString == null || genderString.equals("") || genderString.equals("Cinsiyet")) {
+            Toast.makeText(context, "Lütfen Cinsiyet Belirtin", Toast.LENGTH_LONG).show();
+            error += "HATA";
+        }
+        if (timestamp1 != null && timestamp2 != null) {
+            if (timestamp1.getSeconds() >= timestamp2.getSeconds()) {
+                Toast.makeText(context, "Lütfen Saat Aralığını Doğru Belirtin", Toast.LENGTH_LONG).show();
+                error += "HATA";
+            }
+        }
+        if (error.isEmpty()) {
 
 
             args.putLong("timestamp1", timestamp1.getSeconds());
@@ -235,11 +641,13 @@ public class PostDAL {
             args.putString("gender", genderString);
             args.putString("city", cityString);
             return args;
-        }
-        else{
+        } else {
             return null;
         }
 
 
     }
 }
+
+
+

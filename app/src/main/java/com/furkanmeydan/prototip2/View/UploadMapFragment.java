@@ -29,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.protobuf.StringValue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +65,6 @@ public class UploadMapFragment extends Fragment {
             mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
                 public void onMapLongClick(LatLng latLng) {
-
 
                     addMarker(latLng);
 
@@ -122,15 +122,17 @@ public class UploadMapFragment extends Fragment {
                 }
             });
 
-            String sharedLat1 = localDataManager.getSharedPreference(postActivity, "lat_1", null);
-            String sharedLng1 = localDataManager.getSharedPreference(postActivity, "lng_1", null);
-            String sharedLat2 = localDataManager.getSharedPreference(postActivity, "lat_2", null);
-            String sharedLng2 = localDataManager.getSharedPreference(postActivity, "lng_2", null);
+            double sharedLat1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1", 0d);
+            double sharedLng1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1", 0d);
+            double sharedLat2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_2", 0d);
+            double sharedLng2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_2", 0d);
+            Log.d("TAG SHARED ", String.valueOf(sharedLat1));
 
-            if (sharedLat1 != null && sharedLat2 != null && sharedLng1 != null && sharedLng2 != null) {
-                LatLng latlng1 = new LatLng(Double.parseDouble(sharedLat1), Double.parseDouble(sharedLng1));
+            if (sharedLat1 != 0 && sharedLat2 != 0 && sharedLng1 != 0 && sharedLng2 != 0) {
+
+                LatLng latlng1 = new LatLng(sharedLat1, sharedLng1);
                 mMap.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
-                LatLng latln2 = new LatLng(Double.parseDouble(sharedLat2), Double.parseDouble(sharedLng2));
+                LatLng latln2 = new LatLng(sharedLat2, sharedLng2);
                 mMap.addMarker(new MarkerOptions().title("Varış").position(latln2));
             }
 
@@ -210,8 +212,8 @@ public class UploadMapFragment extends Fragment {
                 cord2 = lng1.toString();
 
 
-                localDataManager.setSharedPreference(postActivity, "lat_1", cord1);
-                localDataManager.setSharedPreference(postActivity, "lng_1", cord2);
+                localDataManager.setSharedPreferenceForDouble(postActivity, "lat_1", lat1);
+                localDataManager.setSharedPreferenceForDouble(postActivity, "lng_1", lng1);
                 localDataManager.setSharedPreference(postActivity, "marker1city", addressList.get(0).getAdminArea());
 
 
@@ -227,14 +229,16 @@ public class UploadMapFragment extends Fragment {
                 cord4 = lng2.toString();
 
 
-                localDataManager.setSharedPreference(postActivity, "lat_2", cord3);
-                localDataManager.setSharedPreference(postActivity, "lng_2", cord4);
+                localDataManager.setSharedPreferenceForDouble(postActivity, "lat_2", lat2);
+                localDataManager.setSharedPreferenceForDouble(postActivity, "lng_2", lng2);
                 localDataManager.setSharedPreference(postActivity, "marker2city", addressList.get(0).getAdminArea());
 
-                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lat_1", "YOK"));
-                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lng_1", "YOK"));
-                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lat_2", "YOK"));
-                Log.d("Tag", localDataManager.getSharedPreference(postActivity, "lng_2", "YOK"));
+                Log.d("Tag", String.valueOf(localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1",  0d)));
+                Log.d("Tag", String.valueOf(localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1",  0d)));
+                Log.d("Tag", String.valueOf(localDataManager.getSharedPreferenceForDouble(postActivity, "lat_2", 0d)));
+                Log.d("Tag", String.valueOf(localDataManager.getSharedPreferenceForDouble(postActivity, "lng_2", 0d)));
+
+                System.out.println(localDataManager.getSharedPreferenceForDouble(postActivity,"lat_1",0d));
 
                 mMap.addMarker(new MarkerOptions().title("Varış: " + addressArray.get(0)).position(latLng));
                 addressArray.clear();

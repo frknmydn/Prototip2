@@ -19,6 +19,8 @@ import android.widget.FrameLayout;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
 import com.furkanmeydan.prototip2.Model.User;
 import com.furkanmeydan.prototip2.R;
@@ -51,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      FirebaseStorage firebaseStorage;
      LocalDataManager localDataManager;
      LocalDataManager localDataManagerUser;
+     ProfileDAL profileDAL;
 
+     String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initializing(){
         localDataManager = new LocalDataManager();
         localDataManagerUser = new LocalDataManager();
+        profileDAL = new ProfileDAL();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         // sharedPrefte kullanıcı bilgileri var ise çekmek için
         nameSurnameString = localDataManagerUser.getSharedPreference(this,"sharedNameSurname",null);
@@ -93,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseStorage = FirebaseStorage.getInstance();
+
+        userId = firebaseAuth.getCurrentUser().getUid();
+
         storageReference = firebaseStorage.getReference();
         navigationView = findViewById(R.id.NavigationView);
         navigationView.bringToFront();
@@ -104,6 +112,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if(genderString==null){
+            profileDAL.getProfile(userId, new ProfileCallback() {
+                @Override
+                public void getUser(User user) {
+                    super.getUser(user);
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedNameSurname",user.getNameSurname());
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedEmail",user.getEmail());
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedBirthdate",user.getBirthDate());
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedGender",user.getGender());
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedImageURL",user.getProfilePicture());
+
+                }
+            });
 
         }
 
