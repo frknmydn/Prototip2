@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Details"
+        android:icon="@drawable/ic_details"
+        android:title="@string/Details" />
+
+    <item
+        android:id="@+id/Map"
+        android:title="@string/Map"
+        android:icon="@drawable/ic_map" />
+
+
+    <item
+        android:id="@+id/Profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/Questions"
+        android:icon="@drawable/ic_questions"
+        android:title="@string/Questions" />
+
+    <item
+        android:id="@+id/Requests"
+        android:icon="@drawable/ic_requests"
+        android:title="@string/Requests">
+    </item>
+
+</menu>
