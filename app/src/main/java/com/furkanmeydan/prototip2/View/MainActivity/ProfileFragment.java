@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.MainActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

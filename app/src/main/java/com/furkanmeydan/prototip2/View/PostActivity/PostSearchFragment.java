@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.PostActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

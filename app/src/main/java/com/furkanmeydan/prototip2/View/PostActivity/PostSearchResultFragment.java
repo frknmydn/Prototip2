@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.PostActivity;
 
 import android.os.Bundle;
 
@@ -17,13 +17,10 @@ import com.furkanmeydan.prototip2.DataLayer.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Model.Post;
 import com.furkanmeydan.prototip2.Model.SearchResultRecyclerAdapter;
-import com.furkanmeydan.prototip2.Model.myPostRecyclerAdapter;
 import com.furkanmeydan.prototip2.R;
-import com.google.firebase.Timestamp;
+import com.furkanmeydan.prototip2.View.PostActivity.PostActivity;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PostSearchResultFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.PostActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.View.PostSearchResultDetailActivity;
+import com.furkanmeydan.prototip2.View.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

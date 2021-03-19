@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.PostActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,8 @@ import android.widget.Button;
 
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.PostActivity.PostActivity;
+import com.furkanmeydan.prototip2.View.PostActivity.PostSearchResultFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.UploadPostActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -23,12 +23,12 @@ import android.widget.TimePicker;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDetailDataPasser;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.UploadPostActivity.UploadMapFragment;
+import com.furkanmeydan.prototip2.View.UploadPostActivity.UploadPostActivity;
 import com.google.firebase.Timestamp;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 

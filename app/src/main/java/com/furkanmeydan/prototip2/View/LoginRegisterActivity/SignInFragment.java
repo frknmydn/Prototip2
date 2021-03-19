@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.LoginRegisterActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.LoginRegisterActivity.LoginRegisterActivity;
+import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;

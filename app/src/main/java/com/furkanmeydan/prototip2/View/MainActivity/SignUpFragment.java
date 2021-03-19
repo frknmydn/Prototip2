@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.MainActivity;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -31,11 +31,9 @@ import android.widget.Toast;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
-import com.furkanmeydan.prototip2.Model.CollectionHelper;
-import com.furkanmeydan.prototip2.Model.User;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,7 +44,6 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.LOCATION_SERVICE;
 
 
 public class SignUpFragment extends Fragment {

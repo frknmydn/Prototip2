@@ -4,10 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 
 import com.furkanmeydan.prototip2.Model.Post;
-import com.furkanmeydan.prototip2.Model.User;
-import com.furkanmeydan.prototip2.View.MainActivity;
-import com.furkanmeydan.prototip2.View.UploadPostActivity;
-import com.google.android.gms.maps.model.LatLng;
+import com.furkanmeydan.prototip2.View.UploadPostActivity.UploadPostActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
@@ -56,11 +53,15 @@ public class PostTestFireStore {
     public static final Double ANY_DOUBLE_LAT2 = 34.98473993720123;
     public static final Double ANY_DOUBLE_LNG2= 23.857781632413864;
 
-    Post mockPost = new Post(ANY_CITY,ANY_OWNER_ID,ANY_PASSENGER_COUNT,ANY_DESTINATION,ANY_DESCRIPTION,ANY_TIMESTAMP,ANY_CAR_DETAILS,ANY_TO_LAT,ANY_TO_LNG,ANY_FROM_LAT,ANY_FROM_LNG);
+    //Post mockPost = new Post(ANY_CITY,ANY_OWNER_ID,ANY_PASSENGER_COUNT,ANY_DESTINATION,ANY_DESCRIPTION,ANY_TIMESTAMP,ANY_CAR_DETAILS,ANY_TO_LAT,ANY_TO_LNG,ANY_FROM_LAT,ANY_FROM_LNG,1,"Erkek",1);
 
+    /*
+    public Post(String city, int passengerCount,
+                String destination, String description, long timestamp, String carDetail,
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction)
 
-
-
+*/
+    Post mockPost = new Post(ANY_CITY,1,ANY_DESTINATION,ANY_DESCRIPTION,100000,ANY_CAR_DETAILS,100.213,231.312,3123.123,3213.421,1,"ERKEK",1);
 
     private Timestamp mockServerTimestamp = Timestamp.now();
 
@@ -214,10 +215,13 @@ public class PostTestFireStore {
         assertThat(documentSnapshotTask.getResult().toObject(Post.class).getCity()).isNotNull();
     }
 
+    /*
     @Test
     public void getPostOwnerIdNotNull(){
         assertThat(mockPost.getOwnerId()).isNotNull();
     }
+
+     */
     @Test
     public void getPostTimeStampIsNotNull(){
         assertThat(documentSnapshotTask.getResult().toObject(Post.class).getTimestamp()).isNotNull();
@@ -295,6 +299,7 @@ public class PostTestFireStore {
         assertThat(pattern.matcher(description).find()).isFalse();
     }
 
+    /*
     @Test
     public void postTimeStampIsNotValid(){
         String postTimeStamp = documentSnapshotTask.getResult().toObject(Post.class).getTimestamp();
@@ -308,6 +313,9 @@ public class PostTestFireStore {
 
     }
 
+     */
+
+    /*
     @Test
     public void postTimeStampIsNotInFarFuture(){
         //1615852800 14 gün sonrası
@@ -332,6 +340,8 @@ public class PostTestFireStore {
         assertThat(result).isGreaterThan(0);
 
     }
+
+     */
 
 
 

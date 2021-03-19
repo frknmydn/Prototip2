@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.MainActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Model.User;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.PostActivity.PostActivity;
+import com.furkanmeydan.prototip2.View.UploadPostActivity.UploadPostActivity;
 
 import java.util.Objects;
 
@@ -87,7 +89,7 @@ public class HomeFragment extends Fragment {
                     public void getUser(User user) {
                         super.getUser(user);
 
-                        Intent i = new Intent(mainActivity,UploadPostActivity.class);
+                        Intent i = new Intent(mainActivity, UploadPostActivity.class);
                         startActivity(i);
 
                     }
@@ -119,7 +121,7 @@ public class HomeFragment extends Fragment {
         btnSearchPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(),PostActivity.class);
+                Intent i = new Intent(getActivity(), PostActivity.class);
                 startActivity(i);
             }
         });

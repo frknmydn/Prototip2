@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.MainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,13 +8,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
@@ -24,6 +21,7 @@ import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
 import com.furkanmeydan.prototip2.Model.User;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.LoginRegisterActivity.LoginRegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId()==R.id.signOut){
             firebaseAuth.signOut();
-            Intent i = new Intent(MainActivity.this,LoginRegisterActivity.class);
+            Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
             startActivity(i);
             finish();
         }

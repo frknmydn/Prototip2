@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.LoginRegisterActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.View;
+package com.furkanmeydan.prototip2.View.UploadPostActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,15 +6,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
-import com.furkanmeydan.prototip2.DataLayer.PostDetailDataPasser;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -63,7 +62,7 @@ public class UploadPostActivity extends AppCompatActivity {
 
                 AUPClearSharedPref();
 
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
                 finish();
             }
