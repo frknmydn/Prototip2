@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.PostSearchResultDetailActivity.FragmentPostSearchResultDetail">
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="315dp"
+        android:text=":"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="230dp"
+        android:text=":"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="180dp"
+        android:text=":"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailCity"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginTop="80dp"
+        android:gravity="left|center_vertical"
+        android:text="Şehir"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailPasangerCount"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginTop="130dp"
+        android:gravity="left|center_vertical"
+        android:text="Boş Koltuk"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailDateTime"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginTop="180dp"
+        android:gravity="left|center_vertical"
+        android:text="Zaman"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailDescription"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginTop="230dp"
+        android:gravity="left|center_vertical"
+        android:text="Açıklama"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailCarDet"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginTop="315dp"
+        android:gravity="left|center_vertical"
+        android:text="Araç Bilgisi"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/statik1"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="80dp"
+        android:gravity="right|center_vertical"
+        android:text="Şehir"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/statik5"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="315dp"
+        android:gravity="right|center_vertical"
+        android:text="Araç Bilgisi"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/statik3"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="180dp"
+        android:gravity="right|center_vertical"
+        android:text="Zaman"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/statik4"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="230dp"
+        android:gravity="right|center_vertical"
+        android:text="Açıklama"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/txtSearchResultDetailHeader"
+        android:layout_width="391dp"
+        android:layout_height="38dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/statik2"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="130dp"
+        android:gravity="right|center_vertical"
+        android:text="Boş Koltuk"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="80dp"
+        android:text=":"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="130dp"
+        android:text=":"
+        android:textSize="15sp" />
+
+</FrameLayout>
