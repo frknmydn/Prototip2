@@ -93,14 +93,18 @@ public class PostSearchResultDetailActivity extends AppCompatActivity{
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             if(item.getItemId()==R.id.Details){
-                //Toast.makeText(this,"Detail",Toast.LENGTH_LONG).show();
+
                 Toast.makeText(getApplicationContext(),"DET",Toast.LENGTH_LONG).show();
+                changeFragment(new FragmentPostSearchResultDetail());
+
             }
             else if(item.getItemId()==R.id.Map){
                 Toast.makeText(getApplicationContext(),"MAP",Toast.LENGTH_LONG).show();
+                changeFragment(new FragmentPostSearchResultMap());
             }
             else if(item.getItemId()==R.id.showProfile){
                 Toast.makeText(getApplicationContext(),"SHOW PROFILE",Toast.LENGTH_LONG).show();
+                changeFragment(new FragmentPostSearchPostOwner());
             }
             else if(item.getItemId()==R.id.Questions){
                 Toast.makeText(getApplicationContext(),"QUESTIONS",Toast.LENGTH_LONG).show();
