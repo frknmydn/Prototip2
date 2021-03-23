@@ -3,11 +3,13 @@ package com.furkanmeydan.prototip2.Model;
 import java.io.Serializable;
 
 public class Post implements Serializable {
-    private String city,
+    private String  postID,
+                    city,
                     destination,
                     description,
                     carDetail,
-                    userGender;
+                    userGender,
+                    ownerID;
     private Double toLat,
             toLng,
             fromLat,
@@ -24,7 +26,7 @@ public class Post implements Serializable {
 
 
 
-    public Post(String city, int passengerCount,
+    public Post(String postID, String ownerID,String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
                 Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction) {
         this.city = city;
@@ -40,6 +42,9 @@ public class Post implements Serializable {
         this.status = status;
         this.userGender = userGender;
         this.direction = direction;
+        this.ownerID = ownerID;
+        this.postID = postID;
+
 
     }
 
@@ -94,5 +99,13 @@ public class Post implements Serializable {
 
     public int getDirection() {
         return direction;
+    }
+
+    public String getOwnerID() {
+        return ownerID;
+    }
+
+    public String getPostID() {
+        return postID;
     }
 }

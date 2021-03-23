@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.MAPROUTER.TaskLoadedCallback;
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
 import com.furkanmeydan.prototip2.Model.Post;
 import com.furkanmeydan.prototip2.Model.User;
@@ -24,6 +26,7 @@ import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 import com.furkanmeydan.prototip2.View.MainActivity.MyPostFragment;
 import com.furkanmeydan.prototip2.View.MainActivity.ProfileFragment;
 import com.furkanmeydan.prototip2.View.MainActivity.SignUpFragment;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,7 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
 
-public class PostSearchResultDetailActivity extends AppCompatActivity{
+public class PostSearchResultDetailActivity extends AppCompatActivity implements TaskLoadedCallback {
     ProfileDAL profileDAL;
     Post post;
     private BottomNavigationView navigationView1;
@@ -77,7 +80,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity{
 
     public void changeFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //fragmentTransaction.addToBackStack("PostCallback");
+        fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
         fragmentTransaction.commit();
     }
@@ -108,6 +111,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity{
             }
             else if(item.getItemId()==R.id.Questions){
                 Toast.makeText(getApplicationContext(),"QUESTIONS",Toast.LENGTH_LONG).show();
+                changeFragment(new FragmentPostSearchResultQuestions());
             }
 
             else if(item.getItemId()== R.id.Requests){
@@ -116,6 +120,17 @@ public class PostSearchResultDetailActivity extends AppCompatActivity{
             return true;
         }
     };
+
+    @Override
+    public void onTaskDone(Object... values) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentPostSearchResultMap fr = (FragmentPostSearchResultMap) fm.findFragmentById(R.id.PostSearchResultContainer);
+        if(fr.getCurrentPolyline() !=null){
+            fr.getCurrentPolyline().remove();
+        }
+        fr.getmMap().addPolyline((PolylineOptions) values[0]);
+
+    }
 
     /*
     @Override

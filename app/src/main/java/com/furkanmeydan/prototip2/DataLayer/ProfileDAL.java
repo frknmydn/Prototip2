@@ -35,14 +35,18 @@ public class ProfileDAL {
 
     }
 
-    public void getProfile(String id, final ProfileCallback profileCallback) {
+    public void getProfile(final String id, final ProfileCallback profileCallback) {
 
         firestore.collection(CollectionHelper.USER_COLLECTION).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() && task.getResult() != null) {
+                    Log.d("Tag", "Task başarılı");
                     User user = task.getResult().toObject(User.class);
+                    Log.d("Tag", "User oluşturuldu");
+                    Log.d("Tag", "Userid:"+id);
                     if (user != null) {
+                        Log.d("Tag", "User null değil");
                         if (user.getBirthDate() != null && !user.getEmail().equals("") && user.getGender() != null && !user.getNameSurname().equals("") && user.getProfilePicture() != null) {
                             Log.d("Tag", "Döküman var");
                             Log.d("Tag", user.getBirthDate() + "doğum tarihi");

@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.HashMap;
 
-public class FragmentPostSearchResultMap extends Fragment implements  TaskLoadedCallback {
+public class FragmentPostSearchResultMap extends Fragment {
     PostSearchResultDetailActivity activity;
     private Double fromLat, fromLng, toLat, toLng;
 
@@ -50,6 +51,8 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
         fromLng = activity.post.getFromLng();
         toLat = activity.post.getToLat();
         toLng = activity.post.getToLng();
+        marker1 = new LatLng(fromLat,fromLng);
+        marker2 = new LatLng(toLat,toLng);
 
 
 
@@ -74,6 +77,8 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
             mMap.addMarker(place1);
             mMap.addMarker(place2);
 
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1, 16));
+            /*
             if (Build.VERSION.SDK_INT >= 23) {
                 if(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -83,13 +88,13 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
                     // mMap.clear();
 
 
-
-
-
                     Location lastLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
                     if (lastLocation != null) {
                         LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
+                    }
+                    else{
+                        Log.d("Tag", "Last location null geliyor");
                     }
 
 
@@ -109,9 +114,13 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
                     LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
                 }
+                else{
+                    Log.d("Tag", "Last location null sdk <23 geliyor");
+                }
 
 
             }
+            */
 
         }
     };
@@ -129,7 +138,9 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
+        if(mapFragment!=null){
+            mapFragment.getMapAsync(callback);
+        }
 
 
     }
@@ -152,11 +163,12 @@ public class FragmentPostSearchResultMap extends Fragment implements  TaskLoaded
     }
 
 
-    @Override
-    public void onTaskDone(Object... values) {
-        if (currentPolyline != null)
-            currentPolyline.remove();
-        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+    public GoogleMap getmMap() {
+        return mMap;
+    }
+
+    public Polyline getCurrentPolyline() {
+        return currentPolyline;
     }
 }
 

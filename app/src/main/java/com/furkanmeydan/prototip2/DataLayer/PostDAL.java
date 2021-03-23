@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class PostDAL {
@@ -50,6 +52,7 @@ public class PostDAL {
         double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
         double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
         double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+        String postID = UUID.randomUUID().toString();
 
         String userGender = localDataManagerUser.getSharedPreference(context, "sharedGender", null);
 
@@ -152,8 +155,9 @@ public class PostDAL {
 
                 int direction = findDirection(fromLat, fromLng, toLat, toLng);
 
-                Post post = new Post(citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction);
-                firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).add(post);
+
+                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction);
+                firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded();
             }
 
@@ -322,6 +326,8 @@ public class PostDAL {
                 if (task.isSuccessful()) {
 
                     if (task.getResult() != null) {
+
+
                         List<Post> list = task.getResult().toObjects(Post.class);
                         System.out.println("Gelen liste boyutu: " + list.size());
                         postCallback.getPosts(list);
@@ -461,6 +467,8 @@ public class PostDAL {
                 if (task.isSuccessful()) {
 
                     if (task.getResult() != null) {
+
+
                         List<Post> list = task.getResult().toObjects(Post.class);
                         System.out.println("Gelen liste boyutu: " + list.size());
                         postCallback.getPosts(list);
@@ -496,7 +504,7 @@ public class PostDAL {
         List<Post> filteredList = new ArrayList<>();
 
 
-        if (posts != null) {
+        if (posts != null && posts.size()>0) {
             int postDirection = posts.get(0).getDirection();
             if (postDirection == 0) {
                 for (Post i : posts) {

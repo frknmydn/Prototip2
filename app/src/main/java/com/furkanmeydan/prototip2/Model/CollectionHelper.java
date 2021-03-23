@@ -35,4 +35,15 @@ public class CollectionHelper {
     final public static String POSTSEARCH_COLLECTIONGROUP_CITY = "city";
     final public static String POSTSEARCH_COLLECTIONGROUP_STATUS = "status";
 
+
+    final public static String QUESTION_COLLECTION = "Questions";
+    final public static String QUESTION_POSTHEADER = "postHeaderText";
+    final public static String QUESTION_POSTID = "postID";
+    final public static String QUESTION_POSTOWNERID = "postOwnerID";
+    final public static String QUESTION_SENDERNAMESURNAME = "senderNameText";
+    final public static String QUESTION_SENDERID = "senderID";
+    final public static String QUESTION_QUESTIONTEXT = "questionText";
+    final public static String QUESTION_STATUS = "status";
+
+
 }

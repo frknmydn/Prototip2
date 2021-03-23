@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.PostSearchResultDetailActivity.FragmentPostSearchResultAskQuestion">
+
+    <EditText
+        android:id="@+id/fragmentPostSearchResultAskQuestionEdtxt"
+        android:layout_width="352dp"
+        android:layout_height="221dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginBottom="100dp"
+        android:ems="10"
+        android:hint="Sorunuzu Buraya Yazabilirsiniz"
+        android:inputType="textMultiLine|textPersonName"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginBottom="270dp"
+        android:text="Sorunuzu Sorun ve Butona Basın"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/fragmentPostSearchResultAskQuestionbtn"
+        android:layout_width="121dp"
+        android:layout_height="70dp"
+        android:layout_gravity="bottom|center_horizontal|center_vertical"
+        android:layout_marginBottom="200dp"
+        android:text="GÖNDER" />
+</FrameLayout>

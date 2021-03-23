@@ -77,7 +77,7 @@ public class UploadMapFragment extends Fragment {
                     mMap.clear();
 
 
-                    Location lastLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+                    Location lastLocation = locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
                     if (lastLocation != null) {
                         LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
@@ -90,7 +90,7 @@ public class UploadMapFragment extends Fragment {
                 mMap.clear();
 
 
-                Location lastLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+                Location lastLocation = locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
                 if (lastLocation != null) {
                     LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
