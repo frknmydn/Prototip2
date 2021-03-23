@@ -1,5 +1,7 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.furkanmeydan.prototip2.Model.CollectionHelper;
@@ -21,8 +23,10 @@ public class QuestionDAL {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
 
+    public QuestionDAL() {
+    }
 
-    public void uploadQuestion(String question, String ownerID, String postID,String postHeader,String senderName, final QuestionCallback callback){
+    public void uploadQuestion(String question, String ownerID, String postID, String postHeader, String senderName, final QuestionCallback callback){
 
         String questionID = UUID.randomUUID().toString();
         Question questionObject = new Question(postID,postHeader,userId,senderName,question,ownerID,null,questionID,0);
@@ -43,11 +47,15 @@ public class QuestionDAL {
 
     public void getQuestions(String userId, final QuestionCallback callback){
 
-        firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,1)
+        Log.d("Tag","DAL getQuestions içi");
+
+        firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,0)
                 .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d("Tag","getQuestions task onComplete içi");
                 if(task.isSuccessful() && task.getResult() !=null){
+                    Log.d("Tag","getQuestions task is successful && null değil");
                    List<Question> questions =  task.getResult().toObjects(Question.class);
                     callback.onQuestionsRetrieved(questions);
                 }

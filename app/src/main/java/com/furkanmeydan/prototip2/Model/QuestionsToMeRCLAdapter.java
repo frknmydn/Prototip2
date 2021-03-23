@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeRCLAdapter.PostHolder> {
 
+
     QuestionDAL questionDAL = new QuestionDAL();
     private ArrayList<Question> questions;
     @NonNull

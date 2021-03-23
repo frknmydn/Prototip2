@@ -12,8 +12,10 @@ public class Question {
 
     private int status;
 
+    public Question() {
+    }
 
-    public Question(String postID,String postHeader, String senderID,String senderNameText, String questionText, String postOwnerID, String answerText, String questionID, int status) {
+    public Question(String postID, String postHeader, String senderID, String senderNameText, String questionText, String postOwnerID, String answerText, String questionID, int status) {
         this.postID = postID;
         this.senderID = senderID;
         this.questionText = questionText;

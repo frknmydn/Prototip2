@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,13 +68,16 @@ public class QuestionsToMeFragment extends Fragment {
     }
 
     public void getQuestions(){
+        Log.d("Tag","getQuestions içi");
         String currentUserID = questionDAL.getUserId();
         questionDAL.getQuestions(currentUserID, new QuestionCallback() {
             @Override
             public void onQuestionsRetrieved(List<Question> questions) {
                 super.onQuestionsRetrieved(questions);
+                Log.d("Tag","callback İçi");
                 questionsArrayList.addAll(questions);
                 adapter.notifyDataSetChanged();
+
             }
         });
 
