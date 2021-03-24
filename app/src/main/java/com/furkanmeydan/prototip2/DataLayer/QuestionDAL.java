@@ -43,6 +43,18 @@ public class QuestionDAL {
 
     }
 
+    public void getAnsweredQuestions(String userId,final QuestionCallback callback){
+        firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,1)
+                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult()!=null){
+                    List<Question> answeredQuestions = task.getResult().toObjects(Question.class);
+                    callback.onQuestionsRetrieved(answeredQuestions);
+                }
+            }
+        });
+    }
 
 
     public void getQuestions(String userId, final QuestionCallback callback){
@@ -74,6 +86,22 @@ public class QuestionDAL {
                 if(task.isSuccessful() && task.getResult() !=null){
                     task.getResult().getReference().update(CollectionHelper.QUESTION_STATUS,-1);
                     callback.onQuestionDeactivated();
+                }
+            }
+        });
+    }
+
+    public void answerQuestion(String userId, String postId, String questionId, final String answer, final QuestionCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
+                .collection(CollectionHelper.POST_COLLECTION).document(postId)
+                .collection(CollectionHelper.QUESTION_COLLECTION).document(questionId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    DocumentReference docref = task.getResult().getReference();
+                    docref.update(CollectionHelper.QUESTION_STATUS,1);
+                    docref.update(CollectionHelper.QUESTION_ANSWER,answer);
+                    callback.onQuestionAnswered();
                 }
             }
         });

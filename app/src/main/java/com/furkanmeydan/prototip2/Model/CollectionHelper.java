@@ -43,6 +43,7 @@ public class CollectionHelper {
     final public static String QUESTION_SENDERNAMESURNAME = "senderNameText";
     final public static String QUESTION_SENDERID = "senderID";
     final public static String QUESTION_QUESTIONTEXT = "questionText";
+    final public static String QUESTION_ANSWER = "answerText";
     final public static String QUESTION_STATUS = "status";
 
 

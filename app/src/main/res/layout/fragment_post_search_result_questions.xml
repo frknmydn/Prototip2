@@ -7,8 +7,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentPostSearchResultQuestionsRCL"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="387dp"
+        android:layout_height="449dp"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="50dp"
@@ -22,4 +22,14 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="35dp"
         android:text="SORU SOR" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center"
+        android:text="İlanlara Gelen Sorular"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </FrameLayout>

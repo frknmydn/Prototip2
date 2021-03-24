@@ -17,4 +17,10 @@ public abstract class QuestionCallback {
     public void onQuestionDeactivated(){
 
     }
+
+    public void onQuestionAnswered(){
+
+    }
+
+
 }

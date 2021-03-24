@@ -1,6 +1,8 @@
 package com.furkanmeydan.prototip2.Model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     private String postID,
                     senderID,
                     questionText,

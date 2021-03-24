@@ -9,7 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postSearchResultRCL"
         android:layout_width="400dp"
-        android:layout_height="671dp"
+        android:layout_height="535dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="5dp"

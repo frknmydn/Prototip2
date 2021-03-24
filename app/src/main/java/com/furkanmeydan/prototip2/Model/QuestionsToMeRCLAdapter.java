@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Model;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.furkanmeydan.prototip2.DataLayer.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.MainActivity.FragmentAnswerQuestion;
+import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 
 import java.util.ArrayList;
 
 public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeRCLAdapter.PostHolder> {
-
-
+    MainActivity activity;
     QuestionDAL questionDAL = new QuestionDAL();
     private ArrayList<Question> questions;
     @NonNull
@@ -29,8 +31,9 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
         return new QuestionsToMeRCLAdapter.PostHolder(view);
     }
 
-    public QuestionsToMeRCLAdapter(ArrayList<Question> questions) {
+    public QuestionsToMeRCLAdapter(ArrayList<Question> questions, MainActivity activity) {
         this.questions = questions;
+        this.activity = activity;
     }
 
     @Override
@@ -49,9 +52,18 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
                             public void onQuestionDeactivated() {
                                 super.onQuestionDeactivated();
 
-                                notifyDataSetChanged();
+                                questions.remove(position);
+                                notifyItemRemoved(position);
                             }
                         });
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("question",questions.get(position));
+            activity.changeFragmentArgs(new FragmentAnswerQuestion(),bundle);
             }
         });
 

@@ -175,6 +175,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
+    public void changeFragmentArgs(Fragment fragment,Bundle args){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(args);
+        fragmentTransaction.replace(R.id.consLayout,fragment);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

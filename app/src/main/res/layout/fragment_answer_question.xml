@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MainActivity.FragmentAnswerQuestion">
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="62dp"
+        android:layout_height="31dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Soru:"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="175dp"
+        android:text="Cevabınız:"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tctFragmentAnswerQuestionQuestion"
+        android:layout_width="295dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="50dp"
+        android:inputType="textMultiLine"
+        android:text="asDASD ADASDASD ASDAS DAS DAS DA SD ASD AS DAS DAS D ASD ASD ASD AS FAS D ASFAS DAS DAS Fasdasdd asdjkashdkjas daskjdhasd baksjd askjdbasjda sdkasdAS D"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edtFragmentAnswerQuestionAnswer"
+        android:layout_width="294dp"
+        android:layout_height="125dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:ems="10"
+        android:hint="Cevabınızı Buraya yazabilirsiniz"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnFragmentAnswerQuestion"
+        android:layout_width="126dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:text="Gönder" />
+</FrameLayout>

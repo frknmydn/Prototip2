@@ -60,8 +60,7 @@ public class QuestionsToMeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.questionToMeRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        adapter = new QuestionsToMeRCLAdapter(questionsArrayList);
+        adapter = new QuestionsToMeRCLAdapter(questionsArrayList,activity);
         recyclerView.setAdapter(adapter);
 
         getQuestions();
