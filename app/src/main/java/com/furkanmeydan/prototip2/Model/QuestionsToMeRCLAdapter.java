@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Model;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
     @Override
     public void onBindViewHolder(@NonNull final PostHolder holder, final int position) {
 
+        Log.d("Tag","Adapter onBindViewHolder");
         holder.txtHeader.setText(questions.get(position).getPostHeaderText());
         holder.txtSenderName.setText(questions.get(position).getSenderNameText());
         holder.txtQuestionText.setText(questions.get(position).getQuestionText());
@@ -51,9 +53,10 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
                             @Override
                             public void onQuestionDeactivated() {
                                 super.onQuestionDeactivated();
-
+                                Log.d("Tag","Adapter onRemoved Callback");
                                 questions.remove(position);
-                                notifyItemRemoved(position);
+                                notifyDataSetChanged();
+                                Log.d("Tag","Adapter onRemoved Callback Question removed");
                             }
                         });
             }
@@ -63,7 +66,9 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("question",questions.get(position));
+                Log.d("Tag","Adapter onClick");
             activity.changeFragmentArgs(new FragmentAnswerQuestion(),bundle);
+                Log.d("Tag","Adapter onClick changed fragment");
             }
         });
 
