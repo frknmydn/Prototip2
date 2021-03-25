@@ -47,4 +47,19 @@ public class CollectionHelper {
     final public static String QUESTION_STATUS = "status";
 
 
+    final public static String REQUEST_COLLECTION = "Requests";
+    final public static String REQUEST_REQUESTID = "requestID";
+    final public static String REQUEST_STATUS = "status";
+    final public static String REQUEST_POSTOWNER = "postOwnerID";
+    final public static String REQUEST_POSTHEADER = "postHeader";
+    final public static String REQUEST_SENDERID = "senderID";
+    final public static String REQUEST_SENDERNAME = "senderNameSurname";
+    final public static String REQUEST_SENDERIMAGE = "senderImageURL";
+    final public static String REQUEST_SENDERGENDER = "senderGender";
+    final public static String REQUEST_LAT1 = "lat1";
+    final public static String REQUEST_LNG1 = "lng1";
+    final public static String REQUEST_LAT2 = "lat2";
+    final public static String REQUEST_LNG2 = "lng2";
+
+
 }

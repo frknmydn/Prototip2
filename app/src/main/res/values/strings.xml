@@ -55,4 +55,6 @@
     <string name="Questions">Soru-Cevap</string>
     <string name="Details">Detay</string>
     <string name="SignOut">Çıkış Yap</string>
+    <string name="questionToMe">Gelen Sorular</string>
+    <string name="requestsToMyPosts">Gelen İstekler</string>
 </resources>

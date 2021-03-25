@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.View.PostSearchResultDetailActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
+import com.furkanmeydan.prototip2.Model.Post;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.View.MainActivity.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +30,11 @@ import java.util.concurrent.TimeUnit;
 public class FragmentPostSearchResultDetail extends Fragment {
     private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, postCarDetail;
     private PostSearchResultDetailActivity activity;
+    Button btnSendRequest;
+    LocalDataManager localDataManager;
+    Double requestLat1, requestLng1, requestLat2, requestLng2;
+    String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate;
+    RequestDAL requestDAL;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -35,7 +48,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
         super.onCreate(savedInstanceState);
 
         activity = (PostSearchResultDetailActivity) getActivity();
-
+        localDataManager = new LocalDataManager();
+        requestDAL = new RequestDAL();
 
 
     }
@@ -57,8 +71,48 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postTime = view.findViewById(R.id.txtSearchResultDetailDateTime);
         postDescription = view.findViewById(R.id.txtSearchResultDetailDescription);
         postCarDetail = view.findViewById(R.id.txtSearchResultDetailCarDet);
+        btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
 
         setData();
+
+
+        btnSendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestLat1 = localDataManager.getSharedPreferenceForDouble(activity,"requestLat1",0d);
+                requestLng1 = localDataManager.getSharedPreferenceForDouble(activity,"requestLng1",0d);
+                requestLat2 = localDataManager.getSharedPreferenceForDouble(activity,"requestLat2",0d);
+                requestLng2 = localDataManager.getSharedPreferenceForDouble(activity,"requestLng2",0d);
+                Log.d("TAGGY", String.valueOf(requestLat1) + String.valueOf(requestLng1) + String.valueOf(requestLat2)+ String.valueOf(requestLng2));
+                senderID = activity.firebaseAuth.getCurrentUser().getUid();
+                senderName = localDataManager.getSharedPreference(activity,"sharedNameSurname",null);
+                senderImgURL = localDataManager.getSharedPreference(activity,"sharedImageURL",null);
+                senderGender = localDataManager.getSharedPreference(activity,"sharedGender",null);
+                senderEmail = localDataManager.getSharedPreference(activity,"sharedEmail",null);
+                senderBirthdate = localDataManager.getSharedPreference(activity,"sharedBirthdate",null);
+                Post post = activity.post;
+
+
+                requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
+                        post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDescription(), new RequestCallback() {
+                    @Override
+                    public void onRequestSent() {
+                        super.onRequestSent();
+
+
+                        Intent i = new Intent(getContext(), MainActivity.class);
+                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                        startActivity(i);
+                        activity.finish();
+
+                    }
+                });
+
+
+
+
+            }
+        });
 
     }
 

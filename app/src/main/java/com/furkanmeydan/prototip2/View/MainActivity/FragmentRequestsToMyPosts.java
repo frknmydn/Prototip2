@@ -8,42 +8,41 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.furkanmeydan.prototip2.DataLayer.QuestionCallback;
-import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
-import com.furkanmeydan.prototip2.Model.Question;
-import com.furkanmeydan.prototip2.Model.QuestionsToMeRCLAdapter;
+import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
+import com.furkanmeydan.prototip2.Model.Request;
+import com.furkanmeydan.prototip2.Model.RequestsToMeRCLAdapter;
 import com.furkanmeydan.prototip2.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class QuestionsToMeFragment extends Fragment {
-    RecyclerView recyclerView;
-    QuestionsToMeRCLAdapter adapter;
-    QuestionDAL questionDAL;
+public class FragmentRequestsToMyPosts extends Fragment {
+        RecyclerView recyclerView;
+        RequestsToMeRCLAdapter adapter;
+        MainActivity activity;
+        RequestDAL requestDAL;
+        ArrayList<Request> requests;
 
-    MainActivity activity;
-    ArrayList<Question> questionsArrayList;
 
-    public QuestionsToMeFragment() {
+
+    public FragmentRequestsToMyPosts() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (MainActivity) getActivity();
-        questionsArrayList = new ArrayList<>();
-        questionDAL = new QuestionDAL();
+        requestDAL = new RequestDAL();
+        requests = new ArrayList<>();
+
 
     }
 
@@ -51,37 +50,36 @@ public class QuestionsToMeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_questions_to_me, container, false);
+        return inflater.inflate(R.layout.fragment_requests_to_my_posts, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        recyclerView = view.findViewById(R.id.questionToMeRCL);
+        recyclerView = view.findViewById(R.id.fragmentRequestsToMyPostsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new QuestionsToMeRCLAdapter(questionsArrayList,activity);
+        adapter = new RequestsToMeRCLAdapter(requests,activity);
         recyclerView.setAdapter(adapter);
+
+
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getQuestions();
+        getRequests();
     }
 
-    public void getQuestions(){
-        Log.d("Tag","getQuestions içi");
-        String currentUserID = questionDAL.getUserId();
-        questionDAL.getQuestions(currentUserID, new QuestionCallback() {
-            @Override
-            public void onQuestionsRetrieved(List<Question> questions) {
-                super.onQuestionsRetrieved(questions);
-                Log.d("Tag","callback İçi");
-                questionsArrayList.addAll(questions);
-                adapter.notifyDataSetChanged();
+    private void getRequests() {
 
+        requestDAL.getMyRequests(new RequestCallback() {
+            @Override
+            public void getRequestsToMe(List<Request> list) {
+                super.getRequestsToMe(list);
+                requests.clear();
+                requests.addAll(list);
+                adapter.notifyDataSetChanged();
             }
         });
 

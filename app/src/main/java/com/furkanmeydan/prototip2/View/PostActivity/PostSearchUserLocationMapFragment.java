@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.View.PostActivity.PostActivity;
@@ -41,6 +42,7 @@ public class PostSearchUserLocationMapFragment extends Fragment {
     LocationManager locationManager;
     PostActivity postActivity;
     Bundle bundle;
+    LocalDataManager localDataManager;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -97,6 +99,13 @@ public class PostSearchUserLocationMapFragment extends Fragment {
                     bundle.putDouble("userlng2", lng2);
                     bundle.putInt("direction",direction);
 
+                    //Kullanıcı istek gönderirken kullanmak için
+                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLat1",lat1);
+                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLng1",lng1);
+                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLat2",lat2);
+                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLng2",lng2);
+
+
 
                     postActivity.changeFragmentArgs(new PostSearchResultFragment(),bundle);
                 }
@@ -119,6 +128,7 @@ public class PostSearchUserLocationMapFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         postActivity = (PostActivity) getActivity();
+        localDataManager = new LocalDataManager();
 
         if(getArguments() !=null){
             bundle = getArguments();
@@ -158,6 +168,7 @@ public class PostSearchUserLocationMapFragment extends Fragment {
 
                 cord1 = lat1.toString();
                 cord2 = lng1.toString();
+
 
 
                 mMap.addMarker(new MarkerOptions().title("Biniş").position(latLng));

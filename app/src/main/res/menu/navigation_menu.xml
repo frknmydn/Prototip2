@@ -20,7 +20,12 @@
     <item
         android:id="@+id/questionsToMe"
         android:icon="@drawable/ic_question_mark"
-        android:title="@string/SignOut"></item>
+        android:title="@string/questionToMe"></item>
+
+    <item
+        android:id="@+id/requestsToMyPosts"
+        android:icon="@drawable/ic_requests_to_me"
+        android:title="@string/requestsToMyPosts"></item>
 
     <item
         android:id="@+id/signOut"
