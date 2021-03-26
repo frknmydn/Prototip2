@@ -1,6 +1,8 @@
 package com.furkanmeydan.prototip2.Models;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
 
     String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader;
     Double lat1,lng1,lat2,lng2;

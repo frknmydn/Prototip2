@@ -1,5 +1,7 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.FragmentRequestSenderProfile;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
 import java.util.ArrayList;
 
@@ -39,7 +43,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
 
         holder.txtHeader.setText(requestsList.get(position).getPostHeader());
         holder.txtNameSurname.setText(requestsList.get(position).getSenderName());
@@ -47,6 +51,18 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
 
         Glide.with(activity.getApplicationContext()).load(requestsList.get(position).getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Request request = requestsList.get(position);
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable("request",request);
+                activity.changeFragmentArgs(new FragmentRequestSenderProfile(),bundle);
+
+            }
+        });
 
 
     }
