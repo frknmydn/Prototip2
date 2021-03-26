@@ -1,6 +1,6 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
-import com.furkanmeydan.prototip2.exceptions.RxFirebaseNullDataException;
+import com.furkanmeydan.prototip2.Exceptions.RxFirebaseNullDataException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

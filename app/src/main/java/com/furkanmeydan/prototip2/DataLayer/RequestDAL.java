@@ -2,8 +2,8 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import androidx.annotation.NonNull;
 
-import com.furkanmeydan.prototip2.Model.CollectionHelper;
-import com.furkanmeydan.prototip2.Model.Request;
+import com.furkanmeydan.prototip2.Models.CollectionHelper;
+import com.furkanmeydan.prototip2.Models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

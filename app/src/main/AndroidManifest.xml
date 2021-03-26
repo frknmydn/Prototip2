@@ -32,17 +32,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".View.PostSearchResultDetailActivity.PostSearchResultDetailActivity" />
-        <activity android:name=".View.PostActivity.PostActivity" />
-        <activity android:name=".View.UploadPostActivity.UploadPostActivity" />
-        <activity android:name=".View.LoginRegisterActivity.LoginRegisterActivity">
+        <activity android:name=".Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity" />
+        <activity android:name=".Views.PostActivity.PostActivity" />
+        <activity android:name=".Views.UploadPostActivity.UploadPostActivity" />
+        <activity android:name=".Views.LoginRegisterActivity.LoginRegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.MainActivity.MainActivity" />
+        <activity android:name=".Views.MainActivity.MainActivity" />
     </application>
 
 </manifest>

@@ -5,6 +5,6 @@
     android:id="@+id/postContainerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.PostActivity.PostActivity">
+    tools:context=".Views.PostActivity.PostActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

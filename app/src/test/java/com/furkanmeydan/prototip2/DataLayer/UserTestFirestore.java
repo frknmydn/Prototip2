@@ -1,32 +1,24 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
-import android.util.Log;
-
-import com.furkanmeydan.prototip2.Model.User;
+import com.furkanmeydan.prototip2.Models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
-import org.apache.commons.validator.Validator;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.checkerframework.checker.regex.qual.Regex;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
-import io.reactivex.rxjava3.observers.TestObserver;
 
 import static com.furkanmeydan.prototip2.DataLayer.RxTestUtil.setupOfflineTask;
 import static com.furkanmeydan.prototip2.DataLayer.RxTestUtil.setupTask;

@@ -3,8 +3,8 @@ package com.furkanmeydan.prototip2.DataLayer;
 import android.location.Address;
 import android.location.Geocoder;
 
-import com.furkanmeydan.prototip2.Model.Post;
-import com.furkanmeydan.prototip2.View.UploadPostActivity.UploadPostActivity;
+import com.furkanmeydan.prototip2.Models.Post;
+import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;

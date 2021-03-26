@@ -1,6 +1,6 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
-import com.furkanmeydan.prototip2.Model.User;
+import com.furkanmeydan.prototip2.Models.User;
 
 public abstract class ProfileCallback {
     //void getUser(User user) {

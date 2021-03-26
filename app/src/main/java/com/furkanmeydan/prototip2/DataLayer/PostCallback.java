@@ -1,6 +1,6 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
-import com.furkanmeydan.prototip2.Model.Post;
+import com.furkanmeydan.prototip2.Models.Post;
 
 import java.util.List;
 

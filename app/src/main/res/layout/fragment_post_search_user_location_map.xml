@@ -5,7 +5,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.PostActivity.PostSearchUserLocationMapFragment">
+    tools:context=".Views.PostActivity.PostSearchUserLocationMapFragment">
 
     <Button
         android:id="@+id/btnUserLocationMapClear"

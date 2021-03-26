@@ -4,8 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.furkanmeydan.prototip2.Model.CollectionHelper;
-import com.furkanmeydan.prototip2.Model.Question;
+import com.furkanmeydan.prototip2.Models.CollectionHelper;
+import com.furkanmeydan.prototip2.Models.Question;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

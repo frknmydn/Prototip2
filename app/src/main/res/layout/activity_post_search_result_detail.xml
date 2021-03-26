@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.PostSearchResultDetailActivity.PostSearchResultDetailActivity">
+    tools:context=".Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity">
 
     <FrameLayout
         android:id="@+id/PostSearchResultContainer"

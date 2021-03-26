@@ -1,6 +1,6 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
-import com.furkanmeydan.prototip2.Model.Question;
+import com.furkanmeydan.prototip2.Models.Question;
 
 import java.util.List;
 
