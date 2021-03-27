@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +35,7 @@ public class FragmentRequestSenderProfile extends Fragment {
     private TextView nameSurname, gender, birthdate;
     private ImageView imageView;
     private Button btnShowComments, btnAccept, btnDecline;
+    RequestDAL requestDAL;
     Request request;
 
     MapView mapView;
@@ -45,21 +49,19 @@ public class FragmentRequestSenderProfile extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (MainActivity) getActivity();
+        requestDAL = new RequestDAL();
 
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             request = (Request) getArguments().getSerializable("request");
 
         }
-        latlng1 = new LatLng(request.getLat1(),request.getLng1());
-        latLng2 = new LatLng(request.getLat2(),request.getLng2());
-        
 
-
+        latlng1 = new LatLng(request.getLat1(), request.getLng1());
+        latLng2 = new LatLng(request.getLat2(), request.getLng2());
 
 
     }
@@ -86,7 +88,6 @@ public class FragmentRequestSenderProfile extends Fragment {
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-
             }
         });
 
@@ -104,6 +105,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         imageView = view.findViewById(R.id.fragmentRequestSenderProfileImg);
         btnAccept = view.findViewById(R.id.fragmentRequestSenderProfileAccept);
         btnDecline = view.findViewById(R.id.fragmentRequestSenderProfileDecline);
+        btnShowComments = view.findViewById(R.id.fragmentRequestSenderProfileShowComments);
 
         nameSurname.setText(request.getSenderName());
         gender.setText(request.getSenderGender());
@@ -111,5 +113,48 @@ public class FragmentRequestSenderProfile extends Fragment {
 
         Glide.with(activity.getApplicationContext()).load(request.getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String requestID = request.getRequestID();
+                String postID = request.getPostID();
+                String postownerID = request.getPostOwnerID();
+                requestDAL.acceptRequest(postID, postownerID, requestID, new RequestCallback() {
+                    @Override
+                    public void onRequestAccepted() {
+                        super.onRequestAccepted();
+                        activity.changeFragment(new FragmentRequestsToMyPosts());
+                    }
+                });
+            }
+        });
+
+        btnDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String requestID = request.getRequestID();
+                String postID = request.getPostID();
+                String postownerID = request.getPostOwnerID();
+
+                requestDAL.rejectRequest(postID, postownerID, requestID, new RequestCallback() {
+                    @Override
+                    public void onRequestRejected() {
+                        super.onRequestRejected();
+                        activity.changeFragment(new FragmentRequestsToMyPosts());
+                    }
+                });
+            }
+        });
+
+        btnShowComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
+
+

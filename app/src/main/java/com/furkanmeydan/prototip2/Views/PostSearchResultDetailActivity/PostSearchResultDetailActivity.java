@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class PostSearchResultDetailActivity extends AppCompatActivity implements TaskLoadedCallback {
     ProfileDAL profileDAL;
     Post post;
-    private BottomNavigationView navigationView1;
+    BottomNavigationView navigationView1;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -53,6 +53,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         if(bundle !=null){
             post = (Post) bundle.getSerializable("post");
         }
+
         profileDAL = new ProfileDAL();
         navigationView1 = findViewById(R.id.postSearchResultDetailBottomNavigation);
         navigationView1.bringToFront();
@@ -60,7 +61,9 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
 
     public void changeFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
         fragmentTransaction.commit();
@@ -111,6 +114,11 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         }
         fr.getmMap().addPolyline((PolylineOptions) values[0]);
 
+        //Haritada directions geldikten sonra navigation itemlerinin geri açılması için
+        for(int i = 0; i < navigationView1.getMenu().size();i++){
+            navigationView1.getMenu().getItem(i).setEnabled(true);
+        }
+        //navigationView1.setClickable(true);
     }
 
     /*
@@ -138,6 +146,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
      */
 
-
-
+    public BottomNavigationView getNavigationView1() {
+        return navigationView1;
+    }
 }

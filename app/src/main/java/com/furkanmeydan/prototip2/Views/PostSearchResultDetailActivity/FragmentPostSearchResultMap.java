@@ -46,7 +46,6 @@ public class FragmentPostSearchResultMap extends Fragment {
         marker2 = new LatLng(toLat,toLng);
 
 
-
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -69,6 +68,7 @@ public class FragmentPostSearchResultMap extends Fragment {
             mMap.addMarker(place2);
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1, 16));
+
             /*
             if (Build.VERSION.SDK_INT >= 23) {
                 if(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -129,6 +129,11 @@ public class FragmentPostSearchResultMap extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        //Haritada directions gelmeden fragment değiştirilince kod patlıyor, onu engellemek için
+        for(int i = 0; i < activity.navigationView1.getMenu().size();i++){
+            activity.navigationView1.getMenu().getItem(i).setEnabled(false);
+        }
         if(mapFragment!=null){
             mapFragment.getMapAsync(callback);
         }

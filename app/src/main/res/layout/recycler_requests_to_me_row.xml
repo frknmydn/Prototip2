@@ -7,13 +7,16 @@
 
     <Button
         android:id="@+id/btnrequestsToMeRowRCLDecline"
-        android:layout_width="62dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="100dp"
         android:text="Reddet"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/btnrequestsToMeRowRCLAccept"
-        app:layout_constraintTop_toTopOf="@+id/btnrequestsToMeRowRCLAccept" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/requestsToMeRowRCLImg"
+        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLGender" />
 
     <TextView
         android:id="@+id/requestsToMeRowRCLHeader"
@@ -61,17 +64,6 @@
         app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toEndOf="@+id/requestsToMeRowRCLImg"
         app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLNameSurname" />
-
-    <Button
-        android:id="@+id/btnrequestsToMeRowRCLAccept"
-        android:layout_width="62dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:text="Onayla"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/requestsToMeRowRCLImg"
-        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLGender" />
 
     <View
         android:id="@+id/divider5"

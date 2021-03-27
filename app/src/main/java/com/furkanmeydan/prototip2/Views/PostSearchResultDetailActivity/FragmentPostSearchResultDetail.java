@@ -34,12 +34,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate;
+    Post post;
     RequestDAL requestDAL;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
     }
-
 
 
 
@@ -50,7 +50,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         activity = (PostSearchResultDetailActivity) getActivity();
         localDataManager = new LocalDataManager();
         requestDAL = new RequestDAL();
-
+        post = activity.post;
 
     }
 
@@ -73,7 +73,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postCarDetail = view.findViewById(R.id.txtSearchResultDetailCarDet);
         btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
 
-        setData();
+
 
 
         btnSendRequest.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 senderGender = localDataManager.getSharedPreference(activity,"sharedGender",null);
                 senderEmail = localDataManager.getSharedPreference(activity,"sharedEmail",null);
                 senderBirthdate = localDataManager.getSharedPreference(activity,"sharedBirthdate",null);
-                Post post = activity.post;
+
 
 
                 requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
@@ -98,7 +98,6 @@ public class FragmentPostSearchResultDetail extends Fragment {
                     @Override
                     public void onRequestSent() {
                         super.onRequestSent();
-
 
                         Intent i = new Intent(getContext(), MainActivity.class);
                         Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
@@ -116,12 +115,31 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setData();
+    }
+
     private void setData() {
+
+
         postHeader.setText(activity.post.getDestination());
         postCity.setText(activity.post.getCity());
         postPassangerCount.setText(String.valueOf(activity.post.getPassengerCount()));
         postDescription.setText(activity.post.getDescription());
         postCarDetail.setText(activity.post.getCarDetail());
+
+
+        requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {
+            @Override
+            public void onRequestRetrievedNotNull() {
+                super.onRequestRetrievedNotNull();
+                btnSendRequest.setClickable(false);
+                btnSendRequest.setFocusable(false);
+                btnSendRequest.setText("İstek gönderildi");
+            }
+        });
 
         //zaman işlemleri
         long timeStampp = activity.post.getTimestamp();

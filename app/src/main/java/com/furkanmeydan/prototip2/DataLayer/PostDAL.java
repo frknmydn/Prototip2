@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -613,7 +614,18 @@ public class PostDAL {
         return filteredList;
     }
 
+    public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).update(CollectionHelper.POST_PASSENGERCOUNT, FieldValue.increment(-1))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onRequestAccepted();
+            }
+        });
+    }
     public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {
         String error = "";
         Bundle args = new Bundle();

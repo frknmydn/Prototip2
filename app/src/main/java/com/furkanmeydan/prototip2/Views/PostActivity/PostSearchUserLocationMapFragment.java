@@ -89,23 +89,26 @@ public class PostSearchUserLocationMapFragment extends Fragment {
             btnChangeFragment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (lat1 != null && lng1 != null && lat2 != null && lng2 != null) {
 
-                    int direction = postDAL.findDirection(lat1,lng1,lat2,lng2);
+
+
+                    int direction = postDAL.findDirection(lat1, lng1, lat2, lng2);
                     bundle.putDouble("userlat1", lat1);
                     bundle.putDouble("userlat2", lat2);
                     bundle.putDouble("userlng1", lng1);
                     bundle.putDouble("userlng2", lng2);
-                    bundle.putInt("direction",direction);
+                    bundle.putInt("direction", direction);
 
                     //Kullanıcı istek gönderirken kullanmak için
-                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLat1",lat1);
-                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLng1",lng1);
-                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLat2",lat2);
-                    localDataManager.setSharedPreferenceForDouble(postActivity,"requestLng2",lng2);
+                    localDataManager.setSharedPreferenceForDouble(postActivity, "requestLat1", lat1);
+                    localDataManager.setSharedPreferenceForDouble(postActivity, "requestLng1", lng1);
+                    localDataManager.setSharedPreferenceForDouble(postActivity, "requestLat2", lat2);
+                    localDataManager.setSharedPreferenceForDouble(postActivity, "requestLng2", lng2);
 
 
-
-                    postActivity.changeFragmentArgs(new PostSearchResultFragment(),bundle);
+                    postActivity.changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                }
                 }
             });
 

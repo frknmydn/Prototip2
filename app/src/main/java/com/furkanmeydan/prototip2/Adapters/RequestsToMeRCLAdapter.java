@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.FragmentRequestSenderProfile;
@@ -27,10 +29,12 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
 
     MainActivity activity;
     ArrayList<Request> requestsList;
+    RequestDAL requestDAL;
 
     public RequestsToMeRCLAdapter(ArrayList<Request> requestsList, MainActivity activity) {
         this.requestsList = requestsList;
         this.activity = activity;
+        requestDAL = new RequestDAL();
     }
 
     @NonNull
@@ -64,6 +68,20 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
             }
         });
 
+        holder.btnDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestDAL.rejectRequest(requestsList.get(position).getPostID(), requestsList.get(position).getPostOwnerID(), requestsList.get(position).getRequestID(), new RequestCallback() {
+                    @Override
+                    public void onRequestRejected() {
+                        super.onRequestRejected();
+                        requestsList.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
 
     }
 
@@ -75,7 +93,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
     public class PostHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView txtHeader, txtNameSurname, txtGender;
-        Button btnAccept, btnDecline;
+        Button btnDecline;
         public PostHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -83,7 +101,6 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
             txtHeader = itemView.findViewById(R.id.requestsToMeRowRCLHeader);
             txtNameSurname = itemView.findViewById(R.id.requestsToMeRowRCLNameSurname);
             txtGender = itemView.findViewById(R.id.requestsToMeRowRCLGender);
-            btnAccept = itemView.findViewById(R.id.btnrequestsToMeRowRCLAccept);
             btnDecline = itemView.findViewById(R.id.btnrequestsToMeRowRCLDecline);
 
         }

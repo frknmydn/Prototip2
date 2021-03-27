@@ -12,4 +12,18 @@ public abstract class RequestCallback {
         public void getRequestsToMe(List<Request> list){
 
         }
+
+        public void onRequestAccepted(){
+
+        }
+
+        public void onRequestRejected(){
+
+        }
+        public void onRequestRetrievedNotNull(){
+
+        }
+        public void onRequestRetrievedNull(){
+
+        }
 }
