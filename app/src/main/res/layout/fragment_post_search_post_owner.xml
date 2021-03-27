@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,52 +7,116 @@
     tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchPostOwner">
 
     <TextView
-        android:id="@+id/postSearchPostOwnerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="250dp"
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_vertical"
         android:text="Adı Soyadı"
+        android:textColor="#5C5C5C"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postSearchPostOwnerImageView" />
 
     <TextView
-        android:id="@+id/postSearchPostOwnerBD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="350dp"
+        android:id="@+id/textView28"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_vertical"
         android:text="Doğum Tarihi"
+        android:textColor="#5C5C5C"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_vertical"
+        android:text="Cinsiyeti"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#E6E9FF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="İLAN SAHİBİNİN PROFİLİ"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/postSearchPostOwnerImageView"
         android:layout_width="150sp"
         android:layout_height="150sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:srcCompat="@drawable/ic_image_holder"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="İlan Sahibinin Profili"
-        android:textColor="#151515"
+        android:id="@+id/postSearchPostOwnerName"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/spinner_shape"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        app:layout_constraintBottom_toTopOf="@+id/postSearchPostOwnerBD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/postSearchPostOwnerBD"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/spinner_shape"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerName"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="@+id/textView28" />
 
     <TextView
         android:id="@+id/postSearchPostOwnerGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="300dp"
-        android:text="Cinsiyeti"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/spinner_shape"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerBD"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="@+id/textView33" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

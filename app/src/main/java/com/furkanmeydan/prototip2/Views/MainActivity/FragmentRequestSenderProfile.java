@@ -57,6 +57,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         }
         latlng1 = new LatLng(request.getLat1(),request.getLng1());
         latLng2 = new LatLng(request.getLat2(),request.getLng2());
+        
 
 
 

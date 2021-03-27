@@ -27,6 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,55 +41,71 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#E6E9FF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="PROFİL BİLGİLERİ"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/ImageViewFragment"
             android:layout_width="150sp"
             android:layout_height="150sp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="44dp"
             app:layout_constraintBottom_toTopOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView31"
             app:srcCompat="@android:drawable/ic_menu_gallery"
             tools:src="@tools:sample/avatars" />
 
         <EditText
             android:id="@+id/EDTNameSurnameFragment"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
-            android:layout_marginBottom="29dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Adınız Soyadınız"
-            android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/EDTEmailFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment"
+            android:background="@drawable/spinner_shape"/>
 
         <EditText
             android:id="@+id/EDTEmailFragment"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="55dp"
-            android:layout_marginEnd="55dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="E-mail Adresiniz"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/BirthdayFragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment" />
+            app:layout_constraintEnd_toEndOf="@+id/EDTNameSurnameFragment"
+            app:layout_constraintStart_toStartOf="@+id/EDTNameSurnameFragment"
+            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment"
+            android:background="@drawable/spinner_shape"/>
 
         <TextView
             android:id="@+id/BirthdayFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginBottom="28dp"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
             android:clickable="false"
             android:ems="10"
             android:focusable="false"
@@ -96,32 +113,39 @@
             android:inputType="date"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/GenderFragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment" />
-
-        <Button
-            android:id="@+id/btnUpdateFragment"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="112dp"
-            android:text="Güncelle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/GenderFragment" />
+            app:layout_constraintEnd_toStartOf="@+id/GenderFragment"
+            app:layout_constraintStart_toStartOf="@+id/EDTEmailFragment"
+            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment"
+            android:background="@drawable/spinner_shape"/>
 
         <TextView
             android:id="@+id/GenderFragment"
-            android:layout_width="125dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="69dp"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/spinner_shape"
             android:text="TextView"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btnUpdateFragment"
-            app:layout_constraintStart_toStartOf="@+id/BirthdayFragment"
-            app:layout_constraintTop_toBottomOf="@+id/BirthdayFragment" />
+            app:layout_constraintBottom_toBottomOf="@+id/BirthdayFragment"
+            app:layout_constraintEnd_toEndOf="@+id/EDTEmailFragment"
+            app:layout_constraintStart_toEndOf="@+id/BirthdayFragment" />
+
+        <Button
+            android:id="@+id/btnUpdateFragment"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="25dp"
+            android:text="Güncelle"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            android:background="#E1E1E1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
