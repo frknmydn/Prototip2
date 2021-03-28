@@ -1,10 +1,14 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,6 +24,7 @@ public class RequestDAL {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     PostDAL postDAL = new PostDAL();
+    String currentUserID = firebaseAuth.getCurrentUser().getUid();
 
     public RequestDAL() {
     }
@@ -43,7 +48,6 @@ public class RequestDAL {
     }
 
     public void getMyRequests(final RequestCallback callback){
-        String currentUserID = firebaseAuth.getCurrentUser().getUid();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).
                 whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).
                 whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -89,7 +93,9 @@ public class RequestDAL {
 
     public void getRequest(final String postID, final String postOwnerID, final RequestCallback callback){
 
-        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+         currentUserID = firebaseAuth.getCurrentUser().getUid();
+         Log.d("RequestDalUserId",currentUserID);
+
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
@@ -99,11 +105,34 @@ public class RequestDAL {
 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() != null){
+                if(task.isSuccessful() && task.getResult().size()>0){
+                    Log.d("RequestDalOncomplete","Çalışıyor");
                     callback.onRequestRetrievedNotNull();
                 }
             }
         });
+
+
+
+         /*
+         firestore.collection(CollectionHelper.USER_COLLECTION)
+                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
+                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+             @Override
+             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                 callback.onRequestRetrievedNotNull();
+
+             }
+         }).addOnFailureListener(new OnFailureListener() {
+             @Override
+             public void onFailure(@NonNull Exception e) {
+                 callback.onRequestRetrievedNull();
+             }
+         });
+
+          */
 
     }
 }

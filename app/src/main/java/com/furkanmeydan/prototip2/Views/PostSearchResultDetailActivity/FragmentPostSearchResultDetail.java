@@ -134,11 +134,15 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postDescription.setText(activity.post.getDescription());
         postCarDetail.setText(activity.post.getCarDetail());
 
+        Log.d("RequestDalPostOwnerId",post.getOwnerID());
+        Log.d("RequestDalPostID",post.getPostID());
+
 
         requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {
             @Override
             public void onRequestRetrievedNotNull() {
                 super.onRequestRetrievedNotNull();
+
                 btnSendRequest.setClickable(false);
                 btnSendRequest.setFocusable(false);
                 btnSendRequest.setText("İstek gönderildi");
