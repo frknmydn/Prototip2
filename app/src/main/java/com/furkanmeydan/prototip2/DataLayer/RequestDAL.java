@@ -135,4 +135,23 @@ public class RequestDAL {
           */
 
     }
+
+    public void getAcceptedRequests(String postID, String postOwnerID, final RequestCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                .collection(CollectionHelper.POST_COLLECTION).document(postID)
+                .collection(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_STATUS,1)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult()!=null){
+                    if(task.getResult().size() > 0){
+                        callback.onRequestRetrievedNotNull();
+                    }
+                    else{
+                        callback.onRequestRetrievedNull();
+                    }
+                }
+            }
+        });
+    }
 }

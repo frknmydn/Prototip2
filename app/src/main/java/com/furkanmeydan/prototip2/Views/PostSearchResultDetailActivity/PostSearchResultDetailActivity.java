@@ -100,7 +100,9 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
             else if(item.getItemId()== R.id.Requests){
                 Toast.makeText(getApplicationContext(),"REQUESTS",Toast.LENGTH_LONG).show();
+                changeFragment(new FragmentPostSearchResultDetailAcceptedRequests());
             }
+
             return true;
         }
     };

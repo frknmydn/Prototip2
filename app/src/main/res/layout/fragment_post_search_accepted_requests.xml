@@ -4,14 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.PostActivity.FragmentAcceptedRequests">
+    tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchResultDetailAcceptedRequests">
 
+
+    <TextView
+        android:id="@+id/txtFragmentAcceptedRequestInformation"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="264dp"
+        android:background="#E6E9FF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="İlan Sahibinin Kabul Ettiği İstek Bulunmamaktadır."
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/textView34"
+        app:layout_constraintStart_toStartOf="@+id/textView34"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentAcceptedRequestsRCL"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,4 +50,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

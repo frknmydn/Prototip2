@@ -16,19 +16,19 @@ import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
+import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
 import java.util.ArrayList;
 
 public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.PostHolder> {
 
     ArrayList<Request> acceptedRequest;
-    PostActivity postActivity;
-    RequestDAL requestDAL;
+    PostSearchResultDetailActivity activity;
 
-    public AcceptedRequestAdapter(ArrayList<Request> acceptedRequest, PostActivity postActivity) {
+
+    public AcceptedRequestAdapter(ArrayList<Request> acceptedRequest, PostSearchResultDetailActivity activity) {
         this.acceptedRequest = acceptedRequest;
-        this.postActivity = postActivity;
-        requestDAL = new RequestDAL();
+        this.activity = activity;
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         holder.txtRequestSenderGender.setText(acceptedRequest.get(position).getSenderGender());
         holder.txtRequestSenderBirthdate.setText(acceptedRequest.get(position).getSenderBirthdate());
 
-        Glide.with(postActivity.getApplicationContext()).load(acceptedRequest.get(position).getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
+        Glide.with(activity.getApplicationContext()).load(acceptedRequest.get(position).getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imgRequestSenderPic);
     }
 
