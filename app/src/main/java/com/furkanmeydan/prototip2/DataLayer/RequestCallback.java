@@ -26,7 +26,7 @@ public abstract class RequestCallback {
         public void onRequestRetrievedNull(){
 
         }
-        public void onRequestsRetrievedNotNull(){
+        public void onRequestsRetrievedNotNull(List<Request> list){
 
         }
         public void onRequestsRetrievedNull(){

@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,9 @@ import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     RecyclerView recyclerView;
@@ -34,13 +37,16 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
 
     RequestDAL requestDAL;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestList = new ArrayList<>();
-        activity = (PostSearchResultDetailActivity) getActivity();
+
+        Log.d("Tag","AcceptedRequests onCreate");
         requestDAL = new RequestDAL();
+        activity = (PostSearchResultDetailActivity) getActivity();
         post = activity.post;
+        requestList = activity.requestList;
 
 
     }
@@ -63,22 +69,34 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AcceptedRequestAdapter(requestList,activity);
         recyclerView.setAdapter(adapter);
+        Log.d("Tag","AcceptedRequests onViewCreated");
 
+        if(requestList.size()>0){
+            adapter.notifyDataSetChanged();
+            txtInfo.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        else{
+            txtInfo.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        //getData();
         Log.d("Tag","AcceptedRequests onStart");
-        getData();
     }
 
     public void getData(){
         requestDAL.getAcceptedRequests(post.getPostID(), post.getOwnerID(), new RequestCallback() {
             @Override
-            public void onRequestsRetrievedNotNull() {
-                super.onRequestsRetrievedNotNull();
+            public void onRequestsRetrievedNotNull(List<Request> list) {
+                super.onRequestsRetrievedNotNull(list);
+                requestList.addAll(list);
+                adapter.notifyDataSetChanged();
                 txtInfo.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
@@ -88,5 +106,16 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
                 super.onRequestsRetrievedNull();
             }
         });
+    }
+
+
+
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Tag","onSaveInstanceState");
+        outState.putSerializable("requestList",(Serializable) requestList);
     }
 }

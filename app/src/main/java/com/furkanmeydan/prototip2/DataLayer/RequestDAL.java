@@ -145,10 +145,13 @@ public class RequestDAL {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful() && task.getResult()!=null){
                     if(task.getResult().size() > 0){
-                        callback.onRequestRetrievedNotNull();
+                        List<Request> list = task.getResult().toObjects(Request.class);
+                        Log.d("Tag","callbackonrequestretrievedNOTNULL");
+                        callback.onRequestsRetrievedNotNull(list);
                     }
                     else{
-                        callback.onRequestRetrievedNull();
+                        Log.d("Tag","callbackonrequestretrievedNULL");
+                        callback.onRequestsRetrievedNull();
                     }
                 }
             }

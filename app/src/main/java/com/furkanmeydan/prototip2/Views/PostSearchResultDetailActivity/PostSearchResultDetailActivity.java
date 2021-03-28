@@ -12,18 +12,27 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.MapRouter.TaskLoadedCallback;
 import com.furkanmeydan.prototip2.Models.Post;
+import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostSearchResultDetailActivity extends AppCompatActivity implements TaskLoadedCallback {
     ProfileDAL profileDAL;
     Post post;
     BottomNavigationView navigationView1;
     FirebaseAuth firebaseAuth;
+
+    ArrayList<Request> requestList;
+    RequestDAL requestDAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +63,13 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             post = (Post) bundle.getSerializable("post");
         }
 
+        requestList = new ArrayList<>();
+        requestDAL = new RequestDAL();
         profileDAL = new ProfileDAL();
         navigationView1 = findViewById(R.id.postSearchResultDetailBottomNavigation);
         navigationView1.bringToFront();
+
+        approvedRequestsFragmentList();
     }
 
 
@@ -74,6 +87,22 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         fragment.setArguments(args);
         fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
         fragmentTransaction.commit();
+    }
+
+    public ArrayList<Request> approvedRequestsFragmentList(){
+        requestDAL.getAcceptedRequests(post.getPostID(), post.getOwnerID(), new RequestCallback() {
+            @Override
+            public void onRequestsRetrievedNotNull(List<Request> list) {
+                super.onRequestsRetrievedNotNull(list);
+                requestList.addAll(list);
+            }
+
+            @Override
+            public void onRequestsRetrievedNull() {
+                super.onRequestsRetrievedNull();
+            }
+        });
+        return requestList;
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -126,7 +155,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
     /*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         if(item.getItemId()==R.id.Details){
             Toast.makeText(this,"Detail",Toast.LENGTH_LONG).show();
         }
@@ -139,13 +167,11 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         else if(item.getItemId()==R.id.Questions){
             Toast.makeText(this,"QUESTIONS",Toast.LENGTH_LONG).show();
         }
-
         else if(item.getItemId()== R.id.Requests){
             Toast.makeText(this,"REQUESTS",Toast.LENGTH_LONG).show();
         }
         return true;
     }
-
      */
 
     public BottomNavigationView getNavigationView1() {
