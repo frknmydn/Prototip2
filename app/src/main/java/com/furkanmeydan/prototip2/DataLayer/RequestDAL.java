@@ -63,6 +63,42 @@ public class RequestDAL {
         });
 
     }
+
+    public void getAcceptedRequestsISent(final RequestCallback callback){
+        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
+                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
+                 .whereEqualTo(CollectionHelper.REQUEST_STATUS, 1).get()
+                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().toObjects(Request.class).size() > 0){
+                        List<Request> list = task.getResult().toObjects(Request.class);
+
+                        callback.onRequestsRetrievedNotNull(list);
+                    }
+                }
+            }
+        });
+    }
+    public void getAwatingRequestsISent(final RequestCallback callback){
+        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
+                .whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful() && task.getResult() !=null){
+                            if(task.getResult().toObjects(Request.class).size() > 0){
+                                List<Request> list = task.getResult().toObjects(Request.class);
+                                callback.onRequestsRetrievedNotNull(list);
+                            }
+                        }
+                    }
+                });
+    }
     public void acceptRequest(final String postID, final String postOwnerID, String requestID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
