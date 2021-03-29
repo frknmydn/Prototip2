@@ -77,7 +77,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack("PostCallback");
+        //fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
         fragmentTransaction.commit();
     }

@@ -50,4 +50,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <Button
+        android:id="@+id/postRowBtnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sil"
+        app:layout_constraintStart_toEndOf="@+id/postRowDate"
+        app:layout_constraintTop_toBottomOf="@+id/postRowDestination" />
 </androidx.constraintlayout.widget.ConstraintLayout>

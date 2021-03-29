@@ -17,7 +17,7 @@ public class Post implements Serializable {
 
     private int direction; // 0-->kuzey doğu 1-->güney doğu 2-->güney batı 3--> kuzey batı
     private long timestamp;
-    private int status; /// 0--> not active, 1--> active, 3--> full
+    private int status; /// 0--> Silinmiş, 1--> active, 2 --> Tarihi geçmiş, 3--> full
     private int passengerCount;
 
     public Post(){

@@ -1,16 +1,24 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.furkanmeydan.prototip2.DataLayer.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +28,14 @@ import java.util.concurrent.TimeUnit;
 public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAdapter.PostHolder> {
 
     private ArrayList<Post> posts;
+    MainActivity activity;
+    Dialog dialog;
+    PostDAL postDAL;
 
-    public myPostRecyclerAdapter(ArrayList<Post> posts) {
+    public myPostRecyclerAdapter(MainActivity activity,ArrayList<Post> posts) {
         this.posts = posts;
+        this.activity = activity;
+        postDAL = new PostDAL();
     }
 
     @NonNull
@@ -35,7 +48,7 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
 
         holder.txtDestination.setText(posts.get(position).getDestination());
 
@@ -50,7 +63,50 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
         String dateTime = dateCombinedFormat.format(date);
         holder.txtDateTime.setText(dateTime);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Tag","Adapter onclick");
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("post",posts.get(position));
+                Intent i = new Intent(activity, PostSearchResultDetailActivity.class);
+                i.putExtra("bundle",bundle);
+                activity.startActivity(i);
 
+
+            }
+        });
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.popup_delete_post_row);
+                dialog.show();
+                Button btnYes = dialog.findViewById(R.id.btnPopupYes);
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        postDAL.deletePost(posts.get(position), new PostCallback() {
+                            @Override
+                            public void onPostDeleted() {
+                                super.onPostDeleted();
+                                posts.remove(position);
+                                notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+                Button btnNo = dialog.findViewById(R.id.btnPopupNo);
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -62,11 +118,13 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
     public class PostHolder extends RecyclerView.ViewHolder {
 
         TextView txtDestination, txtDateTime;
+        Button btnDelete;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             txtDestination = itemView.findViewById(R.id.postRowDestination);
             txtDateTime = itemView.findViewById(R.id.postRowDate);
+            btnDelete = itemView.findViewById(R.id.postRowBtnDelete);
 
         }
     }

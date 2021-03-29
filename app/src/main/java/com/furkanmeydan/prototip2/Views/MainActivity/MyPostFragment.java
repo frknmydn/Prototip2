@@ -26,6 +26,7 @@ public class MyPostFragment extends Fragment {
     myPostRecyclerAdapter postRCLAdapter;
     RecyclerView recyclerView;
     ArrayList<Post> posts;
+    MainActivity activity;
 
     PostDAL postDAL;
 
@@ -43,6 +44,7 @@ public class MyPostFragment extends Fragment {
 
         posts = new ArrayList<>();
         postDAL = new PostDAL();
+        activity = (MainActivity) getActivity();
 
     }
 
@@ -60,7 +62,7 @@ public class MyPostFragment extends Fragment {
         recyclerView = view.findViewById(R.id.myPostRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        postRCLAdapter = new myPostRecyclerAdapter(posts);
+        postRCLAdapter = new myPostRecyclerAdapter(activity,posts);
         recyclerView.setAdapter(postRCLAdapter);
 
         getMyPosts();
@@ -68,11 +70,18 @@ public class MyPostFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getMyPosts();
+    }
+
     public void getMyPosts(){
         postDAL.getMyPosts(new PostCallback() {
             @Override
             public void getMyPosts(List<Post> list) {
                 super.getMyPosts(list);
+                posts.clear();
                 posts.addAll(list);
                 postRCLAdapter.notifyDataSetChanged();
             }

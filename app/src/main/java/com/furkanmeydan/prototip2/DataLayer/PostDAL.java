@@ -12,6 +12,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -480,14 +482,56 @@ public class PostDAL {
 
 
     public void getMyPosts(final PostCallback postCallback) {
-        firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).
-                get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(userId)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POST_STATUS,1)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null) {
                         List<Post> list = task.getResult().toObjects(Post.class);
-                        System.out.println("dddd" + list.size());
+                        postCallback.getMyPosts(list);
+                    }
+
+
+                }
+            }
+        });
+    }
+    public void getMyOlderPosts(final PostCallback postCallback) {
+
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(userId)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POST_STATUS,2)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null) {
+                        List<Post> list = task.getResult().toObjects(Post.class);
+                        postCallback.getMyPosts(list);
+                    }
+
+                }
+            }
+        });
+    }
+    public void getMyDeletedPosts(final PostCallback postCallback) {
+
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(userId)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POST_STATUS,0)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null) {
+                        List<Post> list = task.getResult().toObjects(Post.class);
                         postCallback.getMyPosts(list);
                     }
 
@@ -614,17 +658,48 @@ public class PostDAL {
         return filteredList;
     }
 
+    public void deletePost(Post post, final PostCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(post.getOwnerID())
+                .collection(CollectionHelper.POST_COLLECTION)
+                .document(post.getPostID()).update(CollectionHelper.POST_STATUS, 0).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onPostDeleted();
+            }
+        });
+    }
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
-                .document(postID).update(CollectionHelper.POST_PASSENGERCOUNT, FieldValue.increment(-1))
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .document(postID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onRequestAccepted();
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    DocumentSnapshot ds = task.getResult();
+                    DocumentReference dr = ds.getReference();
+                    Long passengerCount = (Long) ds.get(CollectionHelper.POST_PASSENGERCOUNT);
+                    if(passengerCount > 0L){
+                        dr.update(CollectionHelper.POST_PASSENGERCOUNT,FieldValue.increment(-1));
+                        passengerCount--;
+                        if(passengerCount == 0L){
+                            dr.update(CollectionHelper.POST_STATUS, 3).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    callback.onRequestAccepted();
+                                }
+                            });
+                        }
+                        callback.onRequestAccepted();
+                    }
+
+
+
+
+                }
             }
         });
+
     }
     public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {
         String error = "";
