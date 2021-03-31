@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile"></item>
 
+    <item
+        android:id="@+id/RequestsISent"
+        android:icon="@drawable/sent"
+        android:title="@string/profile"></item>
 
 
     <item

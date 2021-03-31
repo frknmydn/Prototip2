@@ -169,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if(item.getItemId() == R.id.requestsToMyPosts){
             changeFragment(new FragmentRequestsToMyPosts());
         }
+
+        else if(item.getItemId() == R.id.RequestsISent){
+            changeFragment(new FragmentMyRequests());
+        }
         return true;
     }
 
