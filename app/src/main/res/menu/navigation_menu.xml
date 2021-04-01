@@ -12,7 +12,7 @@
     <item
         android:id="@+id/RequestsISent"
         android:icon="@drawable/sent"
-        android:title="@string/profile"></item>
+        android:title="@string/requestISent"></item>
 
 
     <item
