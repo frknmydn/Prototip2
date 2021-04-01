@@ -36,7 +36,7 @@ public class MyAcceptedRequestsAdapter extends RecyclerView.Adapter<MyAcceptedRe
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         holder.txtPostHeader.setText(acceptedPosts.get(position).getDestination());
-        holder.txtPostPassengerCount.setText(acceptedPosts.get(position).getPassengerCount());
+        holder.txtPostPassengerCount.setText((String.valueOf(acceptedPosts.get(position).getPassengerCount())));
 
         long timeStamp = acceptedPosts.get(position).getTimestamp();
         Log.d("adapter Tag timestamp", String.valueOf(timeStamp));

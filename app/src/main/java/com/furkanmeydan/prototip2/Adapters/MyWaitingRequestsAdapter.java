@@ -37,7 +37,7 @@ public class MyWaitingRequestsAdapter extends RecyclerView.Adapter<MyWaitingRequ
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         holder.txtPostHeader.setText(waitingPosts.get(position).getDestination());
-        holder.txtPostPassengerCount.setText(waitingPosts.get(position).getPassengerCount());
+        holder.txtPostPassengerCount.setText(String.valueOf(waitingPosts.get(position).getPassengerCount()));
 
         long timeStamp = waitingPosts.get(position).getTimestamp();
         Log.d("adapter Tag timestamp", String.valueOf(timeStamp));

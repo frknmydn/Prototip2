@@ -668,6 +668,22 @@ public class PostDAL {
             }
         });
     }
+    public void getSinglePost(String postOwnerID, String postID, final PostCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                 .collection(CollectionHelper.POST_COLLECTION).document(postID).get()
+                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                     @Override
+                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                         if(task.isSuccessful()){
+                             if(task.getResult() !=null){
+                                 Post post = task.getResult().toObject(Post.class);
+                                 callback.getPost(post);
+                             }
+                         }
+                     }
+                 });
+
+    }
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
