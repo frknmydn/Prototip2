@@ -7,16 +7,11 @@ import androidx.annotation.NonNull;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.CollationElementIterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,10 +26,10 @@ public class RequestDAL {
 
     public void sendRequest(String senderID, String senderName, String senderGender, String senderImage,
                             String senderBirthdate, String senderEmail, String postID, String postOwnerID,
-                            Double lat1, Double lng1, Double lat2, Double lng2, String postHeader, final RequestCallback callback){
+                            Double lat1, Double lng1, Double lat2, Double lng2, String postHeader, String requestText, final RequestCallback callback){
 
         String requestID = UUID.randomUUID().toString();
-        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,postHeader);
+        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,postHeader, requestText);
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)
                 .collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).set(request).addOnCompleteListener(new OnCompleteListener<Void>() {

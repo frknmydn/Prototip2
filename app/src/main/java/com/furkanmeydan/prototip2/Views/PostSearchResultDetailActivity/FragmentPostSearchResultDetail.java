@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate;
     Post post;
     RequestDAL requestDAL;
+    Dialog dialog;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -83,6 +86,15 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnSendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.popup_send_request);
+                dialog.show();
+                final EditText txtRequestText = dialog.findViewById(R.id.edtPopUpRequestText);
+                Button btnpopUpSendRequest = dialog.findViewById(R.id.btnPopupSendRequest);
+                Button btnpopUpCancel = dialog.findViewById(R.id.btnPopupCancel);
+
+
                 requestLat1 = localDataManager.getSharedPreferenceForDouble(activity,"requestLat1",0d);
                 requestLng1 = localDataManager.getSharedPreferenceForDouble(activity,"requestLng1",0d);
                 requestLat2 = localDataManager.getSharedPreferenceForDouble(activity,"requestLat2",0d);
@@ -95,21 +107,33 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 senderEmail = localDataManager.getSharedPreference(activity,"sharedEmail",null);
                 senderBirthdate = localDataManager.getSharedPreference(activity,"sharedBirthdate",null);
 
-
-
-                requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
-                        post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDescription(), new RequestCallback() {
+                btnpopUpCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onRequestSent() {
-                        super.onRequestSent();
-
-                        Intent i = new Intent(getContext(), MainActivity.class);
-                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
-                        startActivity(i);
-                        activity.finish();
+                    public void onClick(View view) {
+                        dialog.dismiss();
 
                     }
                 });
+
+                btnpopUpSendRequest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
+                                post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(), new RequestCallback() {
+                                    @Override
+                                    public void onRequestSent() {
+                                        super.onRequestSent();
+
+                                        Intent i = new Intent(getContext(), MainActivity.class);
+                                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                                        startActivity(i);
+                                        activity.finish();
+                                    }
+                                });
+                    }
+                });
+
+
 
 
 

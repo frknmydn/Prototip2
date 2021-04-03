@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
 
-    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader;
+    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText;
     Double lat1,lng1,lat2,lng2;
     int status; // 0--> bekliyor, -1--> ret , 1--> onaylanmış
 
@@ -13,7 +13,7 @@ public class Request implements Serializable {
 
     public Request(String requestID, String senderID, String senderName, String senderGender,
                    String senderImage, String senderBirthdate, String senderEmail, String postID,
-                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, String postHeader) {
+                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, String postHeader, String requestText) {
         this.requestID = requestID;
         this.senderID = senderID;
         this.senderName = senderName;
@@ -29,6 +29,7 @@ public class Request implements Serializable {
         this.lng2 = lng2;
         this.status = status;
         this.postHeader = postHeader;
+        this.requestText = requestText;
     }
 
     public String getRequestID() {
@@ -89,5 +90,9 @@ public class Request implements Serializable {
 
     public String getPostHeader() {
         return postHeader;
+    }
+
+    public String getRequestText() {
+        return requestText;
     }
 }

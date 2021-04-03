@@ -59,6 +59,8 @@ public class FragmentPostSearchResultMap extends Fragment {
 
 
 
+
+
             locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
 
             String url = getUrl(place1.getPosition(),place2.getPosition(),"driving");
@@ -68,6 +70,8 @@ public class FragmentPostSearchResultMap extends Fragment {
             mMap.addMarker(place2);
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1, 16));
+
+
 
             /*
             if (Build.VERSION.SDK_INT >= 23) {

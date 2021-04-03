@@ -52,6 +52,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
         holder.txtHeader.setText(requestsList.get(position).getPostHeader());
         holder.txtNameSurname.setText(requestsList.get(position).getSenderName());
         holder.txtGender.setText(requestsList.get(position).getSenderGender());
+        holder.txtRequestText.setText(requestsList.get(position).getRequestText());
 
         Glide.with(activity.getApplicationContext()).load(requestsList.get(position).getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imageView);
@@ -92,7 +93,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
 
     public class PostHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView txtHeader, txtNameSurname, txtGender;
+        TextView txtHeader, txtNameSurname, txtGender, txtRequestText;
         Button btnDecline;
         public PostHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,6 +103,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
             txtNameSurname = itemView.findViewById(R.id.requestsToMeRowRCLNameSurname);
             txtGender = itemView.findViewById(R.id.requestsToMeRowRCLGender);
             btnDecline = itemView.findViewById(R.id.btnrequestsToMeRowRCLDecline);
+            txtRequestText = itemView.findViewById(R.id.requestsToMeRowRCLRequestText);
 
         }
     }

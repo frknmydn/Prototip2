@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             firebaseAuth.signOut();
             Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
             startActivity(i);
-            finish();
+            this.finish();
         }
         else if(item.getItemId()==R.id.questionsToMe){
             changeFragment(new QuestionsToMeFragment());
