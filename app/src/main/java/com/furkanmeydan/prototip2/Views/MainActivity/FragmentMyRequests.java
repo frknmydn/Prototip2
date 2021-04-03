@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.Adapters.MyAcceptedRequestsAdapter;
 import com.furkanmeydan.prototip2.Adapters.MyWaitingRequestsAdapter;
@@ -34,6 +36,8 @@ public class FragmentMyRequests extends Fragment {
     MyWaitingRequestsAdapter adapterWaiting;
     MyAcceptedRequestsAdapter adapterAccepted;
 
+    TextView txtNoAcceptedRequests,txtNoWaitingRequests;
+
     ArrayList<Request> acceptedRequestList;
     ArrayList<Request> waitingRequestList;
     ArrayList<Post> acceptedPostList;
@@ -42,7 +46,6 @@ public class FragmentMyRequests extends Fragment {
     RequestDAL requestDAL;
     PostDAL postDAL;
     MainActivity mainActivity;
-    Request request;
 
     public FragmentMyRequests() {
         // Required empty public constructor
@@ -60,6 +63,7 @@ public class FragmentMyRequests extends Fragment {
         waitingRequestList = new ArrayList<>();
         getAcceptedRequests();
         getAwaitingRequests();
+        Log.d("Tag","OnAttach");
     }
 
     @Override
@@ -79,12 +83,17 @@ public class FragmentMyRequests extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         constraintLayoutAccepted = view.findViewById(R.id.consLayoutAccepted);
         constraintLayoutWaiting = view.findViewById(R.id.consLayotWaiting);
+        txtNoAcceptedRequests = view.findViewById(R.id.txtMyRequestsNoAcceptedRequests);
+        txtNoWaitingRequests = view.findViewById(R.id.txtMyRequestsNoWaitingRequests);
+
         recyclerViewAccepted = view.findViewById(R.id.RCLFragmentMyAcceptedRequests);
         recyclerViewWaiting = view.findViewById(R.id.RCLFragmentMyWaitingRequests);
         recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewWaiting.setLayoutManager(new LinearLayoutManager(getContext()));
+
         adapterAccepted = new MyAcceptedRequestsAdapter(acceptedPostList);
         adapterWaiting = new MyWaitingRequestsAdapter(waitingPostList);
         recyclerViewAccepted.setAdapter(adapterAccepted);
@@ -131,6 +140,7 @@ public class FragmentMyRequests extends Fragment {
     }
 
     public void getPosts(ArrayList<Request> requestList, final int flag){
+        Log.d("Tag","getPosts");
         for(Request request : requestList){
             String postID = request.getPostID();
             String postOwnerID = request.getPostOwnerID();
@@ -143,10 +153,14 @@ public class FragmentMyRequests extends Fragment {
                     if(flag == 1){
                         acceptedPostList.add(post);
                         adapterAccepted.notifyDataSetChanged();
+                        recyclerViewAccepted.setVisibility(View.VISIBLE);
+                        txtNoAcceptedRequests.setVisibility(View.GONE);
                     }
                     else if(flag == 0){
                         waitingPostList.add(post);
                         adapterWaiting.notifyDataSetChanged();
+                        recyclerViewWaiting.setVisibility(View.VISIBLE);
+                        txtNoWaitingRequests.setVisibility(View.GONE);
                     }
 
                 }

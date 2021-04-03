@@ -1,5 +1,7 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ public class MyWaitingRequestsAdapter extends RecyclerView.Adapter<MyWaitingRequ
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
         holder.txtPostHeader.setText(waitingPosts.get(position).getDestination());
         holder.txtPostPassengerCount.setText(String.valueOf(waitingPosts.get(position).getPassengerCount()));
 
@@ -45,6 +48,18 @@ public class MyWaitingRequestsAdapter extends RecyclerView.Adapter<MyWaitingRequ
         Date date = new Date(TimeUnit.SECONDS.toMillis(timeStamp));
         String dateTime = dateCombinedFormat.format(date);
         holder.txtPostTime.setText(dateTime);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("post",waitingPosts.get(position));
+
+                Intent i = new Intent(view.getContext(), PostSearchResultDetailActivity.class);
+                i.putExtra("bundle",bundle);
+                view.getContext().startActivity(i);
+            }
+        });
     }
 
 
