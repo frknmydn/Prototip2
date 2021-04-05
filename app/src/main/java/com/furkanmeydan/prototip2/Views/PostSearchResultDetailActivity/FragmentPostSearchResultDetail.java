@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.DataLayer.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
@@ -33,11 +35,12 @@ import java.util.concurrent.TimeUnit;
 public class FragmentPostSearchResultDetail extends Fragment {
     private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, postCarDetail;
     private PostSearchResultDetailActivity activity;
-    Button btnSendRequest;
+    Button btnSendRequest,btnAddToWish;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate;
     Post post;
+    PostDAL postDAL;
     RequestDAL requestDAL;
     Dialog dialog;
 
@@ -54,6 +57,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         activity = (PostSearchResultDetailActivity) getActivity();
         localDataManager = new LocalDataManager();
         requestDAL = new RequestDAL();
+        postDAL = new PostDAL();
         post = activity.post;
 
     }
@@ -76,6 +80,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postDescription = view.findViewById(R.id.txtSearchResultDetailDescription);
         postCarDetail = view.findViewById(R.id.txtSearchResultDetailCarDet);
         btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
+        btnAddToWish = view.findViewById(R.id.btnSearchResultDetailAddToWish);
 
         // Scroll Element
         postCarDetail.setMovementMethod(new ScrollingMovementMethod());
@@ -140,7 +145,26 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
             }
         });
+        btnAddToWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addtoWish();
 
+            }
+        });
+
+    }
+
+    private void addtoWish() {
+        postDAL.addToWish(post.getOwnerID(), post.getPostID(), new PostCallback() {
+            @Override
+            public void onWishUpdated() {
+                super.onWishUpdated();
+                btnAddToWish.setClickable(false);
+                btnAddToWish.setFocusable(false);
+                btnAddToWish.setText("Takip ediyorsunuz");
+            }
+        });
     }
 
     @Override
@@ -172,6 +196,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 btnSendRequest.setText("İstek gönderildi");
             }
         });
+
+        if(post.getWishArray().contains(activity.firebaseAuth.getCurrentUser().getUid())){
+            btnAddToWish.setClickable(false);
+            btnAddToWish.setFocusable(false);
+            btnAddToWish.setText("Takip ediyorsunuz");
+        }
 
         //zaman işlemleri
         long timeStampp = activity.post.getTimestamp();

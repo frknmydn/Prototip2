@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Post implements Serializable {
     private String  postID,
@@ -19,6 +20,7 @@ public class Post implements Serializable {
     private long timestamp;
     private int status; /// 0--> Silinmiş, 1--> active, 2 --> Tarihi geçmiş, 3--> full
     private int passengerCount;
+    private ArrayList<String> wishArray;
 
     public Post(){
 
@@ -28,7 +30,7 @@ public class Post implements Serializable {
 
     public Post(String postID, String ownerID,String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
-                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction) {
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction, ArrayList<String> wishArray) {
         this.city = city;
         this.passengerCount = passengerCount;
         this.destination = destination;
@@ -44,6 +46,7 @@ public class Post implements Serializable {
         this.direction = direction;
         this.ownerID = ownerID;
         this.postID = postID;
+        this.wishArray = wishArray;
 
 
     }
@@ -107,5 +110,9 @@ public class Post implements Serializable {
 
     public String getPostID() {
         return postID;
+    }
+
+    public ArrayList<String> getWishArray() {
+        return wishArray;
     }
 }

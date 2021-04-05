@@ -10,6 +10,12 @@
         android:title="@string/profile"></item>
 
     <item
+        android:id="@+id/wish_list"
+        android:icon="@drawable/ic_star_"
+        android:title="@string/wishList"></item>
+
+
+    <item
         android:id="@+id/RequestsISent"
         android:icon="@drawable/sent"
         android:title="@string/requestISent"></item>

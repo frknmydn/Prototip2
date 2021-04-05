@@ -18,6 +18,13 @@ public abstract class PostCallback {
 
     }
 
+    public void onWishNOTUpdated(){
+
+    }
+
+    public void onWishUpdated(){
+
+    }
 
     public void getMyPosts(List<Post> list){
 

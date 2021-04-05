@@ -154,8 +154,9 @@ public class PostDAL {
 
                 int direction = findDirection(fromLat, fromLng, toLat, toLng);
 
+                ArrayList<String> wishArray = new ArrayList<>();
 
-                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction);
+                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction,wishArray);
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded();
             }
@@ -682,6 +683,33 @@ public class PostDAL {
                          }
                      }
                  });
+
+    }
+    public void addToWish(String postOwnerID, String postID, final PostCallback callback){
+
+
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                 .document(postID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+               if(task.isSuccessful() &&task.getResult() !=null) {
+                   DocumentReference ref = task.getResult().getReference();
+                   Post post = task.getResult().toObject(Post.class);
+                   ArrayList<String> wishArray = post.getWishArray();
+                   if(!wishArray.contains(userId)){
+                       wishArray.add(userId);
+                   }
+
+
+                   ref.update(CollectionHelper.POST_WISHARRAY,wishArray).addOnCompleteListener(new OnCompleteListener<Void>() {
+                       @Override
+                       public void onComplete(@NonNull Task<Void> task) {
+                           callback.onWishUpdated();
+                       }
+                   });
+               }
+            }
+        });
 
     }
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){

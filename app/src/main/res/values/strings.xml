@@ -58,4 +58,5 @@
     <string name="questionToMe">Gelen Sorular</string>
     <string name="requestsToMyPosts">Gelen İstekler</string>
     <string name="requestISent">Gönderdiğim İstekler</string>
+    <string name="wishList">Kaydedilenler</string>
 </resources>

@@ -1,53 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Views.MainActivity.FragmentAnswerQuestion">
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="62dp"
-        android:layout_height="31dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Soru:"
-        android:textSize="16sp" />
+        android:id="@+id/txtPostHeader"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#E6E9FF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="İLAN BAŞLIĞI"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView18"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/answerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="175dp"
-        android:text="Cevabınız:"
-        android:textSize="16sp" />
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tctFragmentAnswerQuestionQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/tctFragmentAnswerQuestionQuestion">
+
+        <ImageView
+            android:id="@+id/answerMark"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CEVABINIZ"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/questionLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/txtPostHeader"
+        app:layout_constraintTop_toBottomOf="@+id/txtPostHeader">
+
+        <ImageView
+            android:id="@+id/questionMark"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_question_mark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView71"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView71"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="SORU"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tctFragmentAnswerQuestionQuestion"
-        android:layout_width="295dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:inputType="textMultiLine"
         android:text="asDASD ADASDASD ASDAS DAS DAS DA SD ASD AS DAS DAS D ASD ASD ASD AS FAS D ASFAS DAS DAS Fasdasdd asdjkashdkjas daskjdhasd baksjd askjdbasjda sdkasdAS D"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtPostHeader"
+        app:layout_constraintStart_toStartOf="@+id/questionLayout"
+        app:layout_constraintTop_toBottomOf="@+id/questionLayout" />
 
     <EditText
         android:id="@+id/edtFragmentAnswerQuestionAnswer"
-        android:layout_width="294dp"
-        android:layout_height="125dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/spinner_shape"
         android:ems="10"
-        android:hint="Cevabınızı Buraya yazabilirsiniz"
-        android:inputType="textPersonName" />
+        android:gravity="top"
+        android:hint="Cevabınızı buraya yazabilirsiniz"
+        android:inputType="textLongMessage|textMultiLine"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnFragmentAnswerQuestion"
+        app:layout_constraintEnd_toEndOf="@+id/tctFragmentAnswerQuestionQuestion"
+        app:layout_constraintStart_toStartOf="@+id/answerLayout"
+        app:layout_constraintTop_toBottomOf="@+id/answerLayout" />
 
     <Button
         android:id="@+id/btnFragmentAnswerQuestion"
-        android:layout_width="126dp"
-        android:layout_height="64dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"
-        android:text="Gönder" />
-</FrameLayout>
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="25dp"
+        android:background="#E1E1E1"
+        android:fontFamily="sans-serif-black"
+        android:text="Gönder"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
