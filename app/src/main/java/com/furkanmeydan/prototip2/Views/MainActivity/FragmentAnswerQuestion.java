@@ -23,7 +23,7 @@ public class FragmentAnswerQuestion extends Fragment {
 
     QuestionDAL questionDAL;
     MainActivity activity;
-    TextView txtQuestion;
+    TextView txtQuestion, txtPostHeader;
     EditText edtAnswer;
     Button btnAnswer;
     String answer;
@@ -58,8 +58,9 @@ public class FragmentAnswerQuestion extends Fragment {
         txtQuestion = view.findViewById(R.id.tctFragmentAnswerQuestionQuestion);
         edtAnswer = view.findViewById(R.id.edtFragmentAnswerQuestionAnswer);
         btnAnswer = view.findViewById(R.id.btnFragmentAnswerQuestion);
-
+        txtPostHeader = view.findViewById(R.id.txtPostHeader);
         txtQuestion.setText(currentQuestion.getQuestionText());
+        txtPostHeader.setText(currentQuestion.getPostHeaderText());
 
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override

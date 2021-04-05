@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,29 +8,47 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentPostSearchResultQuestionsRCL"
-        android:layout_width="387dp"
-        android:layout_height="449dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="75dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentPostSearchResultQuestionsBtn"
+        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/fragmentPostSearchResultQuestionsBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="35dp"
-        android:text="SORU SOR" />
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="25dp"
+        android:background="#E1E1E1"
+        android:fontFamily="sans-serif-black"
+        android:text="SORU SOR"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#E6E9FF"
+        android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="İlanlara Gelen Sorular"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-</FrameLayout>
+        android:text="İLANA GELEN SORULAR"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

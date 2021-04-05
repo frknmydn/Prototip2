@@ -57,7 +57,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/questionLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -100,9 +100,9 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Sistemde kayıtlı telefon numaranızı girerek giriş, kayıtlı değilseniz numaranızı yazarak kayıt olabilirsiniz."
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintEnd_toEndOf="@+id/questionLayout"
+        app:layout_constraintStart_toStartOf="@+id/questionLayout"
+        app:layout_constraintTop_toBottomOf="@+id/questionLayout" />
 
     <ProgressBar
         android:id="@+id/signinPB"

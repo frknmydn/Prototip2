@@ -78,27 +78,29 @@
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_shape"
             android:ems="10"
+            android:gravity="center_horizontal|center_vertical"
             android:hint="Adınız Soyadınız"
             app:layout_constraintBottom_toTopOf="@+id/EDTEmailFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment"
-            android:background="@drawable/spinner_shape"/>
+            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment" />
 
         <EditText
             android:id="@+id/EDTEmailFragment"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_shape"
             android:ems="10"
+            android:gravity="center_horizontal|center_vertical"
             android:hint="E-mail Adresiniz"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/BirthdayFragment"
             app:layout_constraintEnd_toEndOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintStart_toStartOf="@+id/EDTNameSurnameFragment"
-            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment"
-            android:background="@drawable/spinner_shape"/>
+            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment" />
 
         <TextView
             android:id="@+id/BirthdayFragment"
@@ -106,17 +108,18 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
+            android:background="@drawable/spinner_shape"
             android:clickable="false"
             android:ems="10"
             android:focusable="false"
+            android:gravity="center_horizontal|center_vertical"
             android:hint="Doğum Tarihiniz"
             android:inputType="date"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/GenderFragment"
             app:layout_constraintStart_toStartOf="@+id/EDTEmailFragment"
-            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment"
-            android:background="@drawable/spinner_shape"/>
+            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment" />
 
         <TextView
             android:id="@+id/GenderFragment"
@@ -124,6 +127,7 @@
             android:layout_height="45dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/spinner_shape"
+            android:gravity="center_horizontal|center_vertical"
             android:text="TextView"
             android:textSize="18sp"
             android:textStyle="bold"

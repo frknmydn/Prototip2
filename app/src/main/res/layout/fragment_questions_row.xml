@@ -3,76 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/spinner_shape">
+
+    <ImageView
+        android:id="@+id/questionMark2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_question_mark"
+        app:layout_constraintEnd_toStartOf="@+id/textView71"
+        app:layout_constraintStart_toStartOf="@+id/questionsRCLRowPostHeader"
+        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowPostHeader" />
+
+    <ImageView
+        android:id="@+id/answerMark2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_chat"
+        app:layout_constraintStart_toStartOf="@+id/questionsRCLRowQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowQuestion" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="88dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:text="Soru:"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="SORU"
         android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowPostHeader" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMark2"
+        app:layout_constraintStart_toEndOf="@+id/questionMark2"
+        app:layout_constraintTop_toTopOf="@+id/questionMark2" />
 
     <TextView
         android:id="@+id/questionsRCLRowQuestion"
-        android:layout_width="301dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
         android:inputType="textMultiLine"
-        android:text="DENEME SORUSU DENEME SIRUSI NDENEME SORUSU DENEMEKE SIDASD ASDJASDIAS ASDASDASDJASDA SDJASDASDAJSDAS DASJDAS DASDA SDJ"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis lorem non lacus rhoncus auctor a ac velit. Nam non nulla ut tortor iaculis fringilla sit amet in justo."
+        app:layout_constraintEnd_toEndOf="@+id/questionsRCLRowPostHeader"
+        app:layout_constraintStart_toStartOf="@+id/questionMark2"
+        app:layout_constraintTop_toBottomOf="@+id/questionMark2" />
 
     <TextView
         android:id="@+id/questionsRCLRowQuestionOwner"
-        android:layout_width="111dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowQuestion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowAnswer" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:text="İlan Sahibinin Cevabı:"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="İLAN SAHİBİNİN CEVABI"
         android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowQuestionOwner" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/answerMark2"
+        app:layout_constraintStart_toEndOf="@+id/answerMark2"
+        app:layout_constraintTop_toTopOf="@+id/answerMark2" />
 
     <TextView
         android:id="@+id/questionsRCLRowAnswer"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:text="DENEME DENDME DENDEMDEDEDENDEDED EDNED EDED EDE DEJDE DED EDJED EDJE DEJDE DEJDE DE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="48dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionsRCLRowAnswer" />
+        android:layout_marginTop="5dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis lorem non lacus rhoncus auctor a ac velit. Nam non nulla ut tortor iaculis fringilla sit amet in justo."
+        app:layout_constraintEnd_toEndOf="@+id/questionsRCLRowQuestion"
+        app:layout_constraintStart_toStartOf="@+id/answerMark2"
+        app:layout_constraintTop_toBottomOf="@+id/answerMark2" />
 
     <TextView
         android:id="@+id/questionsRCLRowPostHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center"
-        android:text="DENEME DEMDENDE DENMDENDED EDNEDED DEDNEDEM"
+        android:inputType="textShortMessage"
+        android:text="İLAN BAŞLIĞI"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/questionsRCLRowQuestionOwner"
+        app:layout_constraintEnd_toStartOf="@+id/questionsRCLRowQuestionOwner"
+        app:layout_constraintTop_toTopOf="@+id/questionsRCLRowQuestionOwner"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
