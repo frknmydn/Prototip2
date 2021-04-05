@@ -47,7 +47,6 @@
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:text="Kayıt Ol / Giriş Yap"
-            android:textColor="#5C5C5C"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

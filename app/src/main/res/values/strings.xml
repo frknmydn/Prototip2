@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prototip2</string>
+    <string name="app_name">Prototip 2</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -24,7 +24,6 @@
         <item>Cinsiyet</item>
         <item>Kadın</item>
         <item>Erkek</item>
-        <item>Diğer</item>
         <item>Fark Etmez</item>
     </string-array>
 

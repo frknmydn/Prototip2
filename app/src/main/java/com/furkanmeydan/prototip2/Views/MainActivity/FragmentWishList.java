@@ -11,11 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.furkanmeydan.prototip2.Adapters.SearchResultRecyclerAdapter;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
+
+import java.util.ArrayList;
 
 
 public class FragmentWishList extends Fragment {
     RecyclerView wishRCL;
+    SearchResultRecyclerAdapter adapter;
+    ArrayList<Post> postList;
+    PostDAL postDAL;
 
 
     public FragmentWishList() {
@@ -26,6 +34,9 @@ public class FragmentWishList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        postList = new ArrayList<>();
+        postDAL = new PostDAL();
+
 
     }
 
@@ -39,5 +50,10 @@ public class FragmentWishList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        wishRCL = view.findViewById(R.id.RCLWishList);
+        adapter = new SearchResultRecyclerAdapter(postList);
+
+        wishRCL.setAdapter(adapter);
     }
 }

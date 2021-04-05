@@ -8,48 +8,51 @@
 
     <Button
         android:id="@+id/btnUploadPostDetails"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:onClick="AUPDetailFragment"
         android:text="Detay"
+        app:layout_constraintEnd_toStartOf="@+id/btnUploadPostMap"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnUploadPost" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnUploadPostMap"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginRight="15dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:onClick="AUPMapFragment"
         android:text="Harita"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnUploadPost" />
-
-    <Button
-        android:id="@+id/btnUploadPost"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="15dp"
-        android:onClick="AUPUploadPost"
-        android:text="İlan Yükle"
-        app:layout_constraintEnd_toStartOf="@+id/btnUploadPostMap"
-        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toEndOf="@+id/btnUploadPostDetails"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/btnUploadPostDetails" />
 
     <FrameLayout
         android:id="@+id/postUploadFrameLayout"
-        android:layout_width="414dp"
-        android:layout_height="623dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnUploadPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnUploadPostMap">
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btnUploadPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="AUPUploadPost"
+        android:text="İlanı Yükle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postUploadFrameLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

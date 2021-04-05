@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private String genderString, nameSurnameString, eMailString,profilePic,birthDate;
 
-    //For profile fragment
+        //For profile fragment
      FirebaseAuth firebaseAuth;
      FirebaseFirestore firebaseFirestore;
      StorageReference storageReference;
