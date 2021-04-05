@@ -2,6 +2,7 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -713,6 +714,26 @@ public class PostDAL {
 
     }
 
+    public void getWishList(final PostCallback callback){
+        firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
+                .whereArrayContains(CollectionHelper.POST_WISHARRAY,userId)
+                .whereEqualTo(CollectionHelper.POST_STATUS,1)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult()!=null){
+                    if(task.getResult().toObjects(Post.class).size() > 0){
+                        List<Post> postList = task.getResult().toObjects(Post.class);
+                        Log.d("Tag","PostDAL getWishList size:" +" "+  postList.size());
+                        callback.OnWishListRetrieved(postList);
+                    }
+                    else{
+                        Log.d("Tag","PostDAL GetWishList patliyor");
+                    }
+                }
+            }
+        });
+    }
 
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 

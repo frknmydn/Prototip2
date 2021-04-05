@@ -26,6 +26,10 @@ public abstract class PostCallback {
 
     }
 
+    public void OnWishListRetrieved(List<Post> list){
+
+    }
+
     public void getMyPosts(List<Post> list){
 
     }
