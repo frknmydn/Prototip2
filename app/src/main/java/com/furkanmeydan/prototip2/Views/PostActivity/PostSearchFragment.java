@@ -130,7 +130,7 @@ public class PostSearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(adapterView.getItemAtPosition(i).toString().equals("Cinsiyet")){
-                    Toast.makeText(getActivity(),"Lütfen Cinsiyet seçiniz",Toast.LENGTH_LONG).show();
+
                 }
                 else{
                     genderString= adapterView.getItemAtPosition(i).toString();

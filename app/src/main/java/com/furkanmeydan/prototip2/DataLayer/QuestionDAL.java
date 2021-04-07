@@ -43,9 +43,10 @@ public class QuestionDAL {
 
     }
 
-    public void getAnsweredQuestions(String userId,final QuestionCallback callback){
+    public void getAnsweredQuestions(String userId,String postID,final QuestionCallback callback){
         firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,1)
-                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).
+                whereEqualTo(CollectionHelper.QUESTION_POSTID,postID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful() && task.getResult()!=null){

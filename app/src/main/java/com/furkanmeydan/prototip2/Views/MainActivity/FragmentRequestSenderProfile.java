@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class FragmentRequestSenderProfile extends Fragment {
-    private TextView nameSurname, gender, birthdate;
+    private TextView nameSurname, gender, birthdate, requestText;
     private ImageView imageView;
     private Button btnShowComments, btnAccept, btnDecline;
     RequestDAL requestDAL;
@@ -97,7 +97,7 @@ public class FragmentRequestSenderProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        requestText = view.findViewById(R.id.fragmentRequestSenderProfileRequestText);
         nameSurname = view.findViewById(R.id.fragmentRequestSenderProfileNameSurname);
         gender = view.findViewById(R.id.fragmentRequestSenderProfileGender);
         birthdate = view.findViewById(R.id.fragmentRequestSenderProfileBirthday);
@@ -110,6 +110,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         nameSurname.setText(request.getSenderName());
         gender.setText(request.getSenderGender());
         birthdate.setText(request.getSenderBirthdate());
+        requestText.setText(request.getRequestText());
 
         Glide.with(activity.getApplicationContext()).load(request.getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);

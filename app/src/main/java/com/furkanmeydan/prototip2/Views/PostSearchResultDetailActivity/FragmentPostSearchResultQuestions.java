@@ -74,12 +74,15 @@ public class FragmentPostSearchResultQuestions extends Fragment {
         });
     }
 
+
     public void getQuestions(){
         String currentUserId = questionDAL.getUserId();
-        questionDAL.getAnsweredQuestions(currentUserId, new QuestionCallback() {
+        String postID = activity.post.getPostID();
+        questionDAL.getAnsweredQuestions(currentUserId, postID ,new QuestionCallback() {
             @Override
             public void onQuestionsRetrieved(List<Question> questions) {
                 super.onQuestionsRetrieved(questions);
+
                 questionList.addAll(questions);
                 adapter.notifyDataSetChanged();
             }

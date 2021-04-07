@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginBottom="15dp"
-        android:background="#A66E6F81"
+        android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
         android:text="İlan Ekle"
         android:textColor="#D3D3D3"
@@ -46,7 +46,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="25dp"
-        android:background="#A66E6F81"
+        android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
         android:text="İlan Ara"
         android:textColor="#D3D3D3"
@@ -56,3 +56,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+android:background="#A66E6F81"
+-->
