@@ -50,7 +50,7 @@ public class ProfileDAL {
                         Log.d("Tag", "User null değil");
                         if (user.getBirthDate() != null && !user.getEmail().equals("") && user.getGender() != null && !user.getNameSurname().equals("") && user.getProfilePicture() != null) {
                             Log.d("Tag", "Döküman var");
-                            Log.d("Tag", user.getBirthDate() + "doğum tarihi");
+                            Log.d("Tag", user.getOneSignalID() + " onesignalID");
                             profileCallback.getUser(user);
                         } else {
                             profileCallback.nullUser();
@@ -98,7 +98,7 @@ public class ProfileDAL {
             String oneSignalID = device.getUserId();
             User newUser = new User(nameSurname,birthday,picURI,email,gender,oneSignalID);
             firestore.collection(CollectionHelper.USER_COLLECTION).document(userid).set(newUser);
-            profileCallback.uploadProfile();
+            profileCallback.uploadProfile(newUser);
         }
 
     }

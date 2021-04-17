@@ -54,6 +54,8 @@ public class PostDAL {
         double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
         String postID = UUID.randomUUID().toString();
 
+        String postOwnerOneSignalID = localDataManager.getSharedPreference(context,"sharedOneSignalID",null);
+
         String userGender = localDataManagerUser.getSharedPreference(context, "sharedGender", null);
 
 
@@ -157,7 +159,7 @@ public class PostDAL {
 
                 ArrayList<String> wishArray = new ArrayList<>();
 
-                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction,wishArray);
+                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction,wishArray,postOwnerOneSignalID);
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded();
             }

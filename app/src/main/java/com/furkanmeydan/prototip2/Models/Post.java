@@ -10,7 +10,8 @@ public class Post implements Serializable {
                     description,
                     carDetail,
                     userGender,
-                    ownerID;
+                    ownerID,
+                    ownerOneSignalID;
     private Double toLat,
             toLng,
             fromLat,
@@ -30,7 +31,7 @@ public class Post implements Serializable {
 
     public Post(String postID, String ownerID,String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
-                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction, ArrayList<String> wishArray) {
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction, ArrayList<String> wishArray,String ownerOneSignalID) {
         this.city = city;
         this.passengerCount = passengerCount;
         this.destination = destination;
@@ -47,6 +48,7 @@ public class Post implements Serializable {
         this.ownerID = ownerID;
         this.postID = postID;
         this.wishArray = wishArray;
+        this.ownerOneSignalID = ownerOneSignalID;
 
 
     }
@@ -110,6 +112,10 @@ public class Post implements Serializable {
 
     public String getPostID() {
         return postID;
+    }
+
+    public String getOwnerOneSignalID() {
+        return ownerOneSignalID;
     }
 
     public ArrayList<String> getWishArray() {

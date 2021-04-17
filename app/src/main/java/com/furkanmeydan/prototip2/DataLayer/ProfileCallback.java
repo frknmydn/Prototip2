@@ -15,7 +15,7 @@ public abstract class ProfileCallback {
 
     }
 
-    public void uploadProfile(){
+    public void uploadProfile(User user){
 
     }
 

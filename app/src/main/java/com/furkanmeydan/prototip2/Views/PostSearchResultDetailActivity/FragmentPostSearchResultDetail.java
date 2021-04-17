@@ -28,6 +28,9 @@ import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.onesignal.OneSignal;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +42,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     Button btnSendRequest,btnAddToWish;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
-    String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate;
+    String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID;
     Post post;
     PostDAL postDAL;
     RequestDAL requestDAL;
@@ -115,6 +118,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 senderEmail = localDataManager.getSharedPreference(activity,"sharedEmail",null);
                 senderBirthdate = localDataManager.getSharedPreference(activity,"sharedBirthdate",null);
 
+                senderOneSignalID = localDataManager.getSharedPreference(activity,"sharedOneSignalID",null);
+
                 btnpopUpCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -127,15 +132,23 @@ public class FragmentPostSearchResultDetail extends Fragment {
                     @Override
                     public void onClick(View view) {
                         requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
-                                post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(), new RequestCallback() {
+                                post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(),senderOneSignalID,post.getOwnerOneSignalID(), new RequestCallback() {
                                     @Override
                                     public void onRequestSent() {
                                         super.onRequestSent();
 
-                                        Intent i = new Intent(getContext(), MainActivity.class);
-                                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
-                                        startActivity(i);
-                                        activity.finish();
+
+                                        try {
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + post.getOwnerOneSignalID() + "']}"), null);
+                                            Intent i = new Intent(getContext(), MainActivity.class);
+                                            Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                                            startActivity(i);
+                                            activity.finish();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
                                     }
                                 });
                     }

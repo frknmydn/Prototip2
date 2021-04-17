@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
 import java.util.Objects;
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ConstraintLayout constraintLayout;
     private Fragment fragment;
 
-    private String genderString, nameSurnameString, eMailString,profilePic,birthDate;
+    private String genderString, nameSurnameString, eMailString,profilePic,birthDate,oneSignalID;
 
         //For profile fragment
      FirebaseAuth firebaseAuth;
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         birthDate = localDataManagerUser.getSharedPreference(this,"sharedBirthdate",null);
         genderString = localDataManagerUser.getSharedPreference(this,"sharedGender",null);
         profilePic = localDataManagerUser.getSharedPreference(this,"sharedImageURL",null);
+        oneSignalID = localDataManager.getSharedPreference(this,"sharedOneSignalID",null);
 
 
 
@@ -114,11 +118,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void getUser(User user) {
                     super.getUser(user);
+
                     localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedNameSurname",user.getNameSurname());
                     localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedEmail",user.getEmail());
                     localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedBirthdate",user.getBirthDate());
                     localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedGender",user.getGender());
                     localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedImageURL",user.getProfilePicture());
+                    localDataManagerUser.setSharedPreference(getApplicationContext(),"sharedOneSignalID",user.getOneSignalID());
 
                 }
             });
@@ -199,4 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         changeFragment(new HomeFragment());
     }
 
+    public String getOneSignalID() {
+        return oneSignalID;
+    }
 }

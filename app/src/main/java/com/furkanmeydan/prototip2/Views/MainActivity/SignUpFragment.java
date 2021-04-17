@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -248,16 +249,17 @@ public class SignUpFragment extends Fragment {
 
         profileDAL.uploadProfile(nameSurnameString, eMailString, dateString, genderString, imageURL, getActivity(), new ProfileCallback() {
 
-
             @Override
-            public void uploadProfile() {
-                super.uploadProfile();
+            public void uploadProfile(User user) {
+                super.uploadProfile(user);
 
-                localDataManagerUser.setSharedPreference(mainActivity,"sharedNameSurname",nameSurnameString);
-                localDataManagerUser.setSharedPreference(mainActivity,"sharedEmail",eMailString);
-                localDataManagerUser.setSharedPreference(mainActivity,"sharedBirthdate",dateString);
-                localDataManagerUser.setSharedPreference(mainActivity,"sharedGender",genderString);
-                localDataManagerUser.setSharedPreference(mainActivity,"sharedImageURL",imageURL);
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedNameSurname", user.getNameSurname());
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedEmail", user.getEmail());
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedBirthdate", user.getBirthDate());
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedGender", user.getGender());
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedImageURL", user.getProfilePicture());
+                localDataManagerUser.setSharedPreference(mainActivity, "sharedOneSignalID", user.getOneSignalID());
+
 
 
                 Intent i = new Intent(mainActivity, MainActivity.class);
@@ -266,10 +268,7 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-
     }
-
-
     // İlk defa galeriyi açınca izin isteme muhabbeti
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -122,6 +122,7 @@ public class ProfileFragment extends Fragment {
             public void getUser(User user) {
                 super.getUser(user);
                 Log.d("Tag", "getUser çalıştı");
+                Log.d("Tag","getUser "+ mainActivity.getOneSignalID());
                 txtBirthday.setText(user.getBirthDate());
                 edtEmail.setText(user.getEmail());
                 edtNameSurname.setText(user.getNameSurname());
@@ -131,6 +132,9 @@ public class ProfileFragment extends Fragment {
 
                 CLProgress.setVisibility(View.INVISIBLE);
                 CLMain.setVisibility(View.VISIBLE);
+
+
+
             }
         });
 
