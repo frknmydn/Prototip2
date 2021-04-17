@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -92,7 +94,9 @@ public class ProfileDAL {
             Toast.makeText(context,"Lütfen Profil Fotoğrafı Seçin",Toast.LENGTH_LONG).show();
         }
         else {
-            User newUser = new User(nameSurname,birthday,picURI,email,gender);
+            OSDeviceState device = OneSignal.getDeviceState();
+            String oneSignalID = device.getUserId();
+            User newUser = new User(nameSurname,birthday,picURI,email,gender,oneSignalID);
             firestore.collection(CollectionHelper.USER_COLLECTION).document(userid).set(newUser);
             profileCallback.uploadProfile();
         }

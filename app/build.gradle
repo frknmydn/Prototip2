@@ -1,6 +1,9 @@
+
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs"
+
 
 android {
     compileSdkVersion 30
@@ -22,6 +25,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
@@ -55,6 +60,9 @@ dependencies {
 
     //email validation
     implementation 'commons-validator:commons-validator:1.7'
+
+    //onesignal
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 
     implementation 'com.google.firebase:firebase-auth'
     implementation fileTree(dir: "libs", include: ["*.jar"])

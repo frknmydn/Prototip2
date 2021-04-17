@@ -26,6 +26,7 @@ import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.onesignal.OneSignal;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +61,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postDAL = new PostDAL();
         post = activity.post;
 
+        OneSignal.initWithContext(activity);
+        
     }
 
     @Override

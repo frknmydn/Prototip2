@@ -7,18 +7,20 @@ public class User {
                     birthDate,
                     profilePicture,
                     email,
-                    gender;
+                    gender,
+                    oneSignalID;
 
     public User(){
 
     }
 
-    public User(String nameSurname, String birthDate, String profilePicture, String email, String gender) {
+    public User(String nameSurname, String birthDate, String profilePicture, String email, String gender, String oneSignalID) {
         this.nameSurname = nameSurname;
         this.birthDate = birthDate;
         this.profilePicture = profilePicture;
         this.email = email;
         this.gender = gender;
+        this.oneSignalID = oneSignalID;
     }
 
     public String getGender() {
@@ -41,5 +43,8 @@ public class User {
         return email;
     }
 
+    public String getOneSignalID() {
+        return oneSignalID;
+    }
 }
 
