@@ -36,6 +36,10 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 
 public class FragmentRequestSenderProfile extends Fragment {
     private TextView nameSurname, gender, birthdate, requestText;
@@ -125,7 +129,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String requestID = request.getRequestID();
+                final String requestID = request.getRequestID();
                 String postID = request.getPostID();
                 String postownerID = request.getPostOwnerID();
                 requestDAL.acceptRequest(postID, postownerID, requestID, new RequestCallback() {
@@ -133,7 +137,15 @@ public class FragmentRequestSenderProfile extends Fragment {
                     public void onRequestAccepted() {
                         super.onRequestAccepted();
                         try {
-                            OneSignal.postNotification(new JSONObject("{'contents': {'tr':'Gönderdiğiniz bir istek, ilan sahibi tarafından kabul edildi'}, 'include_player_ids': ['" + request.getOwnerOneSignalID() + "']}"), null);
+
+
+                            long timestamp = request.getPostTimestamp() - 60L;
+                            SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                            Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
+                            String dateTime = dateCombinedFormat.format(date);
+
+                            OneSignal.postNotification(new JSONObject("{'contents': {'tr':'Gönderdiğiniz bir istek, ilan sahibi tarafından kabul edildi'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+                            OneSignal.postNotification(new JSONObject("{'contents': {'tr':'Gönderdiğiniz bir istek, ilan sahibi tarafından kabul edildi'}, 'send_after': ['"+dateTime+"'] 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
                             Intent i = new Intent(getContext(), MainActivity.class);
                             Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
                             startActivity(i);

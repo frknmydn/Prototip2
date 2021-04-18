@@ -6,6 +6,7 @@ public class Request implements Serializable {
 
     String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText,oneSignalID,ownerOneSignalID;
     Double lat1,lng1,lat2,lng2;
+    long postTimestamp;
     int status; // 0--> bekliyor, -1--> ret , 1--> onaylanmış
 
     public Request() {
@@ -13,7 +14,7 @@ public class Request implements Serializable {
 
     public Request(String requestID, String senderID, String senderName, String senderGender,
                    String senderImage, String senderBirthdate, String senderEmail, String postID,
-                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, String postHeader, String requestText, String oneSignalID,String ownerOneSignalID) {
+                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, String postHeader, String requestText, String oneSignalID,String ownerOneSignalID,long postTimestamp) {
         this.requestID = requestID;
         this.senderID = senderID;
         this.senderName = senderName;
@@ -32,6 +33,7 @@ public class Request implements Serializable {
         this.requestText = requestText;
         this.oneSignalID = oneSignalID;
         this.ownerOneSignalID = ownerOneSignalID;
+        this.postTimestamp = postTimestamp;
     }
 
     public String getRequestID() {
@@ -100,6 +102,10 @@ public class Request implements Serializable {
 
     public String getOneSignalID() {
         return oneSignalID;
+    }
+
+    public long getPostTimestamp() {
+        return postTimestamp;
     }
 
     public String getOwnerOneSignalID() {

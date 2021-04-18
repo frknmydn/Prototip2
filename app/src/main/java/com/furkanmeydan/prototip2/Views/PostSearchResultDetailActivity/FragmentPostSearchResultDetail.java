@@ -132,7 +132,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                     @Override
                     public void onClick(View view) {
                         requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
-                                post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(),senderOneSignalID,post.getOwnerOneSignalID(), new RequestCallback() {
+                                post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(),senderOneSignalID,post.getOwnerOneSignalID(),post.getTimestamp(), new RequestCallback() {
                                     @Override
                                     public void onRequestSent() {
                                         super.onRequestSent();
@@ -147,6 +147,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                                             activity.finish();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
+                                            Toast.makeText(activity,"İstek gönderilirken bir hata meydana geldi.",Toast.LENGTH_LONG).show();
                                         }
 
 
