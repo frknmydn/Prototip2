@@ -113,12 +113,14 @@ public class RequestDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
-                .document(requestID).update(CollectionHelper.REQUEST_STATUS,-1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .document(requestID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 callback.onRequestRejected();
             }
         });
+
+
 
     }
 

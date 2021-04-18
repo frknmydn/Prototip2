@@ -6,17 +6,27 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class UploadPostActivity extends AppCompatActivity {
     LocalDataManager localDataManager;
@@ -56,13 +66,28 @@ public class UploadPostActivity extends AppCompatActivity {
     public void AUPUploadPost(View view){
         postDAL.uploadPost(userId, getApplicationContext(), new PostCallback() {
             @Override
-            public void onPostAdded() {
-                super.onPostAdded();
+            public void onPostAdded(Post post) {
+                super.onPostAdded(post);
                 Toast.makeText(getApplicationContext(),"Başarılı",Toast.LENGTH_LONG).show();
 
-                AUPClearSharedPref();
 
+
+                try {
+                    OSDeviceState device = OneSignal.getDeviceState();
+                    String oneSignalID = device.getUserId();
+
+                    long timestamp = post.getTimestamp()-900L;
+                    SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
+                    String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
+
+                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_player_ids': ['" +oneSignalID + "']}").put("send_after",dateTime), null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("Tag","onesignal CATCHLEDİ LMAO");
+                }
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                AUPClearSharedPref();
                 startActivity(i);
                 finish();
             }

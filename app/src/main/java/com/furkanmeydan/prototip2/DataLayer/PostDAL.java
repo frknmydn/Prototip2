@@ -149,6 +149,10 @@ public class PostDAL {
                     Toast.makeText(context, "Sadece Gelecek İki Hafta İçin İlan Verebilirsiniz", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
+                if(timestamp < secondsNowTimestamp + 3600L ){
+                    Toast.makeText(context, "Minimum 1 saat sonrasına ilan koyabilirsiniz", Toast.LENGTH_LONG).show();
+                    errors += "HATA";
+                }
 
             }
 
@@ -161,7 +165,7 @@ public class PostDAL {
 
                 Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction,wishArray,postOwnerOneSignalID);
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
-                postCallback.onPostAdded();
+                postCallback.onPostAdded(post);
             }
 
 

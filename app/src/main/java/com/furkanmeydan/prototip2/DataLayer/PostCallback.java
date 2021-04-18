@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class PostCallback {
 
-    public void onPostAdded(){
+    public void onPostAdded(Post post){
         
     }
 
