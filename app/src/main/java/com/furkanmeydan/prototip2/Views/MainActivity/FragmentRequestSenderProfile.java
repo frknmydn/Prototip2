@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,6 +31,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.onesignal.OneSignal;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class FragmentRequestSenderProfile extends Fragment {
@@ -126,7 +132,16 @@ public class FragmentRequestSenderProfile extends Fragment {
                     @Override
                     public void onRequestAccepted() {
                         super.onRequestAccepted();
-                        activity.changeFragment(new FragmentRequestsToMyPosts());
+                        try {
+                            OneSignal.postNotification(new JSONObject("{'contents': {'tr':'Gönderdiğiniz bir istek, ilan sahibi tarafından kabul edildi'}, 'include_player_ids': ['" + request.getOwnerOneSignalID() + "']}"), null);
+                            Intent i = new Intent(getContext(), MainActivity.class);
+                            Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                            startActivity(i);
+                            activity.finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }

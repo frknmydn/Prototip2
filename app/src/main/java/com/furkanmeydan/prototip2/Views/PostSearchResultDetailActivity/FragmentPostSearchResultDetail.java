@@ -139,9 +139,10 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
                                         try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Test Message'}, 'include_player_ids': ['" + post.getOwnerOneSignalID() + "']}"), null);
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'tr':'Aktif ilanınıza bir kullanıcı tarafından istek gönderildi'}, 'include_player_ids': ['" + post.getOwnerOneSignalID() + "']}"), null);
                                             Intent i = new Intent(getContext(), MainActivity.class);
                                             Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                                            dialog.dismiss();
                                             startActivity(i);
                                             activity.finish();
                                         } catch (JSONException e) {
