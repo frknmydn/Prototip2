@@ -57,10 +57,18 @@ public class CollectionHelper {
     final public static String REQUEST_SENDERNAME = "senderNameSurname";
     final public static String REQUEST_SENDERIMAGE = "senderImageURL";
     final public static String REQUEST_SENDERGENDER = "senderGender";
+    final public static String REQUEST_POSTTIMESTAMP = "postTimestamp";
     final public static String REQUEST_LAT1 = "lat1";
     final public static String REQUEST_LNG1 = "lng1";
     final public static String REQUEST_LAT2 = "lat2";
     final public static String REQUEST_LNG2 = "lng2";
+
+
+    final public static String BLOCK_COLLECTION = "Blocks";
+    final public static String BLOCK_BLOCKERID = "userBlockerID";
+    final public static String BLOCK_BLOCKEDID = "userBlockedID";
+    final public static String BLOCK_BLOCKREASON = "blockReason";
+
 
 
 }

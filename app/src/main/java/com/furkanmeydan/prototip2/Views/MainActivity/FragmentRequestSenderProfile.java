@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.furkanmeydan.prototip2.DataLayer.BlockCallback;
+import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
@@ -44,9 +48,12 @@ import java.util.concurrent.TimeUnit;
 public class FragmentRequestSenderProfile extends Fragment {
     private TextView nameSurname, gender, birthdate, requestText;
     private ImageView imageView;
-    private Button btnShowComments, btnAccept, btnDecline;
+    private Button btnShowComments, btnAccept, btnDecline,btnBlock;
     RequestDAL requestDAL;
+    BlockDAL blockDAL;
     Request request;
+
+    Dialog dialog;
 
     MapView mapView;
     private GoogleMap googleMap;
@@ -64,6 +71,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         super.onCreate(savedInstanceState);
         activity = (MainActivity) getActivity();
         requestDAL = new RequestDAL();
+        blockDAL = new BlockDAL();
 
         if (getArguments() != null) {
             request = (Request) getArguments().getSerializable("request");
@@ -111,6 +119,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         nameSurname = view.findViewById(R.id.fragmentRequestSenderProfileNameSurname);
         gender = view.findViewById(R.id.fragmentRequestSenderProfileGender);
         birthdate = view.findViewById(R.id.fragmentRequestSenderProfileBirthday);
+        btnBlock = view.findViewById(R.id.fragmentRequestSenderProfileBtnBlock);
 
         imageView = view.findViewById(R.id.fragmentRequestSenderProfileImg);
         btnAccept = view.findViewById(R.id.fragmentRequestSenderProfileAccept);
@@ -176,6 +185,100 @@ public class FragmentRequestSenderProfile extends Fragment {
                 });
             }
         });
+
+
+        btnBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.popup_blockuser_notif);
+                dialog.show();
+                Button btnBlockYes = dialog.findViewById(R.id.btnPopupBlockYes);
+                Button btnBlockNo = dialog.findViewById(R.id.btnPopupBlockNo);
+                final EditText edtBlockReason = dialog.findViewById(R.id.edtPopupBlockReason);
+
+
+                btnBlockYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final String userid = activity.userId;
+
+                        final String blockReason = edtBlockReason.getText().toString();
+                            requestDAL.getRequestStatusToBlock(userid, request.getSenderID(), new RequestCallback() {
+                                @Override
+                                public void onAcceptedRequestSearchResult(boolean flag) {
+                                    super.onAcceptedRequestSearchResult(flag);
+                                    if(!flag){
+
+                                        requestDAL.getRequestStatusToBlock(request.getSenderID(), userid, new RequestCallback() {
+                                            @Override
+                                            public void onAcceptedRequestSearchResult(boolean flag) {
+                                                super.onAcceptedRequestSearchResult(flag);
+                                                if(!flag){
+                                                    if(blockDAL.checkReason(blockReason,activity)){
+                                                        blockDAL.blockUser(userid, request.getSenderID(), blockReason, new BlockCallback() {
+                                                            @Override
+                                                            public void onUserBlocked() {
+                                                                super.onUserBlocked();
+                                                                blockDAL.blockUser(request.getSenderID(), userid, null, new BlockCallback() {
+                                                                    @Override
+                                                                    public void onUserBlocked() {
+                                                                        super.onUserBlocked();
+                                                                        requestDAL.deleteRequestsOnBlock(userid, request.getSenderID(), new RequestCallback() {
+                                                                            @Override
+                                                                            public void onRequestsDeletedOnBlock() {
+                                                                                super.onRequestsDeletedOnBlock();
+                                                                                requestDAL.deleteRequestsOnBlock(request.getSenderID(), userid, new RequestCallback() {
+                                                                                    @Override
+                                                                                    public void onRequestsDeletedOnBlock() {
+                                                                                        super.onRequestsDeletedOnBlock();
+                                                                                        dialog.dismiss();
+                                                                                        Intent i = new Intent(activity,MainActivity.class);
+                                                                                        startActivity(i);
+                                                                                        activity.finish();
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        });
+
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+
+                                                }else{
+                                                    Toast.makeText(activity,"Bu kullanıcadan size gelen onaylı bir istek bulunmaktadır",Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                                    }else{
+                                        Toast.makeText(activity,"Bu kullanıcya yolladığınız onaylı bir isteğiniz bulunmaktadır",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
+
+
+
+
+
+
+
+
+                        dialog.dismiss();
+                    }
+                });
+
+                btnBlockNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
 
         btnShowComments.setOnClickListener(new View.OnClickListener() {
             @Override

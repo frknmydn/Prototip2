@@ -8,8 +8,12 @@ import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -59,6 +63,51 @@ public class RequestDAL {
 
     }
 
+    //Method iki defa çağırılacağı için DAL içindeki hazır currentuserid kullanmak yerine variable'a atanıyor.
+    //İkinci çağırılışta id'ler yer değiştircek.
+    public void getRequestStatusToBlock(String userid, String postOwnerID, final RequestCallback callback){
+
+        Timestamp currentTime = Timestamp.now();
+        long currentTimeSeconds = currentTime.getSeconds();
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).whereEqualTo(CollectionHelper.REQUEST_STATUS,1).whereGreaterThan(CollectionHelper.REQUEST_POSTTIMESTAMP,currentTimeSeconds)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    boolean flag;
+                   if(task.getResult().size() > 0){
+                       flag = true;
+                   }else{
+                       flag = false;
+                   }
+                    callback.onAcceptedRequestSearchResult(flag);
+
+                }
+            }
+
+        });
+
+
+    }
+
+    public void deleteRequestsOnBlock(String userid, String postOwnerID , final RequestCallback callback){
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0) {
+                        for (DocumentSnapshot ds : task.getResult().getDocuments()) {
+                            ds.getReference().delete();
+                        }
+                    }
+                    callback.onRequestsDeletedOnBlock();
+                }
+            }
+        });
+
+    }
     public void getAcceptedRequestsISent(final RequestCallback callback){
         String currentUserID = firebaseAuth.getCurrentUser().getUid();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)

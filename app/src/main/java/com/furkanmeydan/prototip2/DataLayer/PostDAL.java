@@ -776,6 +776,7 @@ public class PostDAL {
     }
     public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {
         String error = "";
+
         Bundle args = new Bundle();
 
         if (timestamp1 == null || timestamp2 == null) {

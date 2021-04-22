@@ -115,9 +115,9 @@
         android:id="@+id/fragmentRequestSenderProfileShowComments"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginEnd="30dp"
         android:text="Kullanıcı Yorumları"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -137,6 +137,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentRequestSenderProfileShowComments" />
+
+    <Button
+        android:id="@+id/fragmentRequestSenderProfileBtnBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="55dp"
+        android:text="Engelle"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentRequestSenderProfileShowComments"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentRequestSenderProfileShowComments"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragmentRequestSenderProfileShowComments"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

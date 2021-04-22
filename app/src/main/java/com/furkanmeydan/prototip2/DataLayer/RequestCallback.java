@@ -32,4 +32,20 @@ public abstract class RequestCallback {
         public void onRequestsRetrievedNull(){
 
         }
+
+        public void onAcceptedRequestFound(){
+
+        }
+
+        public void onAcceptedRequestNotFound(){
+
+        }
+
+        public void onAcceptedRequestSearchResult(boolean flag){
+
+        }
+
+        public void onRequestsDeletedOnBlock(){
+
+        }
 }
