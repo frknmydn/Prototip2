@@ -29,7 +29,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
-import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;

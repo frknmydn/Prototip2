@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.furkanmeydan.prototip2.DataLayer.QuestionCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.Models.Question;
 import com.furkanmeydan.prototip2.R;

@@ -21,11 +21,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.furkanmeydan.prototip2.DataLayer.BlockCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
-import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
-import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,7 +36,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.onesignal.OneSignal;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;

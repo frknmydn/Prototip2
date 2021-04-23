@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.Adapters.MyAcceptedRequestsAdapter;
 import com.furkanmeydan.prototip2.Adapters.MyWaitingRequestsAdapter;
-import com.furkanmeydan.prototip2.DataLayer.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
-import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;

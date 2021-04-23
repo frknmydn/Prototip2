@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Question;
 import com.google.android.gms.tasks.OnCompleteListener;

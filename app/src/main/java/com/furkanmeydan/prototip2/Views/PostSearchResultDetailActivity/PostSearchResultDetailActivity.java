@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
-import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.MapRouter.TaskLoadedCallback;
 import com.furkanmeydan.prototip2.Models.Post;

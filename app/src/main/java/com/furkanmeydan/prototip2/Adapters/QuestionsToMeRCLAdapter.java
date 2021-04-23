@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.furkanmeydan.prototip2.DataLayer.QuestionCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.Models.Question;
 import com.furkanmeydan.prototip2.R;

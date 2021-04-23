@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.DataLayer;
+package com.furkanmeydan.prototip2.DataLayer.Callbacks;
 
 public abstract class BlockCallback {
 

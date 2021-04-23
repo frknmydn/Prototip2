@@ -11,13 +11,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
-import com.furkanmeydan.prototip2.DataLayer.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.User;
@@ -31,8 +30,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.onesignal.OSDeviceState;
-import com.onesignal.OneSignal;
 
 import java.util.Objects;
 

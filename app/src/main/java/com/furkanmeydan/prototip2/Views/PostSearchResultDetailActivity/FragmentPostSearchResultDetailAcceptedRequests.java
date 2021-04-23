@@ -1,6 +1,5 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,12 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.Adapters.AcceptedRequestAdapter;
-import com.furkanmeydan.prototip2.DataLayer.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

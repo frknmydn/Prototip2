@@ -1,4 +1,4 @@
-package com.furkanmeydan.prototip2.DataLayer;
+package com.furkanmeydan.prototip2.DataLayer.Callbacks;
 
 import com.furkanmeydan.prototip2.Models.Request;
 
