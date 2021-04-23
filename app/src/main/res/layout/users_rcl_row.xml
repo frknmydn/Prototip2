@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <Button
+        android:id="@+id/btnUnBlockUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Engeli Kaldır"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnRclGoToProfile"
+        app:layout_constraintStart_toStartOf="@+id/txtUserRclGender"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserRclGender" />
+
+    <ImageView
+        android:id="@+id/imgUserRclRow"
+        android:layout_width="125sp"
+        android:layout_height="125sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnUnBlockUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtUserRclName"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/txtUserRclName"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="Erman Kan Derici"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgUserRclRow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtUserRclGender"
+        android:layout_width="94dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="5dp"
+        android:text="Erkek"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/txtUserRclName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtUserRclName"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserRclName" />
+
+    <Button
+        android:id="@+id/btnRclGoToProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Görüntüle"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtUserRclName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnUnBlockUser"
+        app:layout_constraintTop_toTopOf="@+id/btnUnBlockUser" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
