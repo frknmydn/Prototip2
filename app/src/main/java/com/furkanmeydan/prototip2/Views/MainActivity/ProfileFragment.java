@@ -44,6 +44,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
+    User user;
     ProfileDAL profileDAL;
     private EditText edtNameSurname, edtEmail;
     private TextView gender, txtBirthday;
@@ -69,7 +70,11 @@ public class ProfileFragment extends Fragment {
 
         profileDAL = new ProfileDAL();
 
+
+
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,21 +100,35 @@ public class ProfileFragment extends Fragment {
         imageView = view.findViewById(R.id.ImageViewFragment);
         btnUpdate = view.findViewById(R.id.btnUpdateFragment);
 
-        getData();
+        if(getArguments() != null){
+            Bundle bundle = getArguments();
+            user = (User) bundle.getSerializable("user");
+            getUserProfile(user);
+            btnUpdate.setVisibility(View.GONE);
+            imageView.setClickable(false);
+            imageView.setFocusable(false);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updatePicture();
-            }
-        });
+        }else{
+                getData();
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updatePictureData();
-            }
-        });
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updatePicture();
+                }
+            });
+
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updatePictureData();
+                }
+            });
+
+
+        }
+
+
 
     }
 
@@ -123,6 +142,8 @@ public class ProfileFragment extends Fragment {
                 super.getUser(user);
                 Log.d("Tag", "getUser çalıştı");
                 Log.d("Tag","getUser "+ mainActivity.getOneSignalID());
+                getUserProfile(user);
+                /*
                 txtBirthday.setText(user.getBirthDate());
                 edtEmail.setText(user.getEmail());
                 edtNameSurname.setText(user.getNameSurname());
@@ -132,13 +153,25 @@ public class ProfileFragment extends Fragment {
 
                 CLProgress.setVisibility(View.INVISIBLE);
                 CLMain.setVisibility(View.VISIBLE);
-
-
+                *
+                 */
 
             }
         });
 
 
+    }
+
+    private void getUserProfile(User user) {
+        txtBirthday.setText(user.getBirthDate());
+        edtEmail.setText(user.getEmail());
+        edtNameSurname.setText(user.getNameSurname());
+        gender.setText(user.getGender());
+        Glide.with(mainActivity.getApplicationContext()).load(user.getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+
+        CLProgress.setVisibility(View.INVISIBLE);
+        CLMain.setVisibility(View.VISIBLE);
     }
 
 

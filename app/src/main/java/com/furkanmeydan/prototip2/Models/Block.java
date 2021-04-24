@@ -15,6 +15,9 @@ public class Block {
         this.userBlockedID = userBlockedID;
         this.blockReason = blockReason;
     }
+    public Block(){
+
+    }
 
     public String getUserBlockerID() {
         return userBlockerID;

@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if(item.getItemId() == R.id.wish_list){
             changeFragment(new FragmentWishList());
         }
+        else if(item.getItemId() == R.id.blockedUsers){
+            changeFragment(new FragmentBlockList());
+        }
         return true;
     }
 

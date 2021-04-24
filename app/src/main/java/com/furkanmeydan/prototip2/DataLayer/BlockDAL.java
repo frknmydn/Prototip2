@@ -12,15 +12,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BlockDAL {
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+    private final String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
 
     public void blockUser(String userBlocker, String userBlocked, String blockReason, final BlockCallback callback){
         Block block = new Block(userBlocker,userBlocked,blockReason);
@@ -35,6 +38,39 @@ public class BlockDAL {
 
     }
 
+    public void unblockUser(String userBlocker, String userBlocked, final BlockCallback callback){
+
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userBlocker).whereEqualTo(CollectionHelper.BLOCK_BLOCKEDID,userBlocked).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0){
+                        for(DocumentSnapshot ds : task.getResult().getDocuments()){
+                            ds.getReference().delete();
+
+                        }
+                        callback.onUserUnblocked();
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void getBlockedList(final BlockCallback callback){
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).whereNotEqualTo(CollectionHelper.BLOCK_BLOCKREASON,null).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0){
+                        List<Block> blocks = task.getResult().toObjects(Block.class);
+                        callback.onListRetrieved(blocks);
+                    }
+                }
+            }
+        });
+    }
+
     public boolean checkReason(String blockReason, Context context){
         String error = "";
 
@@ -47,4 +83,7 @@ public class BlockDAL {
 
     }
 
+    public String getUserId() {
+        return userId;
+    }
 }

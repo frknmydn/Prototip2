@@ -1,8 +1,11 @@
 package com.furkanmeydan.prototip2.Models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String
+                    userID,
                     nameSurname,
                     birthDate,
                     profilePicture,
@@ -14,13 +17,18 @@ public class User {
 
     }
 
-    public User(String nameSurname, String birthDate, String profilePicture, String email, String gender, String oneSignalID) {
+    public User(String userID,String nameSurname, String birthDate, String profilePicture, String email, String gender, String oneSignalID) {
+        this.userID = userID;
         this.nameSurname = nameSurname;
         this.birthDate = birthDate;
         this.profilePicture = profilePicture;
         this.email = email;
         this.gender = gender;
         this.oneSignalID = oneSignalID;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public String getGender() {

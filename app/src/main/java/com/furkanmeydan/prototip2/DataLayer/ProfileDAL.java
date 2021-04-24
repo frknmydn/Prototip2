@@ -20,6 +20,7 @@ import com.onesignal.OneSignal;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class ProfileDAL {
@@ -97,7 +98,7 @@ public class ProfileDAL {
         else {
             OSDeviceState device = OneSignal.getDeviceState();
             String oneSignalID = device.getUserId();
-            User newUser = new User(nameSurname,birthday,picURI,email,gender,oneSignalID);
+            User newUser = new User(userid,nameSurname,birthday,picURI,email,gender,oneSignalID);
             firestore.collection(CollectionHelper.USER_COLLECTION).document(userid).set(newUser);
             profileCallback.uploadProfile(newUser);
         }

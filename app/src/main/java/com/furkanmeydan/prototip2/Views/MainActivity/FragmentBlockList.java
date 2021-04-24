@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,16 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.furkanmeydan.prototip2.Adapters.BlockedUsersAdapter;
+import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.Models.Block;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentBlockList extends Fragment {
     RecyclerView rclBlockedList;
     MainActivity activity;
     BlockedUsersAdapter adapter;
     ArrayList<User> listBlockedUsers;
+    BlockDAL blockDAL;
+    ProfileDAL profileDAL;
 
 
 
@@ -36,6 +47,8 @@ public class FragmentBlockList extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (MainActivity) getActivity();
+        blockDAL = new BlockDAL();
+        profileDAL = new ProfileDAL();
         listBlockedUsers = new ArrayList<>();
     }
 
@@ -52,11 +65,40 @@ public class FragmentBlockList extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rclBlockedList = view.findViewById(R.id.RCLBlockedUsers);
+        rclBlockedList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BlockedUsersAdapter(listBlockedUsers,activity);
         rclBlockedList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getData();
+    }
+
+    public void getData(){
+        blockDAL.getBlockedList(new BlockCallback() {
+            @Override
+            public void onListRetrieved(List<Block> list) {
+                super.onListRetrieved(list);
+                for(Block block : list){
+                    profileDAL.getProfile(block.getUserBlockedID(), new ProfileCallback() {
+                        @Override
+                        public void getUser(User user) {
+                            super.getUser(user);
+                            listBlockedUsers.clear();
+                            listBlockedUsers.add(user);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+
+            }
+        });
 
     }
 }

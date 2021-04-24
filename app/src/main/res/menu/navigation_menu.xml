@@ -38,6 +38,11 @@
         android:title="@string/requestsToMyPosts"></item>
 
     <item
+        android:id="@+id/blockedUsers"
+        android:icon="@drawable/ic_baseline_block"
+        android:title="Engelli kullanıcılar"></item>
+
+    <item
         android:id="@+id/signOut"
         android:icon="@drawable/ic_baseline_close"
         android:title="@string/SignOut"></item>
