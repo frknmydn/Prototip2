@@ -68,10 +68,9 @@ public class BlockDAL {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful() && task.getResult() !=null){
-                    if(task.getResult().size() > 0){
                         List<Block> blocks = task.getResult().toObjects(Block.class);
                         callback.onListRetrieved(blocks);
-                    }
+
                 }
             }
         });
