@@ -62,6 +62,22 @@ public class BlockDAL {
         });
     }
 
+    public void getBlockedListForPosts(final BlockCallback callback){
+
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0){
+                        List<Block> blocks = task.getResult().toObjects(Block.class);
+                        callback.onListRetrieved(blocks);
+                    }
+                }
+            }
+        });
+
+    }
+
     public boolean checkReason(String blockReason, Context context){
         String error = "";
 
