@@ -55,6 +55,16 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
         Glide.with(activity.getApplicationContext()).load(requestsList.get(position).getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imageView);
 
+        holder.itemView.setOnClickListener(view -> {
+            Request request = requestsList.get(position);
+            Bundle bundle = new Bundle();
+
+            bundle.putSerializable("request",request);
+            activity.changeFragmentArgs(new FragmentRequestSenderProfile(),bundle);
+
+        });
+
+        /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +76,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
 
             }
         });
+         */
 
         holder.btnDecline.setOnClickListener(new View.OnClickListener() {
             @Override

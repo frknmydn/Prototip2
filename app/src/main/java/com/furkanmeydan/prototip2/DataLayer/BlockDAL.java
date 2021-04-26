@@ -27,12 +27,9 @@ public class BlockDAL {
 
     public void blockUser(String userBlocker, String userBlocked, String blockReason, final BlockCallback callback){
         Block block = new Block(userBlocker,userBlocked,blockReason);
-        firestore.collection(CollectionHelper.BLOCK_COLLECTION).add(block).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if(task.isSuccessful()){
-                    callback.onUserBlocked();
-                }
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).add(block).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                callback.onUserBlocked();
             }
         });
 
@@ -40,17 +37,14 @@ public class BlockDAL {
 
     public void unblockUser(String userBlocker, String userBlocked, final BlockCallback callback){
 
-        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userBlocker).whereEqualTo(CollectionHelper.BLOCK_BLOCKEDID,userBlocked).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    if(task.getResult().size() > 0){
-                        for(DocumentSnapshot ds : task.getResult().getDocuments()){
-                            ds.getReference().delete();
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userBlocker).whereEqualTo(CollectionHelper.BLOCK_BLOCKEDID,userBlocked).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult() !=null){
+                if(task.getResult().size() > 0){
+                    for(DocumentSnapshot ds : task.getResult().getDocuments()){
+                        ds.getReference().delete();
 
-                        }
-                        callback.onUserUnblocked();
                     }
+                    callback.onUserUnblocked();
                 }
             }
         });
@@ -58,14 +52,11 @@ public class BlockDAL {
     }
 
     public void getBlockedList(final BlockCallback callback){
-        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).whereNotEqualTo(CollectionHelper.BLOCK_BLOCKREASON,null).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    if(task.getResult().size() > 0){
-                        List<Block> blocks = task.getResult().toObjects(Block.class);
-                        callback.onListRetrieved(blocks);
-                    }
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).whereNotEqualTo(CollectionHelper.BLOCK_BLOCKREASON,null).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult() !=null){
+                if(task.getResult().size() > 0){
+                    List<Block> blocks = task.getResult().toObjects(Block.class);
+                    callback.onListRetrieved(blocks);
                 }
             }
         });
