@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.Block;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Adapters.SearchResultRecyclerAdapter;
 import com.furkanmeydan.prototip2.R;
@@ -24,6 +27,7 @@ import java.util.List;
 
 public class PostSearchResultFragment extends Fragment {
     PostDAL postDAL;
+    BlockDAL blockDAL;
     PostActivity postActivity;
     private String city;
     private String gender;
@@ -37,6 +41,7 @@ public class PostSearchResultFragment extends Fragment {
     SearchResultRecyclerAdapter resultAdapter;
     RecyclerView recyclerView;
     ArrayList<Post> posts;
+    ArrayList<Block> blockList;
 
 
 
@@ -49,6 +54,8 @@ public class PostSearchResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         posts = new ArrayList<>();
+        blockDAL = new BlockDAL();
+        blockList = new ArrayList<>();
 
         postDAL = new PostDAL();
         postActivity = (PostActivity) getActivity();
@@ -90,20 +97,27 @@ public class PostSearchResultFragment extends Fragment {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);
+                    final List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
 
-                    List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
-                    for (Post post : filteredList){
-                        String docId = post.getDescription();
-                        Log.d("TagPostGetFragment", docId);
-                        Log.d("TagPostGetFragment", String.valueOf(post.getToLat()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getToLng()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getFromLat()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getFromLng()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getFromLng()));
+                    blockDAL.getBlockedListForPosts(new BlockCallback() {
+                        @Override
+                        public void onListRetrieved(List<Block> list) {
+                            super.onListRetrieved(list);
+                            for(Post postvar : filteredList){
+                                for(Block blockvar : list){
+                                    if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
+                                        posts.add(postvar);
+                                    }
+                                }
+                            }
+                            resultAdapter.notifyDataSetChanged();
 
-                    }
-                    posts.addAll(filteredList);
-                    resultAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+
+
+
                     //Log.d("TagPostGetFragment", list.get(0).getDestination());
 
                 }
@@ -115,23 +129,23 @@ public class PostSearchResultFragment extends Fragment {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);
-                    List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
-                    for (Post post : filteredList){
+                    final List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
 
-                        String docId = post.getDescription();
-                        Log.d("TagPostGetFragment", docId);
-                        Log.d("TagPostGetFragment", String.valueOf(post.getToLat()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getToLng()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getFromLat()));
-                        Log.d("TagPostGetFragment", String.valueOf(post.getFromLng()));
-                        Log.d("TagPostGetFragment Size", String.valueOf(filteredList.size()));
+                    blockDAL.getBlockedListForPosts(new BlockCallback() {
+                        @Override
+                        public void onListRetrieved(List<Block> list) {
+                            super.onListRetrieved(list);
+                            for(Post postvar : filteredList){
+                                for(Block blockvar : list){
+                                    if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
+                                        posts.add(postvar);
+                                    }
+                                }
+                            }
+                            resultAdapter.notifyDataSetChanged();
 
-
-                    }
-                    posts.addAll(filteredList);
-                    resultAdapter.notifyDataSetChanged();
-
-
+                        }
+                    });
 
                     //Log.d("TagPostGetFragment", list.get(0).getDestination());
 
