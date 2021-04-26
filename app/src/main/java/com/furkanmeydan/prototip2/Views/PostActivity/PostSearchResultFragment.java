@@ -130,18 +130,28 @@ public class PostSearchResultFragment extends Fragment {
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);
                     final List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
+                    Log.d("Tag","FilteredListSize"+ filteredList.size());
 
                     blockDAL.getBlockedListForPosts(new BlockCallback() {
                         @Override
                         public void onListRetrieved(List<Block> list) {
                             super.onListRetrieved(list);
-                            for(Post postvar : filteredList){
-                                for(Block blockvar : list){
-                                    if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
-                                        posts.add(postvar);
+                            Log.d("Tag","onListRetrieved Block içi ");
+
+                            if(list.size() > 0 ){
+                                for(Post postvar : filteredList){
+                                    for(Block blockvar : list){
+                                        if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
+                                            posts.add(postvar);
+                                            Log.d("Tag","postsSize"+ posts.size());
+                                        }
                                     }
                                 }
                             }
+                            else{
+                                posts.addAll(filteredList);
+                            }
+
                             resultAdapter.notifyDataSetChanged();
 
                         }
