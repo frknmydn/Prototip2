@@ -139,9 +139,16 @@ public class PostSearchResultFragment extends Fragment {
                             Log.d("Tag","onListRetrieved Block içi ");
 
                             if(list.size() > 0 ){
+                                Log.d("Tag","onListRetrievedBlock if içi ");
                                 for(Post postvar : filteredList){
+                                    Log.d("Tag","onListRetrievedBlock ilk for içi ");
+                                    Log.d("Tag","PostOwner "+postvar.getOwnerID());
                                     for(Block blockvar : list){
-                                        if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
+                                        Log.d("Tag","onListRetrievedBlock ikinci for içi ");
+                                        Log.d("Tag","Blocklist size "+list.size());
+                                        Log.d("Tag","BlockerID "+blockvar.getUserBlockerID());
+                                        if(!blockvar.getUserBlockedID().equals(postvar.getOwnerID())){
+                                            Log.d("Tag","onListRetrievedBlock en son if içi ");
                                             posts.add(postvar);
                                             Log.d("Tag","postsSize"+ posts.size());
                                         }
@@ -149,6 +156,7 @@ public class PostSearchResultFragment extends Fragment {
                                 }
                             }
                             else{
+                                Log.d("Tag","onListRetrievedBlock else AddAll (Block Yok) ");
                                 posts.addAll(filteredList);
                             }
 
