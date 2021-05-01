@@ -23,8 +23,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,6 +52,7 @@ public class FragmentRequestSenderProfile extends Fragment {
     private Button btnShowComments, btnAccept, btnDecline,btnBlock;
     RequestDAL requestDAL;
     BlockDAL blockDAL;
+    PostDAL postDAL;
     Request request;
 
     Dialog dialog;
@@ -70,6 +74,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         activity = (MainActivity) getActivity();
         requestDAL = new RequestDAL();
         blockDAL = new BlockDAL();
+        postDAL = new PostDAL();
 
         if (getArguments() != null) {
             request = (Request) getArguments().getSerializable("request");
@@ -230,10 +235,23 @@ public class FragmentRequestSenderProfile extends Fragment {
                                                                                     @Override
                                                                                     public void onRequestsDeletedOnBlock() {
                                                                                         super.onRequestsDeletedOnBlock();
-                                                                                        dialog.dismiss();
-                                                                                        Intent i = new Intent(activity,MainActivity.class);
-                                                                                        startActivity(i);
-                                                                                        activity.finish();
+                                                                                        postDAL.removeFromWishListForBlock(userid, request.getSenderID(), new PostCallback() {
+                                                                                            @Override
+                                                                                            public void deleteWishOnBlock() {
+                                                                                                super.deleteWishOnBlock();
+                                                                                                postDAL.removeFromWishListForBlock(request.getSenderID(), userid, new PostCallback() {
+                                                                                                    @Override
+                                                                                                    public void deleteWishOnBlock() {
+                                                                                                        super.deleteWishOnBlock();
+                                                                                                        dialog.dismiss();
+                                                                                                        Intent i = new Intent(activity,MainActivity.class);
+                                                                                                        startActivity(i);
+                                                                                                        activity.finish();
+                                                                                                    }
+                                                                                                });
+                                                                                            }
+                                                                                        });
+
                                                                                     }
                                                                                 });
                                                                             }

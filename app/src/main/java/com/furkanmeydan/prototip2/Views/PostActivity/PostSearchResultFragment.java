@@ -89,7 +89,7 @@ public class PostSearchResultFragment extends Fragment {
         recyclerView = view.findViewById(R.id.postSearchResultRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        resultAdapter = new SearchResultRecyclerAdapter(posts);
+        resultAdapter = new SearchResultRecyclerAdapter(posts, postActivity);
         recyclerView.setAdapter(resultAdapter);
 
         if(gender.equals("Fark Etmez")){

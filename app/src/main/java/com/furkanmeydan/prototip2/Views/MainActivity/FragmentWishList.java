@@ -66,7 +66,7 @@ public class FragmentWishList extends Fragment {
 
         wishRCL = view.findViewById(R.id.RCLWishList);
         wishRCL.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SearchResultRecyclerAdapter(postList);
+        adapter = new SearchResultRecyclerAdapter(postList, activity);
         wishRCL.setAdapter(adapter);
 
     }
