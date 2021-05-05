@@ -3,11 +3,14 @@ package com.furkanmeydan.prototip2.Adapters;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
+import com.google.firebase.Timestamp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +80,14 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
 
             }
         });
+        long ts = Timestamp.now().getSeconds();
 
+        if(posts.get(position).getTimestamp() - 180 <= ts ){
+            Log.d("Time", "Bir kere çalışması lazım");
+            holder.timeInfo.setImageResource(R.drawable.timer);
+        }
+
+        /*
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +118,8 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
                 });
             }
         });
+
+         */
     }
 
     @Override
@@ -118,13 +131,13 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
     public class PostHolder extends RecyclerView.ViewHolder {
 
         TextView txtDestination, txtDateTime;
-        Button btnDelete;
+        ImageView timeInfo;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             txtDestination = itemView.findViewById(R.id.postRowDestination);
             txtDateTime = itemView.findViewById(R.id.postRowDate);
-            btnDelete = itemView.findViewById(R.id.postRowBtnDelete);
+            timeInfo = itemView.findViewById(R.id.postRowBtnDelete);
 
         }
     }

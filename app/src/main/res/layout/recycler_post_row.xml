@@ -50,14 +50,13 @@
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
-    <Button
+    <ImageView
         android:id="@+id/postRowBtnDelete"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#94B00000"
-        android:foreground="@drawable/ic_baseline_close"
+        android:src="@android:drawable/presence_away"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/postRowDestination"

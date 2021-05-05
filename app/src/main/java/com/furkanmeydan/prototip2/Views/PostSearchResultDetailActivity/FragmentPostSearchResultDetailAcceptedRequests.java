@@ -20,6 +20,13 @@ import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +39,8 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     PostSearchResultDetailActivity activity;
     TextView txtInfo;
     Post post;
-
+    MapView mapView;
+    private GoogleMap googleMap;
     RequestDAL requestDAL;
 
 
@@ -53,7 +61,29 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_search_accepted_requests, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_post_search_accepted_requests, container, false);
+        mapView = rootView.findViewById(R.id.mapViewAcceptedRequestsPoints);
+        mapView.onCreate(savedInstanceState);
+
+        mapView.onResume();
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                //googleMap.setMyLocationEnabled(true);
+
+                for(int i=0; i<requestList.size(); i++){
+                    LatLng markers = new LatLng(requestList.get(i).getLat1(), requestList.get(i).getLng1());
+                    googleMap.addMarker(new MarkerOptions().position(markers).title(requestList.get(i).getSenderName()+ "'nin binmek istediği yer."));
+                }
+                LatLng postLatLng = new LatLng(post.getFromLat(), post.getFromLng());
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(postLatLng).zoom(14).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+        return rootView;
     }
 
     @Override

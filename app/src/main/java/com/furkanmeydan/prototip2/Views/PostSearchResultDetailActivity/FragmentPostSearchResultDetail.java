@@ -1,11 +1,15 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.ScrollingMovementMethod;
@@ -24,8 +28,10 @@ import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
+import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.google.firebase.Timestamp;
 import com.onesignal.OneSignal;
 
 import org.json.JSONException;
@@ -39,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 public class FragmentPostSearchResultDetail extends Fragment {
     private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, postCarDetail;
     private PostSearchResultDetailActivity activity;
-    Button btnSendRequest,btnAddToWish;
+    Button btnSendRequest,btnAddToWish, btnStartService, btnEndService;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID;
@@ -87,10 +93,13 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postCarDetail = view.findViewById(R.id.txtSearchResultDetailCarDet);
         btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
         btnAddToWish = view.findViewById(R.id.btnSearchResultDetailAddToWish);
-
+        btnStartService = view.findViewById(R.id.btnSearchResultDetailStartService);
+        btnEndService = view.findViewById(R.id.btnSearchResultDetailEndService);
         // Scroll Element
         postCarDetail.setMovementMethod(new ScrollingMovementMethod());
         postDescription.setMovementMethod(new ScrollingMovementMethod());
+
+
 
 
 
@@ -203,6 +212,60 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 
+
+
+        //Eğer kullanıcı post sahibiyse ve ilan saatine 3 dakikadan az süre kalmışsa
+        long ts = Timestamp.now().getSeconds();
+        if(activity.post.getTimestamp() - 180 <= ts && activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())){
+            if(localDataManager.getSharedPreference(activity,"isServiceEnable",null) ==null || localDataManager.getSharedPreference(activity,"isServiceEnable",null).equals("0")){
+                btnStartService.setVisibility(View.VISIBLE);
+            }
+            else if(localDataManager.getSharedPreference(activity,"isServiceEnable",null).equals("1")){
+                btnEndService.setVisibility(View.VISIBLE);
+            }
+
+        }
+
+
+
+        btnStartService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    for(Request request: activity.requestList){
+                        OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                Intent serviceIntent = new Intent(activity, LocationService.class);
+                serviceIntent.putExtra("action","1");
+                serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
+                serviceIntent.putExtra("postOwnerID",activity.post.getOwnerID());
+                serviceIntent.putExtra("postID",activity.post.getPostID());
+                ContextCompat.startForegroundService(activity, serviceIntent);
+                localDataManager.setSharedPreference(activity,"isServiceEnable","1");
+                btnStartService.setVisibility(View.GONE);
+                btnEndService.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btnEndService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnEndService.setVisibility(View.GONE);
+                btnStartService.setVisibility(View.VISIBLE);
+                Intent serviceIntent = new Intent(activity, LocationService.class);
+                serviceIntent.putExtra("action","0");
+                ContextCompat.startForegroundService(activity, serviceIntent);
+                localDataManager.setSharedPreference(activity,"isServiceEnable","0");
+
+            }
+        });
 
         requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {
             @Override

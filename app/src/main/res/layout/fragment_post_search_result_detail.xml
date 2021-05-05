@@ -193,20 +193,6 @@
         app:layout_constraintTop_toBottomOf="@+id/statik4" />
 
     <TextView
-        android:id="@+id/statik"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_vertical"
-        android:text="Değerlendirme"
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
-        app:layout_constraintStart_toStartOf="@+id/statik5"
-        app:layout_constraintTop_toBottomOf="@+id/statik5" />
-
-    <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -234,14 +220,6 @@
         app:layout_constraintStart_toEndOf="@+id/textView24"
         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
-    <RatingBar
-        android:id="@+id/ratingBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statik" />
-
     <Button
         android:id="@+id/btnSearchResultDetailSendRequest"
         android:layout_width="0dp"
@@ -268,5 +246,32 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSearchResultDetailSendRequest"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailSendRequest" />
+
+    <Button
+        android:id="@+id/btnSearchResultDetailStartService"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="40dp"
+        android:text="Yolculuğu Başlatabilirsiniz"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchResultDetailSendRequest"
+        app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/statik5"
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
+
+    <Button
+        android:id="@+id/btnSearchResultDetailEndService"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Takip Sistemini Sonlandır."
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchResultDetailSendRequest"
+        app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
+        app:layout_constraintStart_toStartOf="@+id/statik5"
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

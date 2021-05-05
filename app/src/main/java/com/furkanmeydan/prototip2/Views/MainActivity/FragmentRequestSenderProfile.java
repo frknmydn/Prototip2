@@ -273,19 +273,9 @@ public class FragmentRequestSenderProfile extends Fragment {
                                     }
                                 }
                             });
-
-
-
-
-
-
-
-
-
                         dialog.dismiss();
                     }
                 });
-
                 btnBlockNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -294,7 +284,6 @@ public class FragmentRequestSenderProfile extends Fragment {
                 });
             }
         });
-
 
         btnShowComments.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -725,7 +725,7 @@ public class PostDAL {
     public void removeFromWishListForBlock(String blockerID, String blockedID, PostCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION).document(blockerID).collection(CollectionHelper.POST_COLLECTION)
-                .whereArrayContains(CollectionHelper.POST_WISHARRAY,blockerID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .whereArrayContains(CollectionHelper.POST_WISHARRAY,blockedID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful() && task.getResult() !=null){

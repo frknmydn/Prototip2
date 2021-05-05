@@ -18,7 +18,7 @@
         android:text="İlan Sahibinin Kabul Ettiği İstek Bulunmamaktadır."
         android:textColor="#5C5C5C"
         android:textSize="16sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/textView34"
         app:layout_constraintStart_toStartOf="@+id/textView34"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,11 +26,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentAcceptedRequestsRCL"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="177dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/mapViewAcceptedRequestsPoints"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.909"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
@@ -44,11 +46,20 @@
         android:background="#E6E9FF"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="İLAN SAHİBİNİN KABUL ETTİĞİ İSTEKLER"
+        android:text="YOLCULUK ARKADAŞLARI VE ROTA"
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapViewAcceptedRequestsPoints"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAcceptedRequestsRCL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
