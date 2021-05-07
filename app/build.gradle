@@ -57,6 +57,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
+    //volley for api interaction
+    implementation 'com.android.volley:volley:1.2.0'
+
     //glide for images
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
