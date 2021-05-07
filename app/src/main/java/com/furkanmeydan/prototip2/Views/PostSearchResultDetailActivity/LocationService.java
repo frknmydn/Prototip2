@@ -59,6 +59,7 @@ public class LocationService extends Service {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 4000, 0, (LocationListener) listener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listener);
         firebaseAuth = FirebaseAuth.getInstance();
+        Log.d("Tag Auth Service",firebaseAuth.getCurrentUser().getUid());
 
     }
 
