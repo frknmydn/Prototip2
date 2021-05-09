@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
 public class FragmentPostSearchResultDetail extends Fragment {
     private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, postCarDetail;
     private PostSearchResultDetailActivity activity;
-    Button btnSendRequest,btnAddToWish, btnStartService, btnEndService;
+    Button btnSendRequest,btnAddToWish, btnStartService, btnEndService, btnLocationTracking;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID, authID;
@@ -98,6 +98,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnAddToWish = view.findViewById(R.id.btnSearchResultDetailAddToWish);
         btnStartService = view.findViewById(R.id.btnSearchResultDetailStartService);
         btnEndService = view.findViewById(R.id.btnSearchResultDetailEndService);
+        btnLocationTracking = view.findViewById(R.id.btnSearchResultDetailTrackLocation);
         // Scroll Element
         postCarDetail.setMovementMethod(new ScrollingMovementMethod());
         postDescription.setMovementMethod(new ScrollingMovementMethod());

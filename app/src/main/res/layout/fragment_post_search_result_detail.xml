@@ -274,4 +274,18 @@
         app:layout_constraintStart_toStartOf="@+id/statik5"
         app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
 
+    <Button
+        android:id="@+id/btnSearchResultDetailTrackLocation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="70dp"
+        android:text="İlan Sahibini İzleyin"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchResultDetailSendRequest"
+        app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
+        app:layout_constraintStart_toStartOf="@+id/statik5"
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
