@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -59,6 +60,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
     FirebaseAuth firebaseAuth;
     RequestQueue queue;
 
+    ArrayList<Request> requestList;
+
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
     }
@@ -74,6 +77,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
         requestDAL = new RequestDAL();
         postDAL = new PostDAL();
         post = activity.post;
+        requestList = activity.requestList;
+        Log.d("Tag","Requestlist Size: "+requestList.size());
         firebaseAuth = FirebaseAuth.getInstance();
         OneSignal.initWithContext(activity);
         authID = firebaseAuth.getCurrentUser().getUid();
@@ -192,7 +197,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnLocationTracking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                activity.changeFragment(new FragmentPostSearchResultDetailLocationTracking());
             }
         });
 
@@ -218,16 +223,29 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
     // Eğer API'dan request boş gelmiyor ise tracking sayfasına yönlendircek butonun visibility'sini açmak için
     public void tryRequest(){
-        boolean flag = false;
-        String url = "https://carsharingapp.me/api/Positions/"+post.getPostID();
+
+        String url = "https://carsharingapp.me/api/Positions/GetPositionByPostID/"+post.getPostID();
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 
         JsonObjectRequest volleyRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                try {
+                    Long currentTimestamp = Timestamp.now().getSeconds();
+                    Long responseTimeStamp = response.getLong("timestamp");
+                    Long timestampDifference = currentTimestamp - responseTimeStamp;
+                    Log.d("Tag", "current timestamp: "+ currentTimestamp);
+                    Log.d("Tag", "response timestamp: "+ responseTimeStamp);
+                    Log.d("Tag", "timestamp arası fark" + timestampDifference);
+                    if(timestampDifference <= 180){
+                        btnLocationTracking.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.d("Tag", "onResponse çalışıyor");
-                btnLocationTracking.setVisibility(View.VISIBLE);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -338,9 +356,14 @@ public class FragmentPostSearchResultDetail extends Fragment {
         //
         postTime.setText(dateTime);
 
+        Log.d("Tag","AUTHID : "+ authID);
+        Log.d("Tag","RequestList Size : "+ requestList.size());
         if(!authID.equals(post.getOwnerID())){
             for(int i =0; i < activity.requestList.size();i++){
+                Log.d("Tag","SENDER ID: "+ requestList.get(i).getSenderID());
+
                 if(activity.requestList.get(i).getSenderID().equals(authID)){
+
                     tryRequest();
                     break;
                 }
