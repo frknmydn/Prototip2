@@ -42,9 +42,8 @@ public class LocationService extends Service {
     public LocationManager locationManager;
     public myLocationListener listener;
     public Location previousBestLocation = null;
-    FirebaseAuth firebaseAuth;
     RequestQueue queue;
-    String url,postOwnerID,postID,currentUserID;
+    String url,postOwnerID,postID, authID;
 
 
 
@@ -58,8 +57,8 @@ public class LocationService extends Service {
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 4000, 0, (LocationListener) listener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listener);
-        firebaseAuth = FirebaseAuth.getInstance();
-        Log.d("Tag Auth Service",firebaseAuth.getCurrentUser().getUid());
+
+        Log.d("TAGGGG","Çalışıyor");
 
     }
 
@@ -70,12 +69,13 @@ public class LocationService extends Service {
         queue = Volley.newRequestQueue(this);
         url = "https://carsharingapp.me/api/Positions";
 
-
+        Log.d("TAGGGG","Çalışıyor");
+        Log.d("TAGGGG",intent.getStringExtra("action"));
         if (intent.getStringExtra("action").equals("1")) {
-
-            currentUserID = firebaseAuth.getCurrentUser().getUid();
+            authID = intent.getStringExtra("authID");
             postOwnerID = intent.getStringExtra("postOwnerID");
             postID = intent.getStringExtra("postID");
+            Log.d("Tag service",authID+ postOwnerID);
 
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
@@ -191,7 +191,7 @@ public class LocationService extends Service {
         public void onLocationChanged(@NonNull Location location) {
             Log.d("Tag","Location has been changed!");
             if(isBetterLocation(location,previousBestLocation)){
-                if(currentUserID.equals(postOwnerID)){
+                if(authID.equals(postOwnerID)){
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     long time = location.getTime() / 1000;

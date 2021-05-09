@@ -32,6 +32,7 @@ import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OneSignal;
 
 import org.json.JSONException;
@@ -48,11 +49,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
     Button btnSendRequest,btnAddToWish, btnStartService, btnEndService;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
-    String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID;
+    String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID, authID;
     Post post;
     PostDAL postDAL;
     RequestDAL requestDAL;
     Dialog dialog;
+    FirebaseAuth firebaseAuth;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -69,9 +71,10 @@ public class FragmentPostSearchResultDetail extends Fragment {
         requestDAL = new RequestDAL();
         postDAL = new PostDAL();
         post = activity.post;
-
+        firebaseAuth = FirebaseAuth.getInstance();
         OneSignal.initWithContext(activity);
-        
+        authID = firebaseAuth.getCurrentUser().getUid();
+        Log.d("Tag service",authID+ post.getOwnerID());
     }
 
     @Override
@@ -98,6 +101,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         // Scroll Element
         postCarDetail.setMovementMethod(new ScrollingMovementMethod());
         postDescription.setMovementMethod(new ScrollingMovementMethod());
+
 
 
 
@@ -246,6 +250,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
                 serviceIntent.putExtra("postOwnerID",activity.post.getOwnerID());
                 serviceIntent.putExtra("postID",activity.post.getPostID());
+                serviceIntent.putExtra("authID",authID);
+
                 ContextCompat.startForegroundService(activity, serviceIntent);
                 localDataManager.setSharedPreference(activity,"isServiceEnable","1");
                 btnStartService.setVisibility(View.GONE);
