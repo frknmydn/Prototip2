@@ -1,17 +1,8 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +13,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
-import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
@@ -55,6 +57,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     RequestDAL requestDAL;
     Dialog dialog;
     FirebaseAuth firebaseAuth;
+    RequestQueue queue;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -74,6 +77,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         OneSignal.initWithContext(activity);
         authID = firebaseAuth.getCurrentUser().getUid();
+        queue = Volley.newRequestQueue(activity);
         Log.d("Tag service",authID+ post.getOwnerID());
     }
 
@@ -185,6 +189,13 @@ public class FragmentPostSearchResultDetail extends Fragment {
             }
         });
 
+        btnLocationTracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     private void addtoWish() {
@@ -204,6 +215,31 @@ public class FragmentPostSearchResultDetail extends Fragment {
         super.onResume();
         setData();
     }
+
+    // Eğer API'dan request boş gelmiyor ise tracking sayfasına yönlendircek butonun visibility'sini açmak için
+    public void tryRequest(){
+        boolean flag = false;
+        String url = "https://carsharingapp.me/api/Positions/"+post.getPostID();
+        Log.d("Tag","String url : " + url);
+        JSONObject jsonObject = new JSONObject();
+
+        JsonObjectRequest volleyRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Tag", "onResponse çalışıyor");
+                btnLocationTracking.setVisibility(View.VISIBLE);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Tag", "onErrorResponse çalışıyor: "+ error.getMessage());
+            }
+        });
+
+        queue.add(volleyRequest);
+
+    }
+
 
     private void setData() {
 
@@ -301,5 +337,16 @@ public class FragmentPostSearchResultDetail extends Fragment {
         String dateTime = dateCombinedFormat.format(date);
         //
         postTime.setText(dateTime);
+
+        if(!authID.equals(post.getOwnerID())){
+            for(int i =0; i < activity.requestList.size();i++){
+                if(activity.requestList.get(i).getSenderID().equals(authID)){
+                    tryRequest();
+                    break;
+                }
+            }
+
+
+        };
     }
 }
