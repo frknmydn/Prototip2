@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.LoginRegisterActivity.LoginRegisterActivity;
+import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.LocationService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -157,6 +159,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId()==R.id.signOut){
             firebaseAuth.signOut();
+            Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
+            serviceIntent.putExtra("action","0");
+            ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+            localDataManager.setSharedPreference(MainActivity.this,"isServiceEnable","0");
             Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
             startActivity(i);
             this.finish();

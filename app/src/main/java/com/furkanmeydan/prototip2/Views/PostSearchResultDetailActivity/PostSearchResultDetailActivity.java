@@ -102,6 +102,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             @Override
             public void onRequestsRetrievedNull() {
                 super.onRequestsRetrievedNull();
+                changeFragment(new FragmentPostSearchResultDetail());
             }
         });
         return requestList;

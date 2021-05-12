@@ -1,7 +1,10 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -33,6 +36,8 @@ import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OneSignal;
@@ -290,8 +295,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+                }else{
                 try {
-                    for(Request request: activity.requestList){
+                    for (Request request : activity.requestList) {
                         OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
                     }
 
@@ -301,17 +310,18 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
                 Intent serviceIntent = new Intent(activity, LocationService.class);
-                serviceIntent.putExtra("action","1");
+                serviceIntent.putExtra("action", "1");
                 serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
-                serviceIntent.putExtra("postOwnerID",activity.post.getOwnerID());
-                serviceIntent.putExtra("postID",activity.post.getPostID());
-                serviceIntent.putExtra("authID",authID);
+                serviceIntent.putExtra("postOwnerID", activity.post.getOwnerID());
+                serviceIntent.putExtra("postID", activity.post.getPostID());
+                serviceIntent.putExtra("authID", authID);
 
                 ContextCompat.startForegroundService(activity, serviceIntent);
-                localDataManager.setSharedPreference(activity,"isServiceEnable","1");
+                localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
                 btnStartService.setVisibility(View.GONE);
                 btnEndService.setVisibility(View.VISIBLE);
 
+            }
             }
         });
 
@@ -372,4 +382,15 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
         };
     }
-}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length > 0){
+            if (requestCode == 1 && ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+               Toast.makeText(activity,"Konum izni verilmiştir, lütfen servisi başlatınız",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+    }

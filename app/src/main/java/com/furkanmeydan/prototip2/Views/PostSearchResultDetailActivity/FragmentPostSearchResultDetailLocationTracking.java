@@ -1,9 +1,14 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,6 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -29,8 +36,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
@@ -41,6 +52,7 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
     private LatLng latLngPosition;
     Post post;
     Double lat,lng;
+    Long timestamp;
     String latString,lngString;
     RequestQueue queue;
 
@@ -113,7 +125,18 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
                     latString = response.getString("latitude");
                     lngString = response.getString("longitude");
                     latLngPosition = new LatLng(lat,lng);
-                    googleMapLocations.addMarker(new MarkerOptions().position(latLngPosition).title("Binmek istediği nokta"));
+                    timestamp = Long.valueOf(response.getString("timestamp"));
+
+                    //zaman işlemleri
+                    Log.d("Tag","Request timestamp: "+ String.valueOf(timestamp));
+
+                    SimpleDateFormat hourMinFormat = new SimpleDateFormat("HH:mm");
+                    Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));;
+                    String formattedHour = hourMinFormat.format(date);
+
+                    Log.d("Tag","Formattan sonra zaman saat : " + formattedHour);
+
+                    googleMapLocations.addMarker(new MarkerOptions().position(latLngPosition).title(formattedHour).icon(BitmapFromVector(activity,R.drawable.ic_baseline_car_24)).alpha(1.0f));
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(latLngPosition).zoom(14).build();
                     googleMapLocations.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     //Log.d("Tag","responseGetString" +response.getString("latitude"));
@@ -136,5 +159,17 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
 
         queue.add(volleyRequest);
 
+    }
+
+
+
+    private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        vectorDrawable.setAlpha(255);
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }
