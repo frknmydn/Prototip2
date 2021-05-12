@@ -141,17 +141,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId()==R.id.profile){
             firebaseFirestore.collection(CollectionHelper.USER_COLLECTION).document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
-                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    User user = Objects.requireNonNull(task.getResult()).toObject(User.class);
-                    if(user !=null){
-                        changeFragment(new ProfileFragment());
-                    }else{
-                        changeFragment(new SignUpFragment());
-                    }
-                }
-            });
+                    .get().addOnCompleteListener(task -> {
+                        User user = Objects.requireNonNull(task.getResult()).toObject(User.class);
+                        if(user !=null){
+                            changeFragment(new ProfileFragment());
+                        }else{
+                            changeFragment(new SignUpFragment());
+                        }
+                    });
 
 
         }

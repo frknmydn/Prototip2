@@ -3,18 +3,12 @@ package com.furkanmeydan.prototip2.DataLayer;
 import android.content.Context;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.Models.Block;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,14 +58,11 @@ public class BlockDAL {
 
     public void getBlockedListForPosts(final BlockCallback callback){
 
-        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                        List<Block> blocks = task.getResult().toObjects(Block.class);
-                        callback.onListRetrieved(blocks);
+        firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult() !=null){
+                    List<Block> blocks = task.getResult().toObjects(Block.class);
+                    callback.onListRetrieved(blocks);
 
-                }
             }
         });
 

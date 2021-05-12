@@ -62,12 +62,7 @@ public class FragmentAnswerQuestion extends Fragment {
         txtQuestion.setText(currentQuestion.getQuestionText());
         txtPostHeader.setText(currentQuestion.getPostHeaderText());
 
-        btnAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                answerQuestion();
-            }
-        });
+        btnAnswer.setOnClickListener(view1 -> answerQuestion());
 
     }
 

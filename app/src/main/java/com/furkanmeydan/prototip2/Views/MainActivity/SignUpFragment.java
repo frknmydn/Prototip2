@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,12 +10,6 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +17,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -84,6 +81,7 @@ public class SignUpFragment extends Fragment {
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,31 +126,22 @@ public class SignUpFragment extends Fragment {
 
 
         //Doğum tarihi seçtirmek
-        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        final DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, i, i1, i2) -> {
 
-                calendar.set(Calendar.YEAR, i);
-                calendar.set(Calendar.MONTH, i1 + 1);
-                calendar.set(Calendar.DAY_OF_MONTH, i2);
+            calendar.set(Calendar.YEAR, i);
+            calendar.set(Calendar.MONTH, i1 + 1);
+            calendar.set(Calendar.DAY_OF_MONTH, i2);
 
-                dateString = String.format("%02d/%02d/%04d", i2, i1 + 1, i);
-                edtBirthday.setText(dateString);
+            dateString = String.format("%02d/%02d/%04d", i2, i1 + 1, i);
+            edtBirthday.setText(dateString);
 //
 
-            }
         };
-        edtBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(view.getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-
-            }
-        });
+        edtBirthday.setOnClickListener(view1 -> new DatePickerDialog(view1.getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show());
 
 
         //spinner
-        genderSpinner = (Spinner) view.findViewById(R.id.signUpGender);
+        genderSpinner = view.findViewById(R.id.signUpGender);
         spinnerAdapter = ArrayAdapter.createFromResource(view.getContext(), R.array.genders_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(spinnerAdapter);
@@ -179,44 +168,38 @@ public class SignUpFragment extends Fragment {
 
 
         //Galeriden fotoğraf seçme işlemleri
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        imageView.setOnClickListener(view12 -> {
+            if (ContextCompat.checkSelfPermission(view12.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                    //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                    //Üstteki kod çalışmıyor
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                //Üstteki kod çalışmıyor
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-                } else {
-                    Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intentToGallery, 2);
-
-                }
+            } else {
+                Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intentToGallery, 2);
 
             }
+
         });
 
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nameSurnameString = edtNameSurname.getText().toString();
-                eMailString = edtEmail.getText().toString();
+        btnRegister.setOnClickListener(view13 -> {
+            nameSurnameString = edtNameSurname.getText().toString();
+            eMailString = edtEmail.getText().toString();
 
 
-                if (imageData != null) {
-                    if(!genderString.equals("Cinsiyet")){
-                        uploadImage();
-                    }
-                    else{
-                        Toast.makeText(getActivity(), "Lütfen Cinsiyetinizi Belirtiniz.", Toast.LENGTH_LONG).show();
-                    }
+            if (imageData != null) {
+                if(!genderString.equals("Cinsiyet")){
+                    uploadImage();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Lütfen Cinsiyetinizi Belirtiniz.", Toast.LENGTH_LONG).show();
+                }
 
-                } else
-                    Toast.makeText(getActivity(), "Lütfen Profil Fotoğrafı Seçin", Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getActivity(), "Lütfen Profil Fotoğrafı Seçin", Toast.LENGTH_LONG).show();
 
-            }
         });
 
 
@@ -227,19 +210,13 @@ public class SignUpFragment extends Fragment {
 
 
         final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + "jpg";
-        storageReference.child(imageName).putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
-                imgURLref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String imageURL = uri.toString();
-                        uploadData(imageURL);
+        storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
+            StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
+            imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
+                String imageURL = uri.toString();
+                uploadData(imageURL);
 
-                    }
-                });
-            }
+            });
         });
     }
 

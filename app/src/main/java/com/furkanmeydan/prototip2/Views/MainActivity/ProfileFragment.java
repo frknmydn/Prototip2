@@ -111,19 +111,9 @@ public class ProfileFragment extends Fragment {
         }else{
                 getData();
 
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    updatePicture();
-                }
-            });
+            imageView.setOnClickListener(view1 -> updatePicture());
 
-            btnUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    updatePictureData();
-                }
-            });
+            btnUpdate.setOnClickListener(view12 -> updatePictureData());
 
 
         }
@@ -182,18 +172,9 @@ public class ProfileFragment extends Fragment {
 
     public void updatePictureData() {
         final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + "jpg";
-        mainActivity.storageReference.child(imageName).putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
-                imgURLref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-
-                        Toast.makeText(mainActivity.getApplicationContext(), "Başarılı bir şekilde güncellendi", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+        mainActivity.storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
+            StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
+            imgURLref.getDownloadUrl().addOnSuccessListener(uri -> Toast.makeText(mainActivity.getApplicationContext(), "Başarılı bir şekilde güncellendi", Toast.LENGTH_LONG).show());
         });
     }
 

@@ -1,13 +1,9 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
-import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -92,24 +91,21 @@ public class FragmentRequestSenderProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_request_sender_profile, container, false);
-        mapView = (MapView) rootView.findViewById(R.id.mapView);
+        mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         mapView.onResume();
 
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                //googleMap.setMyLocationEnabled(true);
+        mapView.getMapAsync(mMap -> {
+            googleMap = mMap;
+            //googleMap.setMyLocationEnabled(true);
 
-                googleMap.addMarker(new MarkerOptions().position(latlng1).title("Binmek istediği nokta"));
-                googleMap.addMarker(new MarkerOptions().position(latLng2).title("İnmek istediği nokta"));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng1).zoom(14).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            googleMap.addMarker(new MarkerOptions().position(latlng1).title("Binmek istediği nokta"));
+            googleMap.addMarker(new MarkerOptions().position(latLng2).title("İnmek istediği nokta"));
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng1).zoom(14).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-            }
         });
 
         return rootView;
@@ -151,7 +147,7 @@ public class FragmentRequestSenderProfile extends Fragment {
                         try {
                             long timestamp = request.getPostTimestamp()-900L;
 
-                            SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
                             String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
                             Log.d("Tag","onesignal date: "+dateTime);
@@ -276,20 +272,12 @@ public class FragmentRequestSenderProfile extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                btnBlockNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                btnBlockNo.setOnClickListener(view1 -> dialog.dismiss());
             }
         });
 
-        btnShowComments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnShowComments.setOnClickListener(view12 -> {
 
-            }
         });
     }
 }

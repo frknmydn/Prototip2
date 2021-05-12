@@ -130,7 +130,7 @@ public class PostSearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(adapterView.getItemAtPosition(i).toString().equals("Cinsiyet")){
-
+                    Toast.makeText(postActivity,"Cinsiyet içi ",Toast.LENGTH_LONG).show();
                 }
                 else{
                     genderString= adapterView.getItemAtPosition(i).toString();
@@ -146,35 +146,29 @@ public class PostSearchFragment extends Fragment {
 
 
         // tarih seçtirme
-        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                calendar.set(Calendar.YEAR,i);
-                calendar.set(Calendar.MONTH,i1);
-                calendar.set(Calendar.DAY_OF_MONTH,i2);
+        final DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, i, i1, i2) -> {
+            calendar.set(Calendar.YEAR,i);
+            calendar.set(Calendar.MONTH,i1);
+            calendar.set(Calendar.DAY_OF_MONTH,i2);
 
 
-                //seçilen zamanı STring'e çevirme
-                dateString = simpleDateFormat.format(calendar.getTime());
-                dateCombined1 = dateString;
-                dateCombined2 = dateString;
-                edtSearchDate.setText(dateString);
-                edtSearchTime1.setVisibility(View.VISIBLE);
-                edtSearchTime2.setVisibility(View.VISIBLE);
+            //seçilen zamanı STring'e çevirme
+            dateString = simpleDateFormat.format(calendar.getTime());
+            dateCombined1 = dateString;
+            dateCombined2 = dateString;
+            edtSearchDate.setText(dateString);
+            edtSearchTime1.setVisibility(View.VISIBLE);
+            edtSearchTime2.setVisibility(View.VISIBLE);
 
-            }
         };
 
 
 
 
 
-        edtSearchDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(view.getContext(),dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        edtSearchDate.setOnClickListener(view1 ->
+                new DatePickerDialog(view1.getContext(),dateSetListener,calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show());
 
 
 
@@ -185,30 +179,27 @@ public class PostSearchFragment extends Fragment {
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minutes = calendar.get(Calendar.MINUTE);
 
-                timePickerDialog1 = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        calendar.set(Calendar.HOUR_OF_DAY,i);
-                        calendar.set(Calendar.MINUTE,i1);
+                timePickerDialog1 = new TimePickerDialog(getActivity(), (timePicker, i, i1) -> {
+                    calendar.set(Calendar.HOUR_OF_DAY,i);
+                    calendar.set(Calendar.MINUTE,i1);
 
-                        timeString1 = dateTimeFormat.format(calendar.getTime());
-                        edtSearchTime1.setText(timeString1);
+                    timeString1 = dateTimeFormat.format(calendar.getTime());
+                    edtSearchTime1.setText(timeString1);
 
-                        dateCombined1 = dateString;
-                        dateCombined1 = dateCombined1 + " "+ timeString1;
+                    dateCombined1 = dateString;
+                    dateCombined1 = dateCombined1 + " "+ timeString1;
 
-                        try{
-                            dateDate1 = dateCombinedFormat.parse(dateCombined1);
-                        }
-                        catch (ParseException e){
-
-                        }
-                        assert dateDate1 != null;
-                        timestamp1 = new Timestamp(dateDate1);
-                        Log.d("TAG timestamp1",timestamp1.toString());
-
+                    try{
+                        dateDate1 = dateCombinedFormat.parse(dateCombined1);
+                    }
+                    catch (ParseException e){
 
                     }
+                    assert dateDate1 != null;
+                    timestamp1 = new Timestamp(dateDate1);
+                    //Log.d("TAG timestamp1",timestamp1.toString());
+
+
                 },hour,minutes,true);
                 timePickerDialog1.show();
 
@@ -217,55 +208,46 @@ public class PostSearchFragment extends Fragment {
 
 
 
-        edtSearchTime2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calendar = Calendar.getInstance();
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minutes = calendar.get(Calendar.MINUTE);
+        edtSearchTime2.setOnClickListener(view12 -> {
+            calendar = Calendar.getInstance();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minutes = calendar.get(Calendar.MINUTE);
 
-                timePickerDialog2 = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        calendar.set(Calendar.HOUR_OF_DAY,i);
-                        calendar.set(Calendar.MINUTE,i1);
+            timePickerDialog2 = new TimePickerDialog(getActivity(), (timePicker, i, i1) -> {
+                calendar.set(Calendar.HOUR_OF_DAY,i);
+                calendar.set(Calendar.MINUTE,i1);
 
-                        timeString2 = dateTimeFormat.format(calendar.getTime());
-                        edtSearchTime2.setText(timeString2);
+                timeString2 = dateTimeFormat.format(calendar.getTime());
+                edtSearchTime2.setText(timeString2);
 
 
-                        dateCombined2 = dateString;
-                        dateCombined2 = dateCombined2 + " " + timeString2;
+                dateCombined2 = dateString;
+                dateCombined2 = dateCombined2 + " " + timeString2;
 
-                        try{
-                            dateDate2 = dateCombinedFormat.parse(dateCombined2);
-                        }
-                        catch (ParseException e){
+                try{
+                    dateDate2 = dateCombinedFormat.parse(dateCombined2);
+                }
+                catch (ParseException e){
 
-                        }
-                        assert dateDate2 != null;
-                        timestamp2 = new Timestamp(dateDate2);
-                        Log.d("TAG datecombined2",dateCombined2);
-                        Log.d("TAG timestamp2",timestamp2.toString());
-                    }
-                },hour,minutes,true);
-                timePickerDialog2.show();
+                }
+                assert dateDate2 != null;
+                timestamp2 = new Timestamp(dateDate2);
+                //Log.d("TAG datecombined2",dateCombined2);
+                //Log.d("TAG timestamp2",timestamp2.toString());
+            },hour,minutes,true);
+            timePickerDialog2.show();
 
-            }
         });
 
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSearch.setOnClickListener(view13 -> {
 
 
-                Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
-                if(args !=null){
-                    postActivity.changeFragmentArgs(new PostSearchUserLocationMapFragment(),args);
-                }
-
+            Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
+            if(args !=null){
+                postActivity.changeFragmentArgs(new PostSearchUserLocationMapFragment(),args);
             }
+
         });
 
     }

@@ -2,18 +2,13 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,12 +30,7 @@ public class RequestDAL {
         Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,postHeader, requestText,oneSignalID,ownerOneSignalID,postTimestamp);
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)
-                .collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).set(request).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onRequestSent();
-            }
-        });
+                .collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).set(request).addOnCompleteListener(task -> callback.onRequestSent());
 
 
     }
@@ -48,17 +38,14 @@ public class RequestDAL {
     public void getMyRequests(final RequestCallback callback){
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).
                 whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).
-                whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult()!=null){
-                    List<Request> list = task.getResult().toObjects(Request.class);
+                whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult()!=null){
+                        List<Request> list = task.getResult().toObjects(Request.class);
 
-                    callback.getRequestsToMe(list);
+                        callback.getRequestsToMe(list);
 
-                }
-            }
-        });
+                    }
+                });
 
     }
 
@@ -70,41 +57,30 @@ public class RequestDAL {
         long currentTimeSeconds = currentTime.getSeconds();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
                 .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).whereEqualTo(CollectionHelper.REQUEST_STATUS,1).whereGreaterThan(CollectionHelper.REQUEST_POSTTIMESTAMP,currentTimeSeconds)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    boolean flag;
-                   if(task.getResult().size() > 0){
-                       flag = true;
-                   }else{
-                       flag = false;
-                   }
-                    callback.onAcceptedRequestSearchResult(flag);
+                .get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        boolean flag;
+                        flag = task.getResult().size() > 0;
+                        callback.onAcceptedRequestSearchResult(flag);
 
-                }
-            }
-
-        });
+                    }
+                });
 
 
     }
 
     public void deleteRequestsOnBlock(String userid, String postOwnerID , final RequestCallback callback){
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
-                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    if(task.getResult().size() > 0) {
-                        for (DocumentSnapshot ds : task.getResult().getDocuments()) {
-                            ds.getReference().delete();
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        if(task.getResult().size() > 0) {
+                            for (DocumentSnapshot ds : task.getResult().getDocuments()) {
+                                ds.getReference().delete();
+                            }
                         }
+                        callback.onRequestsDeletedOnBlock();
                     }
-                    callback.onRequestsDeletedOnBlock();
-                }
-            }
-        });
+                });
 
     }
     public void getAcceptedRequestsISent(final RequestCallback callback){
@@ -112,32 +88,26 @@ public class RequestDAL {
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
                  .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
                  .whereEqualTo(CollectionHelper.REQUEST_STATUS, 1).get()
-                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    if(task.getResult().toObjects(Request.class).size() > 0){
-                        List<Request> list = task.getResult().toObjects(Request.class);
+                 .addOnCompleteListener(task -> {
+                     if(task.isSuccessful() && task.getResult() !=null){
+                         if(task.getResult().toObjects(Request.class).size() > 0){
+                             List<Request> list = task.getResult().toObjects(Request.class);
 
-                        callback.onRequestsRetrievedNotNull(list);
-                    }
-                }
-            }
-        });
+                             callback.onRequestsRetrievedNotNull(list);
+                         }
+                     }
+                 });
     }
     public void getAwatingRequestsISent(final RequestCallback callback){
         String currentUserID = firebaseAuth.getCurrentUser().getUid();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
                 .whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful() && task.getResult() !=null){
-                            if(task.getResult().toObjects(Request.class).size() > 0){
-                                List<Request> list = task.getResult().toObjects(Request.class);
-                                callback.onRequestsRetrievedNotNull(list);
-                            }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        if(task.getResult().toObjects(Request.class).size() > 0){
+                            List<Request> list = task.getResult().toObjects(Request.class);
+                            callback.onRequestsRetrievedNotNull(list);
                         }
                     }
                 });
@@ -147,13 +117,7 @@ public class RequestDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
-                .document(requestID).update(CollectionHelper.REQUEST_STATUS, 1).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                postDAL.decreasePassengerCount(postID,postOwnerID,callback);
-
-            }
-        });
+                .document(requestID).update(CollectionHelper.REQUEST_STATUS, 1).addOnCompleteListener(task -> postDAL.decreasePassengerCount(postID,postOwnerID,callback));
 
 
     }
@@ -161,12 +125,7 @@ public class RequestDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
-                .document(requestID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onRequestRejected();
-            }
-        });
+                .document(requestID).delete().addOnCompleteListener(task -> callback.onRequestRejected());
 
 
 
@@ -182,16 +141,12 @@ public class RequestDAL {
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult().size()>0){
-                    Log.d("RequestDalOncomplete","Çalışıyor");
-                    callback.onRequestRetrievedNotNull();
-                }
-            }
-        });
+                .get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult().size()>0){
+                        Log.d("RequestDalOncomplete","Çalışıyor");
+                        callback.onRequestRetrievedNotNull();
+                    }
+                });
 
 
 
@@ -221,21 +176,18 @@ public class RequestDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)
                 .collection(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_STATUS,1)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult()!=null){
-                    if(task.getResult().size() > 0){
-                        List<Request> list = task.getResult().toObjects(Request.class);
-                        Log.d("Tag","callbackonrequestretrievedNOTNULL");
-                        callback.onRequestsRetrievedNotNull(list);
+                .get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult()!=null){
+                        if(task.getResult().size() > 0){
+                            List<Request> list = task.getResult().toObjects(Request.class);
+                            Log.d("Tag","callbackonrequestretrievedNOTNULL");
+                            callback.onRequestsRetrievedNotNull(list);
+                        }
+                        else{
+                            Log.d("Tag","callbackonrequestretrievedNULL");
+                            callback.onRequestsRetrievedNull();
+                        }
                     }
-                    else{
-                        Log.d("Tag","callbackonrequestretrievedNULL");
-                        callback.onRequestsRetrievedNull();
-                    }
-                }
-            }
-        });
+                });
     }
 }

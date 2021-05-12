@@ -206,10 +206,13 @@ public class PostDAL {
 
     public void getPostsWithGender(double userFromLat, double userToLat, double userFromLng, double userToLng, long timestamp1, long timestamp2, String genderString, String cityString, Context context, int direction, final PostCallback postCallback) {
 
-        double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
-        double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
-        double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
-        double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+        /*
+            double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
+            double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
+            double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
+            double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+         */
+
 
         /*
         if(userToLat > userFromLat){
@@ -329,22 +332,19 @@ public class PostDAL {
                 .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
                 .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
                 .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-                    if (task.getResult() != null) {
+                        if (task.getResult() != null) {
 
 
-                        List<Post> list = task.getResult().toObjects(Post.class);
-                        System.out.println("Gelen liste boyutu: " + list.size());
-                        postCallback.getPosts(list);
+                            List<Post> list = task.getResult().toObjects(Post.class);
+                            System.out.println("Gelen liste boyutu: " + list.size());
+                            postCallback.getPosts(list);
 
+                        }
                     }
-                }
-            }
-        });
+                });
 
 
     }
@@ -470,22 +470,19 @@ public class PostDAL {
                 .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
                 .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
                 .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-                    if (task.getResult() != null) {
+                        if (task.getResult() != null) {
 
 
-                        List<Post> list = task.getResult().toObjects(Post.class);
-                        System.out.println("Gelen liste boyutu: " + list.size());
-                        postCallback.getPosts(list);
+                            List<Post> list = task.getResult().toObjects(Post.class);
+                            System.out.println("Gelen liste boyutu: " + list.size());
+                            postCallback.getPosts(list);
 
+                        }
                     }
-                }
-            }
-        });
+                });
 
 
     }
@@ -497,19 +494,16 @@ public class PostDAL {
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,1)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        List<Post> list = task.getResult().toObjects(Post.class);
-                        postCallback.getMyPosts(list);
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null) {
+                            List<Post> list = task.getResult().toObjects(Post.class);
+                            postCallback.getMyPosts(list);
+                        }
+
+
                     }
-
-
-                }
-            }
-        });
+                });
     }
     public void getMyOlderPosts(final PostCallback postCallback) {
 
@@ -517,18 +511,15 @@ public class PostDAL {
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,2)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        List<Post> list = task.getResult().toObjects(Post.class);
-                        postCallback.getMyPosts(list);
-                    }
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null) {
+                            List<Post> list = task.getResult().toObjects(Post.class);
+                            postCallback.getMyPosts(list);
+                        }
 
-                }
-            }
-        });
+                    }
+                });
     }
     public void getMyDeletedPosts(final PostCallback postCallback) {
 
@@ -536,19 +527,16 @@ public class PostDAL {
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,0)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        List<Post> list = task.getResult().toObjects(Post.class);
-                        postCallback.getMyPosts(list);
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null) {
+                            List<Post> list = task.getResult().toObjects(Post.class);
+                            postCallback.getMyPosts(list);
+                        }
+
+
                     }
-
-
-                }
-            }
-        });
+                });
     }
 
     public List<Post> filterWithLTGLNG(List<Post> posts, double userToLat, double userToLng, double userFromLat, double userFromLng) {
@@ -671,24 +659,18 @@ public class PostDAL {
     public void deletePost(Post post, final PostCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(post.getOwnerID())
                 .collection(CollectionHelper.POST_COLLECTION)
-                .document(post.getPostID()).update(CollectionHelper.POST_STATUS, 0).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onPostDeleted();
-            }
-        });
+                .document(post.getPostID()).update(CollectionHelper.POST_STATUS, 0).addOnCompleteListener(task -> callback.onPostDeleted());
     }
+
+
     public void getSinglePost(String postOwnerID, String postID, final PostCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                  .collection(CollectionHelper.POST_COLLECTION).document(postID).get()
-                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                     @Override
-                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                         if(task.isSuccessful()){
-                             if(task.getResult() !=null){
-                                 Post post = task.getResult().toObject(Post.class);
-                                 callback.getPost(post);
-                             }
+                 .addOnCompleteListener(task -> {
+                     if(task.isSuccessful()){
+                         if(task.getResult() !=null){
+                             Post post = task.getResult().toObject(Post.class);
+                             callback.getPost(post);
                          }
                      }
                  });
@@ -698,44 +680,33 @@ public class PostDAL {
 
 
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
-                 .document(postID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-               if(task.isSuccessful() &&task.getResult() !=null) {
-                   DocumentReference ref = task.getResult().getReference();
-                   Post post = task.getResult().toObject(Post.class);
-                   ArrayList<String> wishArray = post.getWishArray();
-                   if(!wishArray.contains(userId)){
-                       wishArray.add(userId);
-                   }
+                 .document(postID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() &&task.getResult() !=null) {
+                        DocumentReference ref = task.getResult().getReference();
+                        Post post = task.getResult().toObject(Post.class);
+                        ArrayList<String> wishArray = post.getWishArray();
+                        if(!wishArray.contains(userId)){
+                            wishArray.add(userId);
+                        }
 
 
-                   ref.update(CollectionHelper.POST_WISHARRAY,wishArray).addOnCompleteListener(new OnCompleteListener<Void>() {
-                       @Override
-                       public void onComplete(@NonNull Task<Void> task) {
-                           callback.onWishUpdated();
-                       }
-                   });
-               }
-            }
-        });
+                        ref.update(CollectionHelper.POST_WISHARRAY,wishArray).addOnCompleteListener(task1 -> callback.onWishUpdated());
+                    }
+                 });
 
     }
 
     public void removeFromWishListForBlock(String blockerID, String blockedID, PostCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION).document(blockerID).collection(CollectionHelper.POST_COLLECTION)
-                .whereArrayContains(CollectionHelper.POST_WISHARRAY,blockedID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    for(DocumentSnapshot ds : task.getResult().getDocuments()){
-                        ds.getReference().update(CollectionHelper.POST_WISHARRAY, FieldValue.arrayRemove(blockedID));
+                .whereArrayContains(CollectionHelper.POST_WISHARRAY,blockedID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        for(DocumentSnapshot ds : task.getResult().getDocuments()){
+                            ds.getReference().update(CollectionHelper.POST_WISHARRAY, FieldValue.arrayRemove(blockedID));
+                        }
+                        callback.deleteWishOnBlock();
                     }
-                    callback.deleteWishOnBlock();
-                }
-            }
-        });
+                });
 
 
     }
@@ -744,54 +715,43 @@ public class PostDAL {
         firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
                 .whereArrayContains(CollectionHelper.POST_WISHARRAY,userId)
                 .whereEqualTo(CollectionHelper.POST_STATUS,1)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult()!=null){
-                    if(task.getResult().toObjects(Post.class).size() > 0){
-                        List<Post> postList = task.getResult().toObjects(Post.class);
-                        Log.d("Tag","PostDAL getWishList size:" +" "+  postList.size());
-                        callback.OnWishListRetrieved(postList);
+                .get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult()!=null){
+                        if(task.getResult().toObjects(Post.class).size() > 0){
+                            List<Post> postList = task.getResult().toObjects(Post.class);
+                            Log.d("Tag","PostDAL getWishList size:" +" "+  postList.size());
+                            callback.OnWishListRetrieved(postList);
+                        }
+                        else{
+                            Log.d("Tag","PostDAL GetWishList patliyor");
+                        }
                     }
-                    else{
-                        Log.d("Tag","PostDAL GetWishList patliyor");
-                    }
-                }
-            }
-        });
+                });
     }
 
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
-                .document(postID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    DocumentSnapshot ds = task.getResult();
-                    DocumentReference dr = ds.getReference();
-                    Long passengerCount = (Long) ds.get(CollectionHelper.POST_PASSENGERCOUNT);
-                    if(passengerCount > 0L){
-                        dr.update(CollectionHelper.POST_PASSENGERCOUNT,FieldValue.increment(-1));
-                        passengerCount--;
-                        if(passengerCount == 0L){
-                            dr.update(CollectionHelper.POST_STATUS, 3).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    callback.onRequestAccepted();
-                                }
-                            });
+                .document(postID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        DocumentSnapshot ds = task.getResult();
+                        DocumentReference dr = ds.getReference();
+                        Long passengerCount = (Long) ds.get(CollectionHelper.POST_PASSENGERCOUNT);
+                        if(passengerCount > 0L){
+                            dr.update(CollectionHelper.POST_PASSENGERCOUNT,FieldValue.increment(-1));
+                            passengerCount--;
+                            if(passengerCount == 0L){
+                                dr.update(CollectionHelper.POST_STATUS, 3).addOnCompleteListener(task1 -> callback.onRequestAccepted());
+                            }
+                            callback.onRequestAccepted();
                         }
-                        callback.onRequestAccepted();
+
+
+
+
                     }
-
-
-
-
-                }
-            }
-        });
+                });
 
     }
     public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {

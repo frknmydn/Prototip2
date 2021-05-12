@@ -1,6 +1,9 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,18 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.furkanmeydan.prototip2.Adapters.BlockedUsersAdapter;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
-import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.Block;
-import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 

@@ -117,8 +117,6 @@ public class FragmentMyRequests extends Fragment {
                 acceptedRequestList.addAll(list);
                 if(acceptedRequestList !=null && acceptedRequestList.size() > 0){
                     getPosts(acceptedRequestList,1);
-                }else{
-
                 }
             }
         });
@@ -132,8 +130,6 @@ public class FragmentMyRequests extends Fragment {
                 waitingRequestList.addAll(list);
                 if(waitingRequestList !=null && waitingRequestList.size()>0){
                     getPosts(waitingRequestList,0);
-                }else{
-
                 }
             }
         });

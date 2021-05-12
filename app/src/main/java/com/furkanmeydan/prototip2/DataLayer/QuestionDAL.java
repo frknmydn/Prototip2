@@ -35,27 +35,19 @@ public class QuestionDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION).document(ownerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)
                 .collection(CollectionHelper.QUESTION_COLLECTION).document(questionID).set(questionObject)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        callback.onQuestionAdded();
-                    }
-                });
+                .addOnCompleteListener(task -> callback.onQuestionAdded());
 
     }
 
     public void getAnsweredQuestions(String userId,String postID,final QuestionCallback callback){
         firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,1)
                 .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).
-                whereEqualTo(CollectionHelper.QUESTION_POSTID,postID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult()!=null){
-                    List<Question> answeredQuestions = task.getResult().toObjects(Question.class);
-                    callback.onQuestionsRetrieved(answeredQuestions);
-                }
-            }
-        });
+                whereEqualTo(CollectionHelper.QUESTION_POSTID,postID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult()!=null){
+                        List<Question> answeredQuestions = task.getResult().toObjects(Question.class);
+                        callback.onQuestionsRetrieved(answeredQuestions);
+                    }
+                });
     }
 
 
@@ -64,17 +56,14 @@ public class QuestionDAL {
         Log.d("Tag","DAL getQuestions içi");
 
         firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,0)
-                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d("Tag","getQuestions task onComplete içi");
-                if(task.isSuccessful() && task.getResult() !=null){
-                    Log.d("Tag","getQuestions task is successful && null değil");
-                   List<Question> questions =  task.getResult().toObjects(Question.class);
-                    callback.onQuestionsRetrieved(questions);
-                }
-            }
-        });
+                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId).get().addOnCompleteListener(task -> {
+                    Log.d("Tag","getQuestions task onComplete içi");
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        Log.d("Tag","getQuestions task is successful && null değil");
+                       List<Question> questions =  task.getResult().toObjects(Question.class);
+                        callback.onQuestionsRetrieved(questions);
+                    }
+                });
 
 
     }
@@ -82,31 +71,25 @@ public class QuestionDAL {
     public void deactivateQuestion(String userId, String postId, String questionId, final QuestionCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
                 .collection(CollectionHelper.POST_COLLECTION).document(postId)
-                .collection(CollectionHelper.QUESTION_COLLECTION).document(questionId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    task.getResult().getReference().update(CollectionHelper.QUESTION_STATUS,-1);
-                    callback.onQuestionDeactivated();
-                }
-            }
-        });
+                .collection(CollectionHelper.QUESTION_COLLECTION).document(questionId).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        task.getResult().getReference().update(CollectionHelper.QUESTION_STATUS,-1);
+                        callback.onQuestionDeactivated();
+                    }
+                });
     }
 
     public void answerQuestion(String userId, String postId, String questionId, final String answer, final QuestionCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
                 .collection(CollectionHelper.POST_COLLECTION).document(postId)
-                .collection(CollectionHelper.QUESTION_COLLECTION).document(questionId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful() && task.getResult() !=null){
-                    DocumentReference docref = task.getResult().getReference();
-                    docref.update(CollectionHelper.QUESTION_STATUS,1);
-                    docref.update(CollectionHelper.QUESTION_ANSWER,answer);
-                    callback.onQuestionAnswered();
-                }
-            }
-        });
+                .collection(CollectionHelper.QUESTION_COLLECTION).document(questionId).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        DocumentReference docref = task.getResult().getReference();
+                        docref.update(CollectionHelper.QUESTION_STATUS,1);
+                        docref.update(CollectionHelper.QUESTION_ANSWER,answer);
+                        callback.onQuestionAnswered();
+                    }
+                });
     }
 
     public String getUserId() {

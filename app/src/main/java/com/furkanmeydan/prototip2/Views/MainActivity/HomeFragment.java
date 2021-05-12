@@ -41,14 +41,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,12 +93,9 @@ public class HomeFragment extends Fragment {
                         dialog.setContentView(R.layout.popup_fill_profile);
                         dialog.show();
                         Button btnProfileDialog = dialog.findViewById(R.id.btnPopupGoToProfile);
-                        btnProfileDialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                mainActivity.changeFragment(new SignUpFragment());
-                                dialog.dismiss();
-                            }
+                        btnProfileDialog.setOnClickListener(view1 -> {
+                            mainActivity.changeFragment(new SignUpFragment());
+                            dialog.dismiss();
                         });
                     }
 
@@ -118,12 +107,9 @@ public class HomeFragment extends Fragment {
 
 
         // Search Sayfasına gitme
-        btnSearchPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), PostActivity.class);
-                startActivity(i);
-            }
+        btnSearchPost.setOnClickListener(view12 -> {
+            Intent i = new Intent(getActivity(), PostActivity.class);
+            startActivity(i);
         });
     }
 }
