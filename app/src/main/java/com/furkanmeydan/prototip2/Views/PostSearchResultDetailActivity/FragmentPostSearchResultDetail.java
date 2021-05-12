@@ -1,7 +1,10 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -33,6 +36,8 @@ import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OneSignal;
@@ -41,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -59,6 +65,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
     FirebaseAuth firebaseAuth;
     RequestQueue queue;
 
+    ArrayList<Request> requestList;
+
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
     }
@@ -74,6 +82,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
         requestDAL = new RequestDAL();
         postDAL = new PostDAL();
         post = activity.post;
+        requestList = activity.requestList;
+        Log.d("Tag","Requestlist Size: "+requestList.size());
         firebaseAuth = FirebaseAuth.getInstance();
         OneSignal.initWithContext(activity);
         authID = firebaseAuth.getCurrentUser().getUid();
@@ -192,7 +202,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnLocationTracking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                activity.changeFragment(new FragmentPostSearchResultDetailLocationTracking());
             }
         });
 
@@ -218,16 +228,29 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
     // Eğer API'dan request boş gelmiyor ise tracking sayfasına yönlendircek butonun visibility'sini açmak için
     public void tryRequest(){
-        boolean flag = false;
-        String url = "https://carsharingapp.me/api/Positions/"+post.getPostID();
+
+        String url = "https://carsharingapp.me/api/Positions/GetPositionByPostID/"+post.getPostID();
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 
         JsonObjectRequest volleyRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                try {
+                    Long currentTimestamp = Timestamp.now().getSeconds();
+                    Long responseTimeStamp = response.getLong("timestamp");
+                    Long timestampDifference = currentTimestamp - responseTimeStamp;
+                    Log.d("Tag", "current timestamp: "+ currentTimestamp);
+                    Log.d("Tag", "response timestamp: "+ responseTimeStamp);
+                    Log.d("Tag", "timestamp arası fark" + timestampDifference);
+                    if(timestampDifference <= 180){
+                        btnLocationTracking.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.d("Tag", "onResponse çalışıyor");
-                btnLocationTracking.setVisibility(View.VISIBLE);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -272,8 +295,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+                }else{
                 try {
-                    for(Request request: activity.requestList){
+                    for (Request request : activity.requestList) {
                         OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
                     }
 
@@ -283,17 +310,18 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
                 Intent serviceIntent = new Intent(activity, LocationService.class);
-                serviceIntent.putExtra("action","1");
+                serviceIntent.putExtra("action", "1");
                 serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
-                serviceIntent.putExtra("postOwnerID",activity.post.getOwnerID());
-                serviceIntent.putExtra("postID",activity.post.getPostID());
-                serviceIntent.putExtra("authID",authID);
+                serviceIntent.putExtra("postOwnerID", activity.post.getOwnerID());
+                serviceIntent.putExtra("postID", activity.post.getPostID());
+                serviceIntent.putExtra("authID", authID);
 
                 ContextCompat.startForegroundService(activity, serviceIntent);
-                localDataManager.setSharedPreference(activity,"isServiceEnable","1");
+                localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
                 btnStartService.setVisibility(View.GONE);
                 btnEndService.setVisibility(View.VISIBLE);
 
+            }
             }
         });
 
@@ -338,9 +366,14 @@ public class FragmentPostSearchResultDetail extends Fragment {
         //
         postTime.setText(dateTime);
 
+        Log.d("Tag","AUTHID : "+ authID);
+        Log.d("Tag","RequestList Size : "+ requestList.size());
         if(!authID.equals(post.getOwnerID())){
             for(int i =0; i < activity.requestList.size();i++){
+                Log.d("Tag","SENDER ID: "+ requestList.get(i).getSenderID());
+
                 if(activity.requestList.get(i).getSenderID().equals(authID)){
+
                     tryRequest();
                     break;
                 }
@@ -349,4 +382,15 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
         };
     }
-}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length > 0){
+            if (requestCode == 1 && ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+               Toast.makeText(activity,"Konum izni verilmiştir, lütfen servisi başlatınız",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+    }

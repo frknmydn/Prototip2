@@ -42,7 +42,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         init();
         navigationViewSettings();
 
-        changeFragment(new FragmentPostSearchResultDetail());
+
     }
 
     private void navigationViewSettings() {
@@ -69,7 +69,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         navigationView1 = findViewById(R.id.postSearchResultDetailBottomNavigation);
         navigationView1.bringToFront();
 
-        approvedRequestsFragmentList();
+        requestList = approvedRequestsFragmentList();
     }
 
 
@@ -95,11 +95,14 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             public void onRequestsRetrievedNotNull(List<Request> list) {
                 super.onRequestsRetrievedNotNull(list);
                 requestList.addAll(list);
+                changeFragment(new FragmentPostSearchResultDetail());
+
             }
 
             @Override
             public void onRequestsRetrievedNull() {
                 super.onRequestsRetrievedNull();
+                changeFragment(new FragmentPostSearchResultDetail());
             }
         });
         return requestList;

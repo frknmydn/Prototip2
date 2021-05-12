@@ -2,6 +2,8 @@ package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -136,6 +138,21 @@ public class UploadMapFragment extends Fragment {
 
 
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length > 0){
+            if (requestCode == 1 && ContextCompat.checkSelfPermission(postActivity,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Location lastLocation = locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
+                if (lastLocation != null) {
+                    LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
+                }
+            }
+        }
+
+    }
 
     @Nullable
     @Override

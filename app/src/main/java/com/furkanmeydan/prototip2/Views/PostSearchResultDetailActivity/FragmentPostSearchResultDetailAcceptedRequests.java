@@ -53,7 +53,7 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
         activity = (PostSearchResultDetailActivity) getActivity();
         post = activity.post;
         requestList = activity.requestList;
-
+        Log.d("Tag","Requestlist Size: "+requestList.size());
 
     }
 
