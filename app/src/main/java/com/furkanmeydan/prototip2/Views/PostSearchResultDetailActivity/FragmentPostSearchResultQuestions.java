@@ -15,9 +15,11 @@ import android.widget.Button;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Question;
 import com.furkanmeydan.prototip2.Adapters.QuestionsRCLAdapter;
 import com.furkanmeydan.prototip2.R;
+import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,9 @@ public class FragmentPostSearchResultQuestions extends Fragment {
     QuestionsRCLAdapter adapter;
     ArrayList<Question> questionList;
     QuestionDAL questionDAL;
+    Post post;
+    Long currentTimestamp;
+    boolean isPostOutdated;
 
     public FragmentPostSearchResultQuestions() {
         // Required empty public constructor
@@ -43,6 +48,9 @@ public class FragmentPostSearchResultQuestions extends Fragment {
         activity = (PostSearchResultDetailActivity) getActivity();
         questionList = new ArrayList<>();
         questionDAL = new QuestionDAL();
+        post = activity.post;
+        currentTimestamp = Timestamp.now().getSeconds();
+        isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
 
     }
 
@@ -63,15 +71,23 @@ public class FragmentPostSearchResultQuestions extends Fragment {
         adapter = new QuestionsRCLAdapter(questionList);
         recyclerView.setAdapter(adapter);
 
+        currentTimestamp = Timestamp.now().getSeconds();
+        isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
+
         getQuestions();
 
+        if(isPostOutdated){
+            btnAskQuestion.setVisibility(View.GONE);
+        }
+        else{
+            btnAskQuestion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.changeFragment(new FragmentPostSearchResultAskQuestion());
+                }
+            });
+        }
 
-        btnAskQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.changeFragment(new FragmentPostSearchResultAskQuestion());
-            }
-        });
     }
 
 

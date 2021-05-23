@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
+import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
+import com.google.firebase.Timestamp;
 
 
 public class FragmentPostSearchResultAskQuestion extends Fragment {
@@ -25,6 +27,9 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
     QuestionDAL questionDAL;
     String postOwnerID,postID;
     LocalDataManager localDataManager;
+    Post post;
+    Long currentTimestamp;
+    boolean isPostOutdated;
 
     public FragmentPostSearchResultAskQuestion() {
     }
@@ -35,9 +40,12 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
         super.onCreate(savedInstanceState);
         activity = (PostSearchResultDetailActivity) getActivity();
         questionDAL = new QuestionDAL();
+        post = activity.post;
         postOwnerID = activity.post.getOwnerID();
         postID = activity.post.getPostID();
         localDataManager = new LocalDataManager();
+        currentTimestamp = Timestamp.now().getSeconds();
+        isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
     }
 
     @Override
@@ -53,23 +61,27 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
         edtTxt = view.findViewById(R.id.fragmentPostSearchResultAskQuestionEdtxt);
         btnSend = view.findViewById(R.id.fragmentPostSearchResultAskQuestionbtn);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (isPostOutdated) {
+            btnSend.setVisibility(View.GONE);
+        } else {
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                String question = edtTxt.getText().toString();
-                String postHeader = activity.post.getDescription();
-                String senderName = localDataManager.getSharedPreference(activity,"sharedNameSurname",null);
-                questionDAL.uploadQuestion(question, postOwnerID, postID,postHeader,senderName, new QuestionCallback() {
-                    @Override
-                    public void onQuestionAdded() {
-                        super.onQuestionAdded();
-                        activity.onBackPressed();
-                    }
-                });
+                    String question = edtTxt.getText().toString();
+                    String postHeader = activity.post.getDescription();
+                    String senderName = localDataManager.getSharedPreference(activity, "sharedNameSurname", null);
+                    questionDAL.uploadQuestion(question, postOwnerID, postID, postHeader, senderName, new QuestionCallback() {
+                        @Override
+                        public void onQuestionAdded() {
+                            super.onQuestionAdded();
+                            activity.onBackPressed();
+                        }
+                    });
 
 
-            }
-        });
+                }
+            });
+        }
     }
 }

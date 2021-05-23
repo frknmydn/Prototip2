@@ -41,17 +41,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity" />
-        <activity android:name=".Views.PostActivity.PostActivity" />
-        <activity android:name=".Views.UploadPostActivity.UploadPostActivity" />
-        <activity android:name=".Views.LoginRegisterActivity.LoginRegisterActivity">
+        <activity android:name=".Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Views.PostActivity.PostActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Views.UploadPostActivity.UploadPostActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Views.LoginRegisterActivity.LoginRegisterActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.MainActivity.MainActivity" />
+        <activity android:name=".Views.MainActivity.MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

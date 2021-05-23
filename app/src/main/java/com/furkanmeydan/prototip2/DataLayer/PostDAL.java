@@ -472,7 +472,6 @@ public class PostDAL {
                 .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-
                         if (task.getResult() != null) {
 
 
@@ -490,10 +489,13 @@ public class PostDAL {
 
     public void getMyPosts(final PostCallback postCallback) {
 
+        long currentTimestamp = Timestamp.now().getSeconds();
+
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,1)
+                .whereGreaterThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp - 10*60)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
@@ -507,10 +509,13 @@ public class PostDAL {
     }
     public void getMyOlderPosts(final PostCallback postCallback) {
 
+        long currentTimestamp = Timestamp.now().getSeconds();
+
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
-                .whereEqualTo(CollectionHelper.POST_STATUS,2)
+                //.whereEqualTo(CollectionHelper.POST_STATUS,2) Daha süresi geçen postların statusunu otomatik 2 yapma fonksiyonumuz yok
+                .whereLessThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {

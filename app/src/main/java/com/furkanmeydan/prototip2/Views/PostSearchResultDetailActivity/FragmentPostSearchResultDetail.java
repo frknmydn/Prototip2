@@ -64,8 +64,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
     Dialog dialog;
     FirebaseAuth firebaseAuth;
     RequestQueue queue;
-
+    Long currentTimestamp;
     ArrayList<Request> requestList;
+    boolean isPostOutdated;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -89,6 +90,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
         authID = firebaseAuth.getCurrentUser().getUid();
         queue = Volley.newRequestQueue(activity);
         Log.d("Tag service",authID+ post.getOwnerID());
+        currentTimestamp = Timestamp.now().getSeconds();
+        isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
     }
 
     @Override
@@ -237,13 +240,13 @@ public class FragmentPostSearchResultDetail extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Long currentTimestamp = Timestamp.now().getSeconds();
+
                     Long responseTimeStamp = response.getLong("timestamp");
                     Long timestampDifference = currentTimestamp - responseTimeStamp;
                     Log.d("Tag", "current timestamp: "+ currentTimestamp);
                     Log.d("Tag", "response timestamp: "+ responseTimeStamp);
                     Log.d("Tag", "timestamp arası fark" + timestampDifference);
-                    if(timestampDifference <= 180){
+                    if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
                         btnLocationTracking.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
@@ -276,111 +279,121 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 
-
-
-        //Eğer kullanıcı post sahibiyse ve ilan saatine 3 dakikadan az süre kalmışsa
-        long ts = Timestamp.now().getSeconds();
-        if(activity.post.getTimestamp() - 180 <= ts && activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())){
-            if(localDataManager.getSharedPreference(activity,"isServiceEnable",null) ==null || localDataManager.getSharedPreference(activity,"isServiceEnable",null).equals("0")){
-                btnStartService.setVisibility(View.VISIBLE);
-            }
-            else if(localDataManager.getSharedPreference(activity,"isServiceEnable",null).equals("1")){
-                btnEndService.setVisibility(View.VISIBLE);
-            }
-
+        if(isPostOutdated){
+            btnSendRequest.setVisibility(View.GONE);
+            btnAddToWish.setVisibility(View.GONE);
+            btnLocationTracking.setVisibility(View.GONE);
+            btnStartService.setVisibility(View.GONE);
+            btnEndService.setVisibility(View.GONE);
         }
 
-
-
-        btnStartService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-                }else{
-                try {
-                    for (Request request : activity.requestList) {
-                        OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+        else {
+            //Eğer kullanıcı post sahibiyse ve ilan saatine 3 dakikadan az süre kalmışsa
+            long ts = Timestamp.now().getSeconds();
+            if (activity.post.getTimestamp() - 180 <= ts && activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
+                if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
+                    if (post.getTimestamp() > currentTimestamp - 180) {
+                        btnStartService.setVisibility(View.VISIBLE);
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else if (localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("1")) {
+                    btnEndService.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+
+            btnStartService.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+                    } else {
+                        try {
+                            for (Request request : activity.requestList) {
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        Intent serviceIntent = new Intent(activity, LocationService.class);
+                        serviceIntent.putExtra("action", "1");
+                        serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
+                        serviceIntent.putExtra("postOwnerID", activity.post.getOwnerID());
+                        serviceIntent.putExtra("postID", activity.post.getPostID());
+                        serviceIntent.putExtra("authID", authID);
+
+                        ContextCompat.startForegroundService(activity, serviceIntent);
+                        localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
+                        btnStartService.setVisibility(View.GONE);
+                        btnEndService.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            });
+
+            btnEndService.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    btnEndService.setVisibility(View.GONE);
+                    btnStartService.setVisibility(View.VISIBLE);
+                    Intent serviceIntent = new Intent(activity, LocationService.class);
+                    serviceIntent.putExtra("action", "0");
+                    ContextCompat.startForegroundService(activity, serviceIntent);
+                    localDataManager.setSharedPreference(activity, "isServiceEnable", "0");
+
+                }
+            });
+
+            requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {
+                @Override
+                public void onRequestRetrievedNotNull() {
+                    super.onRequestRetrievedNotNull();
+
+                    btnSendRequest.setClickable(false);
+                    btnSendRequest.setFocusable(false);
+                    btnSendRequest.setText("İstek gönderildi");
+                }
+            });
+
+            if (post.getWishArray().contains(activity.firebaseAuth.getCurrentUser().getUid())) {
+                btnAddToWish.setClickable(false);
+                btnAddToWish.setFocusable(false);
+                btnAddToWish.setText("Takip ediyorsunuz");
+            }
+
+            //zaman işlemleri
+            long timeStampp = activity.post.getTimestamp();
+            Log.d("Post Tag timestamp", String.valueOf(timeStampp));
+            SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+            Date date = new Date(TimeUnit.SECONDS.toMillis(timeStampp));
+
+            String dateTime = dateCombinedFormat.format(date);
+            //
+            postTime.setText(dateTime);
+
+            Log.d("Tag", "AUTHID : " + authID);
+            Log.d("Tag", "RequestList Size : " + requestList.size());
+            if (!authID.equals(post.getOwnerID())) {
+                for (int i = 0; i < activity.requestList.size(); i++) {
+                    Log.d("Tag", "SENDER ID: " + requestList.get(i).getSenderID());
+
+                    if (activity.requestList.get(i).getSenderID().equals(authID)) {
+
+                        tryRequest();
+                        break;
+                    }
                 }
 
 
-                Intent serviceIntent = new Intent(activity, LocationService.class);
-                serviceIntent.putExtra("action", "1");
-                serviceIntent.putExtra("inputExtra", "Yol arkadaşlarınız yolculuğunuz boyunca sizi takip edebilir");
-                serviceIntent.putExtra("postOwnerID", activity.post.getOwnerID());
-                serviceIntent.putExtra("postID", activity.post.getPostID());
-                serviceIntent.putExtra("authID", authID);
-
-                ContextCompat.startForegroundService(activity, serviceIntent);
-                localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
-                btnStartService.setVisibility(View.GONE);
-                btnEndService.setVisibility(View.VISIBLE);
-
             }
-            }
-        });
-
-        btnEndService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnEndService.setVisibility(View.GONE);
-                btnStartService.setVisibility(View.VISIBLE);
-                Intent serviceIntent = new Intent(activity, LocationService.class);
-                serviceIntent.putExtra("action","0");
-                ContextCompat.startForegroundService(activity, serviceIntent);
-                localDataManager.setSharedPreference(activity,"isServiceEnable","0");
-
-            }
-        });
-
-        requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {
-            @Override
-            public void onRequestRetrievedNotNull() {
-                super.onRequestRetrievedNotNull();
-
-                btnSendRequest.setClickable(false);
-                btnSendRequest.setFocusable(false);
-                btnSendRequest.setText("İstek gönderildi");
-            }
-        });
-
-        if(post.getWishArray().contains(activity.firebaseAuth.getCurrentUser().getUid())){
-            btnAddToWish.setClickable(false);
-            btnAddToWish.setFocusable(false);
-            btnAddToWish.setText("Takip ediyorsunuz");
+            ;
         }
-
-        //zaman işlemleri
-        long timeStampp = activity.post.getTimestamp();
-        Log.d("Post Tag timestamp", String.valueOf(timeStampp));
-        SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-        Date date = new Date(TimeUnit.SECONDS.toMillis(timeStampp));
-
-        String dateTime = dateCombinedFormat.format(date);
-        //
-        postTime.setText(dateTime);
-
-        Log.d("Tag","AUTHID : "+ authID);
-        Log.d("Tag","RequestList Size : "+ requestList.size());
-        if(!authID.equals(post.getOwnerID())){
-            for(int i =0; i < activity.requestList.size();i++){
-                Log.d("Tag","SENDER ID: "+ requestList.get(i).getSenderID());
-
-                if(activity.requestList.get(i).getSenderID().equals(authID)){
-
-                    tryRequest();
-                    break;
-                }
-            }
-
-
-        };
     }
 
     @Override

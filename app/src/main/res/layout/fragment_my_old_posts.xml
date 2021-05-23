@@ -7,7 +7,7 @@
     tools:context=".Views.MainActivity.MyPostFragment">
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/textView114"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="10dp"
@@ -16,7 +16,7 @@
         android:background="#E6E9FF"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="AKTİF İLANLARINIZ"
+        android:text="GEÇMİŞ İLANLARINIZ"
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,23 +24,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myPostRCL"
+        android:id="@+id/myOldPostsRCL"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/textView114" />
 
-    <Button
-        android:id="@+id/myPostBtnPastPosts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="GEÇMİŞ İLANLARIM"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPostRCL" />
 </androidx.constraintlayout.widget.ConstraintLayout>

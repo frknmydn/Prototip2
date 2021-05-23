@@ -13,16 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.furkanmeydan.prototip2.Adapters.myPostRecyclerAdapter;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Post;
-import com.furkanmeydan.prototip2.Adapters.myPostRecyclerAdapter;
 import com.furkanmeydan.prototip2.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPostFragment extends Fragment {
+
+public class MyOldPostsFragment extends Fragment {
 
     myPostRecyclerAdapter postRCLAdapter;
     RecyclerView recyclerView;
@@ -32,48 +33,34 @@ public class MyPostFragment extends Fragment {
 
     PostDAL postDAL;
 
-
-    public MyPostFragment() {
+    public MyOldPostsFragment() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        posts = new ArrayList<>();
         postDAL = new PostDAL();
         activity = (MainActivity) getActivity();
-
+        posts = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_post, container, false);
+        return inflater.inflate(R.layout.fragment_my_old_posts, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        recyclerView = view.findViewById(R.id.myPostRCL);
+        recyclerView = view.findViewById(R.id.myOldPostsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         postRCLAdapter = new myPostRecyclerAdapter(activity,posts);
         recyclerView.setAdapter(postRCLAdapter);
-        btnPastPosts = view.findViewById(R.id.myPostBtnPastPosts);
-
-        getMyPosts();
-
-        btnPastPosts.setOnClickListener(view1 -> {
-            activity.changeFragment(new MyOldPostsFragment());
-        });
-
     }
 
     @Override
@@ -83,7 +70,7 @@ public class MyPostFragment extends Fragment {
     }
 
     public void getMyPosts(){
-        postDAL.getMyPosts(new PostCallback() {
+        postDAL.getMyOlderPosts(new PostCallback() {
             @Override
             public void getMyPosts(List<Post> list) {
                 super.getMyPosts(list);
