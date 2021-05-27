@@ -42,6 +42,11 @@ public class PostSearchFragment extends Fragment {
     String dateString;
     String timeString1,timeString2, dateCombined1, dateCombined2;
 
+    //Geçmiş günleri seçmesini engellemek için kullanılıyor
+
+    long timeNow = Timestamp.now().getSeconds() * 1000;
+    long timeMaxDifference = (14 * 24 * 60 * 60 * 1000);
+
 
     private SimpleDateFormat simpleDateFormat, dateTimeFormat, dateCombinedFormat;
 
@@ -53,6 +58,7 @@ public class PostSearchFragment extends Fragment {
     ArrayAdapter<CharSequence> searchCitySpinnerAdapter;
     ArrayAdapter<CharSequence> searchGenderSpinnerAdapter;
 
+    DatePickerDialog datePickerDialog;
 
     PostActivity postActivity;
     PostDAL postDAL;
@@ -147,9 +153,12 @@ public class PostSearchFragment extends Fragment {
 
         // tarih seçtirme
         final DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, i, i1, i2) -> {
+
             calendar.set(Calendar.YEAR,i);
             calendar.set(Calendar.MONTH,i1);
             calendar.set(Calendar.DAY_OF_MONTH,i2);
+
+
 
 
             //seçilen zamanı STring'e çevirme
@@ -163,47 +172,46 @@ public class PostSearchFragment extends Fragment {
         };
 
 
+        datePickerDialog = new DatePickerDialog(postActivity,dateSetListener,calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(timeNow);
+        datePickerDialog.getDatePicker().setMaxDate(timeNow + timeMaxDifference);
+
+
+        edtSearchDate.setOnClickListener(view1 -> datePickerDialog.show());
 
 
 
-        edtSearchDate.setOnClickListener(view1 ->
-                new DatePickerDialog(view1.getContext(),dateSetListener,calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show());
+        edtSearchTime1.setOnClickListener(view14 -> {
+            calendar = Calendar.getInstance();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minutes = calendar.get(Calendar.MINUTE);
 
 
+            timePickerDialog1 = new TimePickerDialog(getActivity(), (timePicker, i, i1) -> {
+                calendar.set(Calendar.HOUR_OF_DAY,i);
+                calendar.set(Calendar.MINUTE,i1);
 
-        edtSearchTime1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calendar = Calendar.getInstance();
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minutes = calendar.get(Calendar.MINUTE);
+                timeString1 = dateTimeFormat.format(calendar.getTime());
+                edtSearchTime1.setText(timeString1);
 
-                timePickerDialog1 = new TimePickerDialog(getActivity(), (timePicker, i, i1) -> {
-                    calendar.set(Calendar.HOUR_OF_DAY,i);
-                    calendar.set(Calendar.MINUTE,i1);
+                dateCombined1 = dateString;
+                dateCombined1 = dateCombined1 + " "+ timeString1;
 
-                    timeString1 = dateTimeFormat.format(calendar.getTime());
-                    edtSearchTime1.setText(timeString1);
+                try{
+                    dateDate1 = dateCombinedFormat.parse(dateCombined1);
+                }
+                catch (ParseException e){
 
-                    dateCombined1 = dateString;
-                    dateCombined1 = dateCombined1 + " "+ timeString1;
-
-                    try{
-                        dateDate1 = dateCombinedFormat.parse(dateCombined1);
-                    }
-                    catch (ParseException e){
-
-                    }
-                    assert dateDate1 != null;
-                    timestamp1 = new Timestamp(dateDate1);
-                    //Log.d("TAG timestamp1",timestamp1.toString());
+                }
+                assert dateDate1 != null;
+                timestamp1 = new Timestamp(dateDate1);
+                //Log.d("TAG timestamp1",timestamp1.toString());
 
 
-                },hour,minutes,true);
-                timePickerDialog1.show();
+            },hour,minutes,true);
+            timePickerDialog1.show();
 
-            }
         });
 
 
@@ -241,6 +249,7 @@ public class PostSearchFragment extends Fragment {
 
 
         btnSearch.setOnClickListener(view13 -> {
+
 
 
             Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);

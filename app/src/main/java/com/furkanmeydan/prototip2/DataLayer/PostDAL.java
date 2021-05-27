@@ -204,7 +204,7 @@ public class PostDAL {
         return direction;
     }
 
-    public void getPostsWithGender(double userFromLat, double userToLat, double userFromLng, double userToLng, long timestamp1, long timestamp2, String genderString, String cityString, Context context, int direction, final PostCallback postCallback) {
+    public void getPostsWithGender(long timestamp1, long timestamp2, String genderString, String cityString, Context context, int direction, final PostCallback postCallback) {
 
         /*
             double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
@@ -325,6 +325,7 @@ public class PostDAL {
          */
 
 
+
         firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS, 1)
                 .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY, cityString)
@@ -350,7 +351,7 @@ public class PostDAL {
     }
 
 
-    public void getPostsWithOUTGender(double userFromLat, double userToLat, double userFromLng, double userToLng, long timestamp1, long timestamp2, String cityString, Context context, int direction, final PostCallback postCallback) {
+    public void getPostsWithOUTGender(long timestamp1, long timestamp2, String cityString, Context context, int direction, final PostCallback postCallback) {
 
         double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
         double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);

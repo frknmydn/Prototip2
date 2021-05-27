@@ -93,7 +93,7 @@ public class PostSearchResultFragment extends Fragment {
         recyclerView.setAdapter(resultAdapter);
 
         if(gender.equals("Fark Etmez")){
-            postDAL.getPostsWithOUTGender(userlat1, userlat2, userlng1, userlng2, timestamp1, timestamp2, city, postActivity,direction, new PostCallback() {
+            postDAL.getPostsWithOUTGender(timestamp1, timestamp2, city, postActivity,direction, new PostCallback() {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);
@@ -125,7 +125,7 @@ public class PostSearchResultFragment extends Fragment {
         }
         else {
 
-            postDAL.getPostsWithGender(userlat1, userlat2, userlng1, userlng2,timestamp1, timestamp2, gender, city, postActivity,direction, new PostCallback() {
+            postDAL.getPostsWithGender(timestamp1, timestamp2, gender, city, postActivity,direction, new PostCallback() {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);

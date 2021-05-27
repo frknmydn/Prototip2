@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         else if(item.getItemId() == R.id.RequestsISent){
-            changeFragment(new FragmentMyRequests());
+            changeFragment(new FragmentMyRequests2());
         }
         else if(item.getItemId() == R.id.wish_list){
             changeFragment(new FragmentWishList());

@@ -2,7 +2,10 @@ package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.android.volley.RequestQueue;
@@ -67,6 +71,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     Long currentTimestamp;
     ArrayList<Request> requestList;
     boolean isPostOutdated;
+    BroadcastReceiver localBroadcastReceiver;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -92,6 +97,28 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("Tag service",authID+ post.getOwnerID());
         currentTimestamp = Timestamp.now().getSeconds();
         isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
+        localBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String string = intent.getStringExtra("durdur");
+                if(string.equals("durdur")){
+                    btnEndService.setVisibility(View.GONE);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(activity).registerReceiver(localBroadcastReceiver,new IntentFilter("durdur"));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(activity).unregisterReceiver(localBroadcastReceiver);
+        super.onStop();
+
     }
 
     @Override
@@ -279,6 +306,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 
+
         if(isPostOutdated){
             btnSendRequest.setVisibility(View.GONE);
             btnAddToWish.setVisibility(View.GONE);
@@ -329,7 +357,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                         ContextCompat.startForegroundService(activity, serviceIntent);
                         localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
-                        btnStartService.setVisibility(View.GONE);
+                        //btnStartService.setVisibility(View.GONE);
                         btnEndService.setVisibility(View.VISIBLE);
 
                     }
@@ -392,7 +420,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
             }
-            ;
+
         }
     }
 

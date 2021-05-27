@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,7 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonObject;
 
@@ -45,11 +48,27 @@ public class LocationService extends Service {
     RequestQueue queue;
     String url,postOwnerID,postID, authID;
 
+    LocalBroadcastManager localBroadcastManager;
+    PendingIntent pendingStopIntent;
+    LocalDataManager localDataManager;
+
+    String ACTION_STOP_SERVICE= "STOP";
+
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        // servisi notificationdan kapatmak için.
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        Intent snoozeIntent = new Intent(this, LocationService.class);
+        snoozeIntent.putExtra("action","0");
+        snoozeIntent.setAction(this.ACTION_STOP_SERVICE);
+
+        pendingStopIntent = PendingIntent.getService(LocationService.this,0,snoozeIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+
+        localDataManager = new LocalDataManager();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new myLocationListener();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -65,9 +84,10 @@ public class LocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-
         queue = Volley.newRequestQueue(this);
         url = "https://carsharingapp.me/api/Positions";
+
+
 
         Log.d("TAGGGG","Çalışıyor");
         Log.d("TAGGGG",intent.getStringExtra("action"));
@@ -79,24 +99,39 @@ public class LocationService extends Service {
 
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
-        Intent notificationIntent = new Intent(this, PostSearchResultDetailActivity.class);
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
+
+
+
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Yolculuk kaydınız başlamıştır.")
                 .setContentText(input)
+                .addAction(R.drawable.common_google_signin_btn_icon_dark_focused,"DURDUR",pendingStopIntent)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_light)
                 .setContentIntent(pendingIntent)
                 .build();
         startForeground(1, notification);
     }
-        else if (intent.getStringExtra("action").equals("0")){
+        else if (intent.getStringExtra("action").equals("0") || intent.getStringExtra("action").equals(this.ACTION_STOP_SERVICE)){
+            sendResult("durdur");
+            localDataManager.setSharedPreference(this, "isServiceEnable", "0");
             stopForeground(true);
             stopSelf();
+
         }
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
+    }
+
+    public void sendResult(String message) {
+        Intent intent = new Intent("durdur");
+        if(message != null)
+            intent.putExtra("durdur", message);
+        localBroadcastManager.sendBroadcast(intent);
     }
 
     public boolean isBetterLocation(Location location,Location currentBestLocation){
