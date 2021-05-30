@@ -8,13 +8,15 @@ public class Request implements Serializable {
     Double lat1,lng1,lat2,lng2;
     long postTimestamp;
     int status; // 0--> bekliyor, -1--> ret , 1--> onaylanmış
+    int selfConfirmed; // 0 --> Kendi tarafından onaylanmadı 1 -- > onaylandı
+    int ownerConfirmed; // 0 --> postsahibi tarafından onaylanmadı 1 --> onaylandı
 
     public Request() {
     }
 
     public Request(String requestID, String senderID, String senderName, String senderGender,
                    String senderImage, String senderBirthdate, String senderEmail, String postID,
-                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, String postHeader, String requestText, String oneSignalID,String ownerOneSignalID,long postTimestamp) {
+                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, int selfConfirmed, int ownerConfirmed, String postHeader, String requestText, String oneSignalID,String ownerOneSignalID,long postTimestamp) {
         this.requestID = requestID;
         this.senderID = senderID;
         this.senderName = senderName;
@@ -34,6 +36,8 @@ public class Request implements Serializable {
         this.oneSignalID = oneSignalID;
         this.ownerOneSignalID = ownerOneSignalID;
         this.postTimestamp = postTimestamp;
+        this.selfConfirmed = selfConfirmed;
+        this.ownerConfirmed = ownerConfirmed;
     }
 
     public String getRequestID() {
@@ -110,5 +114,13 @@ public class Request implements Serializable {
 
     public String getOwnerOneSignalID() {
         return ownerOneSignalID;
+    }
+
+    public int getSelfConfirmed() {
+        return selfConfirmed;
+    }
+
+    public int getOwnerConfirmed() {
+        return ownerConfirmed;
     }
 }

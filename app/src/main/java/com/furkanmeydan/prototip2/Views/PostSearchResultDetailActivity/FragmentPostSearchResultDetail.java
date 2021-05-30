@@ -178,13 +178,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                 senderOneSignalID = localDataManager.getSharedPreference(activity,"sharedOneSignalID",null);
 
-                btnpopUpCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-
-                    }
-                });
+                btnpopUpCancel.setOnClickListener(view1 -> dialog.dismiss());
 
                 btnpopUpSendRequest.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -221,20 +215,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
             }
         });
-        btnAddToWish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addtoWish();
+        btnAddToWish.setOnClickListener(view12 -> addtoWish());
 
-            }
-        });
-
-        btnLocationTracking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.changeFragment(new FragmentPostSearchResultDetailLocationTracking());
-            }
-        });
+        btnLocationTracking.setOnClickListener(view13 -> activity.changeFragment(new FragmentPostSearchResultDetailLocationTracking()));
 
     }
 
@@ -263,31 +246,23 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 
-        JsonObjectRequest volleyRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
+        JsonObjectRequest volleyRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, jsonObject, response -> {
+            try {
 
-                    Long responseTimeStamp = response.getLong("timestamp");
-                    Long timestampDifference = currentTimestamp - responseTimeStamp;
-                    Log.d("Tag", "current timestamp: "+ currentTimestamp);
-                    Log.d("Tag", "response timestamp: "+ responseTimeStamp);
-                    Log.d("Tag", "timestamp arası fark" + timestampDifference);
-                    if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
-                        btnLocationTracking.setVisibility(View.VISIBLE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                Long responseTimeStamp = response.getLong("timestamp");
+                Long timestampDifference = currentTimestamp - responseTimeStamp;
+                Log.d("Tag", "current timestamp: "+ currentTimestamp);
+                Log.d("Tag", "response timestamp: "+ responseTimeStamp);
+                Log.d("Tag", "timestamp arası fark" + timestampDifference);
+                if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
+                    btnLocationTracking.setVisibility(View.VISIBLE);
                 }
-                Log.d("Tag", "onResponse çalışıyor");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("Tag", "onResponse çalışıyor");
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Tag", "onErrorResponse çalışıyor: "+ error.getMessage());
-            }
-        });
+        }, error -> Log.d("Tag", "onErrorResponse çalışıyor: "+ error.getMessage()));
 
         queue.add(volleyRequest);
 
@@ -306,6 +281,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 
+        btnStartService.setVisibility(View.VISIBLE);
 
         if(isPostOutdated){
             btnSendRequest.setVisibility(View.GONE);
@@ -321,7 +297,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
             if (activity.post.getTimestamp() - 180 <= ts && activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
                 if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
                     if (post.getTimestamp() > currentTimestamp - 180) {
-                        btnStartService.setVisibility(View.VISIBLE);
+                        //btnStartService.setVisibility(View.VISIBLE);
                     }
 
                 } else if (localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("1")) {
@@ -338,6 +314,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
                     } else {
+                        postDAL.startPost(activity.post.getOwnerID(), activity.post.getPostID(), new PostCallback() {
+                            @Override
+                            public void onPostUpdated() {
+                                super.onPostUpdated();
+
+
                         try {
                             for (Request request : activity.requestList) {
                                 OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
@@ -346,6 +328,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
 
 
                         Intent serviceIntent = new Intent(activity, LocationService.class);
@@ -360,21 +343,20 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         //btnStartService.setVisibility(View.GONE);
                         btnEndService.setVisibility(View.VISIBLE);
 
+                            }
+                        });
                     }
                 }
             });
 
-            btnEndService.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    btnEndService.setVisibility(View.GONE);
-                    btnStartService.setVisibility(View.VISIBLE);
-                    Intent serviceIntent = new Intent(activity, LocationService.class);
-                    serviceIntent.putExtra("action", "0");
-                    ContextCompat.startForegroundService(activity, serviceIntent);
-                    localDataManager.setSharedPreference(activity, "isServiceEnable", "0");
+            btnEndService.setOnClickListener(view -> {
+                btnEndService.setVisibility(View.GONE);
+                btnStartService.setVisibility(View.VISIBLE);
+                Intent serviceIntent = new Intent(activity, LocationService.class);
+                serviceIntent.putExtra("action", "0");
+                ContextCompat.startForegroundService(activity, serviceIntent);
+                localDataManager.setSharedPreference(activity, "isServiceEnable", "0");
 
-                }
             });
 
             requestDAL.getRequest(post.getPostID(), post.getOwnerID(), new RequestCallback() {

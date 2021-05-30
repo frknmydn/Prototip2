@@ -165,7 +165,7 @@ public class PostDAL {
 
                 ArrayList<String> wishArray = new ArrayList<>();
 
-                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1, userGender, direction,wishArray,postOwnerOneSignalID);
+                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1,0, userGender, direction,wishArray,postOwnerOneSignalID);
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded(post);
             }
@@ -735,6 +735,19 @@ public class PostDAL {
                 });
     }
 
+    public void startPost(String postOwnerID, String postID, final PostCallback callback){
+
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() !=null){
+                        DocumentReference dr = task.getResult().getReference();
+                        dr.update(CollectionHelper.POST_HASSTARTED,1);
+                        callback.onPostUpdated();
+                    }
+                });
+
+
+    }
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)

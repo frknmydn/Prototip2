@@ -22,6 +22,7 @@ public class Post implements Serializable {
     private int status; /// 0--> Silinmiş, 1--> active, 2 --> Tarihi geçmiş, 3--> full
     private int passengerCount;
     private ArrayList<String> wishArray;
+    private int hasStarted; // 0 --> başlamamış 1--> başlamış
 
     public Post(){
 
@@ -31,7 +32,7 @@ public class Post implements Serializable {
 
     public Post(String postID, String ownerID,String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
-                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction, ArrayList<String> wishArray,String ownerOneSignalID) {
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status,int hasStarted, String userGender, int direction, ArrayList<String> wishArray,String ownerOneSignalID) {
         this.city = city;
         this.passengerCount = passengerCount;
         this.destination = destination;
@@ -49,6 +50,7 @@ public class Post implements Serializable {
         this.postID = postID;
         this.wishArray = wishArray;
         this.ownerOneSignalID = ownerOneSignalID;
+        this.hasStarted = hasStarted;
 
 
     }
@@ -116,6 +118,10 @@ public class Post implements Serializable {
 
     public String getOwnerOneSignalID() {
         return ownerOneSignalID;
+    }
+
+    public int getHasStarted() {
+        return hasStarted;
     }
 
     public ArrayList<String> getWishArray() {

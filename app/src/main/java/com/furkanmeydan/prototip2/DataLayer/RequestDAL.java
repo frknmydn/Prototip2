@@ -27,7 +27,7 @@ public class RequestDAL {
                             Double lat1, Double lng1, Double lat2, Double lng2, String postHeader, String requestText,String oneSignalID,String ownerOneSignalID,long postTimestamp, final RequestCallback callback){
 
         String requestID = UUID.randomUUID().toString();
-        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,postHeader, requestText,oneSignalID,ownerOneSignalID,postTimestamp);
+        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,0,0,postHeader, requestText,oneSignalID,ownerOneSignalID,postTimestamp);
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)
                 .collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).set(request).addOnCompleteListener(task -> callback.onRequestSent());

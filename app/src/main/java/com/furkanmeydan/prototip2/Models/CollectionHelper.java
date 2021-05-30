@@ -27,6 +27,7 @@ public class CollectionHelper {
     final public static String POST_TOLNG = "toLng";
     final public static String POST_DIRECTION = "direction";
     final public static String POST_WISHARRAY = "wishArray";
+    final public static String POST_HASSTARTED = "hasStarted";
 
 
 

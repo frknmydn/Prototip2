@@ -38,6 +38,10 @@ public abstract class PostCallback {
 
     }
 
+    public void onPostUpdated(){
+
+    }
+
     public void deleteWishOnBlock(){
 
     }
