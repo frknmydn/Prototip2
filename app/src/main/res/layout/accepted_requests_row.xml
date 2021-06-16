@@ -59,5 +59,31 @@
         app:layout_constraintStart_toStartOf="@+id/txtAcceptedRequestName"
         app:layout_constraintTop_toBottomOf="@+id/txtAcceptedRequestName" />
 
+    <Button
+        android:id="@+id/btnAcceptedRequestConfirmUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:text="Onayla"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAcceptedRequestPic"
+        app:layout_constraintEnd_toStartOf="@+id/btnAcceptedRequestDeclineUser"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtAcceptedRequestBirthdate"
+        app:layout_constraintTop_toBottomOf="@+id/txtAcceptedRequestBirthdate" />
+
+    <Button
+        android:id="@+id/btnAcceptedRequestDeclineUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="16dp"
+        android:text="Bildir"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAcceptedRequestConfirmUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAcceptedRequestConfirmUser"
+        app:layout_constraintTop_toTopOf="@+id/btnAcceptedRequestConfirmUser" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

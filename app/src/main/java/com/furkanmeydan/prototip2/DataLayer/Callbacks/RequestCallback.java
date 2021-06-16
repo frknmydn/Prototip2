@@ -13,6 +13,10 @@ public abstract class RequestCallback {
 
         }
 
+        public void onRequestUpdated(){
+
+        }
+
         public void onRequestAccepted(){
 
         }

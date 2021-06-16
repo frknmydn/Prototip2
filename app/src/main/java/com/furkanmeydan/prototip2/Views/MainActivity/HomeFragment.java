@@ -27,7 +27,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
 
-    private Button btnAddPost, btnSearchPost;
+    private Button btnAddPost, btnSearchPost, btnConfirmUser;
     MainActivity mainActivity;
 
     Dialog dialog;
@@ -65,9 +65,12 @@ public class HomeFragment extends Fragment {
 
 
         mainActivity = (MainActivity) getActivity();
+
         assert mainActivity != null;
         userid = Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid();
         Log.d("TAG", "userid " + userid);
+
+        btnConfirmUser =view.findViewById(R.id.btnConfirmUser);
         btnAddPost = view.findViewById(R.id.btnAddPostFragmentH);
         btnSearchPost = view.findViewById(R.id.btnSearchPost);
 
@@ -110,6 +113,10 @@ public class HomeFragment extends Fragment {
         btnSearchPost.setOnClickListener(view12 -> {
             Intent i = new Intent(getActivity(), PostActivity.class);
             startActivity(i);
+        });
+
+        btnConfirmUser.setOnClickListener(view13 -> {
+            mainActivity.changeFragment(new FragmentConfirmUser());
         });
     }
 }

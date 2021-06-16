@@ -7,6 +7,21 @@
     android:background="@drawable/homebgg"
     tools:context=".Views.MainActivity.HomeFragment">
 
+    <Button
+        android:id="@+id/btnConfirmUser"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="408dp"
+        android:background="@drawable/deneme_button"
+        android:fontFamily="sans-serif-black"
+        android:text="Kullanıcı Onayla"
+        android:textColor="#D3D3D3"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchPost"
+        app:layout_constraintEnd_toEndOf="@+id/btnSearchPost"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/btnSearchPost" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"

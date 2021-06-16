@@ -34,13 +34,11 @@ import java.util.List;
 
 public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     RecyclerView recyclerView;
-    ArrayList<Request> requestList;
+    //ArrayList<Request> requestList;
     AcceptedRequestAdapter adapter;
     PostSearchResultDetailActivity activity;
     TextView txtInfo;
     Post post;
-    MapView mapView;
-    private GoogleMap googleMap;
     RequestDAL requestDAL;
 
 
@@ -52,8 +50,8 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
         requestDAL = new RequestDAL();
         activity = (PostSearchResultDetailActivity) getActivity();
         post = activity.post;
-        requestList = activity.requestList;
-        Log.d("Tag","Requestlist Size: "+requestList.size());
+        //requestList = activity.requestList;
+        Log.d("Tag","Requestlist Size: "+activity.requestList.size());
 
     }
 
@@ -63,26 +61,6 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_post_search_accepted_requests, container, false);
-        mapView = rootView.findViewById(R.id.mapViewAcceptedRequestsPoints);
-        mapView.onCreate(savedInstanceState);
-
-        mapView.onResume();
-
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                //googleMap.setMyLocationEnabled(true);
-
-                for(int i=0; i<requestList.size(); i++){
-                    LatLng markers = new LatLng(requestList.get(i).getLat1(), requestList.get(i).getLng1());
-                    googleMap.addMarker(new MarkerOptions().position(markers).title(requestList.get(i).getSenderName()+ "'nin binmek istediği yer."));
-                }
-                LatLng postLatLng = new LatLng(post.getFromLat(), post.getFromLng());
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(postLatLng).zoom(14).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });
         return rootView;
     }
 
@@ -95,11 +73,11 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
 
         recyclerView = view.findViewById(R.id.fragmentAcceptedRequestsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AcceptedRequestAdapter(requestList,activity);
+        adapter = new AcceptedRequestAdapter(activity.requestList,activity);
         recyclerView.setAdapter(adapter);
         Log.d("Tag","AcceptedRequests onViewCreated");
 
-        if(requestList.size()>0){
+        if(activity.requestList.size()>0){
             adapter.notifyDataSetChanged();
             txtInfo.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -123,7 +101,7 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
             @Override
             public void onRequestsRetrievedNotNull(List<Request> list) {
                 super.onRequestsRetrievedNotNull(list);
-                requestList.addAll(list);
+                activity.requestList.addAll(list);
                 adapter.notifyDataSetChanged();
                 txtInfo.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -144,6 +122,6 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d("Tag","onSaveInstanceState");
-        outState.putSerializable("requestList",(Serializable) requestList);
+        outState.putSerializable("requestList",(Serializable) activity.requestList);
     }
 }

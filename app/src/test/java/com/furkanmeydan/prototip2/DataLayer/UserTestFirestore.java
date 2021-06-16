@@ -27,9 +27,18 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.when;
 
 public class UserTestFirestore {
-
-    private User childData = new User("abch**^^^'''+%EI2353   4QWIE        R7765JW  EI)W'", BIRTHDATE, "Profile Picture", "frkn@frkn.com", "Gender");
+    private static final String ANY_USERID = "ANY DATE";
+    private static final String ANY_NAME_SURNAME = "ANY DATE";
     private static final String BIRTHDATE = "ANY DATE";
+    private static final String ANY_PROFILE_PIC = "ANY DATE";
+    private static final String ANY_EMAIL = "ANY DATE";
+    private static final String ANY_GENDER = "ANY DATE";
+    private static final String ANY_ONESIGNALID = "ANY DATE";
+
+
+    //String userID,String nameSurname, String birthDate, String profilePicture, String email, String gender, String oneSignalID
+    private User childData = new User(ANY_USERID,ANY_NAME_SURNAME,BIRTHDATE, ANY_PROFILE_PIC,ANY_EMAIL, ANY_GENDER, ANY_ONESIGNALID);
+
 
     @Mock
     private Task<Void> mockVoidTask;

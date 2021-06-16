@@ -1,9 +1,5 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -11,7 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.furkanmeydan.prototip2.MapRouter.FetchURL;
+import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,40 +22,46 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 
+import java.util.ArrayList;
+
 public class FragmentPostSearchResultMap extends Fragment {
     PostSearchResultDetailActivity activity;
-    private Double fromLat, fromLng, toLat, toLng;
+
+    ArrayList<Request> requestList;
+
 
     private LatLng marker1, marker2;
     private GoogleMap mMap;
     LocationManager locationManager;
 
-    private MarkerOptions place1, place2;
     private Polyline currentPolyline;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         activity = (PostSearchResultDetailActivity) getActivity();
-        assert activity != null;
-        fromLat = activity.post.getFromLat();
-        fromLng = activity.post.getFromLng();
-        toLat = activity.post.getToLat();
-        toLng = activity.post.getToLng();
-        marker1 = new LatLng(fromLat,fromLng);
-        marker2 = new LatLng(toLat,toLng);
-
+        if(activity!=null){
+            requestList = activity.requestList;
+            Double fromLat = activity.post.getFromLat();
+            Double fromLng = activity.post.getFromLng();
+            Double toLat = activity.post.getToLat();
+            Double toLng = activity.post.getToLng();
+            marker1 = new LatLng(fromLat, fromLng);
+            marker2 = new LatLng(toLat, toLng);
+        }
 
     }
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            place1 = new MarkerOptions().position(marker1).title("Kalkış");
-            place2 = new MarkerOptions().position(marker2).title("Varış");
+            MarkerOptions place1 = new MarkerOptions().position(marker1).title("Kalkış");
+            MarkerOptions place2 = new MarkerOptions().position(marker2).title("Varış");
             mMap = googleMap;
 
 
@@ -63,8 +70,13 @@ public class FragmentPostSearchResultMap extends Fragment {
 
             locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
 
-            String url = getUrl(place1.getPosition(),place2.getPosition(),"driving");
+            String url = getUrl(place1.getPosition(), place2.getPosition(),"driving");
             new FetchURL(activity).execute(url,"driving");
+
+            for(int i=0; i<requestList.size(); i++){
+                LatLng markers = new LatLng(requestList.get(i).getLat1(), requestList.get(i).getLng1());
+                googleMap.addMarker(new MarkerOptions().position(markers).title(requestList.get(i).getSenderName()+ "'nin binmek istediği yer."));
+            }
 
             mMap.addMarker(place1);
             mMap.addMarker(place2);
@@ -158,8 +170,7 @@ public class FragmentPostSearchResultMap extends Fragment {
         // Output format
         String output = "json";
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyAkR63wvDhI3bukQYRSBxXtarR_e2G_t1I";
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyAkR63wvDhI3bukQYRSBxXtarR_e2G_t1I";
     }
 
 

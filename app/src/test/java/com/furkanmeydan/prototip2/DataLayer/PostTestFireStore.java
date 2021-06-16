@@ -35,8 +35,6 @@ public class PostTestFireStore {
 
     public static final String ANY_DESTINATION = "ANY_DESTINATION";
     public static final String ANY_CITY = "ANY_CITY";
-    public static final String ANY_TIMESTAMP = "1615695028";
-    public static final String ANY_PASSENGER_COUNT = "ANY_PASSENGER_COUNT";
     public static final String ANY_DESCRIPTION = "ANY DESCRIPTION";
     public static final String ANY_CAR_DETAILS ="Araç Siyah Mercedes A180";
     public static final String ANY_OWNER_ID ="ANY_OWNER_ID";
@@ -46,6 +44,17 @@ public class PostTestFireStore {
     public static final String ANY_TO_LNG = "ANY_TO_LNG";
     public static final String ANY_DROPDOWN_CITY = "Aydın";
     public static final String ANY_SHAREDPREF_CITY = "İzmir";
+    public static final String ANY_GENDER= "Kadın";
+    public static final String ANY_ONESIGNAL_ID = "denemedeneme";
+    public static final String ANY_POSTID = "denemedeneme";
+    public static final ArrayList<String> ANY_WISH_ARRAY  = null;
+    public static final int ANY_STATUS = 1;
+    public static final int ANY_DIRECTION= 1;
+    public static final int ANY_HAS_STARTED = 0;
+    public static final int ANY_PASSANGER_COUNT = 3;
+    public static final long ANY_TIMESTAMP = 1623844394;
+
+
     //public static final String
 
     public static final Double ANY_DOUBLE_LAT = 37.85819170277286;
@@ -54,14 +63,12 @@ public class PostTestFireStore {
     public static final Double ANY_DOUBLE_LNG2= 23.857781632413864;
 
     //Post mockPost = new Post(ANY_CITY,ANY_OWNER_ID,ANY_PASSENGER_COUNT,ANY_DESTINATION,ANY_DESCRIPTION,ANY_TIMESTAMP,ANY_CAR_DETAILS,ANY_TO_LAT,ANY_TO_LNG,ANY_FROM_LAT,ANY_FROM_LNG,1,"Erkek",1);
+    Post mockPost = new Post(ANY_POSTID,ANY_OWNER_ID,ANY_CITY, ANY_PASSANGER_COUNT, ANY_DESTINATION, ANY_DESCRIPTION,ANY_TIMESTAMP, ANY_CAR_DETAILS,
+            ANY_DOUBLE_LAT,ANY_DOUBLE_LNG , ANY_DOUBLE_LAT2, ANY_DOUBLE_LNG2, ANY_STATUS,
+            ANY_HAS_STARTED,ANY_GENDER,ANY_DIRECTION, ANY_WISH_ARRAY, ANY_ONESIGNAL_ID);
 
-    /*
-    public Post(String city, int passengerCount,
-                String destination, String description, long timestamp, String carDetail,
-                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, String userGender, int direction)
 
-*/
-    Post mockPost = new Post(ANY_CITY,1,ANY_DESTINATION,ANY_DESCRIPTION,100000,ANY_CAR_DETAILS,100.213,231.312,3123.123,3213.421,1,"ERKEK",1);
+
 
     private Timestamp mockServerTimestamp = Timestamp.now();
 

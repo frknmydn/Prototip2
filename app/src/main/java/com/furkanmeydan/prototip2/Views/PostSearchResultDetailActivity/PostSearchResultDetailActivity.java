@@ -28,6 +28,9 @@ import java.util.List;
 public class PostSearchResultDetailActivity extends AppCompatActivity implements TaskLoadedCallback {
     ProfileDAL profileDAL;
     Post post;
+    String currentUserID;
+
+
     BottomNavigationView navigationView1;
     FirebaseAuth firebaseAuth;
 
@@ -53,9 +56,16 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
     }
 
 
+
+
     public void init(){
 
         firebaseAuth=FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()!=null){
+            currentUserID = firebaseAuth.getCurrentUser().getUid();
+        }
+
+
         Intent i = getIntent();
         Bundle bundle = i.getBundleExtra("bundle");
 
@@ -179,5 +189,18 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
     public BottomNavigationView getNavigationView1() {
         return navigationView1;
+    }
+
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setRequestList(ArrayList<Request> requestList) {
+        this.requestList = requestList;
+    }
+
+    public String getCurrentUserID() {
+        return currentUserID;
     }
 }

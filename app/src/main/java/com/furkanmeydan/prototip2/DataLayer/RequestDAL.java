@@ -2,9 +2,13 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -111,6 +115,29 @@ public class RequestDAL {
                         }
                     }
                 });
+    }
+
+    public void confirmRequestAsRequestSender(String postID, String postOwnerID, String requestID, RequestCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).update(CollectionHelper.REQUEST_SELFCONFIRMED,1).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onRequestUpdated();
+            }
+        });
+    }
+
+    public void confirmRequestAsPostOwner(String postID, String postOwnerID, String requestID, RequestCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION).document(requestID)
+                .update(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,1).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onRequestUpdated();
+            }
+        });
     }
     public void acceptRequest(final String postID, final String postOwnerID, String requestID, final RequestCallback callback){
 

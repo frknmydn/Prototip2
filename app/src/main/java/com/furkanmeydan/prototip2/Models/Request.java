@@ -40,6 +40,14 @@ public class Request implements Serializable {
         this.ownerConfirmed = ownerConfirmed;
     }
 
+    public void setSelfConfirmed(int selfConfirmed) {
+        this.selfConfirmed = selfConfirmed;
+    }
+
+    public void setOwnerConfirmed(int ownerConfirmed) {
+        this.ownerConfirmed = ownerConfirmed;
+    }
+
     public String getRequestID() {
         return requestID;
     }
