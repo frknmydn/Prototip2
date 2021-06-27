@@ -32,7 +32,7 @@ public class ProfileDAL {
     //İsim soyisimde Alphanumeric karakter olup olmadığının kontrolü için
     Pattern pattern = Pattern.compile("[^a-zA-ZğĞüÜşŞiİöÖçÇı\\s]");
 
-    String userid= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+    String userid= firebaseAuth.getCurrentUser().getUid();
 
     public ProfileDAL() {
 

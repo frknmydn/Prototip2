@@ -156,10 +156,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId()==R.id.signOut){
             firebaseAuth.signOut();
-            Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
-            serviceIntent.putExtra("action","0");
-            ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-            localDataManager.setSharedPreference(MainActivity.this,"isServiceEnable","0");
+            String serviceRunning = localDataManager.getSharedPreference(MainActivity.this, "isServiceEnable","0");
+            if(!serviceRunning.equals("0")) {
+                Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
+                serviceIntent.putExtra("action", "0");
+                ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+                localDataManager.setSharedPreference(MainActivity.this, "isServiceEnable", "0");
+            }
             Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
             startActivity(i);
             this.finish();

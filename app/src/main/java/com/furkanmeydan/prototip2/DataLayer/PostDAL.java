@@ -337,8 +337,6 @@ public class PostDAL {
                     if (task.isSuccessful()) {
 
                         if (task.getResult() != null) {
-
-
                             List<Post> list = task.getResult().toObjects(Post.class);
                             System.out.println("Gelen liste boyutu: " + list.size());
                             postCallback.getPosts(list);
@@ -474,7 +472,6 @@ public class PostDAL {
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
-
 
                             List<Post> list = task.getResult().toObjects(Post.class);
                             System.out.println("Gelen liste boyutu: " + list.size());
