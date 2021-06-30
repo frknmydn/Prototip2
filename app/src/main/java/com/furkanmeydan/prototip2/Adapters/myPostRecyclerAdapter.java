@@ -80,12 +80,21 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
 
             }
         });
-        long ts = Timestamp.now().getSeconds();
+        long threeMinutesMin = posts.get(position).getTimestamp() - 180;
+        long threeMinutesMax = posts.get(position).getTimestamp() + 180;
 
-        if(posts.get(position).getTimestamp() - 180 <= ts ){
+
+
+        long currentTimestamp = Timestamp.now().getSeconds();
+
+        if(posts.get(position).getTimestamp() + 240 < currentTimestamp){
+            holder.timeInfo.setImageResource(R.drawable.redclock);
+        }
+        else if(currentTimestamp > threeMinutesMin && currentTimestamp < threeMinutesMax ){
             Log.d("Time", "Bir kere çalışması lazım");
             holder.timeInfo.setImageResource(R.drawable.timer);
         }
+
 
         /*
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {

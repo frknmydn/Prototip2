@@ -96,7 +96,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         queue = Volley.newRequestQueue(activity);
         Log.d("Tag service",authID+ post.getOwnerID());
         currentTimestamp = Timestamp.now().getSeconds();
-        isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
+        isPostOutdated = post.getTimestamp() <= currentTimestamp - 240;
         localBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -281,7 +281,6 @@ public class FragmentPostSearchResultDetail extends Fragment {
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 
-        btnStartService.setVisibility(View.VISIBLE);
 
         if(isPostOutdated){
             btnSendRequest.setVisibility(View.GONE);
@@ -293,11 +292,21 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
         else {
             //Eğer kullanıcı post sahibiyse ve ilan saatine 3 dakikadan az süre kalmışsa
-            long ts = Timestamp.now().getSeconds();
-            if (activity.post.getTimestamp() - 180 <= ts && activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
+            long threeMinutesMin = post.getTimestamp() - 180;
+            long threeMinutesMax = post.getTimestamp() + 180;
+
+            Log.d("TAG","Timestamp outdated," + isPostOutdated);
+            Log.d("TAG","Timestamp min," + threeMinutesMin);
+            Log.d("TAG","Timestamp max," + threeMinutesMax);
+            Log.d("TAG","Timestamp post," + post.getTimestamp());
+            Log.d("TAG","Timestamp current," + currentTimestamp);
+            if (activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
+                Log.d("TAG","İlk if içi");
                 if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
-                    if (post.getTimestamp() > currentTimestamp - 180) {
-                        //btnStartService.setVisibility(View.VISIBLE);
+                    Log.d("TAG","İkinci if içi");
+                    if (currentTimestamp > threeMinutesMin && currentTimestamp < threeMinutesMax) {
+                        Log.d("TAG","Üçüncü if içi");
+                        btnStartService.setVisibility(View.VISIBLE);
                     }
 
                 } else if (localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("1")) {
@@ -340,7 +349,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                         ContextCompat.startForegroundService(activity, serviceIntent);
                         localDataManager.setSharedPreference(activity, "isServiceEnable", "1");
-                        //btnStartService.setVisibility(View.GONE);
+                        btnStartService.setVisibility(View.GONE);
                         btnEndService.setVisibility(View.VISIBLE);
 
                             }

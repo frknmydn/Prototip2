@@ -39,6 +39,10 @@ public class UploadPostDetailFragment extends Fragment {
     UploadPostActivity postActivity;
     String cardet;
 
+    DatePickerDialog datePickerDialog;
+    long timeNow = Timestamp.now().getSeconds() * 1000;
+    long timeMaxDifference = (14 * 24 * 60 * 60 * 1000);
+
     Integer[] items = new Integer[]{1,2,3,4,5};
 
 
@@ -170,13 +174,25 @@ public class UploadPostDetailFragment extends Fragment {
 
             }
         };
+        datePickerDialog = new DatePickerDialog(postActivity,dateSetListener,calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(timeNow);
+        datePickerDialog.getDatePicker().setMaxDate(timeNow + timeMaxDifference);
+
+
+        edtDate.setOnClickListener(view1 -> datePickerDialog.show());
+
+        /*
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(view.getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                datePickerDialog.getDatePicker().setMinDate(timeNow);
+                datePickerDialog.getDatePicker().setMaxDate(timeNow + timeMaxDifference);
 
             }
         });
+        */
 
 
         //Saat seçmek için
