@@ -2,33 +2,33 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class RequestDAL {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     PostDAL postDAL = new PostDAL();
-    String currentUserID = firebaseAuth.getCurrentUser().getUid();
+    String currentUserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+
 
     public RequestDAL() {
     }
 
     public void sendRequest(String senderID, String senderName, String senderGender, String senderImage,
                             String senderBirthdate, String senderEmail, String postID, String postOwnerID,
-                            Double lat1, Double lng1, Double lat2, Double lng2, String postHeader, String requestText,String oneSignalID,String ownerOneSignalID,long postTimestamp, final RequestCallback callback){
+                            Double lat1, Double lng1, Double lat2, Double lng2, String postHeader,
+                            String requestText,String oneSignalID,String ownerOneSignalID,long postTimestamp,
+                            final RequestCallback callback){
 
         String requestID = UUID.randomUUID().toString();
         Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,0,0,postHeader, requestText,oneSignalID,ownerOneSignalID,postTimestamp);
@@ -40,10 +40,14 @@ public class RequestDAL {
     }
 
     public void getMyRequests(final RequestCallback callback){
+        Long timeStampNow = Timestamp.now().getSeconds();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).
                 whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).
-                whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID).get().addOnCompleteListener(task -> {
+                whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID)
+                .whereGreaterThan(CollectionHelper.POST_TIMESTAMP,timeStampNow)
+                .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult()!=null){
+
                         List<Request> list = task.getResult().toObjects(Request.class);
 
                         callback.getRequestsToMe(list);
@@ -59,8 +63,11 @@ public class RequestDAL {
 
         Timestamp currentTime = Timestamp.now();
         long currentTimeSeconds = currentTime.getSeconds();
-        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
-                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).whereEqualTo(CollectionHelper.REQUEST_STATUS,1).whereGreaterThan(CollectionHelper.REQUEST_POSTTIMESTAMP,currentTimeSeconds)
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID)
+                .whereEqualTo(CollectionHelper.REQUEST_STATUS,1)
+                .whereGreaterThan(CollectionHelper.REQUEST_POSTTIMESTAMP,currentTimeSeconds)
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult() !=null){
                         boolean flag;
@@ -75,7 +82,8 @@ public class RequestDAL {
 
     public void deleteRequestsOnBlock(String userid, String postOwnerID , final RequestCallback callback){
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).whereEqualTo(CollectionHelper.REQUEST_SENDERID,userid)
-                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).get().addOnCompleteListener(task -> {
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,postOwnerID).get()
+                .addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult() !=null){
                         if(task.getResult().size() > 0) {
                             for (DocumentSnapshot ds : task.getResult().getDocuments()) {
@@ -88,7 +96,7 @@ public class RequestDAL {
 
     }
     public void getAcceptedRequestsISent(final RequestCallback callback){
-        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+        String currentUserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
                  .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
                  .whereEqualTo(CollectionHelper.REQUEST_STATUS, 1).get()
@@ -103,7 +111,7 @@ public class RequestDAL {
                  });
     }
     public void getAwatingRequestsISent(final RequestCallback callback){
-        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+        String currentUserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
                 .whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).get()
@@ -120,31 +128,26 @@ public class RequestDAL {
     public void confirmRequestAsRequestSender(String postID, String postOwnerID, String requestID, RequestCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION)
-                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION).document(requestID).update(CollectionHelper.REQUEST_SELFCONFIRMED,1).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onRequestUpdated();
-            }
-        });
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .document(requestID).update(CollectionHelper.REQUEST_SELFCONFIRMED,1)
+                .addOnCompleteListener(task -> callback.onRequestUpdated());
     }
 
     public void confirmRequestAsPostOwner(String postID, String postOwnerID, String requestID, RequestCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION)
-                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION).document(requestID)
-                .update(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,1).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                callback.onRequestUpdated();
-            }
-        });
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .document(requestID)
+                .update(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,1)
+                .addOnCompleteListener(task -> callback.onRequestUpdated());
     }
     public void acceptRequest(final String postID, final String postOwnerID, String requestID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
-                .document(requestID).update(CollectionHelper.REQUEST_STATUS, 1).addOnCompleteListener(task -> postDAL.decreasePassengerCount(postID,postOwnerID,callback));
+                .document(requestID).update(CollectionHelper.REQUEST_STATUS, 1)
+                .addOnCompleteListener(task -> postDAL.decreasePassengerCount(postID,postOwnerID,callback));
 
 
     }
@@ -160,7 +163,7 @@ public class RequestDAL {
 
     public void getRequest(final String postID, final String postOwnerID, final RequestCallback callback){
 
-         currentUserID = firebaseAuth.getCurrentUser().getUid();
+         currentUserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
          Log.d("RequestDalUserId",currentUserID);
 
 
@@ -169,7 +172,7 @@ public class RequestDAL {
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
                 .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
                 .get().addOnCompleteListener(task -> {
-                    if(task.isSuccessful() && task.getResult().size()>0){
+                    if(task.isSuccessful() && task.getResult()!=null && task.getResult().size()>0){
                         Log.d("RequestDalOncomplete","Çalışıyor");
                         callback.onRequestRetrievedNotNull();
                     }
