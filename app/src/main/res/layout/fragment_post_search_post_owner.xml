@@ -6,117 +6,154 @@
     android:layout_height="match_parent"
     tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchPostOwner">
 
-    <TextView
-        android:id="@+id/textView27"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_vertical"
-        android:text="Adı Soyadı"
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postSearchPostOwnerImageView" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_vertical"
-        android:text="Doğum Tarihi"
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/textView33"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center_vertical"
-        android:text="Cinsiyeti"
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="#E6E9FF"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="İLAN SAHİBİNİN PROFİLİ"
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/postSearchPostOwnerImageView"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:layout_marginTop="10dp"
+        <TextView
+            android:id="@+id/postSearchPostOwnerBD"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@drawable/spinner_shape"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerName"
+            app:layout_constraintStart_toStartOf="@+id/postSearchPostOwnerName"
+            app:layout_constraintTop_toTopOf="@+id/textView28" />
+
+        <ImageView
+            android:id="@+id/postSearchPostOwnerImageView"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_marginStart="131dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="130dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:srcCompat="@drawable/ic_image_holder"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="110dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_vertical"
+            android:text="Adı Soyadı"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postSearchPostOwnerImageView" />
+
+        <TextView
+            android:id="@+id/postSearchPostOwnerName"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/spinner_shape"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView27"
+            app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="4dp"
+            android:background="#E6E9FF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="İLAN SAHİBİNİN PROFİLİ"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/postSearchPostOwnerImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/postSearchPostOwnerGender"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@drawable/spinner_shape"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerBD"
+            app:layout_constraintStart_toStartOf="@+id/postSearchPostOwnerBD"
+            app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_vertical"
+            android:text="Doğum Tarihi"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView27"
+            app:layout_constraintStart_toStartOf="@+id/textView27"
+            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_vertical"
+            android:text="Cinsiyeti"
+            android:textColor="#5C5C5C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView28"
+            app:layout_constraintStart_toStartOf="@+id/textView28"
+            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchProfileConsLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:srcCompat="@drawable/ic_image_holder"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/postSearchPostOwnerName"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/spinner_shape"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/postSearchPostOwnerBD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/postSearchPostOwnerBD"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/spinner_shape"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerName"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toTopOf="@+id/textView28" />
-
-    <TextView
-        android:id="@+id/postSearchPostOwnerGender"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/spinner_shape"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/postSearchPostOwnerBD"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toTopOf="@+id/textView33" />
+        <ProgressBar
+            android:id="@+id/searchResultProgress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

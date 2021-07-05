@@ -1,9 +1,11 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,11 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.User;
@@ -29,6 +36,8 @@ public class FragmentPostSearchPostOwner extends Fragment {
     Bundle bundle;
     private TextView txtNameSurname, txtGender, txtBirthday;
     private ImageView imageView;
+    ConstraintLayout layoutDetail, layoutProgress;
+    private ProgressBar progressBar;
     String ownerId;
     User userProfile;
 
@@ -66,6 +75,9 @@ public class FragmentPostSearchPostOwner extends Fragment {
         txtGender = view.findViewById(R.id.postSearchPostOwnerGender);
         txtBirthday = view.findViewById(R.id.postSearchPostOwnerBD);
         imageView = view.findViewById(R.id.postSearchPostOwnerImageView);
+        layoutDetail = view.findViewById(R.id.constraintLayout2);
+        layoutProgress = view.findViewById(R.id.searchProfileConsLayout);
+        progressBar = view.findViewById(R.id.searchResultProgress);
         Log.d("Tag","PostSearchactivity owner id "+ ownerId);
         Log.d("Tag","PostSearchactivity getprofiledata öncesi ");
         getProfileData();
@@ -86,8 +98,21 @@ public class FragmentPostSearchPostOwner extends Fragment {
                 txtNameSurname.setText(userProfile.getNameSurname());
                 txtBirthday.setText(userProfile.getBirthDate());
                 txtGender.setText(userProfile.getGender());
-                Glide.with(activity.getApplicationContext()).load(userProfile.getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+                Glide.with(activity.getApplicationContext()).load(userProfile.getProfilePicture()).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        layoutProgress.setVisibility(View.GONE);
+                        layoutDetail.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).apply(RequestOptions.skipMemoryCacheOf(true))
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+
 
 
             }
