@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.furkanmeydan.prototip2.Adapters.SearchResultRecyclerAdapter;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
@@ -29,6 +31,8 @@ public class FragmentWishList extends Fragment {
     SearchResultRecyclerAdapter adapter;
     ArrayList<Post> postList;
     PostDAL postDAL;
+    ConstraintLayout layoutWishInfo;
+    ImageView imgInfo;
 
 
     public FragmentWishList() {
@@ -42,6 +46,7 @@ public class FragmentWishList extends Fragment {
         postList = new ArrayList<>();
         postDAL = new PostDAL();
         activity = (MainActivity) getActivity();
+
 
         getData();
 
@@ -64,6 +69,8 @@ public class FragmentWishList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutWishInfo = view.findViewById(R.id.consLayoutWishList);
+        imgInfo = view.findViewById(R.id.imageView3);
         wishRCL = view.findViewById(R.id.RCLWishList);
         wishRCL.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SearchResultRecyclerAdapter(postList, activity);
@@ -80,6 +87,11 @@ public class FragmentWishList extends Fragment {
 
                 postList.addAll(list);
                 adapter.notifyDataSetChanged();
+
+                if(postList!=null){
+                    layoutWishInfo.setVisibility(View.GONE);
+                    wishRCL.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

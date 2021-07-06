@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ public class MyPostFragment extends Fragment {
     ArrayList<Post> posts;
     MainActivity activity;
     Button btnPastPosts;
+    ConstraintLayout layoutInfo;
 
     PostDAL postDAL;
 
@@ -61,6 +64,8 @@ public class MyPostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutInfo = view.findViewById(R.id.consLayoutMyPosts);
+
         recyclerView = view.findViewById(R.id.myPostRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -90,6 +95,11 @@ public class MyPostFragment extends Fragment {
                 posts.clear();
                 posts.addAll(list);
                 postRCLAdapter.notifyDataSetChanged();
+                Log.d("TAGGY",String.valueOf(posts.size()));
+                if(posts.size()>0){
+                    layoutInfo.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
 

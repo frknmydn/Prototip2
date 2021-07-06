@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +31,7 @@ public class FragmentBlockList extends Fragment {
     ArrayList<User> listBlockedUsers;
     BlockDAL blockDAL;
     ProfileDAL profileDAL;
-
+    ConstraintLayout layoutInfo;
 
 
     public FragmentBlockList() {
@@ -65,7 +66,7 @@ public class FragmentBlockList extends Fragment {
         rclBlockedList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BlockedUsersAdapter(listBlockedUsers,activity);
         rclBlockedList.setAdapter(adapter);
-
+        layoutInfo = view.findViewById(R.id.consLayoutblock);
 
 
     }
@@ -89,6 +90,11 @@ public class FragmentBlockList extends Fragment {
                             listBlockedUsers.clear();
                             listBlockedUsers.add(user);
                             adapter.notifyDataSetChanged();
+                            if(listBlockedUsers.size() > 0){
+                                layoutInfo.setVisibility(View.INVISIBLE);
+                                rclBlockedList.setVisibility(View.VISIBLE);
+
+                            }
                         }
                     });
                 }

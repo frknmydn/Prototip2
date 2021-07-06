@@ -1,23 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Views.MainActivity.FragmentRequestsToMyPosts">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consLayoutMyPostsRequestsLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#DEDFDF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentRequestsToMyPostsRCL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView15"
+        app:layout_constraintVertical_bias="0.3">
+
+        <TextView
+            android:id="@+id/txtfragmentRequestToMyPosts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#DEDFDF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Paylaşmak istediğiniz yolculuğa gelen bir katılma isteği bulunmamaktadır."
+            android:textColor="#5C5C5C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.44"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_marginEnd="250dp"
+            android:src="@drawable/info"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/txtfragmentRequestToMyPosts"
+            app:layout_constraintEnd_toEndOf="@+id/txtfragmentRequestToMyPosts"
+            app:layout_constraintStart_toStartOf="@+id/txtfragmentRequestToMyPosts"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentRequestsToMyPostsRCL"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView15"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#E6E9FF"
+        android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="İlanlarınıza Gelen İstekler"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-</FrameLayout>
+        android:text="İLANINIZA GELEN İSTEKLER"
+        android:textColor="#5C5C5C"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

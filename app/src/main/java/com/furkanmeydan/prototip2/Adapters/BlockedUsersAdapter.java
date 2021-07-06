@@ -1,19 +1,26 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.Models.Request;
@@ -52,7 +59,18 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
 
         holder.txtUserName.setText(blockedUsers.get(position).getNameSurname());
         holder.txtUserGender.setText(blockedUsers.get(position).getGender());
-        Glide.with(activity.getApplicationContext()).load(blockedUsers.get(position).getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+        Glide.with(activity.getApplicationContext()).load(blockedUsers.get(position).getProfilePicture()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                holder.blockedUserPB.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        }).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imgUserPhoto);
 
 
@@ -100,6 +118,7 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
         TextView txtUserName, txtUserGender;
         ImageView imgUserPhoto;
         Button btnUnblockUser, btnGoToProfile;
+        ProgressBar blockedUserPB;
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             txtUserGender = itemView.findViewById(R.id.txtUserRclGender);
@@ -107,7 +126,7 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
             imgUserPhoto = itemView.findViewById(R.id.imgUserRclRow);
             btnUnblockUser = itemView.findViewById(R.id.btnUnBlockUser);
             btnGoToProfile = itemView.findViewById(R.id.btnRclGoToProfile);
-
+            blockedUserPB = itemView.findViewById(R.id.progressBarBlock);
         }
     }
 }

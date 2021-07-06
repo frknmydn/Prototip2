@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,8 @@ public class QuestionsToMeFragment extends Fragment {
 
     MainActivity activity;
     ArrayList<Question> questionsArrayList;
+
+    private ConstraintLayout layoutInfo;
 
     public QuestionsToMeFragment() {
         // Required empty public constructor
@@ -58,6 +61,7 @@ public class QuestionsToMeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutInfo = view.findViewById(R.id.consLayoutMyQuestions);
         recyclerView = view.findViewById(R.id.questionToMeRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new QuestionsToMeRCLAdapter(questionsArrayList,activity);
@@ -81,6 +85,11 @@ public class QuestionsToMeFragment extends Fragment {
                 Log.d("Tag","callback İçi");
                 questionsArrayList.addAll(questions);
                 adapter.notifyDataSetChanged();
+
+                if(questionsArrayList.size()>0){
+                    layoutInfo.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
 
             }
         });

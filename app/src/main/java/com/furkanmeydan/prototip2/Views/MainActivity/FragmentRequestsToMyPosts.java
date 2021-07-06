@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
@@ -28,6 +30,8 @@ public class FragmentRequestsToMyPosts extends Fragment {
         MainActivity activity;
         RequestDAL requestDAL;
         ArrayList<Request> requests;
+        ConstraintLayout layoutInfo;
+        TextView txtMessageInfo;
 
 
 
@@ -60,7 +64,8 @@ public class FragmentRequestsToMyPosts extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RequestsToMeRCLAdapter(requests,activity);
         recyclerView.setAdapter(adapter);
-
+        layoutInfo = view.findViewById(R.id.consLayoutMyPostsRequestsLayout);
+        txtMessageInfo =view.findViewById(R.id.txtfragmentRequestToMyPosts);
 
 
     }
@@ -76,10 +81,16 @@ public class FragmentRequestsToMyPosts extends Fragment {
         requestDAL.getMyRequests(new RequestCallback() {
             @Override
             public void getRequestsToMe(List<Request> list) {
+
                 super.getRequestsToMe(list);
                 requests.clear();
                 requests.addAll(list);
                 adapter.notifyDataSetChanged();
+
+                if(requests.size()>0){
+                    layoutInfo.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
 

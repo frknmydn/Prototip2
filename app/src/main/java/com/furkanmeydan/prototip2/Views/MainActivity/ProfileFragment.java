@@ -3,6 +3,7 @@ package com.furkanmeydan.prototip2.Views.MainActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,8 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.User;
@@ -157,11 +162,22 @@ public class ProfileFragment extends Fragment {
         edtEmail.setText(user.getEmail());
         edtNameSurname.setText(user.getNameSurname());
         gender.setText(user.getGender());
-        Glide.with(mainActivity.getApplicationContext()).load(user.getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+        Glide.with(mainActivity.getApplicationContext()).load(user.getProfilePicture()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                CLProgress.setVisibility(View.INVISIBLE);
+                CLMain.setVisibility(View.VISIBLE);
+                return false;
+            }
+        }).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
 
-        CLProgress.setVisibility(View.INVISIBLE);
-        CLMain.setVisibility(View.VISIBLE);
+
     }
 
 

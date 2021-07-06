@@ -6,6 +6,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.MainActivity.QuestionsToMeFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consLayoutMyQuestions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#DEDFDF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView31"
+        app:layout_constraintVertical_bias="0.176">
+
+        <TextView
+            android:id="@+id/txtWishList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#DEDFDF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:inputType="textMultiLine|text|textImeMultiLine"
+            android:text="Cevaplanmayı bekleyen sorunuz bulunmamaktadır."
+            android:textColor="#5C5C5C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_marginEnd="350dp"
+            android:src="@drawable/info"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/txtWishList"
+            app:layout_constraintEnd_toEndOf="@+id/txtWishList"
+            app:layout_constraintStart_toStartOf="@+id/txtWishList"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/textView31"
         android:layout_width="0dp"
@@ -28,6 +73,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

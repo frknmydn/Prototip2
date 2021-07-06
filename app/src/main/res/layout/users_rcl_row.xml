@@ -64,4 +64,15 @@
         app:layout_constraintStart_toEndOf="@+id/btnUnBlockUser"
         app:layout_constraintTop_toTopOf="@+id/btnUnBlockUser" />
 
+    <ProgressBar
+        android:id="@+id/progressBarBlock"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="125sp"
+        android:layout_height="125sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnUnBlockUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtUserRclName"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
