@@ -47,6 +47,7 @@ public class CollectionHelper {
     final public static String QUESTION_QUESTIONTEXT = "questionText";
     final public static String QUESTION_ANSWER = "answerText";
     final public static String QUESTION_STATUS = "status";
+    final public static String QUESTION_POST_TIMESTAMP = "postTimestamp";
 
 
     final public static String REQUEST_COLLECTION = "Requests";

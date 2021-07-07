@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
     Post post;
     Long currentTimestamp;
     boolean isPostOutdated;
+    long postTimestamp;
 
     public FragmentPostSearchResultAskQuestion() {
     }
@@ -46,6 +48,9 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
         localDataManager = new LocalDataManager();
         currentTimestamp = Timestamp.now().getSeconds();
         isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
+        postTimestamp = post.getTimestamp();
+        Log.d("TAGGo", "onCreate: posttimestamp:" + String.valueOf(postTimestamp));
+
     }
 
     @Override
@@ -71,7 +76,8 @@ public class FragmentPostSearchResultAskQuestion extends Fragment {
                     String question = edtTxt.getText().toString();
                     String postHeader = activity.post.getDescription();
                     String senderName = localDataManager.getSharedPreference(activity, "sharedNameSurname", null);
-                    questionDAL.uploadQuestion(question, postOwnerID, postID, postHeader, senderName, new QuestionCallback() {
+                    Log.d("TAGGo", "onClick: timestamp"+ postTimestamp);
+                    questionDAL.uploadQuestion(question, postOwnerID, postID, postHeader, senderName,postTimestamp, new QuestionCallback() {
                         @Override
                         public void onQuestionAdded() {
                             super.onQuestionAdded();

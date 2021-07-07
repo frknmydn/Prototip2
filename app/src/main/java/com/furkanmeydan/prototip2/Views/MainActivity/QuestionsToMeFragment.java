@@ -84,6 +84,7 @@ public class QuestionsToMeFragment extends Fragment {
                 super.onQuestionsRetrieved(questions);
                 Log.d("Tag","callback İçi");
                 questionsArrayList.addAll(questions);
+                Log.d("TAGGO", "onQuestionsRetrieved: " + questionsArrayList.size());
                 adapter.notifyDataSetChanged();
 
                 if(questionsArrayList.size()>0){

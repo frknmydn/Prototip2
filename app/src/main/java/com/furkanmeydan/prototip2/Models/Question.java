@@ -12,12 +12,14 @@ public class Question implements Serializable {
                     senderNameText,
                     questionID;
 
+    private long postTimestamp;
+
     private int status;
 
     public Question() {
     }
 
-    public Question(String postID, String postHeader, String senderID, String senderNameText, String questionText, String postOwnerID, String answerText, String questionID, int status) {
+    public Question(String postID, String postHeader, String senderID, String senderNameText, String questionText, String postOwnerID, String answerText, String questionID, int status, long postTimestamp) {
         this.postID = postID;
         this.senderID = senderID;
         this.questionText = questionText;
@@ -27,6 +29,7 @@ public class Question implements Serializable {
         this.status = status;
         this.postHeaderText = postHeader;
         this.senderNameText = senderNameText;
+        this.postTimestamp = postTimestamp;
     }
 
     public String getPostID() {
@@ -63,5 +66,9 @@ public class Question implements Serializable {
 
     public String getSenderNameText() {
         return senderNameText;
+    }
+
+    public long getPostTimestamp() {
+        return postTimestamp;
     }
 }

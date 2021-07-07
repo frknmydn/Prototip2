@@ -69,6 +69,7 @@ public class FragmentBlockList extends Fragment {
         layoutInfo = view.findViewById(R.id.consLayoutblock);
 
 
+
     }
 
     @Override
