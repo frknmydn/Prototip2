@@ -86,9 +86,10 @@ public class QuestionsToMeFragment extends Fragment {
                 questionsArrayList.addAll(questions);
                 Log.d("TAGGO", "onQuestionsRetrieved: " + questionsArrayList.size());
                 adapter.notifyDataSetChanged();
-
+                Log.d("TAGGO", "onQuestionsRetrieved: asd" +questionsArrayList.size());
                 if(questionsArrayList.size()>0){
-                    layoutInfo.setVisibility(View.GONE);
+                    layoutInfo.setVisibility(View.INVISIBLE);
+                    Log.d("TAGGO", "onQuestionsRetrieved: asd" +questionsArrayList.size());
                     recyclerView.setVisibility(View.VISIBLE);
                 }
 

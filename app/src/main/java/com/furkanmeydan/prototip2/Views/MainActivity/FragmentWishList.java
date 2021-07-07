@@ -69,7 +69,7 @@ public class FragmentWishList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        layoutWishInfo = view.findViewById(R.id.consLayoutWishList);
+        layoutWishInfo = view.findViewById(R.id.layoutQuestions);
         imgInfo = view.findViewById(R.id.imageView3);
         wishRCL = view.findViewById(R.id.RCLWishList);
         wishRCL.setLayoutManager(new LinearLayoutManager(getContext()));

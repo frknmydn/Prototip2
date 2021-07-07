@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +21,8 @@ import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
@@ -40,6 +33,7 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
     TextView txtInfo;
     Post post;
     RequestDAL requestDAL;
+    ConstraintLayout consLayoutAcceptedRequests;
 
 
     @Override
@@ -69,7 +63,7 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        txtInfo= view.findViewById(R.id.txtFragmentAcceptedRequestInformation);
+        consLayoutAcceptedRequests = view.findViewById(R.id.layoutQuestions);
 
         recyclerView = view.findViewById(R.id.fragmentAcceptedRequestsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -79,11 +73,11 @@ public class FragmentPostSearchResultDetailAcceptedRequests extends Fragment {
 
         if(activity.requestList.size()>0){
             adapter.notifyDataSetChanged();
-            txtInfo.setVisibility(View.GONE);
+            consLayoutAcceptedRequests.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
         }
         else{
-            txtInfo.setVisibility(View.VISIBLE);
+            consLayoutAcceptedRequests.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
 

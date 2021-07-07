@@ -7,21 +7,47 @@
     tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchResultDetailAcceptedRequests">
 
 
-    <TextView
-        android:id="@+id/txtFragmentAcceptedRequestInformation"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="264dp"
-        android:background="#E6E9FF"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="İlan Sahibinin Kabul Ettiği İstek Bulunmamaktadır."
-        android:textColor="#5C5C5C"
-        android:textSize="16sp"
-        android:visibility="gone"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutQuestions"
+        android:layout_width="392dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="10dp"
+        android:background="#DEDFDF"
         app:layout_constraintEnd_toEndOf="@+id/textView34"
         app:layout_constraintStart_toStartOf="@+id/textView34"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView34">
+
+        <TextView
+            android:id="@+id/txtWishList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:background="#DEDFDF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="İlan sahibinin kabul ettiği istek bulunmamaktadır"
+            android:textColor="#5C5C5C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_marginEnd="300dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/info"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtWishList"
+            app:layout_constraintEnd_toEndOf="@+id/txtWishList"
+            app:layout_constraintStart_toStartOf="@+id/txtWishList" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentAcceptedRequestsRCL"
@@ -31,9 +57,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView34"

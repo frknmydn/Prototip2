@@ -24,8 +24,8 @@
             android:id="@+id/txtWishList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="#DEDFDF"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
@@ -41,12 +41,13 @@
             android:id="@+id/imageView3"
             android:layout_width="30sp"
             android:layout_height="30sp"
-            android:layout_marginEnd="260dp"
+            android:layout_marginEnd="300dp"
+            android:layout_marginBottom="30dp"
             android:src="@drawable/info"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/txtWishList"
-            app:layout_constraintEnd_toEndOf="@+id/txtWishList"
-            app:layout_constraintStart_toStartOf="@+id/txtWishList"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

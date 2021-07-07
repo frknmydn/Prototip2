@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class FragmentPostSearchResultQuestions extends Fragment {
     Post post;
     Long currentTimestamp;
     boolean isPostOutdated;
+    ConstraintLayout layoutQuestions;
 
     public FragmentPostSearchResultQuestions() {
         // Required empty public constructor
@@ -65,6 +67,7 @@ public class FragmentPostSearchResultQuestions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutQuestions = view.findViewById(R.id.layoutQuestions);
         btnAskQuestion = view.findViewById(R.id.fragmentPostSearchResultQuestionsBtn);
         recyclerView = view.findViewById(R.id.fragmentPostSearchResultQuestionsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -101,6 +104,11 @@ public class FragmentPostSearchResultQuestions extends Fragment {
 
                 questionList.addAll(questions);
                 adapter.notifyDataSetChanged();
+
+                if(questionList.size()>0){
+                    layoutQuestions.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
 

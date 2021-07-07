@@ -60,7 +60,7 @@ public class QuestionDAL {
         firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_STATUS,0)
                 .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID,userId)
                 // yani burada zaman kıyasalaması yaptığımda kod patlıyor
-                //.whereGreaterThan(CollectionHelper.QUESTION_POST_TIMESTAMP,timestampNow)
+                .whereGreaterThan(CollectionHelper.QUESTION_POST_TIMESTAMP,timestampNow)
                 .get()
                 .addOnCompleteListener(task -> {
                     Log.d("Tag","getQuestions task onComplete içi");

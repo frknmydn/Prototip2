@@ -6,6 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchResultQuestions">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutQuestions"
+        android:layout_width="390dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="150dp"
+        android:background="#DEDFDF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <TextView
+            android:id="@+id/txtWishList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="75dp"
+            android:background="#DEDFDF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="İlan sahibinin cevapladığı soru bulunmamaktadır."
+            android:textColor="#5C5C5C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_marginEnd="285dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/info"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtWishList"
+            app:layout_constraintEnd_toEndOf="@+id/txtWishList"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toStartOf="@+id/txtWishList" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:background="#DEDFDF"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Dilerseniz aşağıdaki butona tıkladıktan sonra ilan sahibine, ilan hakkında soru sorabilirsiniz."
+            android:textColor="#5C5C5C"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtWishList" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentPostSearchResultQuestionsRCL"
         android:layout_width="0dp"
@@ -13,6 +72,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/fragmentPostSearchResultQuestionsBtn"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/textView4"
