@@ -22,5 +22,9 @@ public abstract class QuestionCallback {
 
     }
 
+    public void onQuestionRemovedForBlock(){
+
+    }
+
 
 }

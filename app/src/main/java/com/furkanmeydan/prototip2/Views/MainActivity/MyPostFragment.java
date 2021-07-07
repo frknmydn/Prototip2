@@ -31,7 +31,7 @@ public class MyPostFragment extends Fragment {
     ArrayList<Post> posts;
     MainActivity activity;
     Button btnPastPosts;
-    ConstraintLayout layoutInfo;
+    ConstraintLayout layoutInfo,layoutProgress,layoutContents;
 
     PostDAL postDAL;
 
@@ -64,7 +64,12 @@ public class MyPostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutContents = view.findViewById(R.id.myPostsContentsLayout);
+        layoutContents.setVisibility(View.INVISIBLE);
+        layoutProgress = view.findViewById(R.id.myPostsProgressLayout);
+        layoutProgress.setVisibility(View.VISIBLE);
         layoutInfo = view.findViewById(R.id.consLayoutMyPosts);
+        layoutInfo.setVisibility(View.INVISIBLE);
 
         recyclerView = view.findViewById(R.id.myPostRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,7 +78,8 @@ public class MyPostFragment extends Fragment {
         recyclerView.setAdapter(postRCLAdapter);
         btnPastPosts = view.findViewById(R.id.myPostBtnPastPosts);
 
-        getMyPosts();
+        //getMyPosts();
+
 
         btnPastPosts.setOnClickListener(view1 -> {
             activity.changeFragment(new MyOldPostsFragment());
@@ -94,11 +100,15 @@ public class MyPostFragment extends Fragment {
                 super.getMyPosts(list);
                 posts.clear();
                 posts.addAll(list);
-                postRCLAdapter.notifyDataSetChanged();
                 Log.d("TAGGY",String.valueOf(posts.size()));
                 if(posts.size()>0){
-                    layoutInfo.setVisibility(View.INVISIBLE);
+                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutContents.setVisibility(View.VISIBLE);
+                    postRCLAdapter.notifyDataSetChanged();
                     recyclerView.setVisibility(View.VISIBLE);
+                }else{
+                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutInfo.setVisibility(View.VISIBLE);
                 }
             }
         });

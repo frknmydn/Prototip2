@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void changeFragmentArgs(Fragment fragment,Bundle args){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack("ProfileCallback");
         fragment.setArguments(args);
         fragmentTransaction.replace(R.id.consLayout,fragment);
         fragmentTransaction.commit();

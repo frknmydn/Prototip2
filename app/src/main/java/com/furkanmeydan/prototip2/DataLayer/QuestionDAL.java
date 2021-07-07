@@ -100,6 +100,23 @@ public class QuestionDAL {
                 });
     }
 
+    public void removeQuestionforBlock(String blockerID, String blockedID, QuestionCallback callback){
+        firestore.collectionGroup(CollectionHelper.QUESTION_COLLECTION).whereEqualTo(CollectionHelper.QUESTION_SENDERID,blockedID)
+                .whereEqualTo(CollectionHelper.QUESTION_POSTOWNERID, blockerID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult() !=null && task.getResult().size() > 0){
+                        for(DocumentSnapshot ds : task.getResult().getDocuments()){
+                            ds.getReference().delete();
+                        }
+                        callback.onQuestionRemovedForBlock();
+                    }
+                }
+            }
+        });
+    }
+
     public String getUserId() {
         return userId;
     }

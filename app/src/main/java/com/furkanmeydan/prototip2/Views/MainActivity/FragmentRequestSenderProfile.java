@@ -24,8 +24,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
@@ -52,6 +54,7 @@ public class FragmentRequestSenderProfile extends Fragment {
     RequestDAL requestDAL;
     BlockDAL blockDAL;
     PostDAL postDAL;
+    QuestionDAL questionDAL;
     Request request;
 
     Dialog dialog;
@@ -74,6 +77,7 @@ public class FragmentRequestSenderProfile extends Fragment {
         requestDAL = new RequestDAL();
         blockDAL = new BlockDAL();
         postDAL = new PostDAL();
+        questionDAL = new QuestionDAL();
 
         if (getArguments() != null) {
             request = (Request) getArguments().getSerializable("request");
@@ -209,7 +213,6 @@ public class FragmentRequestSenderProfile extends Fragment {
                                 public void onAcceptedRequestSearchResult(boolean flag) {
                                     super.onAcceptedRequestSearchResult(flag);
                                     if(!flag){
-
                                         requestDAL.getRequestStatusToBlock(request.getSenderID(), userid, new RequestCallback() {
                                             @Override
                                             public void onAcceptedRequestSearchResult(boolean flag) {
@@ -240,10 +243,23 @@ public class FragmentRequestSenderProfile extends Fragment {
                                                                                                     @Override
                                                                                                     public void deleteWishOnBlock() {
                                                                                                         super.deleteWishOnBlock();
-                                                                                                        dialog.dismiss();
-                                                                                                        Intent i = new Intent(activity,MainActivity.class);
-                                                                                                        startActivity(i);
-                                                                                                        activity.finish();
+                                                                                                        questionDAL.removeQuestionforBlock(userid, request.getSenderID(), new QuestionCallback() {
+                                                                                                            @Override
+                                                                                                            public void onQuestionRemovedForBlock() {
+                                                                                                                super.onQuestionRemovedForBlock();
+                                                                                                                questionDAL.removeQuestionforBlock(request.getSenderID(), userid, new QuestionCallback() {
+                                                                                                                    @Override
+                                                                                                                    public void onQuestionRemovedForBlock() {
+                                                                                                                        super.onQuestionRemovedForBlock();
+                                                                                                                        dialog.dismiss();
+                                                                                                                        Intent i = new Intent(activity,MainActivity.class);
+                                                                                                                        startActivity(i);
+                                                                                                                        activity.finish();
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            }
+                                                                                                        });
+
                                                                                                     }
                                                                                                 });
                                                                                             }

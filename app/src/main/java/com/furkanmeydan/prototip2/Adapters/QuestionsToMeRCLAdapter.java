@@ -16,6 +16,7 @@ import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.Models.Question;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.FragmentAnswerQuestion;
+import com.furkanmeydan.prototip2.Views.MainActivity.FragmentUserProfileBlock;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 
 import java.util.ArrayList;
@@ -62,15 +63,18 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
                         });
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("question",questions.get(position));
-                Log.d("Tag","Adapter onClick");
-            activity.changeFragmentArgs(new FragmentAnswerQuestion(),bundle);
-                Log.d("Tag","Adapter onClick changed fragment");
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("question",questions.get(position));
+            Log.d("Tag","Adapter onClick");
+        activity.changeFragmentArgs(new FragmentAnswerQuestion(),bundle);
+            Log.d("Tag","Adapter onClick changed fragment");
+        });
+
+        holder.txtSenderName.setOnClickListener(view -> {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("question",questions.get(position));
+        activity.changeFragmentArgs(new FragmentUserProfileBlock(), bundle);
         });
 
     }

@@ -77,7 +77,7 @@ public class FragmentPostSearchResultQuestions extends Fragment {
         currentTimestamp = Timestamp.now().getSeconds();
         isPostOutdated = post.getTimestamp() <= currentTimestamp - 180;
 
-        getQuestions();
+        //getQuestions();
 
         if(isPostOutdated){
             btnAskQuestion.setVisibility(View.GONE);
@@ -93,6 +93,11 @@ public class FragmentPostSearchResultQuestions extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getQuestions();
+    }
 
     public void getQuestions(){
         String currentUserId = questionDAL.getUserId();
