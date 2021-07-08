@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,7 @@ public class MyOldPostsFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Post> posts;
     MainActivity activity;
-    Button btnPastPosts;
+    ConstraintLayout layoutContent, layoutinfo, layoutProgress;
 
     PostDAL postDAL;
 
@@ -58,6 +59,11 @@ public class MyOldPostsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.myOldPostsRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutContent = view.findViewById(R.id.layoutOldPostsRCL);
+
+        layoutProgress = view.findViewById(R.id.layoutOldPostProgress);
+        layoutProgress.setVisibility(View.VISIBLE);
+        layoutinfo = view.findViewById(R.id.consLayoutMyPosts);
 
         postRCLAdapter = new myPostRecyclerAdapter(activity,posts);
         recyclerView.setAdapter(postRCLAdapter);
@@ -76,6 +82,15 @@ public class MyOldPostsFragment extends Fragment {
                 super.getMyPosts(list);
                 posts.clear();
                 posts.addAll(list);
+                if(posts.size()>0){
+                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutContent.setVisibility(View.VISIBLE);
+                }
+                else{
+                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutinfo.setVisibility(View.VISIBLE);
+                }
+
                 postRCLAdapter.notifyDataSetChanged();
             }
         });

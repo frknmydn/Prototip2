@@ -31,7 +31,7 @@ public class FragmentBlockList extends Fragment {
     ArrayList<User> listBlockedUsers;
     BlockDAL blockDAL;
     ProfileDAL profileDAL;
-    ConstraintLayout layoutInfo;
+    ConstraintLayout layoutInfo, layoutContent, layoutProgress;
 
 
     public FragmentBlockList() {
@@ -66,7 +66,12 @@ public class FragmentBlockList extends Fragment {
         rclBlockedList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BlockedUsersAdapter(listBlockedUsers,activity);
         rclBlockedList.setAdapter(adapter);
-        layoutInfo = view.findViewById(R.id.consLayoutblock);
+        layoutInfo = view.findViewById(R.id.consLayoutblockInfo);
+        layoutInfo.setVisibility(View.GONE);
+
+        layoutContent = view.findViewById(R.id.layoutBlockListRCL);
+        layoutProgress = view.findViewById(R.id.layoutBlockListProgress);
+
 
 
 
@@ -93,8 +98,14 @@ public class FragmentBlockList extends Fragment {
                             adapter.notifyDataSetChanged();
                             if(listBlockedUsers.size() > 0){
                                 layoutInfo.setVisibility(View.INVISIBLE);
-                                rclBlockedList.setVisibility(View.VISIBLE);
-
+                                layoutProgress.setVisibility(View.INVISIBLE);
+                                adapter.notifyDataSetChanged();
+                                layoutContent.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                                layoutProgress.setVisibility(View.INVISIBLE);
+                                layoutInfo.setVisibility(View.VISIBLE);
+                                layoutContent.setVisibility(View.INVISIBLE);
                             }
                         }
                     });

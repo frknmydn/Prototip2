@@ -32,7 +32,7 @@ public class QuestionsToMeFragment extends Fragment {
     MainActivity activity;
     ArrayList<Question> questionsArrayList;
 
-    private ConstraintLayout layoutInfo;
+    private ConstraintLayout layoutInfo, layoutProgress, layoutContent;
 
     public QuestionsToMeFragment() {
         // Required empty public constructor
@@ -61,12 +61,18 @@ public class QuestionsToMeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        layoutInfo = view.findViewById(R.id.consLayoutMyQuestions);
+
         recyclerView = view.findViewById(R.id.questionToMeRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new QuestionsToMeRCLAdapter(questionsArrayList,activity);
         recyclerView.setAdapter(adapter);
 
+        layoutInfo = view.findViewById(R.id.consLayoutMyQuestions);
+        layoutInfo.setVisibility(View.GONE);
+        layoutContent = view.findViewById(R.id.layoutQuestionToMeRCL);
+        layoutContent.setVisibility(View.GONE);
+        layoutProgress = view.findViewById(R.id.layoutQuestionToMeProgress);
+        layoutProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -89,9 +95,14 @@ public class QuestionsToMeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 Log.d("TAGGO", "onQuestionsRetrieved: asd" +questionsArrayList.size());
                 if(questionsArrayList.size()>0){
-                    layoutInfo.setVisibility(View.INVISIBLE);
+                    layoutProgress.setVisibility(View.GONE);
                     Log.d("TAGGO", "onQuestionsRetrieved: asd" +questionsArrayList.size());
-                    recyclerView.setVisibility(View.VISIBLE);
+                    layoutContent.setVisibility(View.VISIBLE);
+                }
+                else{
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutInfo.setVisibility(View.VISIBLE);
+
                 }
 
             }

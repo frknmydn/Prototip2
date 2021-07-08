@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Views.MainActivity.MyPostFragment">
 
+    <Button
+        android:id="@+id/myPostBtnPastPosts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:text="GEÇMİŞ İLANLARIM"
+        app:layout_constraintBottom_toBottomOf="@+id/myPostsContentsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myPostsContentsLayout"
         android:layout_width="match_parent"
@@ -33,19 +44,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/myPostBtnPastPosts"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="15dp"
-            android:text="GEÇMİŞ İLANLARIM"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myPostRCL" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myPostRCL"
             android:layout_width="0dp"
@@ -62,11 +60,12 @@
         android:id="@+id/myPostsProgressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
             android:id="@+id/myPostsProgressBar"
@@ -89,9 +88,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="31dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="400dp"
         android:background="#DEDFDF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

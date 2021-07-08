@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class FragmentPostSearchPostOwner extends Fragment {
     private ProgressBar progressBar;
     String ownerId;
     User userProfile;
+    Button nonShow;
 
 
     public FragmentPostSearchPostOwner() {
@@ -78,6 +80,8 @@ public class FragmentPostSearchPostOwner extends Fragment {
         layoutDetail = view.findViewById(R.id.constraintLayout2);
         layoutProgress = view.findViewById(R.id.searchProfileConsLayout);
         progressBar = view.findViewById(R.id.searchResultProgress);
+        nonShow = view.findViewById(R.id.btnBlockUserProfile);
+        nonShow.setVisibility(View.INVISIBLE);
         Log.d("Tag","PostSearchactivity owner id "+ ownerId);
         Log.d("Tag","PostSearchactivity getprofiledata öncesi ");
         getProfileData();
