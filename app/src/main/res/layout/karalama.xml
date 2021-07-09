@@ -30,4 +30,14 @@
             tools:layout_editor_absoluteX="26dp"
             tools:layout_editor_absoluteY="102dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <SearchView
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

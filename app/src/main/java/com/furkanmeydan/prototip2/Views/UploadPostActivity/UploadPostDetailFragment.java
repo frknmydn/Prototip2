@@ -258,7 +258,7 @@ public class UploadPostDetailFragment extends Fragment {
             public void onClick(View view) {
 
                 saveDetails();
-                postActivity.changeFragment(new UploadMapFragment());
+                postActivity.changeFragment(new UploadMapFragment2());
             }
         });
 

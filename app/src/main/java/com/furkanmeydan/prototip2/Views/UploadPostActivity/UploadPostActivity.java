@@ -58,7 +58,7 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
     public void AUPMapFragment(View view){
-        changeFragment(new UploadMapFragment());
+        changeFragment(new UploadMapFragment2());
         //onBackPressed();
     }
 
