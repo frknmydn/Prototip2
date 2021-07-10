@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -23,6 +25,8 @@ import android.widget.TimePicker;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDetailDataPasser;
 import com.furkanmeydan.prototip2.R;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 
 import java.text.ParseException;
@@ -33,11 +37,22 @@ import java.util.Date;
 public class UploadPostDetailFragment extends Fragment {
 
     EditText edtcarDetail,edtDestination,edtDescription,edtTime,edtDate;
-    Spinner spinnerCity,spinnerPassengerCount;
+
+    //Spinner spinnerCity,spinnerPassengerCount;
+    // ****************UPDATE*********************
+
+    //Spinner spinnerPassengerCount;
+    // New Component for Spinner
+    AutoCompleteTextView spinnerCity, spinnerPassengerCount;
+    // ****************/UPDATE********************
+
     ArrayAdapter<CharSequence> spinnerAdapterCity;
     ArrayAdapter<Integer> spinnerAdapterPassanger;
     UploadPostActivity postActivity;
     String cardet;
+
+    TabLayout tabLayout;
+
 
     DatePickerDialog datePickerDialog;
     long timeNow = Timestamp.now().getSeconds() * 1000;
@@ -74,6 +89,8 @@ public class UploadPostDetailFragment extends Fragment {
         super.onAttach(context);
 
         postActivity = (UploadPostActivity) getActivity();
+
+
     }
 
     @Override
@@ -87,13 +104,15 @@ public class UploadPostDetailFragment extends Fragment {
         dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         calendar = Calendar.getInstance();
 
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_upload_post_detail, container, false);
+        return inflater.inflate(R.layout.fragment_upload_post_detail_new, container, false);
     }
 
     @Override
@@ -104,16 +123,22 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
-        postActivity.findViewById(R.id.btnUploadPostMap).setClickable(true);
-        postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(false);
+        //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(true);
+        //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(false);
+
+
 
         edtcarDetail = view.findViewById(R.id.UPDEDTCarDetail);
-        edtDestination = view.findViewById(R.id.UPDEDTDestination);
+        edtDestination = view.findViewById(R.id.UPDEDTDestination1);
         edtDescription = view.findViewById(R.id.UPDEDTDescription);
         edtTime = view.findViewById(R.id.UPDTime);
         edtDate = view.findViewById(R.id.UPDDate);
 
 
+
+
+
+        /*
         //spinner city
         spinnerCity =view.findViewById(R.id.UPDSpinnerCity);
         spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
@@ -134,9 +159,53 @@ public class UploadPostDetailFragment extends Fragment {
 
             }
         });
+        */
 
+        //***********UPDATE*****************
+        spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
+        spinnerAdapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCity = (AutoCompleteTextView) view.findViewById(R.id.atxtCity);
+        spinnerCity.setAdapter(spinnerAdapterCity);
+
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cityString = adapterView.getItemAtPosition(i).toString();
+                Log.d("Tag","cityString: "+ cityString);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        //***********/UPDATE****************
+
+        /*
         //spinner passenger count. bu classın içinde adapterı yazılı
         spinnerPassengerCount =view.findViewById(R.id.UPDSpinnerPassengerCount);
+        //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
+        spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
+        spinnerAdapterPassanger.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPassengerCount.setAdapter(spinnerAdapterPassanger);
+
+
+        spinnerPassengerCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                passengerCountString = (Integer) adapterView.getItemAtPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        */
+
+        //spinner passenger count. bu classın içinde adapterı yazılı
+        spinnerPassengerCount = view.findViewById(R.id.atxtPassengerCount);
         //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
         spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
         spinnerAdapterPassanger.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -253,6 +322,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
+        /*
         postActivity.findViewById(R.id.btnUploadPostMap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -268,6 +338,34 @@ public class UploadPostDetailFragment extends Fragment {
                 saveDetails();
                 postActivity.AUPUploadPost(view);
 
+
+            }
+        });
+
+         */
+
+
+        tabLayout = postActivity.findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        break;
+                    case 1:
+                        saveDetails();
+                        postActivity.changeFragment(new UploadMapFragment2());
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });

@@ -36,7 +36,7 @@ public class UploadPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_post);
+        setContentView(R.layout.activity_upload_post_new);
         localDataManager = new LocalDataManager();
         changeFragment(new UploadPostDetailFragment());
         postDAL = new PostDAL();
@@ -48,7 +48,7 @@ public class UploadPostActivity extends AppCompatActivity {
     public void changeFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //fragmentTransaction.addToBackStack("PostCallback");
-        fragmentTransaction.replace(R.id.postUploadFrameLayout,fragment);
+        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment);
         fragmentTransaction.commit();
     }
 

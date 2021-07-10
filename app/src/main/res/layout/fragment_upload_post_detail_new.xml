@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Views.UploadPostActivity.UploadPostDetailFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDEDTDestinationLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:hint="Yolculuğunuzu isimlendirin"
+            app:boxStrokeColor="#3D08CF"
+            android:textColorHint="#414141"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/UPDEDTDestination1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="textMultiLine|textPersonName"
+
+                android:fontFamily="sans-serif-light"
+                android:textColor="#414141"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDSpinnerCityLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toStartOf="@+id/UPDSpinnerPassengerCountLayout"
+            app:layout_constraintStart_toStartOf="@+id/UPDEDTDestinationLayout"
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDestinationLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/atxtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gray_circle_drawable"
+                android:fontFamily="sans-serif-light"
+                android:hint="Şehir Seçiniz"
+                android:inputType="none"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDSpinnerPassengerCountLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:boxStrokeColor="#3D08CF"
+            android:layout_centerVertical="true"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+            app:layout_constraintEnd_toEndOf="@+id/UPDEDTDestinationLayout"
+            app:layout_constraintStart_toEndOf="@+id/UPDSpinnerCityLayout"
+            app:layout_constraintTop_toTopOf="@+id/UPDSpinnerCityLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/atxtPassengerCount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="Yolcu Sayısı"
+                android:padding="5dp"
+                android:inputType="none"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#414141"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDDateLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:hint="Tarih Seçiniz"
+            app:boxStrokeColor="#3D08CF"
+            android:textColorHint="#414141"
+            app:layout_constraintEnd_toStartOf="@+id/UPDTimeLayout"
+            app:layout_constraintStart_toStartOf="@+id/UPDSpinnerCityLayout"
+            app:layout_constraintTop_toBottomOf="@+id/UPDSpinnerCityLayout">
+
+            <EditText
+                android:id="@+id/UPDDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPersonName"
+                android:textColor="#414141"
+                android:focusable="false"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDTimeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:hint="Saat Seçiniz"
+            app:boxStrokeColor="#3D08CF"
+            android:textColorHint="#414141"
+            app:layout_constraintEnd_toEndOf="@+id/UPDSpinnerPassengerCountLayout"
+            app:layout_constraintStart_toEndOf="@+id/UPDDateLayout"
+            app:layout_constraintTop_toTopOf="@+id/UPDDateLayout">
+
+            <EditText
+                android:id="@+id/UPDTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:focusable="false"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPersonName"
+                android:textColor="#414141"
+                android:visibility="invisible"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDEDTDescriptionLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            app:boxStrokeColor="#3D08CF"
+            android:background="@drawable/gray_circle_drawable"
+            android:hint="Yolculuk hakkında detaylı bilgi"
+            android:textColorHint="#414141"
+            app:layout_constraintBottom_toTopOf="@+id/UPDEDTCarDetailLayout"
+            app:layout_constraintEnd_toEndOf="@+id/UPDTimeLayout"
+            app:layout_constraintStart_toStartOf="@+id/UPDDateLayout"
+            app:layout_constraintTop_toBottomOf="@+id/UPDDateLayout">
+
+            <EditText
+                android:id="@+id/UPDEDTDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="sans-serif-light"
+                android:gravity="top"
+                android:inputType="textMultiLine|textPersonName"
+                android:textColor="#414141"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UPDEDTCarDetailLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:hint="Araç hakkında detaylı bilgi"
+            app:boxStrokeColor="#3D08CF"
+            android:textColorHint="#414141"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/UPDEDTDescriptionLayout"
+            app:layout_constraintStart_toStartOf="@+id/UPDEDTDescriptionLayout"
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout">
+
+            <EditText
+                android:id="@+id/UPDEDTCarDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="sans-serif-light"
+                android:gravity="top"
+                android:padding="10dp"
+                android:inputType="textMultiLine|textPersonName"
+                android:textColor="#414141"
+                android:textColorLink="#00000000"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

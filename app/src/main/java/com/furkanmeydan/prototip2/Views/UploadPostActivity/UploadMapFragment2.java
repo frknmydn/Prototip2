@@ -32,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +59,7 @@ public class UploadMapFragment2 extends Fragment {
     private GoogleMap googleMappo;
     UploadPostActivity postActivity;
     OnMapReadyCallback callback;
-
+    TabLayout tabLayout;
 
 
     public UploadMapFragment2() {
@@ -149,12 +150,16 @@ public class UploadMapFragment2 extends Fragment {
 
                         }
                     });
+
+                    /*
                     postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             postActivity.AUPUploadPost(view);
                         }
                     });
+
+                     */
 
                     double sharedLat1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1", 0d);
                     double sharedLng1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1", 0d);
@@ -205,8 +210,8 @@ public class UploadMapFragment2 extends Fragment {
         postActivity = (UploadPostActivity) getActivity();
 
         localDataManager = new LocalDataManager();
-        postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
-        postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);
+        //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
+        //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -220,6 +225,30 @@ public class UploadMapFragment2 extends Fragment {
 
 
         }
+
+        tabLayout = postActivity.findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        postActivity.changeFragment(new UploadPostDetailFragment());
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
 
