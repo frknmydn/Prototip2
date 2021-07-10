@@ -65,11 +65,11 @@ public class MyPostFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         layoutContents = view.findViewById(R.id.myPostsContentsLayout);
-        layoutContents.setVisibility(View.INVISIBLE);
+        layoutContents.setVisibility(View.GONE);
         layoutProgress = view.findViewById(R.id.myPostsProgressLayout);
         layoutProgress.setVisibility(View.VISIBLE);
         layoutInfo = view.findViewById(R.id.consLayoutMyPosts);
-        layoutInfo.setVisibility(View.INVISIBLE);
+        layoutInfo.setVisibility(View.GONE);
 
         recyclerView = view.findViewById(R.id.myPostRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -102,12 +102,11 @@ public class MyPostFragment extends Fragment {
                 posts.addAll(list);
                 Log.d("TAGGY",String.valueOf(posts.size()));
                 if(posts.size()>0){
-                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutProgress.setVisibility(View.GONE);
                     layoutContents.setVisibility(View.VISIBLE);
                     postRCLAdapter.notifyDataSetChanged();
-                    recyclerView.setVisibility(View.VISIBLE);
                 }else{
-                    layoutProgress.setVisibility(View.INVISIBLE);
+                    layoutProgress.setVisibility(View.GONE);
                     layoutInfo.setVisibility(View.VISIBLE);
                 }
             }

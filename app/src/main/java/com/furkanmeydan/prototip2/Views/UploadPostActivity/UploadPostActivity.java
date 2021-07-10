@@ -16,6 +16,8 @@ import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
@@ -33,6 +35,7 @@ public class UploadPostActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String userId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,11 @@ public class UploadPostActivity extends AppCompatActivity {
         postDAL = new PostDAL();
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+
+
+
+
+
     }
 
 

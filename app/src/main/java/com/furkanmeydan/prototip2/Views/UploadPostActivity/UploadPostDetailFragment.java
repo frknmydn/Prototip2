@@ -162,48 +162,39 @@ public class UploadPostDetailFragment extends Fragment {
         */
 
         //***********UPDATE*****************
+
         spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
         spinnerAdapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCity = (AutoCompleteTextView) view.findViewById(R.id.atxtCity);
         spinnerCity.setAdapter(spinnerAdapterCity);
 
-        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cityString = adapterView.getItemAtPosition(i).toString();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cityString = (String) parent.getItemAtPosition(position);
                 Log.d("Tag","cityString: "+ cityString);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
+
         //***********/UPDATE****************
 
-        /*
+
         //spinner passenger count. bu classın içinde adapterı yazılı
-        spinnerPassengerCount =view.findViewById(R.id.UPDSpinnerPassengerCount);
-        //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
+        spinnerPassengerCount =view.findViewById(R.id.atxtPassengerCount);
         spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
         spinnerAdapterPassanger.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPassengerCount.setAdapter(spinnerAdapterPassanger);
 
-
-        spinnerPassengerCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPassengerCount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                passengerCountString = (Integer) adapterView.getItemAtPosition(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                passengerCountString = (Integer) parent.getItemAtPosition(position);
             }
         });
-        */
 
+
+
+        /*
         //spinner passenger count. bu classın içinde adapterı yazılı
         spinnerPassengerCount = view.findViewById(R.id.atxtPassengerCount);
         //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
@@ -224,6 +215,8 @@ public class UploadPostDetailFragment extends Fragment {
             }
         });
 
+
+         */
         //Doğum tarihi seçtirmek
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -393,16 +386,16 @@ public class UploadPostDetailFragment extends Fragment {
        if(passengerCountString != -1){
            localDataManager.setSharedPreferenceForInt(postActivity,"passengercount",passengerCountString);
        }
-       //if(!cardet.equals("")){
+       if(!cardet.equals("")){
            localDataManager.setSharedPreference(postActivity,"cardetail",cardet);
 
-       //}
-       //if(!edtDescription.getText().toString().equals("")){
+       }
+       if(!edtDescription.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
-       //}
-       //if(!edtDestination.getText().toString().equals("")){
+       }
+       if(!edtDestination.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"destination",edtDestination.getText().toString());
-       //}
+       }
 
 
     }
@@ -425,7 +418,10 @@ public class UploadPostDetailFragment extends Fragment {
 
 
         cityString = localDataManager.getSharedPreference(postActivity,"city",null);
+        Log.d("TAG", "onResume: "+ cityString);
+
         passengerCountString = (int)localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",Integer.parseInt("-1"));
+        Log.d("TAG", "onResume: " + passengerCountString);
         String carDetail = localDataManager.getSharedPreference(postActivity,"cardetail",null);
         String description = localDataManager.getSharedPreference(postActivity,"description",null);
         String destination = localDataManager.getSharedPreference(postActivity,"destination",null);
@@ -453,8 +449,13 @@ public class UploadPostDetailFragment extends Fragment {
         edtDestination.setText(destination);
         edtcarDetail.setText(carDetail);
         edtDescription.setText(description);
-        spinnerCity.setSelection(spinnerAdapterCity.getPosition(cityString));
-        spinnerPassengerCount.setSelection(spinnerAdapterPassanger.getPosition(passengerCountString));
+        if(cityString!=null && passengerCountString!=null){
+            spinnerCity.setText(cityString,false);
+            //spinnerCity.setSelection(spinnerAdapterCity.getPosition(cityString));
+            spinnerPassengerCount.setText(String.valueOf(passengerCountString),false);
+            //spinnerPassengerCount.setSelection(spinnerAdapterPassanger.getPosition(passengerCountString));
+        }
+
 
 
     }

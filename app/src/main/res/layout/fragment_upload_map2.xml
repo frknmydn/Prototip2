@@ -7,6 +7,16 @@
     tools:context=".Views.UploadPostActivity.UploadMapFragment2">
 
 
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapViewUploadPost"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchViewUPloadMap" />
+
     <ImageButton
         android:id="@+id/imageViewClearMapUploadPost"
         android:layout_width="0dp"
@@ -14,24 +24,28 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:src="@android:drawable/ic_menu_revert"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchViewUPloadMap"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewUploadPost"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <fragment
+        android:id="@+id/uploadPostPlacesFragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewClearMapUploadPost"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewUPloadMap" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </fragment>
 
     <SearchView
         android:id="@+id/searchViewUPloadMap"
         android:layout_width="347dp"
         android:layout_height="35dp"
         android:layout_marginTop="5dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/imageViewClearMapUploadPost"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

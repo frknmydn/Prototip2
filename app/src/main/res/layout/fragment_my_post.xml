@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".Views.MainActivity.MyPostFragment">
 
     <Button
@@ -13,19 +14,19 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:text="GEÇMİŞ İLANLARIM"
-        app:layout_constraintBottom_toBottomOf="@+id/myPostsContentsLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myPostsContentsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="387dp"
+        android:layout_height="620dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/myPostBtnPastPosts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView14"
@@ -46,12 +47,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myPostRCL"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="383dp"
+            android:layout_height="542dp"
             android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/myPostBtnPastPosts"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -79,8 +81,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,13 +93,13 @@
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="400dp"
         android:background="#DEDFDF"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:visibility="visible">
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/txtWishList"

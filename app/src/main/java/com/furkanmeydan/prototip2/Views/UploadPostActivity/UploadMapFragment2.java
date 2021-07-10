@@ -1,7 +1,9 @@
 package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,10 +22,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -32,17 +36,24 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 
-public class UploadMapFragment2 extends Fragment {
+public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     ImageButton btnMapClear;
     LocalDataManager localDataManager;
@@ -52,14 +63,17 @@ public class UploadMapFragment2 extends Fragment {
     String cord2 = "";
     String cord3 = "";
     String cord4 = "";
+    SearchView searchView;
     ArrayList<String> addressArray;
     List<Address> addressList;
 
     LocationManager locationManager;
     private GoogleMap googleMappo;
     UploadPostActivity postActivity;
+    PlacesClient placesClient;
     OnMapReadyCallback callback;
     TabLayout tabLayout;
+
 
 
     public UploadMapFragment2() {
@@ -72,7 +86,12 @@ public class UploadMapFragment2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        postActivity = (UploadPostActivity) getActivity();
         addressArray = new ArrayList<>();
+
+        Places.initialize(postActivity,"AIzaSyAkR63wvDhI3bukQYRSBxXtarR_e2G_t1I");
+
+        placesClient = Places.createClient(postActivity);
 
     }
 
@@ -85,101 +104,11 @@ public class UploadMapFragment2 extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_upload_map2, container, false);
         mapView = rootView.findViewById(R.id.mapViewUploadPost);
         mapView.onCreate(savedInstanceState);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         mapView.onResume();
 
-
-        mapView.getMapAsync(mMap -> {
-            googleMappo = mMap;
-            callback = new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    googleMappo= googleMap;
-
-                    locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    googleMappo.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                        @Override
-                        public void onMapLongClick(LatLng latLng) {
-
-                            addMarker(latLng);
-
-                        }
-                    });
-
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-                        } else {
-                            // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                            googleMappo.clear();
-
-
-                            Location lastLocation = locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
-                            if (lastLocation != null) {
-                                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-                                googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
-                            }
-
-
-                        }
-                    } else {
-
-                        googleMappo.clear();
-
-
-                        Location lastLocation = locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
-                        if (lastLocation != null) {
-                            LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-                            googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
-                        }
-
-
-                    }
-
-                    btnMapClear.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            googleMappo.clear();
-                            localDataManager.removeSharedPreference(postActivity, "lat_1");
-                            localDataManager.removeSharedPreference(postActivity, "lng_1");
-                            localDataManager.removeSharedPreference(postActivity, "lat_2");
-                            localDataManager.removeSharedPreference(postActivity, "lng_2");
-                            counter = 0;
-                            addressArray.clear();
-
-                        }
-                    });
-
-                    /*
-                    postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            postActivity.AUPUploadPost(view);
-                        }
-                    });
-
-                     */
-
-                    double sharedLat1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1", 0d);
-                    double sharedLng1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1", 0d);
-                    double sharedLat2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_2", 0d);
-                    double sharedLng2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_2", 0d);
-                    Log.d("TAG SHARED ", String.valueOf(sharedLat1));
-
-                    if (sharedLat1 != 0 && sharedLat2 != 0 && sharedLng1 != 0 && sharedLng2 != 0) {
-
-                        LatLng latlng1 = new LatLng(sharedLat1, sharedLng1);
-                        googleMappo.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
-                        LatLng latln2 = new LatLng(sharedLat2, sharedLng2);
-                        googleMappo.addMarker(new MarkerOptions().title("Varış").position(latln2));
-                    }
-                }
-            };
-
-
-        });
-
+        mapView.getMapAsync(this);
 
 
 
@@ -207,24 +136,13 @@ public class UploadMapFragment2 extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        postActivity = (UploadPostActivity) getActivity();
+
 
         localDataManager = new LocalDataManager();
         //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
         //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-
-            btnMapClear = view.findViewById(R.id.btnMapClear);
-
-
-
-
-            mapFragment.getMapAsync(callback);
-
-
-        }
+        btnMapClear = view.findViewById(R.id.imageViewClearMapUploadPost);
+        searchView = view.findViewById(R.id.searchViewUPloadMap);
 
         tabLayout = postActivity.findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -249,8 +167,27 @@ public class UploadMapFragment2 extends Fragment {
 
             }
         });
+
+
     }
 
+
+    /*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        if(requestCode == 95957){
+            if(resultCode == Activity.RESULT_OK){
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                LatLng latLng = place.getLatLng();
+                Log.d("Tag","Latlng"+ String.valueOf(latLng));
+                googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+     */
 
     public void addMarker(LatLng latLng) {
         Log.d("TAG", "addMarker: " + "içine girildi");
@@ -334,4 +271,145 @@ public class UploadMapFragment2 extends Fragment {
 
 
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMappo= googleMap;
+
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getChildFragmentManager().findFragmentById(R.id.uploadPostPlacesFragment);
+            if (autocompleteFragment != null) {
+                autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
+
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(@NonNull @NotNull Place place) {
+                    String test = place.getAddress();
+                    LatLng latLng = place.getLatLng();
+                    Log.d("Tag","Latlng "+ String.valueOf(latLng));
+                    Log.d("Tag","Address "+ String.valueOf(test));
+                    googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+                }
+
+                @Override
+                public void onError(@NonNull @NotNull Status status) {
+
+                }
+            });
+        }
+
+        /*
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String location = searchView.getQuery().toString();
+
+
+                List<Address> addressList = null;
+
+                if(location !=null ||location.equals("")){
+                    Geocoder geocoder = new Geocoder(postActivity);
+                    try {
+                        addressList = geocoder.getFromLocationName(location,1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(addressList.size() > 0){
+                        Address address = addressList.get(0);
+
+                    }
+
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+         */
+
+        locationManager = (LocationManager) postActivity.getSystemService(Context.LOCATION_SERVICE);
+        googleMappo.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+
+                addMarker(latLng);
+
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (postActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+            } else {
+                // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                googleMappo.clear();
+
+
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (lastLocation != null) {
+                    LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                    googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
+                }
+
+
+            }
+        } else {
+
+            googleMappo.clear();
+
+
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            if (lastLocation != null) {
+                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
+            }
+
+
+        }
+
+        btnMapClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleMappo.clear();
+                localDataManager.removeSharedPreference(postActivity, "lat_1");
+                localDataManager.removeSharedPreference(postActivity, "lng_1");
+                localDataManager.removeSharedPreference(postActivity, "lat_2");
+                localDataManager.removeSharedPreference(postActivity, "lng_2");
+                counter = 0;
+                addressArray.clear();
+
+            }
+        });
+
+                    /*
+                    postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            postActivity.AUPUploadPost(view);
+                        }
+                    });
+
+                     */
+
+        double sharedLat1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1", 0d);
+        double sharedLng1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1", 0d);
+        double sharedLat2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_2", 0d);
+        double sharedLng2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_2", 0d);
+        Log.d("TAG SHARED ", String.valueOf(sharedLat1));
+
+        if (sharedLat1 != 0 && sharedLat2 != 0 && sharedLng1 != 0 && sharedLng2 != 0) {
+
+            LatLng latlng1 = new LatLng(sharedLat1, sharedLng1);
+            googleMappo.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
+            LatLng latln2 = new LatLng(sharedLat2, sharedLng2);
+            googleMappo.addMarker(new MarkerOptions().title("Varış").position(latln2));
+        }
+
+    }
+
 }
