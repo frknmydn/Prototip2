@@ -12,7 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout mainFrameLayout;
     private ConstraintLayout constraintLayout;
     private Fragment fragment;
+    Button btnOpenDrawable;
 
     private String genderString, nameSurnameString, eMailString,profilePic,birthDate,oneSignalID;
 
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
+        btnOpenDrawable = findViewById(R.id.btnOpenDrawable);
 
         // sharedPrefte kullanıcı bilgileri var ise çekmek için
         nameSurnameString = localDataManagerUser.getSharedPreference(this,"sharedNameSurname",null);
@@ -129,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
 
         }
+
+        btnOpenDrawable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
 
 
         //constraintLayout=findViewById(R.id.consLayout);
