@@ -84,6 +84,7 @@ public class FragmentBlockList extends Fragment {
     }
 
     public void getData(){
+        listBlockedUsers.clear();
         blockDAL.getBlockedList(new BlockCallback() {
             @Override
             public void onListRetrieved(List<Block> list) {
@@ -93,7 +94,7 @@ public class FragmentBlockList extends Fragment {
                         @Override
                         public void getUser(User user) {
                             super.getUser(user);
-                            listBlockedUsers.clear();
+
                             listBlockedUsers.add(user);
                             adapter.notifyDataSetChanged();
                             if(listBlockedUsers.size() > 0){

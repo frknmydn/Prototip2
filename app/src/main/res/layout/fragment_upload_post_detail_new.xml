@@ -114,7 +114,6 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/gray_circle_drawable"
-            android:hint="Tarih Seçiniz"
             app:boxStrokeColor="#3D08CF"
             android:textColorHint="#414141"
             app:layout_constraintEnd_toStartOf="@+id/UPDTimeLayout"

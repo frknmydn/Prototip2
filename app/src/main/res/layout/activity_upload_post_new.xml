@@ -43,7 +43,6 @@
             android:id="@+id/ti_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="AUPDetailFragment"
             android:text="İLAN DETAY">
 
         </com.google.android.material.tabs.TabItem>

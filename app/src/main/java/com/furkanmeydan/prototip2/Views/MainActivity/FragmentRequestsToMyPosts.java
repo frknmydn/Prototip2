@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,9 @@ public class FragmentRequestsToMyPosts extends Fragment {
         MainActivity activity;
         RequestDAL requestDAL;
         ArrayList<Request> requests;
-        ConstraintLayout layoutInfo;
+        ConstraintLayout layoutInfo,consLayoutMyPostsRequestsLayout;
         TextView txtMessageInfo;
+
 
 
 
@@ -68,6 +70,7 @@ public class FragmentRequestsToMyPosts extends Fragment {
         txtMessageInfo =view.findViewById(R.id.txtfragmentRequestToMyPosts);
 
 
+
     }
 
     @Override
@@ -86,10 +89,14 @@ public class FragmentRequestsToMyPosts extends Fragment {
                 requests.clear();
                 requests.addAll(list);
                 adapter.notifyDataSetChanged();
+                Log.d("TAG", "getRequestsToMe: "+requests.size());
 
                 if(requests.size()>0){
                     layoutInfo.setVisibility(View.INVISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
+
+
                 }
             }
         });

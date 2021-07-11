@@ -19,12 +19,12 @@
 
     <ImageButton
         android:id="@+id/imageViewClearMapUploadPost"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_width="245dp"
+        android:layout_height="30dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="48dp"
         android:src="@android:drawable/ic_menu_revert"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchViewUPloadMap"
         app:layout_constraintTop_toTopOf="parent" />

@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.R;
 import com.google.firebase.Timestamp;
@@ -42,6 +43,8 @@ public class PostSearchFragment extends Fragment {
     String dateString;
     String timeString1,timeString2, dateCombined1, dateCombined2;
 
+
+    boolean isDestroyed = false;
     //Geçmiş günleri seçmesini engellemek için kullanılıyor
 
     long timeNow = Timestamp.now().getSeconds() * 1000;
@@ -84,6 +87,9 @@ public class PostSearchFragment extends Fragment {
         dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         calendar = Calendar.getInstance();
         postDAL = new PostDAL();
+        Log.d("Tag", "onCreate: LOL");
+
+
 
 
     }
@@ -110,7 +116,20 @@ public class PostSearchFragment extends Fragment {
 
         btnSearch = view.findViewById(R.id.btnSearchPost);
 
+        Log.d("Tag", "onViewCreated: "+ edtSearchDate.getText().toString());
+        if(isDestroyed && edtSearchDate.getText() !=null){
+            edtSearchTime1.setVisibility(View.VISIBLE);
+            edtSearchTime2.setVisibility(View.VISIBLE);
+        }
 
+        /*
+        if(postActivity.localDataManager.getSharedPreferenceForLong(postActivity,"postSearchTimestamp",0L) != 0L
+                && postActivity.localDataManager.getSharedPreferenceForLong(postActivity,"postSearchTimestamp2",0L) != 0L){
+            edtSearchTime1.setVisibility(View.INVISIBLE);
+            edtSearchTime2.setVisibility(View.INVISIBLE);
+        }
+
+         */
         //city spinner
         searchCitySpinnerAdapter = ArrayAdapter.createFromResource(view.getContext(),R.array.city_array, android.R.layout.simple_spinner_item);
         searchCitySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -168,9 +187,11 @@ public class PostSearchFragment extends Fragment {
             edtSearchDate.setText(dateString);
             edtSearchTime1.setVisibility(View.VISIBLE);
             edtSearchTime2.setVisibility(View.VISIBLE);
+            isDestroyed = true;
 
         };
 
+        Log.d("Tag", "onViewCreated: "+ edtSearchDate.getEditableText().toString());
 
         datePickerDialog = new DatePickerDialog(postActivity,dateSetListener,calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
@@ -248,8 +269,8 @@ public class PostSearchFragment extends Fragment {
         });
 
 
-        btnSearch.setOnClickListener(view13 -> {
-
+        /*
+        postActivity.btnSearch.setOnClickListener(view13 -> {
 
 
             Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
@@ -259,5 +280,18 @@ public class PostSearchFragment extends Fragment {
 
         });
 
+         */
+
+    }
+
+
+    public void saveDetails(){
+        postActivity.bundle = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
+        if(postActivity.bundle !=null) {
+            postActivity.localDataManager.setSharedPreferenceForLong(postActivity, "postSearchTimestamp", timestamp1.getSeconds());
+            postActivity.localDataManager.setSharedPreferenceForLong(postActivity, "postSearchTimestamp2", timestamp2.getSeconds());
+            postActivity.localDataManager.setSharedPreference(postActivity, "postSearchGender", genderString);
+            postActivity.localDataManager.setSharedPreference(postActivity, "postSearchCity", cityString);
+        }
     }
 }

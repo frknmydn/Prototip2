@@ -252,9 +252,13 @@ public class FragmentRequestSenderProfile extends Fragment {
                                                                                                                     public void onQuestionRemovedForBlock() {
                                                                                                                         super.onQuestionRemovedForBlock();
                                                                                                                         dialog.dismiss();
+                                                                                                                        /*
                                                                                                                         Intent i = new Intent(activity,MainActivity.class);
                                                                                                                         startActivity(i);
                                                                                                                         activity.finish();
+
+                                                                                                                         */
+                                                                                                                        activity.changeFragment(new HomeFragment());
                                                                                                                     }
                                                                                                                 });
                                                                                                             }

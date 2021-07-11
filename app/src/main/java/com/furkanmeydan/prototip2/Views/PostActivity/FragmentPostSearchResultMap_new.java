@@ -144,6 +144,23 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     public void onMapReady(GoogleMap googleMap) {
         mMap= googleMap;
 
+        lat1 = localDataManager.getSharedPreferenceForDouble(activity,"requestLat1",0d);
+        lng1 = localDataManager.getSharedPreferenceForDouble(activity, "requestLng1",0d);
+        lat2 = localDataManager.getSharedPreferenceForDouble(activity, "requestLat2",0d);
+        lng2 = localDataManager.getSharedPreferenceForDouble(activity, "requestLng2",0d);
+
+        if(lat1 != 0d && lng1 != 0d && lat2 != 0d && lng2 != 0d){
+            Log.d("Tag", "counter: " + counter);
+            Log.d("Tag", "lat1: " + String.valueOf(lat1));
+            Log.d("Tag", "lng1: " + String.valueOf(lng1));
+            Log.d("Tag", "lng2: " + String.valueOf(lng2));
+            Log.d("Tag", "lat2: " + String.valueOf(lat1));
+            LatLng latLng1 = new LatLng(lat1,lng1);
+            addMarker(latLng1);
+            LatLng latLng2 = new LatLng(lat2,lng2);
+            addMarker(latLng2);
+        }
+
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getChildFragmentManager().findFragmentById(R.id.uploadPostPlacesFragment);
         if (autocompleteFragment != null) {
@@ -183,7 +200,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
             } else {
                 // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                mMap.clear();
+                //mMap.clear();
 
 
                 Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
@@ -196,7 +213,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             }
         } else {
 
-            mMap.clear();
+            //mMap.clear();
 
 
             Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
@@ -208,10 +225,9 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
         }
 
+        /*
         btnChangeFragment.setOnClickListener(view -> {
             if (lat1 != null && lng1 != null && lat2 != null && lng2 != null) {
-
-
 
                 int direction = postDAL.findDirection(lat1, lng1, lat2, lng2);
                 bundle.putDouble("userlat1", lat1);
@@ -221,19 +237,22 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 bundle.putInt("direction", direction);
 
                 //Kullanıcı istek gönderirken kullanmak için
-                localDataManager.setSharedPreferenceForDouble(activity, "requestLat1", lat1);
-                localDataManager.setSharedPreferenceForDouble(activity, "requestLng1", lng1);
-                localDataManager.setSharedPreferenceForDouble(activity, "requestLat2", lat2);
-                localDataManager.setSharedPreferenceForDouble(activity, "requestLng2", lng2);
+
 
 
                 activity.changeFragmentArgs(new PostSearchResultFragment(), bundle);
             }
         });
 
+         */
+
         btnClear.setOnClickListener(view -> {
             mMap.clear();
             counter = 0;
+            localDataManager.removeSharedPreference(activity,"requestLat1");
+            localDataManager.removeSharedPreference(activity,"requestLat2");
+            localDataManager.removeSharedPreference(activity,"requestLng1");
+            localDataManager.removeSharedPreference(activity,"requestLng2");
 
         });
 
@@ -242,6 +261,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
 
     public void addMarker(LatLng latLng) {
+        Log.d("Tag", "addMarker: "+counter);
         if (counter < 2) {
             if (counter == 0) {
                 lat1 = latLng.latitude;
@@ -251,6 +271,10 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 cord2 = lng1.toString();
 
 
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLat1", lat1);
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLng1", lng1);
+                activity.bundle.putDouble("userlat1",lat1);
+                activity.bundle.putDouble("userlng1",lng1);
                 mMap.addMarker(new MarkerOptions().title("Biniş").position(latLng));
 
 
@@ -262,12 +286,18 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 cord4 = lng2.toString();
 
 
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLat2", lat2);
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLng2", lng2);
+                activity.bundle.putDouble("userlat2",lat2);
+                activity.bundle.putDouble("userlng2",lng2);
                 mMap.addMarker(new MarkerOptions().title("İniş").position(latLng));
 
 
             }
             counter++;
         }
+
+
 
 
     }

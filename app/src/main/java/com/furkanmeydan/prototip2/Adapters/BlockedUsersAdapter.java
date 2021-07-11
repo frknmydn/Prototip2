@@ -2,6 +2,7 @@ package com.furkanmeydan.prototip2.Adapters;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
+
+        Log.d("TAG", "onBindViewHolder: "+blockedUsers.size());
 
         holder.txtUserName.setText(blockedUsers.get(position).getNameSurname());
         holder.txtUserGender.setText(blockedUsers.get(position).getGender());

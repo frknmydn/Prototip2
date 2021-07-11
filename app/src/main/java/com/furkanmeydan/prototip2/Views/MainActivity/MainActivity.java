@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ConstraintLayout constraintLayout;
     private Fragment fragment;
     ImageButton btnOpenDrawable;
+    TextView txtHeader;
 
     private String genderString, nameSurnameString, eMailString,profilePic,birthDate,oneSignalID;
 
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         btnOpenDrawable = findViewById(R.id.btnOpenDrawable);
+        txtHeader = findViewById(R.id.textView42);
 
         // sharedPrefte kullanıcı bilgileri var ise çekmek için
         nameSurnameString = localDataManagerUser.getSharedPreference(this,"sharedNameSurname",null);

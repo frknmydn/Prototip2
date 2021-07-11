@@ -20,41 +20,54 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FF3D08CF">
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="#FF3D08CF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnOpenDrawable"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/drawable_menu_white"
+                android:tint="#fff"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="@+id/textView42"
+                app:layout_constraintEnd_toStartOf="@+id/textView42"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center|left"
+                android:text="Prototip2"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnOpenDrawable"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
             android:id="@+id/consLayout"
-            android:layout_width="0dp"
+            android:layout_width="411dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView42" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
-        <ImageButton
-            android:id="@+id/btnOpenDrawable"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/drawable_menu"
-            android:text="Button"
-            app:layout_constraintEnd_toStartOf="@+id/textView42"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView42"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="Prototip2"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnOpenDrawable"
-            app:layout_constraintTop_toTopOf="@+id/btnOpenDrawable" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

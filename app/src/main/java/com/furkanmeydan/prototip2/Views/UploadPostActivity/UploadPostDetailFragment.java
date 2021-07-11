@@ -134,6 +134,8 @@ public class UploadPostDetailFragment extends Fragment {
         edtTime = view.findViewById(R.id.UPDTime);
         edtDate = view.findViewById(R.id.UPDDate);
 
+        edtDate.setHint("Tarih Seçiniz");
+
 
 
 
@@ -258,8 +260,6 @@ public class UploadPostDetailFragment extends Fragment {
 
 
         //Saat seçmek için
-
-
         edtTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -366,13 +366,14 @@ public class UploadPostDetailFragment extends Fragment {
 
 
          */
+
     }
 
     public void saveDetails(){
 
+
         cardet = edtcarDetail.getText().toString();
         Log.d("Tag","cardet" +cardet);
-
 
        if(timeStamp !=null){
            localDataManager.setSharedPreferenceForLong(postActivity,"timestamp",timeStamp.getSeconds());
@@ -389,13 +390,14 @@ public class UploadPostDetailFragment extends Fragment {
        if(passengerCountString != -1){
            localDataManager.setSharedPreferenceForInt(postActivity,"passengercount",passengerCountString);
        }
+        if(!edtDescription.getText().toString().equals("")){
+            localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
+        }
        if(!cardet.equals("")){
            localDataManager.setSharedPreference(postActivity,"cardetail",cardet);
 
        }
-       if(!edtDescription.getText().toString().equals("")){
-           localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
-       }
+
        if(!edtDestination.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"destination",edtDestination.getText().toString());
        }
@@ -408,7 +410,6 @@ public class UploadPostDetailFragment extends Fragment {
         super.onResume();
 
 
-
         Log.d("Tag", "onResume"+localDataManager.getSharedPreference(postActivity,"cardetail","YOK"));
 
 
@@ -416,9 +417,6 @@ public class UploadPostDetailFragment extends Fragment {
 
         String time = (localDataManager.getSharedPreference(postActivity,"time",null));
         String date = (localDataManager.getSharedPreference(postActivity,"date",null));
-
-
-
 
         cityString = localDataManager.getSharedPreference(postActivity,"city",null);
         Log.d("TAG", "onResume: "+ cityString);
@@ -432,6 +430,7 @@ public class UploadPostDetailFragment extends Fragment {
         //saat seçildiyse geri geldiğinde seçilmiş saatin timetext'inde görünmesi için
        if(date!=null){
             if(time!=null){
+
 //                edtTime.setVisibility(View.VISIBLE);
 //                edtTime.setText(time);
 //                String combinedDate = date + " " + time;
@@ -454,8 +453,10 @@ public class UploadPostDetailFragment extends Fragment {
         edtDescription.setText(description);
         if(cityString!=null && passengerCountString!=null){
             spinnerCity.setText(cityString,false);
+            spinnerAdapterCity.getFilter().filter(null);
             //spinnerCity.setSelection(spinnerAdapterCity.getPosition(cityString));
             spinnerPassengerCount.setText(String.valueOf(passengerCountString),false);
+            spinnerAdapterPassanger.getFilter().filter(null);
             //spinnerPassengerCount.setSelection(spinnerAdapterPassanger.getPosition(passengerCountString));
         }
 

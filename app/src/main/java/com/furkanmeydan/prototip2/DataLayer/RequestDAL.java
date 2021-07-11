@@ -41,10 +41,12 @@ public class RequestDAL {
 
     public void getMyRequests(final RequestCallback callback){
         Long timeStampNow = Timestamp.now().getSeconds();
+        Log.d("TAG", "getMyRequests: now" + timeStampNow);
+
         firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION).
                 whereEqualTo(CollectionHelper.REQUEST_STATUS, 0).
                 whereEqualTo(CollectionHelper.REQUEST_POSTOWNER, currentUserID)
-                .whereGreaterThan(CollectionHelper.POST_TIMESTAMP,timeStampNow)
+                .whereGreaterThan(CollectionHelper.REQUEST_POSTTIMESTAMP,timeStampNow)
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult()!=null){
 

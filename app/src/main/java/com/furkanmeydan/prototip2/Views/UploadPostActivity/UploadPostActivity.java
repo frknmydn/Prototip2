@@ -35,6 +35,8 @@ import java.util.concurrent.TimeUnit;
 public class UploadPostActivity extends AppCompatActivity {
     LocalDataManager localDataManager;
     PostDAL postDAL;
+    UploadPostDetailFragment uploadPostDetailFragment;
+    UploadMapFragment2 uploadMapFragment2;
     FirebaseAuth firebaseAuth;
     String userId;
     TabLayout tabLayout;
@@ -43,9 +45,13 @@ public class UploadPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        uploadMapFragment2 = new UploadMapFragment2();
+        uploadPostDetailFragment = new UploadPostDetailFragment();
+
         setContentView(R.layout.activity_upload_post_new);
         localDataManager = new LocalDataManager();
-        changeFragment(new UploadPostDetailFragment());
+        changeFragment(uploadPostDetailFragment);
         postDAL = new PostDAL();
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
@@ -56,10 +62,11 @@ public class UploadPostActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        changeFragment(new UploadPostDetailFragment());
+                        changeFragment(uploadPostDetailFragment);
                         break;
                     case 1:
-                        changeFragment(new UploadMapFragment2());
+                        uploadPostDetailFragment.saveDetails();
+                        changeFragment(uploadMapFragment2);
                         break;
                 }
 
@@ -82,14 +89,15 @@ public class UploadPostActivity extends AppCompatActivity {
 
 
     public void changeFragment(Fragment fragment){
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.popBackStack();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment.getClass(), null);
-        fragmentTransaction.commitNow();
+        //fragmentTransaction.addToBackStack("PostCallback");
+        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment);
+        fragmentTransaction.commit();
     }
+
 
     public void AUPDetailFragment(View view){
         changeFragment(new UploadPostDetailFragment());
@@ -101,14 +109,14 @@ public class UploadPostActivity extends AppCompatActivity {
         //onBackPressed();
     }
 
+
+
     public void AUPUploadPost(View view){
         postDAL.uploadPost(userId, getApplicationContext(), new PostCallback() {
             @Override
             public void onPostAdded(Post post) {
                 super.onPostAdded(post);
                 Toast.makeText(getApplicationContext(),"Başarılı",Toast.LENGTH_LONG).show();
-
-
 
                 try {
                     OSDeviceState device = OneSignal.getDeviceState();

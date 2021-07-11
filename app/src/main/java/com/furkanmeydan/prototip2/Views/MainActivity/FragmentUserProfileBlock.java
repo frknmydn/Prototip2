@@ -60,7 +60,7 @@ public class FragmentUserProfileBlock extends Fragment {
     private TextView txtNameSurname, txtGender, txtBirthday;
     private ImageView imageView;
     ConstraintLayout layoutDetail, layoutProgress;
-    String userID;
+    String userID, userIDSender;
     User userProfile;
     Button btnBlock;
 
@@ -80,6 +80,7 @@ public class FragmentUserProfileBlock extends Fragment {
             bundle = getArguments();
             question = (Question) bundle.getSerializable("question");
             userID = firebaseAuth.getCurrentUser().getUid();
+            userIDSender = question.getSenderID();
         }
 
         blockDAL = new BlockDAL();
@@ -221,7 +222,7 @@ public class FragmentUserProfileBlock extends Fragment {
     public void getProfileData(){
         Log.d("Tag","PostSearchactivity getProfiledata içerisi");
 
-        profileDAL.getProfile(userID, new ProfileCallback() {
+        profileDAL.getProfile(userIDSender, new ProfileCallback() {
             @Override
             public void getUser(User user) {
                 super.getUser(user);
