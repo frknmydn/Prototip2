@@ -254,7 +254,7 @@ public class PostSearchFragment extends Fragment {
 
             Bundle args = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
             if(args !=null){
-                postActivity.changeFragmentArgs(new PostSearchUserLocationMapFragment(),args);
+                postActivity.changeFragmentArgs(new FragmentPostSearchResultMap_new(),args);
             }
 
         });

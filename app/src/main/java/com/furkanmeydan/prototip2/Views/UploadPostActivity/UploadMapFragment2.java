@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,6 +67,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     SearchView searchView;
     ArrayList<String> addressArray;
     List<Address> addressList;
+    AutocompleteSupportFragment autocompleteFragment;
 
     LocationManager locationManager;
     private GoogleMap googleMappo;
@@ -85,6 +87,11 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentManager fm = getChildFragmentManager();
+
+        autocompleteFragment = (AutocompleteSupportFragment)
+                fm.findFragmentById(R.id.uploadPostPlacesFragment);
 
         postActivity = (UploadPostActivity) getActivity();
         addressArray = new ArrayList<>();
@@ -109,11 +116,6 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         mapView.onResume();
 
         mapView.getMapAsync(this);
-
-
-
-
-
 
         return rootView;
     }
@@ -144,6 +146,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         btnMapClear = view.findViewById(R.id.imageViewClearMapUploadPost);
         searchView = view.findViewById(R.id.searchViewUPloadMap);
 
+        /*
         tabLayout = postActivity.findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -168,6 +171,8 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
             }
         });
 
+
+         */
 
     }
 
@@ -272,64 +277,38 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
     }
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMappo= googleMap;
 
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getChildFragmentManager().findFragmentById(R.id.uploadPostPlacesFragment);
-            if (autocompleteFragment != null) {
-                autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
 
-            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(@NonNull @NotNull Place place) {
-                    String test = place.getAddress();
-                    LatLng latLng = place.getLatLng();
-                    Log.d("Tag","Latlng "+ String.valueOf(latLng));
-                    Log.d("Tag","Address "+ String.valueOf(test));
-                    googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-                }
 
-                @Override
-                public void onError(@NonNull @NotNull Status status) {
+         if(autocompleteFragment!=null && autocompleteFragment.isAdded()) {
+             if (autocompleteFragment != null) {
+                 autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
 
-                }
-            });
+                 autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                     @Override
+                     public void onPlaceSelected(@NonNull @NotNull Place place) {
+                         String test = place.getAddress();
+                         LatLng latLng = place.getLatLng();
+                         Log.d("Tag", "Latlng " + String.valueOf(latLng));
+                         Log.d("Tag", "Address " + String.valueOf(test));
+                         googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+                     }
+
+                     @Override
+                     public void onError(@NonNull @NotNull Status status) {
+
+                     }
+                 });
+             }
+
         }
 
-        /*
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String location = searchView.getQuery().toString();
 
-
-                List<Address> addressList = null;
-
-                if(location !=null ||location.equals("")){
-                    Geocoder geocoder = new Geocoder(postActivity);
-                    try {
-                        addressList = geocoder.getFromLocationName(location,1);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if(addressList.size() > 0){
-                        Address address = addressList.get(0);
-
-                    }
-
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-         */
 
         locationManager = (LocationManager) postActivity.getSystemService(Context.LOCATION_SERVICE);
         googleMappo.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {

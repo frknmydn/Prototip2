@@ -338,6 +338,7 @@ public class UploadPostDetailFragment extends Fragment {
          */
 
 
+        /*
         tabLayout = postActivity.findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -363,6 +364,8 @@ public class UploadPostDetailFragment extends Fragment {
             }
         });
 
+
+         */
     }
 
     public void saveDetails(){

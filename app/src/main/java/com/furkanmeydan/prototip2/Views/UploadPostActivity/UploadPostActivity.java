@@ -2,12 +2,14 @@ package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
@@ -18,6 +20,7 @@ import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
@@ -34,6 +37,7 @@ public class UploadPostActivity extends AppCompatActivity {
     PostDAL postDAL;
     FirebaseAuth firebaseAuth;
     String userId;
+    TabLayout tabLayout;
 
 
     @Override
@@ -45,8 +49,32 @@ public class UploadPostActivity extends AppCompatActivity {
         postDAL = new PostDAL();
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+        tabLayout = findViewById(R.id.tabLayout);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        changeFragment(new UploadPostDetailFragment());
+                        break;
+                    case 1:
+                        changeFragment(new UploadMapFragment2());
+                        break;
+                }
 
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
 
@@ -54,10 +82,13 @@ public class UploadPostActivity extends AppCompatActivity {
 
 
     public void changeFragment(Fragment fragment){
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.popBackStack();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //fragmentTransaction.addToBackStack("PostCallback");
-        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment.getClass(), null);
+        fragmentTransaction.commitNow();
     }
 
     public void AUPDetailFragment(View view){

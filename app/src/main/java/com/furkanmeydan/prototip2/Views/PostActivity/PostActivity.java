@@ -2,6 +2,7 @@ package com.furkanmeydan.prototip2.Views.PostActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -19,13 +20,17 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void changeFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //fragmentTransaction.addToBackStack("PostCallback");
         fragmentTransaction.replace(R.id.postContainerLayout,fragment);
         fragmentTransaction.commit();
+
     }
 
     public void changeFragmentArgs(Fragment fragment,Bundle args){
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(args);
         fragmentTransaction.replace(R.id.postContainerLayout,fragment);
