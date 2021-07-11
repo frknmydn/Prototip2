@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout mainFrameLayout;
     private ConstraintLayout constraintLayout;
     private Fragment fragment;
-    Button btnOpenDrawable;
+    ImageButton btnOpenDrawable;
 
     private String genderString, nameSurnameString, eMailString,profilePic,birthDate,oneSignalID;
 
