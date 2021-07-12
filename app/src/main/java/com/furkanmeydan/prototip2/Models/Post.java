@@ -2,8 +2,9 @@ package com.furkanmeydan.prototip2.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Post implements Serializable {
+public class Post implements Serializable, Comparable<Post>{
     private String  postID,
                     city,
                     destination,
@@ -127,4 +128,12 @@ public class Post implements Serializable {
     public ArrayList<String> getWishArray() {
         return wishArray;
     }
+
+
+    @Override
+    public int compareTo(Post o) {
+        return Long.compare(o.getTimestamp(),this.getTimestamp());
+    }
 }
+
+

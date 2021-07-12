@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,11 +86,12 @@ public class FragmentBlockList extends Fragment {
 
     public void getData(){
         listBlockedUsers.clear();
-        blockDAL.getBlockedList(new BlockCallback() {
+        blockDAL.getBlockedList(layoutInfo,layoutProgress,layoutContent,new BlockCallback(){
             @Override
             public void onListRetrieved(List<Block> list) {
                 super.onListRetrieved(list);
                 for(Block block : list){
+                    Log.d("TAG", "onListRetrieved: "+ list.size());
                     profileDAL.getProfile(block.getUserBlockedID(), new ProfileCallback() {
                         @Override
                         public void getUser(User user) {
@@ -97,17 +99,8 @@ public class FragmentBlockList extends Fragment {
 
                             listBlockedUsers.add(user);
                             adapter.notifyDataSetChanged();
-                            if(listBlockedUsers.size() > 0){
-                                layoutInfo.setVisibility(View.INVISIBLE);
-                                layoutProgress.setVisibility(View.INVISIBLE);
-                                adapter.notifyDataSetChanged();
-                                layoutContent.setVisibility(View.VISIBLE);
-                            }
-                            else{
-                                layoutProgress.setVisibility(View.INVISIBLE);
-                                layoutInfo.setVisibility(View.VISIBLE);
-                                layoutContent.setVisibility(View.INVISIBLE);
-                            }
+                            Log.d("TAG", "getUser: "+list.size());
+
                         }
                     });
                 }

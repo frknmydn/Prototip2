@@ -1,7 +1,11 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.Models.Block;
@@ -45,11 +49,21 @@ public class BlockDAL {
 
     }
 
-    public void getBlockedList(final BlockCallback callback){
+    public void getBlockedList(ConstraintLayout constraintLayoutInfo,ConstraintLayout progress, ConstraintLayout content,final BlockCallback callback){
         firestore.collection(CollectionHelper.BLOCK_COLLECTION).whereEqualTo(CollectionHelper.BLOCK_BLOCKERID,userId).whereNotEqualTo(CollectionHelper.BLOCK_BLOCKREASON,null).get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() !=null){
+                Log.d("TAG", "getBlockedList: ");
+                if(task.getResult().size()==0){
+                    constraintLayoutInfo.setVisibility(View.VISIBLE);
+                    progress.setVisibility(View.GONE);
+                    content.setVisibility(View.GONE);
+
+                }
                 if(task.getResult().size() > 0){
                     List<Block> blocks = task.getResult().toObjects(Block.class);
+                    progress.setVisibility(View.GONE);
+                    constraintLayoutInfo.setVisibility(View.GONE);
+                    content.setVisibility(View.VISIBLE);
                     callback.onListRetrieved(blocks);
                 }
             }

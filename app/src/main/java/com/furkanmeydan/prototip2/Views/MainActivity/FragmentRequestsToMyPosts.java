@@ -31,7 +31,7 @@ public class FragmentRequestsToMyPosts extends Fragment {
         MainActivity activity;
         RequestDAL requestDAL;
         ArrayList<Request> requests;
-        ConstraintLayout layoutInfo,consLayoutMyPostsRequestsLayout;
+        ConstraintLayout layoutInfo,layoutProgress, layoutContent;
         TextView txtMessageInfo;
 
 
@@ -67,6 +67,8 @@ public class FragmentRequestsToMyPosts extends Fragment {
         adapter = new RequestsToMeRCLAdapter(requests,activity);
         recyclerView.setAdapter(adapter);
         layoutInfo = view.findViewById(R.id.consLayoutMyPostsRequestsLayout);
+        layoutContent = view.findViewById(R.id.layoutRequestToMyPostContent);
+        layoutProgress = view.findViewById(R.id.layoutRequestToMeProgress);
         txtMessageInfo =view.findViewById(R.id.txtfragmentRequestToMyPosts);
 
 
@@ -92,11 +94,15 @@ public class FragmentRequestsToMyPosts extends Fragment {
                 Log.d("TAG", "getRequestsToMe: "+requests.size());
 
                 if(requests.size()>0){
-                    layoutInfo.setVisibility(View.INVISIBLE);
-                    recyclerView.setVisibility(View.VISIBLE);
+
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutContent.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
 
-
+                }
+                else{
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutInfo.setVisibility(View.VISIBLE);
                 }
             }
         });

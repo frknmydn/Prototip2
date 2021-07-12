@@ -141,9 +141,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:background="@drawable/gray_circle_drawable"
-            android:hint="Saat Seçiniz"
-            app:boxStrokeColor="#3D08CF"
             android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
             app:layout_constraintEnd_toEndOf="@+id/UPDSpinnerPassengerCountLayout"
             app:layout_constraintStart_toEndOf="@+id/UPDDateLayout"
             app:layout_constraintTop_toTopOf="@+id/UPDDateLayout">
@@ -157,8 +156,8 @@
                 android:fontFamily="sans-serif-light"
                 android:inputType="textPersonName"
                 android:textColor="#414141"
-                android:visibility="invisible"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="invisible" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

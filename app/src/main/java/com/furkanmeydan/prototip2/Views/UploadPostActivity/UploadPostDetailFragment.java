@@ -135,6 +135,7 @@ public class UploadPostDetailFragment extends Fragment {
         edtDate = view.findViewById(R.id.UPDDate);
 
         edtDate.setHint("Tarih Seçiniz");
+        edtTime.setHint("Saat Seçiniz");
 
 
 
@@ -234,6 +235,7 @@ public class UploadPostDetailFragment extends Fragment {
                 dateCombined = dateString;
                 edtDate.setText(dateString);
                 edtTime.setVisibility(View.VISIBLE);
+                edtTime.setHint("");
 //
 
             }
