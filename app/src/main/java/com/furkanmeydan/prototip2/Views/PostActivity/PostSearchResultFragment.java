@@ -21,6 +21,7 @@ import com.furkanmeydan.prototip2.Models.Block;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Adapters.SearchResultRecyclerAdapter;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;

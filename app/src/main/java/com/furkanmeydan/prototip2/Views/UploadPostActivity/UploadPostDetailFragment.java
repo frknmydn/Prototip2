@@ -27,6 +27,7 @@ import com.furkanmeydan.prototip2.DataLayer.PostDetailDataPasser;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 
 import java.text.ParseException;
@@ -46,6 +47,7 @@ public class UploadPostDetailFragment extends Fragment {
     AutoCompleteTextView spinnerCity, spinnerPassengerCount;
     // ****************/UPDATE********************
 
+    TextInputLayout timeLayout;
     ArrayAdapter<CharSequence> spinnerAdapterCity;
     ArrayAdapter<Integer> spinnerAdapterPassanger;
     UploadPostActivity postActivity;
@@ -131,12 +133,13 @@ public class UploadPostDetailFragment extends Fragment {
         edtcarDetail = view.findViewById(R.id.UPDEDTCarDetail);
         edtDestination = view.findViewById(R.id.UPDEDTDestination1);
         edtDescription = view.findViewById(R.id.UPDEDTDescription);
+        timeLayout = view.findViewById(R.id.UPDTimeLayout);
         edtTime = view.findViewById(R.id.UPDTime);
         edtDate = view.findViewById(R.id.UPDDate);
 
         edtDate.setHint("Tarih Seçiniz");
         edtTime.setHint("Saat Seçiniz");
-
+        timeLayout.setVisibility(View.INVISIBLE);
 
 
 
@@ -234,9 +237,11 @@ public class UploadPostDetailFragment extends Fragment {
                 dateString = dateFormat.format(calendar.getTime());
                 dateCombined = dateString;
                 edtDate.setText(dateString);
+                timeLayout.setVisibility(View.VISIBLE);
                 edtTime.setVisibility(View.VISIBLE);
                 edtTime.setHint("");
-//
+
+
 
             }
         };
@@ -433,6 +438,7 @@ public class UploadPostDetailFragment extends Fragment {
        if(date!=null){
             if(time!=null){
 
+
 //                edtTime.setVisibility(View.VISIBLE);
 //                edtTime.setText(time);
 //                String combinedDate = date + " " + time;
@@ -444,7 +450,11 @@ public class UploadPostDetailFragment extends Fragment {
 //                }
 //                calendar.setTime(dateTimeStamp);
 //
-                edtDate.setHint(date + " " + time);
+                String dateTime = date + " " + time;
+                edtTime.setVisibility(View.INVISIBLE);
+                timeLayout.setVisibility(View.INVISIBLE);
+                edtDate.setText(dateTime);
+                Log.d("TAG", "onResume: xd "+ date + time);
             }
            // edtDate.setText(date);
 

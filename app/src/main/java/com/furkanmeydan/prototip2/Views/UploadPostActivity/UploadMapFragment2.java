@@ -88,10 +88,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentManager fm = getChildFragmentManager();
 
-        autocompleteFragment = (AutocompleteSupportFragment)
-                fm.findFragmentById(R.id.uploadPostPlacesFragment);
 
         postActivity = (UploadPostActivity) getActivity();
         addressArray = new ArrayList<>();
@@ -284,9 +281,15 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         googleMappo= googleMap;
 
 
+        FragmentManager fm = getChildFragmentManager();
 
-         if(autocompleteFragment!=null && autocompleteFragment.isAdded()) {
-             if (autocompleteFragment != null) {
+        autocompleteFragment = (AutocompleteSupportFragment)
+                fm.findFragmentById(R.id.uploadPostPlacesFragment);
+
+
+
+         if(autocompleteFragment!=null) {
+
                  autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
 
                  autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -304,7 +307,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
                      }
                  });
-             }
+
 
         }
 

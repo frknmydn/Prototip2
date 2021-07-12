@@ -11,30 +11,27 @@
         android:id="@+id/mapViewUploadPost"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewUPloadMap" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadPostPlacesFragment" />
 
     <ImageButton
         android:id="@+id/imageViewClearMapUploadPost"
         android:layout_width="245dp"
         android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="48dp"
         android:src="@android:drawable/ic_menu_revert"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchViewUPloadMap"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mapViewUploadPost" />
 
     <fragment
         android:id="@+id/uploadPostPlacesFragment"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewClearMapUploadPost"
+        android:layout_height="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

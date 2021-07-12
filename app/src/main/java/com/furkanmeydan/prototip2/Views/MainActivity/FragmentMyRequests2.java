@@ -27,6 +27,7 @@ import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
@@ -35,29 +36,36 @@ import java.util.List;
 
 public class FragmentMyRequests2 extends Fragment {
 
-    BottomNavigationView bottomRequestView;
+
     MyWaitingRequestsAdapter adapterWaiting;
     MyAcceptedRequestsAdapter adapterAccepted;
     MyAcceptedRequestsAdapter adapterAcceptedHistory;
+    MyAcceptedRequestsAdapter adapterOncoming;
 
 
     ArrayList<Request> acceptedRequestList;
     ArrayList<Request> waitingRequestList;
     ArrayList<Request> requestListHistory;
+    ArrayList<Request> oncomingRequestList;
 
     ArrayList<Post> acceptedPostList;
     ArrayList<Post> waitingPostList;
     ArrayList<Post> postListHistory;
+    ArrayList<Post> oncomingPostList;
 
     RequestDAL requestDAL;
     PostDAL postDAL;
     MainActivity mainActivity;
 
 
-    ConstraintLayout layoutAccepted, layoutHistory, layoutAwaiting;
-    RecyclerView RCLAccepted, RCLHistory, RCLAwaiting;
+    ConstraintLayout layoutAccepted, layoutHistory, layoutAwaiting, layoutOncoming;
+    RecyclerView RCLAccepted, RCLHistory, RCLAwaiting, RCLOncoming;
 
     Long currentTimestamp;
+    Long timestampMargin = 86400L;
+    Long timestampPostWithMargin;
+
+    private TabLayout tabLayout;
 
 
     public FragmentMyRequests2() {
@@ -82,6 +90,8 @@ public class FragmentMyRequests2 extends Fragment {
         acceptedPostList = new ArrayList<>();
         waitingPostList = new ArrayList<>();
         postListHistory = new ArrayList<>();
+        oncomingPostList = new ArrayList<>();
+        oncomingRequestList = new ArrayList<>();
 
         mainActivity = (MainActivity) getActivity();
         currentTimestamp = Timestamp.now().getSeconds();
@@ -103,33 +113,86 @@ public class FragmentMyRequests2 extends Fragment {
         getAcceptedRequests();
         getAwaitingRequests();
 
-        bottomRequestView.setOnNavigationItemSelectedListener(navListener);
     }
 
     private void init(View view){
-        bottomRequestView = view.findViewById(R.id.RequestsBottomNavigation);
 
-        bottomRequestView.bringToFront();
 
         layoutAccepted = view.findViewById(R.id.consLayoutAccepted);
         layoutAwaiting = view.findViewById(R.id.consLayoutAwaiting);
         layoutHistory = view.findViewById(R.id.consLayoutHistory);
+        layoutOncoming = view.findViewById(R.id.consLayoutYaklas);
 
         RCLAccepted = view.findViewById(R.id.RCLAcceptedRequest1);
         RCLAwaiting = view.findViewById(R.id.RCLaWaitingRequests);
         RCLHistory = view.findViewById(R.id.RCLRequstHistory);
+        RCLOncoming = view.findViewById(R.id.RCLYaklasRequests);
+
 
         RCLAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
         RCLAwaiting.setLayoutManager(new LinearLayoutManager(getContext()));
         RCLHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+        RCLOncoming.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapterAccepted = new MyAcceptedRequestsAdapter(acceptedPostList);
         adapterAcceptedHistory = new MyAcceptedRequestsAdapter(postListHistory);
         adapterWaiting = new MyWaitingRequestsAdapter(waitingPostList);
+        adapterOncoming = new MyAcceptedRequestsAdapter(oncomingPostList);
 
         RCLAccepted.setAdapter(adapterAccepted);
         RCLAwaiting.setAdapter(adapterWaiting);
         RCLHistory.setAdapter(adapterAcceptedHistory);
+        RCLOncoming.setAdapter(adapterOncoming);
+
+        tabLayout = view.findViewById(R.id.tabLayoutRequestISent);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        layoutOncoming.setVisibility(View.VISIBLE);
+                        layoutAwaiting.setVisibility(View.GONE);
+                        layoutAccepted.setVisibility(View.GONE);
+                        layoutHistory.setVisibility(View.GONE);
+                        Log.d("TAG", "onTabSelected: 1 ");
+                        break;
+                    case 1:
+                        layoutOncoming.setVisibility(View.GONE);
+                        layoutAwaiting.setVisibility(View.GONE);
+                        layoutAccepted.setVisibility(View.VISIBLE);
+                        layoutHistory.setVisibility(View.GONE);
+                        Log.d("TAG", "onTabSelected: 2 ");
+                        break;
+                    case 2:
+                        layoutOncoming.setVisibility(View.GONE);
+                        layoutAwaiting.setVisibility(View.VISIBLE);
+                        layoutAccepted.setVisibility(View.GONE);
+                        layoutHistory.setVisibility(View.GONE);
+                        Log.d("TAG", "onTabSelected: 3 ");
+                        break;
+                    case 3:
+                        layoutOncoming.setVisibility(View.GONE);
+                        layoutAwaiting.setVisibility(View.GONE);
+                        layoutAccepted.setVisibility(View.GONE);
+                        layoutHistory.setVisibility(View.VISIBLE);
+                        Log.d("TAG", "onTabSelected: 4 ");
+                        break;
+
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
 
@@ -142,11 +205,14 @@ public class FragmentMyRequests2 extends Fragment {
                 super.onRequestsRetrievedNotNull(list);
                 if(list !=null && list.size() > 0) {
                     for (Request request : list) {
+
                         if (request.getPostTimestamp() >= currentTimestamp) {
                             acceptedRequestList.add(request);
                              // 0 - bekleyen kabul edilmiş, 1 - geçmiş kabul edilmiş, 2 - bekleyen onaylanmamış
+                        }if(request.getPostTimestamp() - currentTimestamp <= timestampMargin){
+                            oncomingRequestList.add(request);
                         }
-                        else{
+                        else if(currentTimestamp >= request.getPostTimestamp()){
                             requestListHistory.add(request);
 
                         }
@@ -155,11 +221,14 @@ public class FragmentMyRequests2 extends Fragment {
                     Log.d("Tag","historyRequestList size :" + requestListHistory.size());
                     getPosts(acceptedRequestList,0);
                     getPosts(requestListHistory,1);
+                    getPosts(oncomingRequestList,3);
                 }
             }
         });
 
     }
+
+
     public void getAwaitingRequests(){
             requestDAL.getAwatingRequestsISent(new RequestCallback() {
                 @Override
@@ -201,6 +270,10 @@ public class FragmentMyRequests2 extends Fragment {
                             waitingPostList.add(post);
                             Log.d("Tag","waitingpostList size :" + waitingPostList.size());
                             adapterWaiting.notifyDataSetChanged();
+                        }else if(flag == 3){
+                            oncomingPostList.add(post);
+                            adapterOncoming.notifyDataSetChanged();
+
                         }
                     }
                 });
@@ -208,26 +281,4 @@ public class FragmentMyRequests2 extends Fragment {
 
     }
 
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
-        if(item.getItemId()==R.id.accepted_requests){
-            layoutHistory.setVisibility(View.INVISIBLE);
-            layoutAwaiting.setVisibility(View.INVISIBLE);
-            layoutAccepted.setVisibility(View.VISIBLE);
-            //layoutAccepted.bringToFront();
-
-        }
-        else if(item.getItemId() == R.id.accepted_requests_history){
-            layoutAwaiting.setVisibility(View.INVISIBLE);
-            layoutAccepted.setVisibility(View.INVISIBLE);
-            layoutHistory.setVisibility(View.VISIBLE);
-        }
-        else if (item.getItemId() == R.id.awaiting_requests){
-            layoutAccepted.setVisibility(View.INVISIBLE);
-            layoutHistory.setVisibility(View.INVISIBLE);
-            layoutAwaiting.setVisibility(View.VISIBLE);
-        }
-
-        return true;
-    };
 }

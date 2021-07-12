@@ -7,6 +7,10 @@
         <item name="colorAccent">@color/dahagri</item>
     </style>
 
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 
     <style name="button_text" >
         <item name="android:layout_width" >fill_parent</item>

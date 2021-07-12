@@ -162,7 +162,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
         }
 
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getChildFragmentManager().findFragmentById(R.id.uploadPostPlacesFragment);
+                getChildFragmentManager().findFragmentById(R.id.searchPostPlacesFragment);
         if (autocompleteFragment != null) {
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
 

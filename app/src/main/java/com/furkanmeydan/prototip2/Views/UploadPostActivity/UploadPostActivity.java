@@ -63,10 +63,13 @@ public class UploadPostActivity extends AppCompatActivity {
                 switch (tab.getPosition()){
                     case 0:
                         changeFragment(uploadPostDetailFragment);
+                        Log.d("TAG", "onTabSelected: 1 ");
                         break;
+
                     case 1:
                         uploadPostDetailFragment.saveDetails();
                         changeFragment(uploadMapFragment2);
+                        Log.d("TAG", "onTabSelected: 2 ");
                         break;
                 }
 
