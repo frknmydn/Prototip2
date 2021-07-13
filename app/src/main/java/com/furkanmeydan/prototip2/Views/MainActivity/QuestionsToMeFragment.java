@@ -67,7 +67,7 @@ public class QuestionsToMeFragment extends Fragment {
         adapter = new QuestionsToMeRCLAdapter(questionsArrayList,activity);
         recyclerView.setAdapter(adapter);
 
-        layoutInfo = view.findViewById(R.id.consLayoutMyQuestions);
+        layoutInfo = view.findViewById(R.id.layoutMyRequestAcceptedInfo);
         layoutInfo.setVisibility(View.GONE);
         layoutContent = view.findViewById(R.id.layoutQuestionToMeRCL);
         layoutContent.setVisibility(View.GONE);

@@ -58,8 +58,12 @@ public class FragmentMyRequests2 extends Fragment {
     MainActivity mainActivity;
 
 
-    ConstraintLayout layoutAccepted, layoutHistory, layoutAwaiting, layoutOncoming;
+    ConstraintLayout layoutAccepted, layoutHistory, layoutAwaiting, layoutOncoming, layoutOnComingProgress
+            ,layoutOnComingInfo, layoutOncomingContent, layoutAwaitingProgress, layoutAwaitingInfo, layoutAwaitingContent
+            ,layoutAcceptedInfo, layoutAcceptedContent, layoutHistoryContent, layoutHistoryInfo;
     RecyclerView RCLAccepted, RCLHistory, RCLAwaiting, RCLOncoming;
+
+
 
     Long currentTimestamp;
     Long timestampMargin = 86400L;
@@ -122,6 +126,21 @@ public class FragmentMyRequests2 extends Fragment {
         layoutAwaiting = view.findViewById(R.id.consLayoutAwaiting);
         layoutHistory = view.findViewById(R.id.consLayoutHistory);
         layoutOncoming = view.findViewById(R.id.consLayoutYaklas);
+
+        layoutOnComingProgress = view.findViewById(R.id.myRequestYaklasProgress);
+        layoutOnComingInfo = view.findViewById(R.id.layoutYaklasInfo);
+        layoutOncomingContent = view.findViewById(R.id.myRequestYaklasContent);
+
+        layoutAwaitingProgress = view.findViewById(R.id.layoutAwaitingProgress);
+        layoutAwaitingInfo  = view.findViewById(R.id.layoutAwaitingInfo);
+        layoutAwaitingContent  = view.findViewById(R.id.layoutAwaitingContent);
+
+        layoutAcceptedInfo = view.findViewById(R.id.layoutMyRequestAcceptedInfo);
+        layoutAcceptedContent = view.findViewById(R.id.layoutMyRequestAcceptedContent);
+
+        layoutHistoryContent = view.findViewById(R.id.conslayoutMyRequestsHistoryContent);
+        layoutHistoryInfo = view.findViewById(R.id.conslayoutMyRequestsHistoryInfo);
+
 
         RCLAccepted = view.findViewById(R.id.RCLAcceptedRequest1);
         RCLAwaiting = view.findViewById(R.id.RCLaWaitingRequests);
@@ -208,14 +227,31 @@ public class FragmentMyRequests2 extends Fragment {
 
                         if (request.getPostTimestamp() >= currentTimestamp) {
                             acceptedRequestList.add(request);
+                            Log.d("TAG", "onRequestsRetrievedNotNull: "+ acceptedRequestList.size());
+
+
+
                              // 0 - bekleyen kabul edilmiş, 1 - geçmiş kabul edilmiş, 2 - bekleyen onaylanmamış
                         }if(request.getPostTimestamp() - currentTimestamp <= timestampMargin){
                             oncomingRequestList.add(request);
+
+                            if(oncomingRequestList.size() > 0){
+                                layoutOnComingProgress.setVisibility(View.GONE);
+                                layoutOncomingContent.setVisibility(View.VISIBLE);
+                            }
+                            else {
+                                layoutOnComingProgress.setVisibility(View.GONE);
+                                layoutOnComingInfo.setVisibility(View.VISIBLE);
+                            }
+
+
                         }
                         else if(currentTimestamp >= request.getPostTimestamp()){
                             requestListHistory.add(request);
 
                         }
+
+
                     }
                     Log.d("Tag","AcceptedRequstList size :" + acceptedRequestList.size());
                     Log.d("Tag","historyRequestList size :" + requestListHistory.size());
@@ -225,6 +261,24 @@ public class FragmentMyRequests2 extends Fragment {
                 }
             }
         });
+
+        if(requestListHistory.size()>0){
+            layoutHistoryContent.setVisibility(View.VISIBLE);
+        }
+        else{
+            layoutHistoryInfo.setVisibility(View.VISIBLE);
+        }
+
+        if(acceptedRequestList.size()>0){
+            layoutAcceptedContent.setVisibility(View.VISIBLE);
+        }
+        else {
+            layoutAcceptedInfo.setVisibility(View.VISIBLE);
+        }
+
+        Log.d("TAGGO", "getAcceptedRequests: " + requestListHistory.size());
+
+
 
     }
 
@@ -238,12 +292,22 @@ public class FragmentMyRequests2 extends Fragment {
                         for (Request request : list){
                             if(request.getPostTimestamp() >= currentTimestamp){
                                 waitingRequestList.add(request);
+
                             }
                         }
                         getPosts(waitingRequestList,2);
                     }
                 }
             });
+
+        if(waitingPostList.size() > 0){
+            layoutAwaitingProgress.setVisibility(View.GONE);
+            layoutAwaitingContent.setVisibility(View.VISIBLE);
+        }
+        else{
+            layoutAwaitingProgress.setVisibility(View.GONE);
+            layoutOnComingInfo.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -277,6 +341,15 @@ public class FragmentMyRequests2 extends Fragment {
                         }
                     }
                 });
+            }
+
+            if (acceptedPostList.size() >0){
+                layoutAcceptedInfo.setVisibility(View.GONE);
+                layoutAcceptedContent.setVisibility(View.VISIBLE);
+            }
+            else {
+                layoutAcceptedContent.setVisibility(View.GONE);
+                layoutAcceptedInfo.setVisibility(View.VISIBLE);
             }
 
     }
