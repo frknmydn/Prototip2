@@ -14,11 +14,12 @@
         android:layout_height="wrap_content"
         android:text="Noktaları Kaldır"
         android:padding="10dp"
-        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
         tools:layout_conversion_absoluteHeight="0dp"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_conversion_absoluteWidth="0dp" />
+        tools:layout_conversion_absoluteWidth="0dp"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <SearchView
         android:layout_width="0dp"

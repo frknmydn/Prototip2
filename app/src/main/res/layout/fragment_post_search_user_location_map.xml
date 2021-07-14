@@ -19,7 +19,8 @@
         android:textSize="16sp"
         android:padding="10dp"
         android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
+        android:paddingEnd="10dp"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <Button
         android:id="@+id/btnUserLocationMapChangeFragment"
@@ -33,6 +34,7 @@
         android:textSize="16sp"
         android:padding="10dp"
         android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
+        android:paddingEnd="10dp"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     </fragment>

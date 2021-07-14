@@ -32,7 +32,8 @@
             android:textColorHint="#414141"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText">
 
             <EditText
                 android:id="@+id/UPDEDTDestination1"
@@ -43,7 +44,8 @@
 
                 android:fontFamily="sans-serif-light"
                 android:textColor="#414141"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:importantForAutofill="no" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -74,7 +76,8 @@
                 android:inputType="none"
                 android:padding="5dp"
                 android:textColor="#414141"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +104,8 @@
                 android:inputType="none"
                 android:fontFamily="sans-serif-light"
                 android:textColor="#414141"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -129,7 +133,9 @@
                 android:inputType="textPersonName"
                 android:textColor="#414141"
                 android:focusable="false"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="TextFields"
+                android:importantForAutofill="no" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -157,7 +163,9 @@
                 android:inputType="textPersonName"
                 android:textColor="#414141"
                 android:textSize="16sp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -175,7 +183,8 @@
             app:layout_constraintBottom_toTopOf="@+id/UPDEDTCarDetailLayout"
             app:layout_constraintEnd_toEndOf="@+id/UPDTimeLayout"
             app:layout_constraintStart_toStartOf="@+id/UPDDateLayout"
-            app:layout_constraintTop_toBottomOf="@+id/UPDDateLayout">
+            app:layout_constraintTop_toBottomOf="@+id/UPDDateLayout"
+            tools:ignore="HardcodedText">
 
             <EditText
                 android:id="@+id/UPDEDTDescription"
@@ -186,7 +195,9 @@
                 android:gravity="top"
                 android:inputType="textMultiLine|textPersonName"
                 android:textColor="#414141"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -205,7 +216,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/UPDEDTDescriptionLayout"
             app:layout_constraintStart_toStartOf="@+id/UPDEDTDescriptionLayout"
-            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout">
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout"
+            tools:ignore="HardcodedText">
 
             <EditText
                 android:id="@+id/UPDEDTCarDetail"
@@ -218,7 +230,9 @@
                 android:inputType="textMultiLine|textPersonName"
                 android:textColor="#414141"
                 android:textColorLink="#00000000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

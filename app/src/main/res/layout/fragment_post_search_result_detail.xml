@@ -21,7 +21,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/statik1"
@@ -35,7 +36,8 @@
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailHeader"
-        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailHeader"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView20"
@@ -46,7 +48,8 @@
         android:text=":"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/statik1" />
+        app:layout_constraintTop_toTopOf="@+id/statik1"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtSearchResultDetailCity"
@@ -55,13 +58,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:text="Şehir"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailHeader"
         app:layout_constraintStart_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintTop_toTopOf="@+id/textView20"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/statik2"
@@ -74,7 +78,8 @@
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/statik1"
-        app:layout_constraintTop_toBottomOf="@+id/statik1" />
+        app:layout_constraintTop_toBottomOf="@+id/statik1"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView21"
@@ -85,7 +90,8 @@
         android:text=":"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/statik2" />
+        app:layout_constraintTop_toTopOf="@+id/statik2"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtSearchResultDetailPasangerCount"
@@ -93,13 +99,14 @@
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:text="Boş Koltuk"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCity"
         app:layout_constraintStart_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
+        app:layout_constraintTop_toTopOf="@+id/textView21"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <TextView
         android:id="@+id/statik3"
@@ -112,7 +119,8 @@
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/statik2"
-        app:layout_constraintTop_toBottomOf="@+id/statik2" />
+        app:layout_constraintTop_toBottomOf="@+id/statik2"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView22"
@@ -123,7 +131,8 @@
         android:text=":"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toTopOf="@+id/statik3" />
+        app:layout_constraintTop_toTopOf="@+id/statik3"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtSearchResultDetailDateTime"
@@ -131,13 +140,14 @@
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:text="Zaman"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailPasangerCount"
         app:layout_constraintStart_toEndOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/textView22" />
+        app:layout_constraintTop_toTopOf="@+id/textView22"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <TextView
         android:id="@+id/statik4"
@@ -150,7 +160,8 @@
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/statik3"
-        app:layout_constraintTop_toBottomOf="@+id/statik3" />
+        app:layout_constraintTop_toBottomOf="@+id/statik3"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView23"
@@ -161,7 +172,8 @@
         android:text=":"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/statik4" />
+        app:layout_constraintTop_toTopOf="@+id/statik4"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtSearchResultDetailDescription"
@@ -169,7 +181,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:scrollbars="vertical"
         android:text="Açıklama"
         android:textColor="#000000"
@@ -177,7 +189,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView23"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailDateTime"
         app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toTopOf="@+id/textView23" />
+        app:layout_constraintTop_toTopOf="@+id/textView23"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <TextView
         android:id="@+id/statik5"
@@ -190,7 +203,8 @@
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/statik4"
-        app:layout_constraintTop_toBottomOf="@+id/statik4" />
+        app:layout_constraintTop_toBottomOf="@+id/statik4"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView24"
@@ -202,7 +216,8 @@
         android:text=":"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/statik5"
-        app:layout_constraintTop_toTopOf="@+id/statik5" />
+        app:layout_constraintTop_toTopOf="@+id/statik5"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtSearchResultDetailCarDet"
@@ -210,7 +225,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:scrollbars="vertical"
         android:text="Araç Bilgisi"
         android:textColor="#000000"
@@ -218,7 +233,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailDescription"
         app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <Button
         android:id="@+id/btnSearchResultDetailSendRequest"
@@ -232,7 +248,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnSearchResultDetailAddToWish" />
+        app:layout_constraintStart_toEndOf="@+id/btnSearchResultDetailAddToWish"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnSearchResultDetailAddToWish"
@@ -245,7 +262,8 @@
         android:text="Takip et"
         app:layout_constraintEnd_toStartOf="@+id/btnSearchResultDetailSendRequest"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailSendRequest" />
+        app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailSendRequest"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnSearchResultDetailStartService"
@@ -261,7 +279,8 @@
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@+id/statik5"
-        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnSearchResultDetailEndService"
@@ -272,7 +291,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnSearchResultDetailSendRequest"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
         app:layout_constraintStart_toStartOf="@+id/statik5"
-        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnSearchResultDetailTrackLocation"
@@ -287,6 +307,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnSearchResultDetailSendRequest"
         app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCarDet"
         app:layout_constraintStart_toStartOf="@+id/statik5"
-        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailCarDet"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

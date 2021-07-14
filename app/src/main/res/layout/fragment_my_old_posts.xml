@@ -32,7 +32,7 @@
             android:background="#DEDFDF"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="Geçmişte kayıtlı ilanınız bulunmamaktadır."
+            android:text="@string/kayıtlı_ilan_yok"
             android:textColor="#5C5C5C"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,6 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/imageView3"
             android:layout_width="30sp"
             android:layout_height="30sp"
@@ -98,7 +99,7 @@
             android:background="#E6E9FF"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="GEÇMİŞ İLANLARINIZ"
+            android:text="@string/ge_m_lanlariniz"
             android:textColor="#5C5C5C"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

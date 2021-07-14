@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPopUpRequestText" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPopUpRequestText"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnPopupSendRequest"
@@ -25,7 +26,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPopUpRequestText" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPopUpRequestText"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/edtPopUpRequestText"
@@ -38,5 +40,6 @@
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.349" />
+        app:layout_constraintVertical_bias="0.349"
+        android:importantForAutofill="no" />
 </androidx.constraintlayout.widget.ConstraintLayout>

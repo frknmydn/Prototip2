@@ -18,7 +18,8 @@
         android:text=":"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        app:layout_constraintTop_toTopOf="@+id/textView9"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtRCLPostHeaderRow"
@@ -36,7 +37,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,TextViewEdits" />
 
     <TextView
         android:id="@+id/txt2323"
@@ -50,7 +52,8 @@
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtRCLPostHeaderRow"
-        app:layout_constraintTop_toBottomOf="@+id/txtRCLPostHeaderRow" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRCLPostHeaderRow"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtRCLPostTimeRow"
@@ -61,7 +64,8 @@
         android:textColor="#6C6B6B"
         android:textStyle="italic"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/textView10"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView9"
@@ -72,7 +76,8 @@
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txt2323"
-        app:layout_constraintTop_toBottomOf="@+id/txt2323" />
+        app:layout_constraintTop_toBottomOf="@+id/txt2323"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView10"
@@ -82,7 +87,8 @@
         android:text=":"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/txt2323" />
+        app:layout_constraintTop_toTopOf="@+id/txt2323"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txtRCLPostPCROW"
@@ -93,7 +99,8 @@
         android:textColor="#6C6B6B"
         android:textStyle="italic"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
+        app:layout_constraintTop_toTopOf="@+id/textView12"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnRCLPostRemove"
@@ -107,5 +114,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRCLPostPCROW" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRCLPostPCROW"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

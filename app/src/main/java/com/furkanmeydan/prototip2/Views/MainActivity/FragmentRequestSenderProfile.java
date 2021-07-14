@@ -158,11 +158,14 @@ public class FragmentRequestSenderProfile extends Fragment {
                             Log.d("Tag","onesignal date: "+dateTime);
                             OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
 
+                            Toast.makeText(activity,"İstek Onaylandı.",Toast.LENGTH_LONG).show();
                             OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}").put("send_after",dateTime), null);
+                            /*
                             Intent i = new Intent(getContext(), MainActivity.class);
-                            Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
                             startActivity(i);
                             activity.finish();
+                            */
+                            activity.changeFragment(new FragmentRequestsToMyPosts());
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.d("Tag","onesignal date: YOH CATCHLEDİ");

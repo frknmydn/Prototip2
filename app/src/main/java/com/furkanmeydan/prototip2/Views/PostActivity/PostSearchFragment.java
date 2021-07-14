@@ -286,8 +286,8 @@ public class PostSearchFragment extends Fragment {
 
 
     public void saveDetails(){
-        postActivity.bundle = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
-        if(postActivity.bundle !=null) {
+        if(postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity) != null) {
+            postActivity.bundle = postDAL.checkArgs(timestamp1,timestamp2,genderString,cityString,postActivity);
             postActivity.localDataManager.setSharedPreferenceForLong(postActivity, "postSearchTimestamp", timestamp1.getSeconds());
             postActivity.localDataManager.setSharedPreferenceForLong(postActivity, "postSearchTimestamp2", timestamp2.getSeconds());
             postActivity.localDataManager.setSharedPreference(postActivity, "postSearchGender", genderString);

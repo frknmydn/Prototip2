@@ -12,19 +12,17 @@
         android:id="@+id/textView30"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:background="#E6E9FF"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:text="KAYIT / GİRİŞ"
         android:textColor="#5C5C5C"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerSearchCityFS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -51,7 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,9 +78,12 @@
             android:maxLength="10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no"
+            tools:ignore="HardcodedText" />
 
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -101,7 +103,8 @@
         android:text="Sistemde kayıtlı telefon numaranızı girerek giriş, kayıtlı değilseniz numaranızı yazarak kayıt olabilirsiniz."
         app:layout_constraintEnd_toEndOf="@+id/questionLayout"
         app:layout_constraintStart_toStartOf="@+id/questionLayout"
-        app:layout_constraintTop_toBottomOf="@+id/questionLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/questionLayout"
+        tools:ignore="HardcodedText" />
 
     <ProgressBar
         android:id="@+id/signinPB"

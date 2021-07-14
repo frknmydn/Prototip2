@@ -38,9 +38,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/imageView3"
             android:layout_width="30sp"
             android:layout_height="30sp"

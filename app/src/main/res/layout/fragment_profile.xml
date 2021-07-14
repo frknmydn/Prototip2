@@ -56,9 +56,11 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/ImageViewFragment"
             android:layout_width="150sp"
             android:layout_height="150sp"
@@ -85,7 +87,9 @@
             app:layout_constraintBottom_toTopOf="@+id/EDTEmailFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/EDTEmailFragment"
@@ -100,7 +104,9 @@
             app:layout_constraintBottom_toTopOf="@+id/BirthdayFragment"
             app:layout_constraintEnd_toEndOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintStart_toStartOf="@+id/EDTNameSurnameFragment"
-            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment"
+            tools:ignore="HardcodedText,TextFields"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/BirthdayFragment"
@@ -119,7 +125,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/GenderFragment"
             app:layout_constraintStart_toStartOf="@+id/EDTEmailFragment"
-            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/EDTEmailFragment"
+            tools:ignore="HardcodedText,TextViewEdits" />
 
         <TextView
             android:id="@+id/GenderFragment"
@@ -128,7 +135,7 @@
             android:layout_marginStart="5dp"
             android:background="@drawable/spinner_shape"
             android:gravity="center_horizontal|center_vertical"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/BirthdayFragment"
@@ -148,7 +155,8 @@
             android:background="#E1E1E1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

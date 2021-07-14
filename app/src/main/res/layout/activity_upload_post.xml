@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/deneme_button"
-        android:text="Detay"
+        android:text="@string/detay"
         app:layout_constraintEnd_toStartOf="@+id/btnUploadPostMap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_height="40dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/deneme_button"
-        android:text="Harita"
+        android:text="@string/harita"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnUploadPostDetails"
         app:layout_constraintTop_toTopOf="@+id/btnUploadPostDetails" />
@@ -50,7 +50,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="10dp"
         android:onClick="AUPUploadPost"
-        android:text="İlanı Yükle"
+        android:text="@string/lan_yukle"
         android:background="@drawable/deneme_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

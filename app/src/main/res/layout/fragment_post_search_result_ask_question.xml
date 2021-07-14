@@ -16,12 +16,13 @@
         android:background="#E6E9FF"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="SORUN SORUN"
+        android:text="SORU SORUN"
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/fragmentPostSearchResultAskQuestionEdtxt"
@@ -40,7 +41,9 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentPostSearchResultAskQuestionbtn"
         app:layout_constraintEnd_toEndOf="@+id/textView31"
         app:layout_constraintStart_toStartOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        app:layout_constraintTop_toBottomOf="@+id/textView31"
+        tools:ignore="HardcodedText"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/fragmentPostSearchResultAskQuestionbtn"
@@ -57,5 +60,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentPostSearchResultAskQuestionEdtxt" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentPostSearchResultAskQuestionEdtxt"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

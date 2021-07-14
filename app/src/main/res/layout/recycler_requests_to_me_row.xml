@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toTopOf="@+id/divider5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/requestsToMeRowRCLGender"
-        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLNameSurname" />
+        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLNameSurname"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnrequestsToMeRowRCLDecline"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/requestsToMeRowRCLRequestText"
         app:layout_constraintEnd_toStartOf="@+id/requestsToMeRowRCLRequestText"
         app:layout_constraintStart_toStartOf="@+id/requestsToMeRowRCLImg"
-        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLImg" />
+        app:layout_constraintTop_toBottomOf="@+id/requestsToMeRowRCLImg"
+        tools:ignore="HardcodedText,SmallSp" />
 
     <TextView
         android:id="@+id/requestsToMeRowRCLHeader"
@@ -43,9 +45,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,TextViewEdits" />
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/requestsToMeRowRCLImg"
         android:layout_width="125sp"
         android:layout_height="125sp"
@@ -61,7 +65,7 @@
         android:layout_height="18dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="Erman Kan Derici"
+        android:text="@string/erman_kan_derici"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/requestsToMeRowRCLHeader"
         app:layout_constraintStart_toEndOf="@+id/requestsToMeRowRCLImg"
@@ -73,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
-        android:text="Erkek"
+        android:text="@string/erkek"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.069"

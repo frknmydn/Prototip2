@@ -60,7 +60,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     private GoogleMap mMap;
     LocationManager locationManager;
     PostActivity activity;
-    Bundle bundle;
+    //Bundle bundle;
     LocalDataManager localDataManager;
 
     private MapView mapView;
@@ -80,9 +80,12 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
         activity = (PostActivity) getActivity();
         localDataManager = new LocalDataManager();
+        /*
         if(getArguments() != null){
             bundle = getArguments();
         }
+
+         */
         if (activity != null) {
             Places.initialize(activity,"AIzaSyAkR63wvDhI3bukQYRSBxXtarR_e2G_t1I");
 
@@ -128,10 +131,6 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
         super.onViewCreated(view, savedInstanceState);
 
             btnClear = view.findViewById(R.id.IBResultMapClear);
-
-
-
-
             postDAL = new PostDAL();
             btnChangeFragment = view.findViewById(R.id.btnChangeFragmentMap);
 

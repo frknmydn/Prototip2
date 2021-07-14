@@ -141,7 +141,6 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
         //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);
         btnMapClear = view.findViewById(R.id.imageViewClearMapUploadPost);
-        searchView = view.findViewById(R.id.searchViewUPloadMap);
 
         /*
         tabLayout = postActivity.findViewById(R.id.tabLayout);

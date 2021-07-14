@@ -21,10 +21,8 @@ import com.furkanmeydan.prototip2.Models.Block;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Adapters.SearchResultRecyclerAdapter;
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -133,7 +131,7 @@ public class PostSearchResultFragment extends Fragment {
         }
         else {
 
-            postDAL.getPostsWithGender(timestamp1, timestamp2, gender, city, postActivity,direction, new PostCallback() {
+            postDAL.getPostsWithGender(timestamp1, timestamp2, gender, city, direction, new PostCallback() {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);

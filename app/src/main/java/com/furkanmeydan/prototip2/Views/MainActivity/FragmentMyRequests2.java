@@ -69,6 +69,9 @@ public class FragmentMyRequests2 extends Fragment {
     Long timestampMargin = 86400L;
     Long timestampPostWithMargin;
 
+    boolean hasMember;
+    int i = 0;
+
     private TabLayout tabLayout;
 
 
@@ -116,7 +119,58 @@ public class FragmentMyRequests2 extends Fragment {
 
         getAcceptedRequests();
         getAwaitingRequests();
+        //setVisibilities();
 
+
+
+    }
+
+    private void setVisibilities(){
+        Log.d("TAG", "setVisibilities: acceptedPostList.size()" +acceptedPostList.size());
+        Log.d("TAG", "setVisibilities: waitingPostList.size()" +waitingPostList.size());
+        Log.d("TAG", "setVisibilities: postListHistory.size()" +postListHistory.size());
+        Log.d("TAG", "setVisibilities: oncomingPostList.size()" +oncomingPostList.size());
+
+        if(acceptedPostList.size() > 0){
+            layoutAcceptedInfo.setVisibility(View.GONE);
+            layoutAcceptedContent.setVisibility(View.VISIBLE);
+        }
+        else{
+            layoutAcceptedInfo.setVisibility(View.VISIBLE);
+            layoutAcceptedContent.setVisibility(View.VISIBLE);
+        }
+
+        if(waitingPostList.size() > 0){
+            layoutAwaitingProgress.setVisibility(View.GONE);
+            layoutAwaitingContent.setVisibility(View.VISIBLE);
+            layoutAwaitingProgress.setVisibility(View.GONE);
+        }
+        else {
+            layoutAwaitingProgress.setVisibility(View.GONE);
+            layoutAwaitingContent.setVisibility(View.GONE);
+            layoutAwaitingInfo.setVisibility(View.VISIBLE);
+        }
+
+        if(postListHistory.size() > 0){
+            layoutHistoryInfo.setVisibility(View.GONE);
+            layoutHistoryContent.setVisibility(View.VISIBLE);
+        }
+        else{
+            layoutHistoryContent.setVisibility(View.GONE);
+            layoutHistoryInfo.setVisibility(View.VISIBLE);
+        }
+
+        if(oncomingPostList.size() > 0){
+            layoutOnComingProgress.setVisibility(View.GONE);
+            layoutOncomingContent.setVisibility(View.VISIBLE);
+            layoutOnComingInfo.setVisibility(View.GONE);
+        }
+        else {
+            layoutOnComingProgress.setVisibility(View.GONE);
+            layoutOnComingInfo.setVisibility(View.VISIBLE);
+            layoutOncomingContent.setVisibility(View.GONE);
+
+        }
     }
 
     private void init(View view){
@@ -230,19 +284,10 @@ public class FragmentMyRequests2 extends Fragment {
                             Log.d("TAG", "onRequestsRetrievedNotNull: "+ acceptedRequestList.size());
 
 
-
                              // 0 - bekleyen kabul edilmiş, 1 - geçmiş kabul edilmiş, 2 - bekleyen onaylanmamış
-                        }if(request.getPostTimestamp() - currentTimestamp <= timestampMargin){
+                        }if(request.getPostTimestamp() - currentTimestamp <= timestampMargin && request.getPostTimestamp() - currentTimestamp > 0){
                             oncomingRequestList.add(request);
-
-                            if(oncomingRequestList.size() > 0){
-                                layoutOnComingProgress.setVisibility(View.GONE);
-                                layoutOncomingContent.setVisibility(View.VISIBLE);
-                            }
-                            else {
-                                layoutOnComingProgress.setVisibility(View.GONE);
-                                layoutOnComingInfo.setVisibility(View.VISIBLE);
-                            }
+                            acceptedRequestList.add(request);
 
 
                         }
@@ -253,8 +298,6 @@ public class FragmentMyRequests2 extends Fragment {
 
 
                     }
-                    Log.d("Tag","AcceptedRequstList size :" + acceptedRequestList.size());
-                    Log.d("Tag","historyRequestList size :" + requestListHistory.size());
                     getPosts(acceptedRequestList,0);
                     getPosts(requestListHistory,1);
                     getPosts(oncomingRequestList,3);
@@ -262,19 +305,6 @@ public class FragmentMyRequests2 extends Fragment {
             }
         });
 
-        if(requestListHistory.size()>0){
-            layoutHistoryContent.setVisibility(View.VISIBLE);
-        }
-        else{
-            layoutHistoryInfo.setVisibility(View.VISIBLE);
-        }
-
-        if(acceptedRequestList.size()>0){
-            layoutAcceptedContent.setVisibility(View.VISIBLE);
-        }
-        else {
-            layoutAcceptedInfo.setVisibility(View.VISIBLE);
-        }
 
         Log.d("TAGGO", "getAcceptedRequests: " + requestListHistory.size());
 
@@ -300,19 +330,17 @@ public class FragmentMyRequests2 extends Fragment {
                 }
             });
 
-        if(waitingPostList.size() > 0){
-            layoutAwaitingProgress.setVisibility(View.GONE);
-            layoutAwaitingContent.setVisibility(View.VISIBLE);
-        }
-        else{
-            layoutAwaitingProgress.setVisibility(View.GONE);
-            layoutOnComingInfo.setVisibility(View.VISIBLE);
-        }
+
     }
 
 
     public void getPosts(ArrayList<Request> requestList, final int flag){
+        i = 0;
             for(Request request : requestList){
+                int requestListSize = requestList.size();
+                Log.d("TAG", "getPosts: requestlistsize: "+ requestListSize);
+                i+=1;
+                hasMember = false;
                 String postID = request.getPostID();
                 String postOwnerID = request.getPostOwnerID();
 
@@ -320,37 +348,91 @@ public class FragmentMyRequests2 extends Fragment {
                     @Override
                     public void getPost(Post post) {
                         super.getPost(post);
+                        Log.d("TAG", "getPost: i = " + i);
                         if(flag == 0){
+                            hasMember = true;
                             acceptedPostList.add(post);
                             Log.d("Tag","AcceptedPostList size :" + acceptedPostList.size());
                             adapterAccepted.notifyDataSetChanged();
 
+                            if(hasMember){
+                                layoutAcceptedContent.setVisibility(View.VISIBLE);
+                                layoutAcceptedInfo.setVisibility(View.GONE);
+                            }else{
+                                layoutAcceptedContent.setVisibility(View.GONE);
+                                layoutAcceptedInfo.setVisibility(View.VISIBLE);
+                            }
+
                         }else if(flag == 1){
+                            hasMember = true;
                             postListHistory.add(post);
                             Log.d("Tag","HistoryList size :" + postListHistory.size());
                             adapterAcceptedHistory.notifyDataSetChanged();
 
+                            if(hasMember){
+                                layoutHistoryContent.setVisibility(View.VISIBLE);
+                                layoutHistoryInfo.setVisibility(View.GONE);
+
+                            }else{
+                                layoutHistoryContent.setVisibility(View.GONE);
+                                layoutHistoryInfo.setVisibility(View.VISIBLE);
+                            }
+
                         }else if(flag == 2){
+                            hasMember = true;
                             waitingPostList.add(post);
                             Log.d("Tag","waitingpostList size :" + waitingPostList.size());
                             adapterWaiting.notifyDataSetChanged();
+
+                            if(hasMember){
+                                layoutAwaitingContent.setVisibility(View.VISIBLE);
+                                layoutAwaitingInfo.setVisibility(View.GONE);
+
+                            }else{
+                                layoutAwaitingContent.setVisibility(View.GONE);
+                                layoutAwaitingInfo.setVisibility(View.VISIBLE);
+                            }
                         }else if(flag == 3){
+                            hasMember = true;
                             oncomingPostList.add(post);
+                            Log.d("Tag","oncomingPostList size :" + oncomingPostList.size());
                             adapterOncoming.notifyDataSetChanged();
 
+                            if(hasMember){
+                            layoutOncomingContent.setVisibility(View.VISIBLE);
+                            layoutOnComingInfo.setVisibility(View.GONE);
+                            }else{
+                                layoutOncomingContent.setVisibility(View.GONE);
+                                layoutOnComingInfo.setVisibility(View.VISIBLE);
+                            }
+                            layoutOnComingProgress.setVisibility(View.GONE);
+
+                        }
+
+                        if(i == requestListSize-1 || i == requestListSize){
+                            if(acceptedPostList.size() == 0){
+
+                            }
+                            if(oncomingPostList.size() == 0){
+                                layoutOnComingProgress.setVisibility(View.GONE);
+                                layoutOncomingContent.setVisibility(View.GONE);
+                                layoutOnComingInfo.setVisibility(View.VISIBLE);
+                            }
+                            if(waitingPostList.size() == 0){
+
+                            }
+                            if(postListHistory.size() == 0){
+
+                            }
                         }
                     }
                 });
+
+
+
             }
 
-            if (acceptedPostList.size() >0){
-                layoutAcceptedInfo.setVisibility(View.GONE);
-                layoutAcceptedContent.setVisibility(View.VISIBLE);
-            }
-            else {
-                layoutAcceptedContent.setVisibility(View.GONE);
-                layoutAcceptedInfo.setVisibility(View.VISIBLE);
-            }
+
 
     }
 

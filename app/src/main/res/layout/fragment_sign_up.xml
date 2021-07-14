@@ -21,9 +21,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/signUpImageView"
         android:layout_width="150sp"
         android:layout_height="150sp"
@@ -47,11 +49,13 @@
         android:ems="10"
         android:hint="Adınız Soyadınız"
         android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         app:layout_constraintBottom_toTopOf="@+id/signUpEDTEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpImageView"
+        android:importantForAutofill="no"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <EditText
         android:id="@+id/signUpEDTEmail"
@@ -62,11 +66,13 @@
         android:ems="10"
         android:hint="E-mail Adresiniz"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         app:layout_constraintBottom_toTopOf="@+id/signUpBirthday"
         app:layout_constraintEnd_toEndOf="@+id/signUpEDTNameSurname"
         app:layout_constraintStart_toStartOf="@+id/signUpEDTNameSurname"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEDTNameSurname" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpEDTNameSurname"
+        tools:ignore="HardcodedText,RtlSymmetry,TextFields"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/signUpBirthday"
@@ -80,11 +86,13 @@
         android:focusable="false"
         android:hint="Doğum Tarihiniz"
         android:inputType="date"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/signUpGender"
         app:layout_constraintStart_toStartOf="@+id/signUpEDTEmail"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEDTEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpEDTEmail"
+        android:importantForAutofill="no"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <Spinner
         android:id="@+id/signUpGender"
@@ -111,6 +119,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

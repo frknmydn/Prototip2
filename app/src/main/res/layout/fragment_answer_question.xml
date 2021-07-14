@@ -16,7 +16,7 @@
         android:background="#E6E9FF"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="İLAN BAŞLIĞI"
+        android:text="@string/ilan_baslik"
         android:textColor="#5C5C5C"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +34,7 @@
         <ImageView
             android:id="@+id/answerMark"
             android:layout_width="wrap_content"
+            android:contentDescription="@null"
             android:layout_height="0dp"
             android:src="@drawable/ic_chat"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +46,7 @@
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CEVABINIZ"
+            android:text="@string/cevabiniz"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,6 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtPostHeader">
 
         <ImageView
+            android:contentDescription="@null"
             android:id="@+id/questionMark"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -77,7 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="SORU"
+            android:text="@string/soru"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,11 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:inputType="textMultiLine"
-        android:text="asDASD ADASDASD ASDAS DAS DAS DA SD ASD AS DAS DAS D ASD ASD ASD AS FAS D ASFAS DAS DAS Fasdasdd asdjkashdkjas daskjdhasd baksjd askjdbasjda sdkasdAS D"
+        android:text="@string/asdasd_adasdasd_asdas_das_das_da_sd_asd_as_das_das_d_asd_asd_asd_as_fas_d_asfas_das_das_fasdasdd_asdjkashdkjas_daskjdhasd_baksjd_askjdbasjda_sdkasdas_d"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/txtPostHeader"
         app:layout_constraintStart_toStartOf="@+id/questionLayout"
-        app:layout_constraintTop_toBottomOf="@+id/questionLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/questionLayout"
+        tools:ignore="TextViewEdits" />
 
     <EditText
         android:id="@+id/edtFragmentAnswerQuestionAnswer"
@@ -106,13 +109,14 @@
         android:background="@drawable/spinner_shape"
         android:ems="10"
         android:gravity="top"
-        android:hint="Cevabınızı buraya yazabilirsiniz"
+        android:hint="@string/cevap_buraya"
         android:inputType="textLongMessage|textMultiLine"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnFragmentAnswerQuestion"
         app:layout_constraintEnd_toEndOf="@+id/tctFragmentAnswerQuestionQuestion"
         app:layout_constraintStart_toStartOf="@+id/answerLayout"
-        app:layout_constraintTop_toBottomOf="@+id/answerLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/answerLayout"
+        android:autofillHints="@null" />
 
     <Button
         android:id="@+id/btnFragmentAnswerQuestion"
@@ -124,7 +128,7 @@
         android:layout_marginBottom="25dp"
         android:background="#E1E1E1"
         android:fontFamily="sans-serif-black"
-        android:text="Gönder"
+        android:text="@string/gonder"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

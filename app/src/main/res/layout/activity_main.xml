@@ -37,7 +37,8 @@
                 android:layout_height="45dp"
                 android:background="@drawable/drawable_menu_white"
                 android:tint="#fff"
-                android:text="Button"
+                android:text="@string/button"
+                android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/textView42"
                 app:layout_constraintEnd_toStartOf="@+id/textView42"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,13 +51,14 @@
                 android:layout_height="45dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center|left"
-                android:text="Prototip2"
+                android:text="@string/prototip2"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnOpenDrawable"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlHardcoded" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout

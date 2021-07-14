@@ -15,9 +15,11 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/btnRclGoToProfile"
         app:layout_constraintStart_toStartOf="@+id/txtUserRclGender"
-        app:layout_constraintTop_toBottomOf="@+id/txtUserRclGender" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUserRclGender"
+        tools:ignore="HardcodedText,SmallSp" />
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/imgUserRclRow"
         android:layout_width="125sp"
         android:layout_height="125sp"
@@ -34,7 +36,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:text="Erman Kan Derici"
+        android:text="@string/erman_kan_derici"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgUserRclRow"
@@ -45,7 +47,7 @@
         android:layout_width="94dp"
         android:layout_height="31dp"
         android:layout_marginTop="5dp"
-        android:text="Erkek"
+        android:text="@string/erkek"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/txtUserRclName"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,7 +64,8 @@
         app:layout_constraintEnd_toEndOf="@+id/txtUserRclName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnUnBlockUser"
-        app:layout_constraintTop_toTopOf="@+id/btnUnBlockUser" />
+        app:layout_constraintTop_toTopOf="@+id/btnUnBlockUser"
+        tools:ignore="HardcodedText" />
 
     <ProgressBar
         android:id="@+id/progressBarBlock"
