@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,8 +24,6 @@ import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 
@@ -67,7 +64,6 @@ public class FragmentMyRequests2 extends Fragment {
 
     Long currentTimestamp;
     Long timestampMargin = 86400L;
-    Long timestampPostWithMargin;
 
     boolean hasMember;
     int i = 0;
@@ -119,7 +115,6 @@ public class FragmentMyRequests2 extends Fragment {
 
         getAcceptedRequests();
         getAwaitingRequests();
-        //setVisibilities();
 
 
 

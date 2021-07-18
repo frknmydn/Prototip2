@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,10 +91,12 @@ public class MyOldPostsFragment extends Fragment {
                 posts.addAll(list);
                 Collections.sort(posts);
                 if(posts.size()>0){
+                    Log.d("TAG", "getMyPosts: " + posts.size());
                     layoutProgress.setVisibility(View.INVISIBLE);
                     layoutContent.setVisibility(View.VISIBLE);
                 }
                 else{
+                    Log.d("TAG", "getMyPosts: "+ posts.size());
                     layoutProgress.setVisibility(View.INVISIBLE);
                     layoutinfo.setVisibility(View.VISIBLE);
                 }
