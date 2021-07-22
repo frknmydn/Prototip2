@@ -34,6 +34,57 @@
         <item>Eskişehir</item>
     </string-array>
 
+    <string-array name="car_type">
+        <item>Araba</item>
+        <item>Motor</item>
+    </string-array>
+
+    <string-array name="brand_array_car">
+        <item>BMW</item>
+        <item>MERCEDES</item>
+        <item>HONDA</item>
+        <item>AUDI</item>
+    </string-array>
+
+    <string-array name="BMW_Models">
+        <item>320</item>
+        <item>520</item>
+        <item>730</item>
+    </string-array>
+
+    <string-array name="MERCEDES_Models">
+        <item>a180</item>
+        <item>c180</item>
+        <item>c200</item>
+        <item>e200</item>
+    </string-array>
+
+    <string-array name="HONDA_Models">
+        <item>Civic</item>
+        <item>City</item>
+        <item>HRV</item>
+        <item>CRV</item>
+    </string-array>
+
+    <string-array name="AUDI_Models">
+        <item>a3</item>
+        <item>a4</item>
+        <item>a5</item>
+        <item>a6</item>
+    </string-array>
+
+    <string-array name="model_year">
+        <item>2000</item>
+        <item>2001</item>
+        <item>2002</item>
+        <item>2003</item>
+        <item>2004</item>
+        <item>2005</item>
+        <item>2006</item>
+        <item>2007</item>
+        <item>2008</item>
+    </string-array>
+
     <integer-array name="passanger_count_array">
         <item>5</item>
         <item>4</item>

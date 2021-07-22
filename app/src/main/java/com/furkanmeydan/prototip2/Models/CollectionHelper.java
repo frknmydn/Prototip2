@@ -74,5 +74,11 @@ public class CollectionHelper {
     final public static String BLOCK_BLOCKREASON = "blockReason";
 
 
+    final public static String CAR_COLLECTION = "Cars";
+    final public static String CAR_COLLECTION_carID = "CarID";
+
+
+
+
 
 }

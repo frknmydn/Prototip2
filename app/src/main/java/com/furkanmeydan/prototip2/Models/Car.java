@@ -2,7 +2,10 @@ package com.furkanmeydan.prototip2.Models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.google.firebase.encoders.annotations.Encodable;
 
 @Entity
 public class Car {
@@ -20,11 +23,21 @@ public class Car {
     String type;
     @ColumnInfo(name = "optionalInfo")
     String optionalInfo;
+    private String picURL;
 
+    @Ignore
+    public Car(int carID, int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
+        this.carID = carID;
+        this.year = year;
+        this.brand = brand;
+        this.model = model;
+        this.color = color;
+        this.type = type;
+        this.optionalInfo = optionalInfo;
+        this.picURL = picURL;
+    }
 
-
-
-    public Car(int carID,String brand, String model, String color, String type, String optionalInfo, int year) {
+    public Car(int carID, String brand, String model, String color, String type, String optionalInfo, int year) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -60,5 +73,13 @@ public class Car {
 
     public int getCarID() {
         return carID;
+    }
+
+    public String getPicURL() {
+        return picURL;
+    }
+
+    public void setPicURL(String picURL) {
+        this.picURL = picURL;
     }
 }

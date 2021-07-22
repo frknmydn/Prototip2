@@ -22,6 +22,7 @@ public interface CarDAO {
 
     @Delete
     void deleteCar(Car car);
+
 }
 
 

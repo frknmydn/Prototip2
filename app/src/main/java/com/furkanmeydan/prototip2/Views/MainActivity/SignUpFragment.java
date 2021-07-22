@@ -207,15 +207,12 @@ public class SignUpFragment extends Fragment {
 
 
     private void uploadImage() {
-
-
         final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + "jpg";
         storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
             StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
             imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
                 String imageURL = uri.toString();
                 uploadData(imageURL);
-
             });
         });
     }
