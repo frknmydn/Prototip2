@@ -23,9 +23,10 @@ public class Car {
     String type;
     @ColumnInfo(name = "optionalInfo")
     String optionalInfo;
-    private String picURL;
+    @ColumnInfo
+    String picURL;
 
-    @Ignore
+
     public Car(int carID, int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
         this.carID = carID;
         this.year = year;
@@ -37,6 +38,7 @@ public class Car {
         this.picURL = picURL;
     }
 
+    @Ignore
     public Car(int carID, String brand, String model, String color, String type, String optionalInfo, int year) {
         this.brand = brand;
         this.model = model;
@@ -46,6 +48,10 @@ public class Car {
         this.year = year;
         this.carID = carID;
     }
+
+
+
+
 
     public String getBrand() {
         return brand;
@@ -82,4 +88,6 @@ public class Car {
     public void setPicURL(String picURL) {
         this.picURL = picURL;
     }
+
+
 }

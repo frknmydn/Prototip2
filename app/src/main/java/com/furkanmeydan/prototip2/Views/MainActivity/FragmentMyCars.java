@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.CarCallback;
 import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.Models.Car;
@@ -62,6 +64,8 @@ public class FragmentMyCars extends Fragment {
 
     CarDAL carDAL;
 
+    AppDatabase db;
+
     public FragmentMyCars() {
 
     }
@@ -75,6 +79,8 @@ public class FragmentMyCars extends Fragment {
         storageReference = firebaseStorage.getReference();
         uuid = UUID.randomUUID();
         carDAL = new CarDAL();
+        db = Room.databaseBuilder(mainActivity,
+                AppDatabase.class, "carsDB").build();
     }
 
     @Override
@@ -192,6 +198,7 @@ public class FragmentMyCars extends Fragment {
             @Override
             public void onClick(View v) {
                 uploadImage();
+
             }
         });
 
@@ -217,7 +224,7 @@ public class FragmentMyCars extends Fragment {
         optionalInfoString = edtOptionalInfo.getText().toString();
         int intLastYear = Integer.parseInt(yearString);
 
-        carDAL.uploadCar(1, brandString, modelString, colourString, typeString, optionalInfoString, intLastYear, imageURL, new CarCallback() {
+        carDAL.uploadCar(1, brandString, modelString, colourString, typeString, optionalInfoString, intLastYear, imageURL,mainActivity ,new CarCallback() {
             @Override
             public void uploadCar(Car car) {
                 super.uploadCar(car);
