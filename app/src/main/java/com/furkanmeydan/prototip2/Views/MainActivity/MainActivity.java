@@ -9,10 +9,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +25,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 //import com.furkanmeydan.prototip2.HomeFragmentDirections;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
@@ -39,6 +44,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragment;
     ImageButton btnOpenDrawable;
     TextView txtHeader;
+
+    //Deneme yapıcam
+    AppDatabase db;
 
     private String genderString, nameSurnameString, eMailString,profilePic,birthDate,oneSignalID;
 
@@ -74,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initializing();
         navigationViewSettings();
         changeFragment(new HomeFragment());
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "carsDB").build();
+
+
     }
 
     private void navigationViewSettings() {
@@ -210,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             changeFragment(new FragmentBlockList());
         }
         else if(item.getItemId() == R.id.my_cars){
-            changeFragment(new FragmentMyCars());
+            changeFragment(new FragmentMyAllCars());
         }
         return true;
     }

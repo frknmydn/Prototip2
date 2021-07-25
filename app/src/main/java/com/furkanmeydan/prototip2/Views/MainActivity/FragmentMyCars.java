@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -40,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -55,6 +57,8 @@ public class FragmentMyCars extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     MainActivity mainActivity;
+    int cnt;
+    int intLastYear;
 
     ArrayAdapter<CharSequence> adapterVehicleType, adapterBrand, adapterModel, adapterYear;
 
@@ -81,6 +85,12 @@ public class FragmentMyCars extends Fragment {
         carDAL = new CarDAL();
         db = Room.databaseBuilder(mainActivity,
                 AppDatabase.class, "carsDB").build();
+
+        //çalışıyor, artık kullanıcıların db'de kayıt ettiği arabayı da tutabiliyoruz.
+        AsyncTask.execute(() -> {
+            List<Car> cars = db.carDao().getAllCars();
+            Log.d("TAGGOY", "run: cars" + cars.size());
+        });
     }
 
     @Override
@@ -113,56 +123,53 @@ public class FragmentMyCars extends Fragment {
         actvType.setAdapter(adapterVehicleType);
 
 
-        actvType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                typeString = (String) parent.getItemAtPosition(position);
-                Log.d("Tag","type string: "+ typeString);
+        actvType.setOnItemClickListener((parent, view1, position, id) -> {
+            typeString = (String) parent.getItemAtPosition(position);
+            Log.d("Tag","type string: "+ typeString);
 
-                if(typeString!=null && typeString.equals("Araba")){
-                    Log.d("TAG", "araba olarak seçili: ");
-                    adapterBrand = ArrayAdapter.createFromResource(view.getContext(),R.array.brand_array_car, android.R.layout.simple_spinner_item);
-                    adapterBrand.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    actvBrand.setAdapter(adapterBrand);
+            if(typeString!=null && typeString.equals("Araba")){
+                Log.d("TAG", "araba olarak seçili: ");
+                adapterBrand = ArrayAdapter.createFromResource(view1.getContext(),R.array.brand_array_car, android.R.layout.simple_spinner_item);
+                adapterBrand.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                actvBrand.setAdapter(adapterBrand);
 
-                    actvBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            brandString = (String) parent.getItemAtPosition(position);
-                            Log.d("Tag","brand string asdasd: "+ brandString);
+                actvBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
+                        brandString = (String) parent.getItemAtPosition(position);
+                        Log.d("Tag","brand string asdasd: "+ brandString);
 
 
-                            if(brandString!=null && brandString.equals("BMW")){
-                                adapterModel = ArrayAdapter.createFromResource(view.getContext(),R.array.BMW_Models, android.R.layout.simple_spinner_item);
-                                adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                actvModel.setAdapter(adapterModel);
-                            }
-                            else if(brandString!=null && brandString.equals("MERCEDES")){
-                                adapterModel = ArrayAdapter.createFromResource(view.getContext(),R.array.MERCEDES_Models, android.R.layout.simple_spinner_item);
-                                adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                actvModel.setAdapter(adapterModel);
-                            }
-                            else if(brandString!=null && brandString.equals("HONDA")){
-                                adapterModel = ArrayAdapter.createFromResource(view.getContext(),R.array.HONDA_Models, android.R.layout.simple_spinner_item);
-                                adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                actvModel.setAdapter(adapterModel);
-                            }
-                            else if(brandString!=null && brandString.equals("AUDI")){
-                                adapterModel = ArrayAdapter.createFromResource(view.getContext(),R.array.AUDI_Models, android.R.layout.simple_spinner_item);
-                                adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                actvModel.setAdapter(adapterModel);
-                            }
-                            actvModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    modelString = (String) parent.getItemAtPosition(position);
-                                    Log.d("TAG", "onItemClick: " + modelString);
-                                }
-                            });
-
+                        if(brandString!=null && brandString.equals("BMW")){
+                            adapterModel = ArrayAdapter.createFromResource(view1.getContext(),R.array.BMW_Models, android.R.layout.simple_spinner_item);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            actvModel.setAdapter(adapterModel);
                         }
-                    });
-                }
+                        else if(brandString!=null && brandString.equals("MERCEDES")){
+                            adapterModel = ArrayAdapter.createFromResource(view1.getContext(),R.array.MERCEDES_Models, android.R.layout.simple_spinner_item);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            actvModel.setAdapter(adapterModel);
+                        }
+                        else if(brandString!=null && brandString.equals("HONDA")){
+                            adapterModel = ArrayAdapter.createFromResource(view1.getContext(),R.array.HONDA_Models, android.R.layout.simple_spinner_item);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            actvModel.setAdapter(adapterModel);
+                        }
+                        else if(brandString!=null && brandString.equals("AUDI")){
+                            adapterModel = ArrayAdapter.createFromResource(view1.getContext(),R.array.AUDI_Models, android.R.layout.simple_spinner_item);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            actvModel.setAdapter(adapterModel);
+                        }
+                        actvModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
+                                modelString = (String) parent.getItemAtPosition(position);
+                                Log.d("TAG", "onItemClick: " + modelString);
+                            }
+                        });
+
+                    }
+                });
             }
         });
 
@@ -188,6 +195,7 @@ public class FragmentMyCars extends Fragment {
             } else {
                 Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intentToGallery, 2);
+                cnt =1;
 
             }
 
@@ -208,21 +216,29 @@ public class FragmentMyCars extends Fragment {
 
 
     private void uploadImage() {
-        final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + uuid + "jpg";
-        storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
-            StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
-            imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
-                String imageURL = uri.toString();
-                uploadData(imageURL);
+        if(cnt==1) {
 
+            final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + uuid + "jpg";
+            storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
+                StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
+                imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String imageURL = uri.toString();
+                    uploadData(imageURL);
+
+                });
             });
-        });
+        }
     }
 
     private void uploadData(final String imageURL){
         colourString = edtColour.getText().toString();
         optionalInfoString = edtOptionalInfo.getText().toString();
-        int intLastYear = Integer.parseInt(yearString);
+        if(yearString!=null){
+            intLastYear = Integer.parseInt(yearString);
+        }
+        else
+            Toast.makeText(mainActivity,"Lütfen model yılı seçiniz",Toast.LENGTH_LONG).show();
+
 
         carDAL.uploadCar(1, brandString, modelString, colourString, typeString, optionalInfoString, intLastYear, imageURL,mainActivity ,new CarCallback() {
             @Override
@@ -256,6 +272,7 @@ public class FragmentMyCars extends Fragment {
 
                 }
                 imgViewCarPhoto.setImageBitmap(selectedImage);
+                cnt=1;
 
 
             } catch (IOException e) {

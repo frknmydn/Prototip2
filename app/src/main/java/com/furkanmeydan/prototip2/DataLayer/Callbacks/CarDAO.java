@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import com.furkanmeydan.prototip2.Models.Car;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -18,7 +19,7 @@ public interface CarDAO {
     List<Car> loadAllCarsByIds(int[] carIDs);
 
     @Insert
-    void insertAll(Car... cars);
+    void insertAll(Car... car);
 
     @Delete
     void deleteCar(Car car);

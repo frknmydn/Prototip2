@@ -26,6 +26,9 @@ public class Car {
     @ColumnInfo
     String picURL;
 
+    @Ignore
+    public Car() {
+    }
 
     public Car(int carID, int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
         this.carID = carID;
