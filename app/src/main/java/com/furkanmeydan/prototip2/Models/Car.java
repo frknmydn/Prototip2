@@ -10,7 +10,7 @@ import com.google.firebase.encoders.annotations.Encodable;
 @Entity
 public class Car {
     @PrimaryKey
-    int carID;
+    public int carID;
     @ColumnInfo(name = "year")
     int year;
     @ColumnInfo(name = "brand")
@@ -30,8 +30,7 @@ public class Car {
     public Car() {
     }
 
-    public Car(int carID, int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
-        this.carID = carID;
+    public Car(int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
         this.year = year;
         this.brand = brand;
         this.model = model;
@@ -51,8 +50,6 @@ public class Car {
         this.year = year;
         this.carID = carID;
     }
-
-
 
 
 
