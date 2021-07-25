@@ -9,7 +9,7 @@ import com.google.firebase.encoders.annotations.Encodable;
 
 @Entity
 public class Car {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int carID;
     @ColumnInfo(name = "year")
     int year;
