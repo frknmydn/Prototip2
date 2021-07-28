@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.furkanmeydan.prototip2.Models.Car;
 
-@Database(entities = {Car.class}, version = 2)
+@Database(entities = {Car.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CarDAO carDao();
 }

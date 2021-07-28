@@ -65,7 +65,7 @@ public class CarDAL {
 
         }
         else {
-            Car newCar = new Car(year,brand,model,color,type,optionalInfo, picURL);
+            Car newCar = new Car(year,brand,model,color,type,optionalInfo, picURL, userid);
             firestore.collection(CollectionHelper.USER_COLLECTION).document(userid).collection(CollectionHelper.CAR_COLLECTION).add(newCar);
             carCallback.uploadCar(newCar);
 

@@ -166,7 +166,8 @@
             android:fontFamily="sans-serif-light"
             android:textColor="#414141"
             android:textSize="16sp"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -194,7 +195,7 @@
             android:fontFamily="sans-serif-light"
             android:hint="Eklemek İstediğiniz Bilgi Varsa Bu Alana Ekleyebilirsiniz."
             android:importantForAutofill="no"
-            android:inputType="none"
+            android:inputType="none|textMultiLine|textImeMultiLine"
             android:padding="5dp"
             android:textColor="#414141"
             android:textSize="16sp"

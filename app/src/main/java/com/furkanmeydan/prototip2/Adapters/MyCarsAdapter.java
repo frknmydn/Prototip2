@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
 import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.FragmentSingleCar;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +53,14 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
         holder.txtCarModel.setText(cars.get(position).getModel());
         Glide.with(activity.getApplicationContext()).load(cars.get(position).getPicURL()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imgCar);
+
+
+        holder.itemView.setOnClickListener(v -> {
+            Car car = cars.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("car",car);
+            activity.changeFragmentArgs(new FragmentSingleCar(), bundle);
+        });
 
     }
 

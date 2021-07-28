@@ -143,7 +143,7 @@ public class FragmentMyAllCars extends Fragment {
         Thread t1 = new Thread() {
             @Override
             public void run() {
-                carList.addAll(appDatabase.carDao().getAllCars());
+                carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
             }
         };
         t1.start();

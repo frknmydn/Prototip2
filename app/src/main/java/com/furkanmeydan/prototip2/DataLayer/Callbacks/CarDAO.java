@@ -18,6 +18,9 @@ public interface CarDAO {
     @Query("SELECT * FROM car WHERE carID IN (:carIDs)")
     List<Car> loadAllCarsByIds(int[] carIDs);
 
+    @Query("SELECT * FROM car WHERE carOwnerID IN (:carownerID)")
+    List<Car> loadAllCarsByUserID(String carownerID);
+
     @Insert
     void insertAll(Car... car);
 

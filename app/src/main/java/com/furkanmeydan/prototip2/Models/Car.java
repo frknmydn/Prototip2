@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey;
 
 import com.google.firebase.encoders.annotations.Encodable;
 
+import java.io.Serializable;
+
 @Entity
-public class Car {
+public class Car implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int carID;
     @ColumnInfo(name = "year")
@@ -25,12 +27,14 @@ public class Car {
     String optionalInfo;
     @ColumnInfo
     String picURL;
+    @ColumnInfo
+    public String carOwnerID;
 
     @Ignore
     public Car() {
     }
 
-    public Car(int year, String brand, String model, String color, String type, String optionalInfo, String picURL) {
+    public Car(int year, String brand, String model, String color, String type, String optionalInfo, String picURL, String carOwnerID) {
         this.year = year;
         this.brand = brand;
         this.model = model;
@@ -38,10 +42,11 @@ public class Car {
         this.type = type;
         this.optionalInfo = optionalInfo;
         this.picURL = picURL;
+        this.carOwnerID = carOwnerID;
     }
 
     @Ignore
-    public Car(int carID, String brand, String model, String color, String type, String optionalInfo, int year) {
+    public Car(int carID, String brand, String model, String color, String type, String optionalInfo, int year, String carOwnerID) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -49,6 +54,7 @@ public class Car {
         this.optionalInfo = optionalInfo;
         this.year = year;
         this.carID = carID;
+        this.carOwnerID = carOwnerID;
     }
 
 
