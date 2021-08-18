@@ -87,7 +87,7 @@
             android:background="#DEDFDF"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/engelli_yok"
+            android:text="@string/araç_yok"
             android:textColor="#5C5C5C"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

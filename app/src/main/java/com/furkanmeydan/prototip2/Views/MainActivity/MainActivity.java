@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        changeFragment(new HomeFragment());
+        //changeFragment(new HomeFragment());
     }
 
     public String getOneSignalID() {

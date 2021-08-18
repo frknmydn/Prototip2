@@ -1,9 +1,12 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,15 +37,23 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.CarCallback;
 import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -53,8 +64,6 @@ public class FragmentMyCars extends Fragment {
     Button btnSave;
     ImageView imgViewCarPhoto;
     private Uri imageData;
-    private Bitmap selectedImage;
-    private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     MainActivity mainActivity;
     int cnt;
@@ -70,6 +79,8 @@ public class FragmentMyCars extends Fragment {
 
     AppDatabase db;
 
+    File file;
+
     public FragmentMyCars() {
 
     }
@@ -79,7 +90,7 @@ public class FragmentMyCars extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainActivity = (MainActivity) getActivity();
-        firebaseStorage = FirebaseStorage.getInstance();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         uuid = UUID.randomUUID();
         carDAL = new CarDAL();
@@ -205,7 +216,11 @@ public class FragmentMyCars extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                try {
+                    uploadImage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -215,10 +230,11 @@ public class FragmentMyCars extends Fragment {
     }
 
 
-    private void uploadImage() {
+    private void uploadImage() throws IOException {
         if(cnt==1) {
 
             final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + uuid + "jpg";
+
             storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
                 StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
                 imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -227,6 +243,9 @@ public class FragmentMyCars extends Fragment {
 
                 });
             });
+
+
+
         }
     }
 
@@ -260,15 +279,26 @@ public class FragmentMyCars extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
             imageData = data.getData();
+
             try {
 
+                Bitmap selectedImage;
                 if (Build.VERSION.SDK_INT >= 28) {
 
                     ImageDecoder.Source source = ImageDecoder.createSource(mainActivity.getContentResolver(), imageData);
                     selectedImage = ImageDecoder.decodeBitmap(source);
+                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
+
+                    imageData = getImageUri(mainActivity,selectedImage);
+
+
+
                 } else {
 
                     selectedImage = MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver(), imageData);
+                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
+
+                    imageData = getImageUri(mainActivity,selectedImage);
 
                 }
                 imgViewCarPhoto.setImageBitmap(selectedImage);
@@ -278,9 +308,17 @@ public class FragmentMyCars extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
 
     }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+
+
 }

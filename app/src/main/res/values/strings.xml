@@ -151,4 +151,5 @@
     <string name="onayli_istek_yok">Herhangi bir ilanda onaylı isteğiniz bulunmamaktadır.</string>
     <string name="cinsiyet">Cinsiyet</string>
     <string name="tarih">Tarih</string>
+    <string name='araç_yok'>Eklediğiniz bir araç bulunmamaktadır</string>
 </resources>

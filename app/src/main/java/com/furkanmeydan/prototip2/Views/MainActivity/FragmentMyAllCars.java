@@ -143,14 +143,19 @@ public class FragmentMyAllCars extends Fragment {
         Thread t1 = new Thread() {
             @Override
             public void run() {
-                carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
+                if(carList.size()<=0){
+                    carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
+                }
             }
         };
         t1.start();
         t1.join();
+        layoutProgress.setVisibility(View.GONE);
         if(carList.size()>0){
-            layoutProgress.setVisibility(View.GONE);
             layoutContent.setVisibility(View.VISIBLE);
+        }
+        else{
+            layoutInfo.setVisibility(View.VISIBLE);
         }
     }
 
@@ -167,12 +172,21 @@ public class FragmentMyAllCars extends Fragment {
                     carList.addAll(cars);
                     adapter.notifyDataSetChanged();
                     Log.d("TAGGO", "onViewCreated: carlist size 2 -- " + carList.size());
+
+                    for(Car car : cars){
+                        AsyncTask.execute(() -> appDatabase.carDao().insertAll(car));
+                    }
+
                     layoutProgress.setVisibility(View.GONE);
                     layoutContent.setVisibility(View.VISIBLE);
-                    //layoutInfo.setVisibility(View.VISIBLE);
+                    layoutInfo.setVisibility(View.GONE);
                 }
 
             });
+        }
+        else{
+            layoutProgress.setVisibility(View.GONE);
+            layoutInfo.setVisibility(View.VISIBLE);
         }
 
     }
