@@ -3,14 +3,21 @@ package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +26,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.furkanmeydan.prototip2.Adapters.MyCarsAdapter;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
+import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDetailDataPasser;
+import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,28 +46,25 @@ import com.google.firebase.Timestamp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class UploadPostDetailFragment extends Fragment {
 
-    EditText edtcarDetail,edtDestination,edtDescription,edtTime,edtDate;
+    EditText edtDestination,edtDescription,edtTime,edtDate;
 
-    //Spinner spinnerCity,spinnerPassengerCount;
-    // ****************UPDATE*********************
-
-    //Spinner spinnerPassengerCount;
-    // New Component for Spinner
     AutoCompleteTextView spinnerCity, spinnerPassengerCount;
-    // ****************/UPDATE********************
+
 
     TextInputLayout timeLayout;
     ArrayAdapter<CharSequence> spinnerAdapterCity;
     ArrayAdapter<Integer> spinnerAdapterPassanger;
     UploadPostActivity postActivity;
-    String cardet;
+
 
     TabLayout tabLayout;
+
 
 
     DatePickerDialog datePickerDialog;
@@ -107,7 +118,6 @@ public class UploadPostDetailFragment extends Fragment {
         calendar = Calendar.getInstance();
 
 
-
     }
 
     @Override
@@ -123,19 +133,55 @@ public class UploadPostDetailFragment extends Fragment {
 
         localDataManager = new LocalDataManager();
 
+        postActivity.layoutCar = view.findViewById(R.id.layoutCar);
 
-
-        //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(true);
-        //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(false);
-
-
-
-        edtcarDetail = view.findViewById(R.id.UPDEDTCarDetail);
         edtDestination = view.findViewById(R.id.UPDEDTDestination1);
         edtDescription = view.findViewById(R.id.UPDEDTDescription);
         timeLayout = view.findViewById(R.id.UPDTimeLayout);
         edtTime = view.findViewById(R.id.UPDTime);
         edtDate = view.findViewById(R.id.UPDDate);
+        postActivity.layoutCar = view.findViewById(R.id.layoutCar);
+        postActivity.txtCarInfo = view.findViewById(R.id.txtCarInfo);
+
+        postActivity.layoutCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //Popup içi adapter için
+                ArrayList<Car> carList = new ArrayList<>();
+                CarDAL carDAL = new CarDAL();
+                AppDatabase appDatabase = Room.databaseBuilder(postActivity,
+                        AppDatabase.class, "carsDB").build();
+                String userid = postActivity.firebaseAuth.getUid();
+                RecyclerView rclMyCars = postActivity.popupView.findViewById(R.id.rclSelectCar);
+                rclMyCars.setLayoutManager(new LinearLayoutManager(getContext()));
+                MyCarsAdapter adapter = new MyCarsAdapter(carList,postActivity);
+
+                rclMyCars.setAdapter(adapter);
+
+
+                Thread t1 = new Thread() {
+                    @Override
+                    public void run() {
+                        if(carList.size()<=0){
+                            carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                };
+                t1.start();
+                try {
+                    t1.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                postActivity.carPopup.showAtLocation(v,Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                Log.d("TAG", "CarListSize: "+ String.valueOf(carList.size()));
+
+            }
+        });
 
         edtDate.setHint("Tarih Seçiniz");
         edtTime.setHint("Saat Seçiniz");
@@ -143,29 +189,6 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
-
-        /*
-        //spinner city
-        spinnerCity =view.findViewById(R.id.UPDSpinnerCity);
-        spinnerAdapterCity = ArrayAdapter.createFromResource(view.getContext(), R.array.city_array, android.R.layout.simple_spinner_item);
-        spinnerAdapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCity.setAdapter(spinnerAdapterCity);
-
-        Log.d("Tag", "onviewCreated" + localDataManager.getSharedPreference(postActivity,"time","YOK"));
-        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cityString = adapterView.getItemAtPosition(i).toString();
-                Log.d("Tag","cityString: "+ cityString);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        */
 
         //***********UPDATE*****************
 
@@ -200,29 +223,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
-        /*
-        //spinner passenger count. bu classın içinde adapterı yazılı
-        spinnerPassengerCount = view.findViewById(R.id.atxtPassengerCount);
-        //spinnerAdapterPassanger = ArrayAdapter.createFromResource(view.getContext(), list, android.R.layout.simple_spinner_item);
-        spinnerAdapterPassanger = new ArrayAdapter<Integer>(postActivity.getApplicationContext(),android.R.layout.simple_spinner_item,items);
-        spinnerAdapterPassanger.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPassengerCount.setAdapter(spinnerAdapterPassanger);
 
-
-        spinnerPassengerCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                passengerCountString = (Integer) adapterView.getItemAtPosition(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-         */
         //Doğum tarihi seçtirmek
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -321,66 +322,9 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
-
-        /*
-        postActivity.findViewById(R.id.btnUploadPostMap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                saveDetails();
-                postActivity.changeFragment(new UploadMapFragment2());
-            }
-        });
-
-        postActivity.findViewById(R.id.btnUploadPost).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveDetails();
-                postActivity.AUPUploadPost(view);
-
-
-            }
-        });
-
-         */
-
-
-        /*
-        tabLayout = postActivity.findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    case 0:
-                        break;
-                    case 1:
-                        saveDetails();
-                        postActivity.changeFragment(new UploadMapFragment2());
-                }
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
-         */
-
     }
 
     public void saveDetails(){
-
-
-        cardet = edtcarDetail.getText().toString();
-        Log.d("Tag","cardet" +cardet);
 
        if(timeStamp !=null){
            localDataManager.setSharedPreferenceForLong(postActivity,"timestamp",timeStamp.getSeconds());
@@ -400,10 +344,7 @@ public class UploadPostDetailFragment extends Fragment {
         if(!edtDescription.getText().toString().equals("")){
             localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
         }
-       if(!cardet.equals("")){
-           localDataManager.setSharedPreference(postActivity,"cardetail",cardet);
 
-       }
 
        if(!edtDestination.getText().toString().equals("")){
            localDataManager.setSharedPreference(postActivity,"destination",edtDestination.getText().toString());
@@ -416,10 +357,6 @@ public class UploadPostDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
-        Log.d("Tag", "onResume"+localDataManager.getSharedPreference(postActivity,"cardetail","YOK"));
-
-
         // eğer data var ise edittextler içinde görünmesi için
 
         String time = (localDataManager.getSharedPreference(postActivity,"time",null));
@@ -430,7 +367,6 @@ public class UploadPostDetailFragment extends Fragment {
 
         passengerCountString = (int)localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",Integer.parseInt("-1"));
         Log.d("TAG", "onResume: " + passengerCountString);
-        String carDetail = localDataManager.getSharedPreference(postActivity,"cardetail",null);
         String description = localDataManager.getSharedPreference(postActivity,"description",null);
         String destination = localDataManager.getSharedPreference(postActivity,"destination",null);
 
@@ -439,37 +375,23 @@ public class UploadPostDetailFragment extends Fragment {
             if(time!=null){
 
 
-//                edtTime.setVisibility(View.VISIBLE);
-//                edtTime.setText(time);
-//                String combinedDate = date + " " + time;
-//
-//                try {
-//                    dateTimeStamp = dateCombinedFormat.parse(combinedDate);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                calendar.setTime(dateTimeStamp);
-//
                 String dateTime = date + " " + time;
                 edtTime.setVisibility(View.INVISIBLE);
                 timeLayout.setVisibility(View.INVISIBLE);
                 edtDate.setText(dateTime);
                 Log.d("TAG", "onResume: xd "+ date + time);
             }
-           // edtDate.setText(date);
+
 
         }
 
         edtDestination.setText(destination);
-        edtcarDetail.setText(carDetail);
         edtDescription.setText(description);
         if(cityString!=null && passengerCountString!=null){
             spinnerCity.setText(cityString,false);
             spinnerAdapterCity.getFilter().filter(null);
-            //spinnerCity.setSelection(spinnerAdapterCity.getPosition(cityString));
             spinnerPassengerCount.setText(String.valueOf(passengerCountString),false);
             spinnerAdapterPassanger.getFilter().filter(null);
-            //spinnerPassengerCount.setSelection(spinnerAdapterPassanger.getPosition(passengerCountString));
         }
 
 

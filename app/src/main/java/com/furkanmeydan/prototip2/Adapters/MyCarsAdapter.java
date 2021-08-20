@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.FragmentSingleCar;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
+import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 
 public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder> {
     private ArrayList<Car> cars;
-    MainActivity activity;
+    MainActivity activity = null;
+    UploadPostActivity postActivity = null;
 
     public MyCarsAdapter() {
     }
@@ -35,6 +38,11 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
         this.cars = cars;
         this.activity = activity;
 
+    }
+
+    public MyCarsAdapter(ArrayList<Car> carList, UploadPostActivity postActivity) {
+        this.cars = carList;
+        this.postActivity = postActivity;
     }
 
     @NonNull
@@ -49,8 +57,7 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull PostHolder holder, int position) {
-        holder.txtCarBrand.setText(cars.get(position).getBrand());
-        holder.txtCarModel.setText(cars.get(position).getModel());
+        if(activity != null) {
         Glide.with(activity.getApplicationContext()).load(cars.get(position).getPicURL()).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imgCar);
 
@@ -58,9 +65,22 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
         holder.itemView.setOnClickListener(v -> {
             Car car = cars.get(position);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("car",car);
+            bundle.putSerializable("car", car);
             activity.changeFragmentArgs(new FragmentSingleCar(), bundle);
         });
+    }
+        else{
+            Glide.with(postActivity.getApplicationContext()).load(cars.get(position).getPicURL()).apply(RequestOptions.skipMemoryCacheOf(true))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(holder.imgCar);
+            holder.itemView.setOnClickListener(v -> {
+                postActivity.car = cars.get(position);
+                postActivity.carPopup.dismiss();
+                postActivity.layoutCar.setBackgroundColor(Color.GREEN);
+                postActivity.txtCarInfo.setText(cars.get(position).getBrand() + " " + cars.get(position).getModel());
+            });
+        }
+        holder.txtCarBrand.setText(cars.get(position).getBrand());
+        holder.txtCarModel.setText(cars.get(position).getModel());
 
     }
 

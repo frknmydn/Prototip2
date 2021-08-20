@@ -1,20 +1,29 @@
 package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
@@ -40,11 +49,17 @@ public class UploadPostActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String userId;
     TabLayout tabLayout;
+    public Car car;
+    public PopupWindow carPopup;
+    public View popupView;
+    public ConstraintLayout layoutCar;
+    public TextView txtCarInfo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        car = null;
 
         uploadMapFragment2 = new UploadMapFragment2();
         uploadPostDetailFragment = new UploadPostDetailFragment();
@@ -55,6 +70,12 @@ public class UploadPostActivity extends AppCompatActivity {
         postDAL = new PostDAL();
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        carPopup = new PopupWindow(inflater.inflate(R.layout.popup_select_car,null,false), ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        carPopup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupView = carPopup.getContentView();
+
+
         tabLayout = findViewById(R.id.tabLayout);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -13,6 +13,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_upload_post_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -28,8 +29,8 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/gray_circle_drawable"
             android:hint="Yolculuğunuzu isimlendirin"
-            app:boxStrokeColor="#3D08CF"
             android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,12 +41,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:inputType="textMultiLine|textPersonName"
-
                 android:fontFamily="sans-serif-light"
+
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textPersonName"
                 android:textColor="#414141"
-                android:textSize="16sp"
-                android:importantForAutofill="no" />
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -86,10 +87,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            app:boxStrokeColor="#3D08CF"
             android:layout_centerVertical="true"
             android:background="@drawable/gray_circle_drawable"
             android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
             app:layout_constraintEnd_toEndOf="@+id/UPDEDTDestinationLayout"
             app:layout_constraintStart_toEndOf="@+id/UPDSpinnerCityLayout"
             app:layout_constraintTop_toTopOf="@+id/UPDSpinnerCityLayout">
@@ -99,10 +100,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:hint="Yolcu Sayısı"
-                android:padding="5dp"
-                android:inputType="none"
                 android:fontFamily="sans-serif-light"
+                android:hint="Yolcu Sayısı"
+                android:inputType="none"
+                android:padding="5dp"
                 android:textColor="#414141"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
@@ -118,8 +119,8 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/gray_circle_drawable"
-            app:boxStrokeColor="#3D08CF"
             android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
             app:layout_constraintEnd_toStartOf="@+id/UPDTimeLayout"
             app:layout_constraintStart_toStartOf="@+id/UPDSpinnerCityLayout"
             app:layout_constraintTop_toBottomOf="@+id/UPDSpinnerCityLayout">
@@ -129,13 +130,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:focusable="false"
                 android:fontFamily="sans-serif-light"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:textColor="#414141"
-                android:focusable="false"
                 android:textSize="16sp"
-                tools:ignore="TextFields"
-                android:importantForAutofill="no" />
+                tools:ignore="TextFields" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -160,11 +161,11 @@
                 android:ems="10"
                 android:focusable="false"
                 android:fontFamily="sans-serif-light"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:textColor="#414141"
                 android:textSize="16sp"
                 android:visibility="invisible"
-                android:importantForAutofill="no"
                 tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,15 +173,15 @@
             android:id="@+id/UPDEDTDescriptionLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="292dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
-            app:boxStrokeColor="#3D08CF"
             android:background="@drawable/gray_circle_drawable"
             android:hint="Yolculuk hakkında detaylı bilgi"
             android:textColorHint="#414141"
-            app:layout_constraintBottom_toTopOf="@+id/UPDEDTCarDetailLayout"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintBottom_toTopOf="@+id/layoutCar"
             app:layout_constraintEnd_toEndOf="@+id/UPDTimeLayout"
             app:layout_constraintStart_toStartOf="@+id/UPDDateLayout"
             app:layout_constraintTop_toBottomOf="@+id/UPDDateLayout"
@@ -193,48 +194,34 @@
                 android:ems="10"
                 android:fontFamily="sans-serif-light"
                 android:gravity="top"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine|textPersonName"
                 android:textColor="#414141"
                 android:textSize="16sp"
-                android:importantForAutofill="no"
                 tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/UPDEDTCarDetailLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/gray_circle_drawable"
-            android:hint="Araç hakkında detaylı bilgi"
-            app:boxStrokeColor="#3D08CF"
-            android:textColorHint="#414141"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCar"
+            android:layout_width="380dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/UPDEDTDescriptionLayout"
             app:layout_constraintStart_toStartOf="@+id/UPDEDTDescriptionLayout"
-            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout"
-            tools:ignore="HardcodedText">
+            app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout">
 
-            <EditText
-                android:id="@+id/UPDEDTCarDetail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:fontFamily="sans-serif-light"
-                android:gravity="top"
-                android:padding="10dp"
-                android:inputType="textMultiLine|textPersonName"
-                android:textColor="#414141"
-                android:textColorLink="#00000000"
-                android:textSize="16sp"
-                android:importantForAutofill="no"
-                tools:ignore="LabelFor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/txtCarInfo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
