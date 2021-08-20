@@ -29,12 +29,14 @@ public class Car implements Serializable {
     String picURL;
     @ColumnInfo
     public String carOwnerID;
+    @ColumnInfo
+    public String carDocID;
 
     @Ignore
     public Car() {
     }
 
-    public Car(int year, String brand, String model, String color, String type, String optionalInfo, String picURL, String carOwnerID) {
+    public Car(String carDocID, int year, String brand, String model, String color, String type, String optionalInfo, String picURL, String carOwnerID) {
         this.year = year;
         this.brand = brand;
         this.model = model;
@@ -43,10 +45,11 @@ public class Car implements Serializable {
         this.optionalInfo = optionalInfo;
         this.picURL = picURL;
         this.carOwnerID = carOwnerID;
+        this.carDocID = carDocID;
     }
 
     @Ignore
-    public Car(int carID, String brand, String model, String color, String type, String optionalInfo, int year, String carOwnerID) {
+    public Car(int carID,String carDocID, String brand, String model, String color, String type, String optionalInfo,String picURL, int year, String carOwnerID) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -55,6 +58,8 @@ public class Car implements Serializable {
         this.year = year;
         this.carID = carID;
         this.carOwnerID = carOwnerID;
+        this.carDocID = carDocID;
+        this.picURL = picURL;
     }
 
 
@@ -95,5 +100,11 @@ public class Car implements Serializable {
         this.picURL = picURL;
     }
 
+    public String getCarOwnerID() {
+        return carOwnerID;
+    }
 
+    public String getCarDocID() {
+        return carDocID;
+    }
 }

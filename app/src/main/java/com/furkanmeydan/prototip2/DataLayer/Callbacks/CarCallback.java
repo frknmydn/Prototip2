@@ -19,4 +19,8 @@ public abstract class CarCallback {
     public void getMyCars(List<Car> cars){
 
     }
+
+    public void deleteCar(){
+
+    }
 }

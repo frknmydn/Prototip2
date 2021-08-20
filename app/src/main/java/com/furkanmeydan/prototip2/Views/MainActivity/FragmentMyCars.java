@@ -259,7 +259,8 @@ public class FragmentMyCars extends Fragment {
             Toast.makeText(mainActivity,"Lütfen model yılı seçiniz",Toast.LENGTH_LONG).show();
 
 
-        carDAL.uploadCar(1, brandString, modelString, colourString, typeString, optionalInfoString, intLastYear, imageURL,mainActivity ,new CarCallback() {
+        carDAL.uploadCar(brandString, modelString, colourString, typeString
+                , optionalInfoString, intLastYear, imageURL,mainActivity ,new CarCallback() {
             @Override
             public void uploadCar(Car car) {
                 super.uploadCar(car);
@@ -279,15 +280,18 @@ public class FragmentMyCars extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
             imageData = data.getData();
+            Double originalWidth, originalHeight, ratio;
 
             try {
 
                 Bitmap selectedImage;
+
                 if (Build.VERSION.SDK_INT >= 28) {
 
                     ImageDecoder.Source source = ImageDecoder.createSource(mainActivity.getContentResolver(), imageData);
                     selectedImage = ImageDecoder.decodeBitmap(source);
-                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
+
+                    selectedImage = resize(selectedImage,1024,720);
 
                     imageData = getImageUri(mainActivity,selectedImage);
 
@@ -296,8 +300,8 @@ public class FragmentMyCars extends Fragment {
                 } else {
 
                     selectedImage = MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver(), imageData);
-                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
 
+                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
                     imageData = getImageUri(mainActivity,selectedImage);
 
                 }
@@ -320,5 +324,25 @@ public class FragmentMyCars extends Fragment {
     }
 
 
+    private  Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
 
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > ratioBitmap) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            }
+            else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
 }

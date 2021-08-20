@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.CarCallback;
+import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
@@ -31,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 public class FragmentSingleCar extends Fragment {
 
     Car car;
+    CarDAL carDAL;
     TextView carType, carBrand, carModel, carYear, carColour, optionalInfo;
     ImageView carImage;
     Button btnDeleteCar;
@@ -54,6 +57,7 @@ public class FragmentSingleCar extends Fragment {
             appDatabase = Room.databaseBuilder(activity,
                     AppDatabase.class, "carsDB").build();
         }
+        carDAL = new CarDAL();
     }
 
     @Override
@@ -109,6 +113,14 @@ public class FragmentSingleCar extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                carDAL.deleteCar(car.carDocID, new CarCallback() {
+                    @Override
+                    public void deleteCar() {
+                        super.deleteCar();
+                        activity.onBackPressed();
+                    }
+                });
 
             }
         });

@@ -66,6 +66,7 @@ public class FragmentMyAllCars extends Fragment {
         super.onStart();
         Log.d("TAG", "onStart: 1");
         try {
+            carList.clear();
             getCarsWithRoom();
         } catch (InterruptedException e) {
             e.printStackTrace();
