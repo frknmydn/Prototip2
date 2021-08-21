@@ -296,6 +296,10 @@ public class FragmentMyRequests2 extends Fragment {
                     getPosts(acceptedRequestList,0);
                     getPosts(requestListHistory,1);
                     getPosts(oncomingRequestList,3);
+                    if(oncomingRequestList.size()==0){
+                        layoutOnComingProgress.setVisibility(View.GONE);
+                        layoutOnComingInfo.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -390,19 +394,22 @@ public class FragmentMyRequests2 extends Fragment {
                         }else if(flag == 3){
                             hasMember = true;
                             oncomingPostList.add(post);
+
                             Log.d("Tag","oncomingPostList size :" + oncomingPostList.size());
                             adapterOncoming.notifyDataSetChanged();
 
                             if(hasMember){
+                            layoutOnComingProgress.setVisibility(View.GONE);
                             layoutOncomingContent.setVisibility(View.VISIBLE);
                             layoutOnComingInfo.setVisibility(View.GONE);
                             }else{
+                                layoutOnComingProgress.setVisibility(View.GONE);
                                 layoutOncomingContent.setVisibility(View.GONE);
                                 layoutOnComingInfo.setVisibility(View.VISIBLE);
                             }
-                            layoutOnComingProgress.setVisibility(View.GONE);
 
                         }
+
 
                         if(i == requestListSize-1 || i == requestListSize){
                             if(acceptedPostList.size() == 0){

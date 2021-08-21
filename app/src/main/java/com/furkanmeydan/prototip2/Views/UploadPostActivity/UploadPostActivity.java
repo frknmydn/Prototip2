@@ -136,7 +136,7 @@ public class UploadPostActivity extends AppCompatActivity {
 
 
     public void AUPUploadPost(View view){
-        postDAL.uploadPost(userId, getApplicationContext(), new PostCallback() {
+        postDAL.uploadPost(userId, getApplicationContext(),car, new PostCallback() {
             @Override
             public void onPostAdded(Post post) {
                 super.onPostAdded(post);

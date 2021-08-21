@@ -393,7 +393,11 @@ public class UploadPostDetailFragment extends Fragment {
             spinnerPassengerCount.setText(String.valueOf(passengerCountString),false);
             spinnerAdapterPassanger.getFilter().filter(null);
         }
+        if(postActivity.car != null){
+            postActivity.txtCarInfo.setText(postActivity.car.getBrand() + " " + postActivity.car.getModel());
+            postActivity.layoutCar.setBackgroundColor(Color.GREEN);
 
+        }
 
 
     }

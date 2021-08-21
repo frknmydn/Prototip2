@@ -7,15 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +36,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
@@ -56,7 +64,9 @@ import java.util.concurrent.TimeUnit;
 
 
 public class FragmentPostSearchResultDetail extends Fragment {
-    private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, postCarDetail;
+    private TextView postHeader, postCity, postPassangerCount, postTime, postDescription, carBrand,
+    carModel, carYear, carColor, carOptionalInfo;
+    private ImageView carPic;
     private PostSearchResultDetailActivity activity;
     Button btnSendRequest,btnAddToWish, btnStartService, btnEndService, btnLocationTracking;
     LocalDataManager localDataManager;
@@ -72,6 +82,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
     ArrayList<Request> requestList;
     boolean isPostOutdated;
     BroadcastReceiver localBroadcastReceiver;
+
+    PopupWindow carPopup;
+    View popupView;
 
     public FragmentPostSearchResultDetail() {
         // Required empty public constructor
@@ -132,22 +145,40 @@ public class FragmentPostSearchResultDetail extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        carBrand = view.findViewById(R.id.txtCarBrand3);
+        carModel = view.findViewById(R.id.txtCarModel);
+        carYear = view.findViewById(R.id.txtCarYear);
+        carColor = view.findViewById(R.id.txtCarColor);
+        carOptionalInfo = view.findViewById(R.id.txtCarOptionalInfo);
+        carPic = view.findViewById(R.id.imageViewCarPic);
+
         postHeader = view.findViewById(R.id.txtSearchResultDetailHeader);
         postCity = view.findViewById(R.id.txtSearchResultDetailCity);
         postPassangerCount = view.findViewById(R.id.txtSearchResultDetailPasangerCount);
         postTime = view.findViewById(R.id.txtSearchResultDetailDateTime);
         postDescription = view.findViewById(R.id.txtSearchResultDetailDescription);
-        postCarDetail = view.findViewById(R.id.txtSearchResultDetailCarDet);
         btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
         btnAddToWish = view.findViewById(R.id.btnSearchResultDetailAddToWish);
         btnStartService = view.findViewById(R.id.btnSearchResultDetailStartService);
         btnEndService = view.findViewById(R.id.btnSearchResultDetailEndService);
         btnLocationTracking = view.findViewById(R.id.btnSearchResultDetailTrackLocation);
         // Scroll Element
-        postCarDetail.setMovementMethod(new ScrollingMovementMethod());
         postDescription.setMovementMethod(new ScrollingMovementMethod());
 
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        carPopup = new PopupWindow(inflater.inflate(R.layout.popup_car_image, null, false), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        carPopup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupView = carPopup.getContentView();
+
+
+        carPic.setOnClickListener(v -> {
+            carPopup.showAtLocation(v, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ImageView carImageZoom = popupView.findViewById(R.id.popup_car_image);
+            Glide.with(activity.getApplicationContext()).load(activity.post.getCar().getPicURL()).apply(RequestOptions.skipMemoryCacheOf(true))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(carImageZoom);
+
+        });
 
 
 
@@ -276,8 +307,15 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postCity.setText(activity.post.getCity());
         postPassangerCount.setText(String.valueOf(activity.post.getPassengerCount()));
         postDescription.setText(activity.post.getDescription());
-        postCarDetail.setText(activity.post.getCarDetail());
 
+        carBrand.setText(activity.post.getCar().getBrand());
+        carModel.setText(activity.post.getCar().getModel());
+        carYear.setText(String.valueOf(activity.post.getCar().getYear()));
+        carOptionalInfo.setText(activity.post.getCar().getOptionalInfo());
+        carColor.setText(activity.post.getCar().getColor());
+
+        Glide.with(activity.getApplicationContext()).load(activity.post.getCar().getPicURL()).apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(carPic);
         Log.d("RequestDalPostOwnerId",post.getOwnerID());
         Log.d("RequestDalPostID",post.getPostID());
 

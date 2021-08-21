@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
+import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Post;
 
@@ -35,7 +36,7 @@ public class PostDAL {
     LocalDataManager localDataManagerUser = new LocalDataManager();
 
 
-    public void uploadPost(String ownerId, Context context, PostCallback postCallback) {
+    public void uploadPost(String ownerId, Context context, Car car, PostCallback postCallback) {
 
         Timestamp nowTimestamp = Timestamp.now();
 
@@ -44,7 +45,6 @@ public class PostDAL {
         String marker2City = localDataManager.getSharedPreference(context, "marker2city", null);
         long timestamp = localDataManager.getSharedPreferenceForLong(context, "timestamp", 0L);
         int passengerCount = localDataManager.getSharedPreferenceForInt(context, "passengercount", -1);
-        String carDetail = localDataManager.getSharedPreference(context, "cardetail", null);
         String description = localDataManager.getSharedPreference(context, "description", null);
         String destination = localDataManager.getSharedPreference(context, "destination", null);
 
@@ -95,26 +95,14 @@ public class PostDAL {
                     errors += "HATA";
                 }
             }
-            if (carDetail == null || carDetail.equals("")) {
-                Toast.makeText(context, "Lütfen Araç Hakkında Bilgi Verin", Toast.LENGTH_LONG).show();
-                errors += "HATA";
-            }
 
-            if (carDetail != null && !carDetail.equals("")) {
-                if (carDetail.length() < 15) {
-                    Toast.makeText(context, "Lütfen Araç Hakkında Detaylı Bilgi Verin", Toast.LENGTH_LONG).show();
-                    errors += "HATA";
-                }
-
-                if (pattern1.matcher(carDetail).find()) {
-                    Toast.makeText(context, "Lütfen Araç Detayı İçin Geçerli Karakterler Kullanın", Toast.LENGTH_LONG).show();
-                    errors += "HATA";
-                }
-
-            }
 
             if (description == null || description.equals("")) {
                 Toast.makeText(context, "Lütfen Yolculuk Hakkında Bilgi Verin", Toast.LENGTH_LONG).show();
+                errors += "HATA";
+            }
+            if(car == null){
+                Toast.makeText(context, "Lütfen araç seçiniz", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
 
@@ -163,8 +151,12 @@ public class PostDAL {
 
                 ArrayList<String> wishArray = new ArrayList<>();
 
-                Post post = new Post(postID,ownerId,citySharedPrefSpinner, passengerCount, destination, description, timestamp, carDetail, toLat, toLng, fromLat, fromLng, 1,0, userGender, direction,wishArray,postOwnerOneSignalID);
-                firestore.collection(CollectionHelper.USER_COLLECTION).document(userId).collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
+                Post post = new Post(postID,ownerId,citySharedPrefSpinner,
+                        passengerCount, destination, description,
+                        timestamp, toLat, toLng, fromLat, fromLng,
+                        1,0, userGender, direction,wishArray,postOwnerOneSignalID, car);
+                firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
+                        .collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded(post);
             }
 

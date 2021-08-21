@@ -13,6 +13,8 @@ public class Post implements Serializable, Comparable<Post>{
                     userGender,
                     ownerID,
                     ownerOneSignalID;
+    private Car car;
+
     private Double toLat,
             toLng,
             fromLat,
@@ -29,11 +31,36 @@ public class Post implements Serializable, Comparable<Post>{
 
     }
 
+    public Post(String postID, String ownerID, String city, int passengerCount,
+                String destination, String description, long timestamp,
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, int hasStarted,
+                String userGender, int direction, ArrayList<String> wishArray, String ownerOneSignalID,Car car) {
+        this.postID = postID;
+        this.city = city;
+        this.destination = destination;
+        this.description = description;
+        this.carDetail = carDetail;
+        this.userGender = userGender;
+        this.ownerID = ownerID;
+        this.ownerOneSignalID = ownerOneSignalID;
+        this.car = car;
+        this.toLat = toLat;
+        this.toLng = toLng;
+        this.fromLat = fromLat;
+        this.fromLng = fromLng;
+        this.direction = direction;
+        this.timestamp = timestamp;
+        this.status = status;
+        this.passengerCount = passengerCount;
+        this.wishArray = wishArray;
+        this.hasStarted = hasStarted;
+    }
 
-
-    public Post(String postID, String ownerID,String city, int passengerCount,
+    /*
+    public Post(String postID, String ownerID, String city, int passengerCount,
                 String destination, String description, long timestamp, String carDetail,
-                Double toLat, Double toLng, Double fromLat, Double fromLng, int status,int hasStarted, String userGender, int direction, ArrayList<String> wishArray,String ownerOneSignalID) {
+                Double toLat, Double toLng, Double fromLat, Double fromLng, int status, int hasStarted,
+                String userGender, int direction, ArrayList<String> wishArray, String ownerOneSignalID) {
         this.city = city;
         this.passengerCount = passengerCount;
         this.destination = destination;
@@ -55,6 +82,8 @@ public class Post implements Serializable, Comparable<Post>{
 
 
     }
+
+     */
 
 
     public String getCity() {
@@ -129,11 +158,20 @@ public class Post implements Serializable, Comparable<Post>{
         return wishArray;
     }
 
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     @Override
     public int compareTo(Post o) {
         return Long.compare(o.getTimestamp(),this.getTimestamp());
     }
 }
+
+
 
 
