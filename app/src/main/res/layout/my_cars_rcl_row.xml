@@ -3,29 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/deneme_button">
 
     <TextView
         android:id="@+id/txtMyCarRowModel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="@color/design_default_color_on_secondary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgMyCarRow"
         app:layout_constraintEnd_toEndOf="@+id/txtmyCarRowBrand"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtmyCarRowBrand"
         app:layout_constraintTop_toBottomOf="@+id/txtmyCarRowBrand"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/txtmyCarRowBrand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="TextView"
+        android:textColor="@color/design_default_color_on_secondary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toEndOf="@+id/imgMyCarRow"
         app:layout_constraintTop_toTopOf="@+id/imgMyCarRow" />
 

@@ -238,12 +238,6 @@ public class FragmentPostSearchResultDetail extends Fragment {
                                 });
                     }
                 });
-
-
-
-
-
-
             }
         });
         btnAddToWish.setOnClickListener(view12 -> addtoWish());

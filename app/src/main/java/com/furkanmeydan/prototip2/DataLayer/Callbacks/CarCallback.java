@@ -23,4 +23,7 @@ public abstract class CarCallback {
     public void deleteCar(){
 
     }
+    public void nullCar(){
+
+    }
 }

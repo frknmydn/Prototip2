@@ -32,13 +32,17 @@ public class CarDAL {
 
 
     public void getMyCars(String useridd,CarCallback carCallback){
+
         firestore.collection(CollectionHelper.USER_COLLECTION).
                 document(useridd).collection(CollectionHelper.CAR_COLLECTION).get().addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult() !=null){
-                        if(task.getResult().toObjects(Request.class).size() > 0){
+                        if(task.getResult().toObjects(Car.class).size() > 0){
                             List<Car> list = task.getResult().toObjects(Car.class);
                             Log.d("TAGGO", "getMyCars: " + list.size());
                             carCallback.getMyCars(list);
+                        }
+                        else{
+                            carCallback.nullCar();
                         }
                     }
                 });
