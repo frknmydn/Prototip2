@@ -166,6 +166,78 @@ public class Post implements Serializable, Comparable<Post>{
         this.car = car;
     }
 
+    public void setPostID(String postID) {
+        this.postID = postID;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCarDetail(String carDetail) {
+        this.carDetail = carDetail;
+    }
+
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
+    }
+
+    public void setOwnerOneSignalID(String ownerOneSignalID) {
+        this.ownerOneSignalID = ownerOneSignalID;
+    }
+
+    public void setToLat(Double toLat) {
+        this.toLat = toLat;
+    }
+
+    public void setToLng(Double toLng) {
+        this.toLng = toLng;
+    }
+
+    public void setFromLat(Double fromLat) {
+        this.fromLat = fromLat;
+    }
+
+    public void setFromLng(Double fromLng) {
+        this.fromLng = fromLng;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setPassengerCount(int passengerCount) {
+        this.passengerCount = passengerCount;
+    }
+
+    public void setWishArray(ArrayList<String> wishArray) {
+        this.wishArray = wishArray;
+    }
+
+    public void setHasStarted(int hasStarted) {
+        this.hasStarted = hasStarted;
+    }
+
     @Override
     public int compareTo(Post o) {
         return Long.compare(o.getTimestamp(),this.getTimestamp());

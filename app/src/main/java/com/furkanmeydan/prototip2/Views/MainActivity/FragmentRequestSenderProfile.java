@@ -156,10 +156,10 @@ public class FragmentRequestSenderProfile extends Fragment {
                             Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
                             String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
                             Log.d("Tag","onesignal date: "+dateTime);
-                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
 
                             Toast.makeText(activity,"İstek Onaylandı.",Toast.LENGTH_LONG).show();
-                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}").put("send_after",dateTime), null);
+                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}").put("send_after",dateTime), null);
                             /*
                             Intent i = new Intent(getContext(), MainActivity.class);
                             startActivity(i);

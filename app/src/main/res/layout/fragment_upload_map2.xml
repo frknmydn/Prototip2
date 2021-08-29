@@ -7,14 +7,27 @@
     tools:context=".Views.UploadPostActivity.UploadMapFragment2">
 
 
+    <Button
+        android:id="@+id/btnAddMarker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="EKLE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.708"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapViewUploadPost"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadPostPlacesFragment" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadPostPlacesFragment"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:contentDescription="@null"
@@ -37,5 +50,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.fragment.app.FragmentContainerView>
+
+    <TextView
+        android:id="@+id/txtMarkerStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/imgMarker"
+        app:layout_constraintEnd_toEndOf="@+id/imgMarker"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/imgMarker" />
+
+    <ImageView
+        android:id="@+id/imgMarker"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_map"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnZoomToMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEREDEYIM"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddMarker"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddMarker"
+        app:layout_constraintHorizontal_bias="0.691"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

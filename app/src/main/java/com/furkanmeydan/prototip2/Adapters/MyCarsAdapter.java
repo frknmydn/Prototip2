@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Adapters;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +32,7 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
     private ArrayList<Car> cars;
     MainActivity activity = null;
     UploadPostActivity postActivity = null;
+    Drawable carSelectedDrawable;
 
     public MyCarsAdapter() {
     }
@@ -75,7 +78,8 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
             holder.itemView.setOnClickListener(v -> {
                 postActivity.car = cars.get(position);
                 postActivity.carPopup.dismiss();
-                postActivity.layoutCar.setBackgroundColor(Color.GREEN);
+                carSelectedDrawable = AppCompatResources.getDrawable(postActivity, R.drawable.car_selected);
+                postActivity.layoutCar.setBackground(carSelectedDrawable);
                 postActivity.txtCarInfo.setText(cars.get(position).getBrand() + " " + cars.get(position).getModel());
             });
         }

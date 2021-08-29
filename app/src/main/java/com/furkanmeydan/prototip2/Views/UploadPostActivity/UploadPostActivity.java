@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -54,12 +55,15 @@ public class UploadPostActivity extends AppCompatActivity {
     public View popupView;
     public ConstraintLayout layoutCar;
     public TextView txtCarInfo;
+    public Button btnAddPost;
+    public Post postToPush;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         car = null;
+        postToPush = new Post();
 
         uploadMapFragment2 = new UploadMapFragment2();
         uploadPostDetailFragment = new UploadPostDetailFragment();
@@ -77,6 +81,7 @@ public class UploadPostActivity extends AppCompatActivity {
 
 
         tabLayout = findViewById(R.id.tabLayout);
+        btnAddPost = findViewById(R.id.btnUploadPostNew);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -136,7 +141,8 @@ public class UploadPostActivity extends AppCompatActivity {
 
 
     public void AUPUploadPost(View view){
-        postDAL.uploadPost(userId, getApplicationContext(),car, new PostCallback() {
+        uploadPostDetailFragment.saveDetails();
+        postDAL.uploadPost(userId, getApplicationContext(),car,postToPush, new PostCallback() {
             @Override
             public void onPostAdded(Post post) {
                 super.onPostAdded(post);
@@ -145,13 +151,12 @@ public class UploadPostActivity extends AppCompatActivity {
                 try {
                     OSDeviceState device = OneSignal.getDeviceState();
                     String oneSignalID = device.getUserId();
-
                     long timestamp = post.getTimestamp()-900L;
                     SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
                     String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
 
-                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_player_ids': ['" +oneSignalID + "']}").put("send_after",dateTime), null);
+                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" +userId + "']}").put("send_after",dateTime), null);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Tag","onesignal CATCHLEDİ LMAO");

@@ -22,8 +22,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.R;
@@ -75,7 +78,9 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     PlacesClient placesClient;
     OnMapReadyCallback callback;
     TabLayout tabLayout;
-
+    Button btnAddMarker,btnZoomToMe;
+    TextView txtMarkerStatus;
+    ImageView imgMarker;
 
 
     public UploadMapFragment2() {
@@ -141,6 +146,14 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
         //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);
         btnMapClear = view.findViewById(R.id.imageViewClearMapUploadPost);
+        btnAddMarker = view.findViewById(R.id.btnAddMarker);
+        txtMarkerStatus = view.findViewById(R.id.txtMarkerStatus);
+        txtMarkerStatus.setText("Tahmini Kalkış Noktası");
+        imgMarker = view.findViewById(R.id.imgMarker);
+        btnZoomToMe = view.findViewById(R.id.btnZoomToMe);
+
+
+
 
         /*
         tabLayout = postActivity.findViewById(R.id.tabLayout);
@@ -231,10 +244,13 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
                 localDataManager.setSharedPreferenceForDouble(postActivity, "lat_1", lat1);
                 localDataManager.setSharedPreferenceForDouble(postActivity, "lng_1", lng1);
+                postActivity.postToPush.setFromLat(lat1);
+                postActivity.postToPush.setFromLng(lng1);
                 localDataManager.setSharedPreference(postActivity, "marker1city", addressList.get(0).getAdminArea());
 
 
                 googleMappo.addMarker(new MarkerOptions().title("Kalkış: " + addressArray.get(0)).position(latLng));
+                txtMarkerStatus.setText("Tahmini Varış Noktası");
                 addressArray.clear();
 
 
@@ -248,6 +264,8 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
                 localDataManager.setSharedPreferenceForDouble(postActivity, "lat_2", lat2);
                 localDataManager.setSharedPreferenceForDouble(postActivity, "lng_2", lng2);
+                postActivity.postToPush.setToLat(lat2);
+                postActivity.postToPush.setToLng(lng2);
                 localDataManager.setSharedPreference(postActivity, "marker2city", addressList.get(0).getAdminArea());
 
                 Log.d("Tag", String.valueOf(localDataManager.getSharedPreferenceForDouble(postActivity, "lat_1",  0d)));
@@ -259,6 +277,9 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
                 googleMappo.addMarker(new MarkerOptions().title("Varış: " + addressArray.get(0)).position(latLng));
                 addressArray.clear();
+                txtMarkerStatus.setVisibility(View.GONE);
+                imgMarker.setVisibility(View.GONE);
+
 
 
             }
@@ -278,6 +299,13 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMappo= googleMap;
+
+        btnAddMarker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addMarker(googleMappo.getCameraPosition().target);
+            }
+        });
 
 
         FragmentManager fm = getChildFragmentManager();
@@ -322,6 +350,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        /*
         if (Build.VERSION.SDK_INT >= 23) {
             if (postActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -353,6 +382,18 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
         }
 
+
+         */
+
+        zoomOnMe();
+
+        btnZoomToMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomOnMe();
+            }
+        });
+
         btnMapClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,6 +404,9 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
                 localDataManager.removeSharedPreference(postActivity, "lng_2");
                 counter = 0;
                 addressArray.clear();
+                imgMarker.setVisibility(View.VISIBLE);
+                txtMarkerStatus.setText("Tahmini Kalkış Noktası");
+                txtMarkerStatus.setVisibility(View.VISIBLE);
 
             }
         });
@@ -389,8 +433,44 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
             googleMappo.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
             LatLng latln2 = new LatLng(sharedLat2, sharedLng2);
             googleMappo.addMarker(new MarkerOptions().title("Varış").position(latln2));
+            counter = 1;
+            txtMarkerStatus.setVisibility(View.GONE);
+            imgMarker.setVisibility(View.GONE);
         }
 
+    }
+
+    public void zoomOnMe(){
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (postActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+            } else {
+                // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                googleMappo.clear();
+
+
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (lastLocation != null) {
+                    LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                    googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
+                }
+
+
+            }
+        } else {
+
+            googleMappo.clear();
+
+
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            if (lastLocation != null) {
+                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                googleMappo.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
+            }
+
+
+        }
     }
 
 }

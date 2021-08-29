@@ -95,6 +95,7 @@ public class ProfileDAL {
         else {
             OSDeviceState device = OneSignal.getDeviceState();
             String oneSignalID = device.getUserId();
+            OneSignal.setExternalUserId(userid);
             User newUser = new User(userid,nameSurname,birthday,picURI,email,gender,oneSignalID);
             firestore.collection(CollectionHelper.USER_COLLECTION).document(userid).set(newUser);
             profileCallback.uploadProfile(newUser);

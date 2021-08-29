@@ -43,6 +43,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
 import java.util.List;
 import java.util.Objects;
@@ -122,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         genderString = localDataManagerUser.getSharedPreference(this,"sharedGender",null);
         profilePic = localDataManagerUser.getSharedPreference(this,"sharedImageURL",null);
         oneSignalID = localDataManager.getSharedPreference(this,"sharedOneSignalID",null);
+
+        OSDeviceState device = OneSignal.getDeviceState();
+        String oneSignalIDOriginal = device.getUserId();
+        Log.d("Tag","OneSignalID: "+oneSignalID);
+        Log.d("Tag","OneSignalIDOriginal: "+oneSignalIDOriginal);
 
 
 

@@ -3,12 +3,15 @@ package com.furkanmeydan.prototip2.Views.UploadPostActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -61,11 +64,7 @@ public class UploadPostDetailFragment extends Fragment {
     ArrayAdapter<CharSequence> spinnerAdapterCity;
     ArrayAdapter<Integer> spinnerAdapterPassanger;
     UploadPostActivity postActivity;
-
-
-    TabLayout tabLayout;
-
-
+    Drawable drawable;
 
     DatePickerDialog datePickerDialog;
     long timeNow = Timestamp.now().getSeconds() * 1000;
@@ -89,6 +88,8 @@ public class UploadPostDetailFragment extends Fragment {
     Timestamp timeStamp;
     //Saat ile ilgili
     TimePickerDialog timePickerDialog;
+
+    TextInputLayout txtinputlay;
 
 
 
@@ -143,44 +144,43 @@ public class UploadPostDetailFragment extends Fragment {
         postActivity.layoutCar = view.findViewById(R.id.layoutCar);
         postActivity.txtCarInfo = view.findViewById(R.id.txtCarInfo);
 
-        postActivity.layoutCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        txtinputlay = view.findViewById(R.id.UPDEDTDestinationLayout);
+
+        postActivity.layoutCar.setOnClickListener(v -> {
 
 
-                //Popup içi adapter için
-                ArrayList<Car> carList = new ArrayList<>();
-                CarDAL carDAL = new CarDAL();
-                AppDatabase appDatabase = Room.databaseBuilder(postActivity,
-                        AppDatabase.class, "carsDB").build();
-                String userid = postActivity.firebaseAuth.getUid();
-                RecyclerView rclMyCars = postActivity.popupView.findViewById(R.id.rclSelectCar);
-                rclMyCars.setLayoutManager(new LinearLayoutManager(getContext()));
-                MyCarsAdapter adapter = new MyCarsAdapter(carList,postActivity);
+            //Popup içi adapter için
+            ArrayList<Car> carList = new ArrayList<>();
+            CarDAL carDAL = new CarDAL();
+            AppDatabase appDatabase = Room.databaseBuilder(postActivity,
+                    AppDatabase.class, "carsDB").build();
+            String userid = postActivity.firebaseAuth.getUid();
+            RecyclerView rclMyCars = postActivity.popupView.findViewById(R.id.rclSelectCar);
+            rclMyCars.setLayoutManager(new LinearLayoutManager(getContext()));
+            MyCarsAdapter adapter = new MyCarsAdapter(carList,postActivity);
 
-                rclMyCars.setAdapter(adapter);
+            rclMyCars.setAdapter(adapter);
 
 
-                Thread t1 = new Thread() {
-                    @Override
-                    public void run() {
-                        if(carList.size()<=0){
-                            carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
-                            adapter.notifyDataSetChanged();
-                        }
+            Thread t1 = new Thread() {
+                @Override
+                public void run() {
+                    if(carList.size()<=0){
+                        carList.addAll(appDatabase.carDao().loadAllCarsByUserID(userid));
+                        adapter.notifyDataSetChanged();
                     }
-                };
-                t1.start();
-                try {
-                    t1.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
-
-                postActivity.carPopup.showAtLocation(v,Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                Log.d("TAG", "CarListSize: "+ String.valueOf(carList.size()));
-
+            };
+            t1.start();
+            try {
+                t1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            postActivity.carPopup.showAtLocation(v,Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            Log.d("TAG", "CarListSize: "+ String.valueOf(carList.size()));
+
         });
 
         edtDate.setHint("Tarih Seçiniz");
@@ -328,6 +328,8 @@ public class UploadPostDetailFragment extends Fragment {
 
        if(timeStamp !=null){
            localDataManager.setSharedPreferenceForLong(postActivity,"timestamp",timeStamp.getSeconds());
+           /////
+           postActivity.postToPush.setTimestamp(timeStamp.getSeconds());
            if(!dateString.equals("")){
                localDataManager.setSharedPreference(postActivity,"date",dateString);
            }
@@ -336,18 +338,22 @@ public class UploadPostDetailFragment extends Fragment {
            }
        }
        if(cityString !=null){
-           localDataManager.setSharedPreference(postActivity,"city",cityString);
+           ////
+           postActivity.postToPush.setCity(cityString);
        }
        if(passengerCountString != -1){
-           localDataManager.setSharedPreferenceForInt(postActivity,"passengercount",passengerCountString);
+           ////
+           postActivity.postToPush.setPassengerCount(passengerCountString);
        }
         if(!edtDescription.getText().toString().equals("")){
-            localDataManager.setSharedPreference(postActivity,"description",edtDescription.getText().toString());
+            ////
+            postActivity.postToPush.setDescription(edtDescription.getText().toString());
         }
 
 
        if(!edtDestination.getText().toString().equals("")){
-           localDataManager.setSharedPreference(postActivity,"destination",edtDestination.getText().toString());
+           ////
+           postActivity.postToPush.setDestination(edtDestination.getText().toString());
        }
 
 
@@ -395,7 +401,10 @@ public class UploadPostDetailFragment extends Fragment {
         }
         if(postActivity.car != null){
             postActivity.txtCarInfo.setText(postActivity.car.getBrand() + " " + postActivity.car.getModel());
-            postActivity.layoutCar.setBackgroundColor(Color.GREEN);
+
+            drawable = AppCompatResources.getDrawable(postActivity, R.drawable.car_selected);
+            postActivity.layoutCar.setBackground(drawable);
+
 
         }
 

@@ -36,26 +36,25 @@ public class PostDAL {
     LocalDataManager localDataManagerUser = new LocalDataManager();
 
 
-    public void uploadPost(String ownerId, Context context, Car car, PostCallback postCallback) {
+    public void uploadPost(String ownerId, Context context, Car car,Post post, PostCallback postCallback) {
 
         Timestamp nowTimestamp = Timestamp.now();
 
-        String citySharedPrefSpinner = localDataManager.getSharedPreference(context, "city", null);
+        String citySharedPrefSpinner = post.getCity();
         String marker1City = localDataManager.getSharedPreference(context, "marker1city", null);
         String marker2City = localDataManager.getSharedPreference(context, "marker2city", null);
-        long timestamp = localDataManager.getSharedPreferenceForLong(context, "timestamp", 0L);
-        int passengerCount = localDataManager.getSharedPreferenceForInt(context, "passengercount", -1);
-        String description = localDataManager.getSharedPreference(context, "description", null);
-        String destination = localDataManager.getSharedPreference(context, "destination", null);
+        long timestamp = post.getTimestamp();
+        int passengerCount = post.getPassengerCount();
+        String description = post.getDescription();
+        String destination = post.getDestination();
 
-        double fromLat = localDataManager.getSharedPreferenceForDouble(context, "lat_1", 0d);
-        double toLat = localDataManager.getSharedPreferenceForDouble(context, "lat_2", 0d);
-        double fromLng = localDataManager.getSharedPreferenceForDouble(context, "lng_1", 0d);
-        double toLng = localDataManager.getSharedPreferenceForDouble(context, "lng_2", 0d);
+        double fromLat = post.getFromLat();
+        double toLat = post.getToLat();
+        double fromLng = post.getFromLng();
+        double toLng = post.getToLng();
         String postID = UUID.randomUUID().toString();
 
         String postOwnerOneSignalID = localDataManager.getSharedPreference(context,"sharedOneSignalID",null);
-
         String userGender = localDataManagerUser.getSharedPreference(context, "sharedGender", null);
 
 
@@ -101,10 +100,7 @@ public class PostDAL {
                 Toast.makeText(context, "Lütfen Yolculuk Hakkında Bilgi Verin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
-            if(car == null){
-                Toast.makeText(context, "Lütfen araç seçiniz", Toast.LENGTH_LONG).show();
-                errors += "HATA";
-            }
+
 
             //if(description!=null && !description.equals("")) çalışmazsa diye burda duruyo
             else {
@@ -119,6 +115,10 @@ public class PostDAL {
                 }
             }
 
+            if(car == null){
+                Toast.makeText(context, "Lütfen araç seçiniz", Toast.LENGTH_LONG).show();
+                errors += "HATA";
+            }
 
             if (timestamp == 0L) {
                 Toast.makeText(context, "Lütfen Tarih ve Saati seçin", Toast.LENGTH_LONG).show();
@@ -150,11 +150,23 @@ public class PostDAL {
                 int direction = findDirection(fromLat, fromLng, toLat, toLng);
 
                 ArrayList<String> wishArray = new ArrayList<>();
+                post.setWishArray(wishArray);
+                post.setOwnerID(userId);
+                post.setPostID(postID);
+                post.setHasStarted(0);
+                post.setStatus(1);
+                post.setUserGender(userGender);
+                post.setOwnerOneSignalID(postOwnerOneSignalID);
+                post.setDirection(direction);
+                post.setCar(car);
 
+                /*
                 Post post = new Post(postID,ownerId,citySharedPrefSpinner,
                         passengerCount, destination, description,
                         timestamp, toLat, toLng, fromLat, fromLng,
                         1,0, userGender, direction,wishArray,postOwnerOneSignalID, car);
+
+                 */
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
                         .collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
                 postCallback.onPostAdded(post);

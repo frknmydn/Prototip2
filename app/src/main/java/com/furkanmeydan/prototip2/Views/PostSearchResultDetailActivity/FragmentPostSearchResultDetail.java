@@ -83,6 +83,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     boolean isPostOutdated;
     BroadcastReceiver localBroadcastReceiver;
 
+
     PopupWindow carPopup;
     View popupView;
 
@@ -222,7 +223,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
                                         try {
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Aktif ilaniniza bir kullanici tarafindan istek gonderildi'}, 'include_player_ids': ['" + post.getOwnerOneSignalID() + "']}"), null);
+                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Aktif ilaniniza bir kullanici tarafindan istek gonderildi'}, 'include_external_user_ids': ['" + post.getOwnerID() + "']}"), null);
                                             Intent i = new Intent(getContext(), MainActivity.class);
                                             Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
                                             dialog.dismiss();
@@ -363,7 +364,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                         try {
                             for (Request request : activity.requestList) {
-                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_player_ids': ['" + request.getOneSignalID() + "']}"), null);
+                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
                             }
 
                         } catch (JSONException e) {
@@ -440,8 +441,6 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         break;
                     }
                 }
-
-
             }
 
         }
