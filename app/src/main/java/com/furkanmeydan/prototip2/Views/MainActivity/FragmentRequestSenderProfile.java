@@ -42,8 +42,12 @@ import com.onesignal.OneSignal;
 
 import org.json.JSONObject;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 
@@ -156,10 +160,159 @@ public class FragmentRequestSenderProfile extends Fragment {
                             Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
                             String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
                             Log.d("Tag","onesignal date: "+dateTime);
-                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+                            //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+
+                            ///// DENEME DENEMEE DENEME DENEME
+                            Thread t1 = new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+
+                                        String jsonResponse;
+
+                                        URL url = new URL("https://onesignal.com/api/v1/notifications");
+                                        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                                        con.setUseCaches(false);
+                                        con.setDoOutput(true);
+                                        con.setDoInput(true);
+
+                                        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                                        con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
+                                        con.setRequestMethod("POST");
+
+                                        String strJsonBody = "{"
+                                                +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
+                                                +   "\"include_external_user_ids\": [\""+request.getSenderID()+"\"],"
+                                                +   "\"channel_for_external_user_ids\": \"push\","
+                                                +   "\"data\": {\"foo\": \"bar\"},"
+                                                +   "\"contents\": {\"en\": \"Gonderdiginiz isteklerinizden biri onaylandi\"},"
+                                                +   "\"headings\": {\"en\": \"Onay\"}"
+                                                + "}";
+                                                    /*
+                                                    String[] sikis = new String[]{post.getOwnerID()};
+                                                    JSONObject deneme = new JSONObject(strJsonBody);
+                                                    deneme.put("include_external_user_ids", );
+                                                    strJsonBody = deneme.toString();
+
+
+                                                     */
+                                        Log.d("Tag","strJsonBody:\n" + strJsonBody);
+
+                                        byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+                                        con.setFixedLengthStreamingMode(sendBytes.length);
+
+                                        OutputStream outputStream = con.getOutputStream();
+                                        outputStream.write(sendBytes);
+
+                                        int httpResponse = con.getResponseCode();
+                                        Log.d("Tag","httpResponse: " + httpResponse);
+
+                                        if (  httpResponse >= HttpURLConnection.HTTP_OK
+                                                && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                                            Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        else {
+                                            Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        Log.d("Tag","jsonResponse:\n" + jsonResponse);
+
+                                        //String jsonResponse;
+
+                                        url = new URL("https://onesignal.com/api/v1/notifications");
+                                         con = (HttpURLConnection)url.openConnection();
+                                        con.setUseCaches(false);
+                                        con.setDoOutput(true);
+                                        con.setDoInput(true);
+
+                                        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                                        con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
+                                        con.setRequestMethod("POST");
+                                        Log.d("Tag" , "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + request.getSenderID());
+
+                                         strJsonBody = "{"
+                                                +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
+                                                +   "\"include_external_user_ids\": [\""+request.getSenderID()+"\"],"
+                                                +   "\"channel_for_external_user_ids\": \"push\","
+                                                +   "\"data\": {\"foo\": \"bar\"},"
+                                                +   "\"contents\": {\"en\": \"Ilan sahibi 15 dakika sonra yolculuga baslayacaktir\"},"
+                                                +   "\"headings\": {\"en\": \"Hatirlatma\"},"
+                                                +   "\"send_after\": \""+dateTime+"\""
+                                                + "}";
+                                                    /*
+                                                    String[] sikis = new String[]{post.getOwnerID()};
+                                                    JSONObject deneme = new JSONObject(strJsonBody);
+                                                    deneme.put("include_external_user_ids", );
+                                                    strJsonBody = deneme.toString();
+
+
+                                                     */
+                                        Log.d("Tag","strJsonBody:\n" + strJsonBody);
+
+                                         sendBytes = strJsonBody.getBytes("UTF-8");
+                                        con.setFixedLengthStreamingMode(sendBytes.length);
+
+                                         outputStream = con.getOutputStream();
+                                        outputStream.write(sendBytes);
+
+                                         httpResponse = con.getResponseCode();
+                                        Log.d("Tag","httpResponse: " + httpResponse);
+
+                                        if (  httpResponse >= HttpURLConnection.HTTP_OK
+                                                && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                                            Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        else {
+                                            Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        Log.d("Tag","jsonResponse for scheduled:\n" + jsonResponse);
+
+
+
+
+                                    } catch(Throwable t) {
+                                        Log.d("Tag","Yarra yedik");
+                                        t.printStackTrace();
+                                    }
+
+                                }
+                            };
+                            t1.start();
+                            try {
+                                t1.join();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+
+
+
 
                             Toast.makeText(activity,"İstek Onaylandı.",Toast.LENGTH_LONG).show();
-                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}").put("send_after",dateTime), null);
+                            //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}").put("send_after",dateTime), null);
+
+
+
+
+
+
+
+
+
+
+
+
+
                             /*
                             Intent i = new Intent(getContext(), MainActivity.class);
                             startActivity(i);

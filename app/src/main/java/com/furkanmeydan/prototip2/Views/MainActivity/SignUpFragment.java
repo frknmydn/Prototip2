@@ -34,6 +34,7 @@ import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OneSignal;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -91,6 +92,7 @@ public class SignUpFragment extends Fragment {
         profileDAL = new ProfileDAL();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+
 
 
         //Doğum tarihi seçmek için telefonun takvim uygulamasını açmak için
@@ -289,4 +291,5 @@ public class SignUpFragment extends Fragment {
 
         }
     }
+
 }

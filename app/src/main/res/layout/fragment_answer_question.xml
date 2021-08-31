@@ -126,7 +126,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="25dp"
-        android:background="#E1E1E1"
+        android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
         android:text="@string/gonder"
         android:textSize="16sp"

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#3D08CF</item>
+        <item name="colorPrimary">#0679D6</item>
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">@color/dahagri</item>
     </style>

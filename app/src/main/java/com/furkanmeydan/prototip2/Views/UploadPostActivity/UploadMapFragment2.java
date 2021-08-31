@@ -341,14 +341,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
 
         locationManager = (LocationManager) postActivity.getSystemService(Context.LOCATION_SERVICE);
-        googleMappo.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
 
-                addMarker(latLng);
-
-            }
-        });
 
         /*
         if (Build.VERSION.SDK_INT >= 23) {

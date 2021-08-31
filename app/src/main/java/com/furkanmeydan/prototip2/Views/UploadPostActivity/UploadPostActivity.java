@@ -37,9 +37,13 @@ import com.onesignal.OneSignal;
 
 import org.json.JSONObject;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class UploadPostActivity extends AppCompatActivity {
@@ -156,7 +160,72 @@ public class UploadPostActivity extends AppCompatActivity {
                     Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
                     String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
 
-                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" +userId + "']}").put("send_after",dateTime), null);
+                    //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" +userId + "']}").put("send_after",dateTime), null);
+                    Thread t1 = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+
+                                String jsonResponse;
+
+                                URL url = new URL("https://onesignal.com/api/v1/notifications");
+                                HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                                con.setUseCaches(false);
+                                con.setDoOutput(true);
+                                con.setDoInput(true);
+
+                                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                                con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
+                                con.setRequestMethod("POST");
+
+                                String strJsonBody = "{"
+                                        +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
+                                        +   "\"include_external_user_ids\": [\""+userId+"\"],"
+                                        +   "\"channel_for_external_user_ids\": \"push\","
+                                        +   "\"data\": {\"foo\": \"bar\"},"
+                                        +   "\"contents\": {\"en\": \"Yolculuk saatinize 15 dakika kalmistir\"},"
+                                        +   "\"headings\": {\"en\": \"Hatirlatma\"}"
+                                        + "}";
+
+                                Log.d("Tag","strJsonBody:\n" + strJsonBody);
+
+                                byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+                                con.setFixedLengthStreamingMode(sendBytes.length);
+
+                                OutputStream outputStream = con.getOutputStream();
+                                outputStream.write(sendBytes);
+
+                                int httpResponse = con.getResponseCode();
+                                Log.d("Tag","httpResponse: " + httpResponse);
+
+                                if (  httpResponse >= HttpURLConnection.HTTP_OK
+                                        && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                                    Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                                    jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                    scanner.close();
+                                }
+                                else {
+                                    Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                                    jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                    scanner.close();
+                                }
+                                Log.d("Tag","jsonResponse:\n" + jsonResponse);
+
+
+
+                            } catch(Throwable t) {
+                                Log.d("Tag","Yarra yedik");
+                                t.printStackTrace();
+                            }
+
+                        }
+                    };
+                    t1.start();
+                    try {
+                        t1.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Tag","onesignal CATCHLEDİ LMAO");
