@@ -120,20 +120,22 @@
 
         <EditText
             android:id="@+id/edtSearchTime1FS"
-            android:layout_width="85dp"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="7dp"
             android:background="@drawable/spinner_shape"
             android:ems="10"
             android:focusable="false"
             android:hint="Başlangıç Saati"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingStart="10dp"
             android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@+id/textView29"
             app:layout_constraintStart_toStartOf="@+id/edtSearchDateFS"
             app:layout_constraintTop_toBottomOf="@+id/edtSearchDateFS"
-            tools:ignore="HardcodedText,RtlSymmetry"
-            android:importantForAutofill="no" />
+            tools:ignore="HardcodedText,RtlSymmetry" />
 
         <TextView
             android:id="@+id/textView29"
@@ -151,18 +153,20 @@
 
         <EditText
             android:id="@+id/edtSearchTime2FS"
-            android:layout_width="85dp"
+            android:layout_width="0dp"
             android:layout_height="45dp"
+            android:layout_marginStart="2dp"
             android:background="@drawable/spinner_shape"
             android:ems="10"
             android:focusable="false"
             android:hint="Bitiş Saati"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingStart="10dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/edtSearchDateFS"
+            app:layout_constraintStart_toEndOf="@+id/textView29"
             app:layout_constraintTop_toTopOf="@+id/edtSearchTime1FS"
-            android:importantForAutofill="no"
             tools:ignore="HardcodedText,RtlSymmetry" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

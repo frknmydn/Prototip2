@@ -9,17 +9,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutMyRequestAcceptedInfo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="450dp"
         android:background="#DEDFDF"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView31"
+        app:layout_constraintTop_toBottomOf="@+id/textView31"
         app:layout_constraintVertical_bias="0.176">
 
         <TextView
@@ -42,12 +43,12 @@
             tools:ignore="HardcodedText,TextViewEdits" />
 
         <ImageView
-            android:contentDescription="@null"
             android:id="@+id/imageView3"
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_marginEnd="310dp"
             android:layout_marginBottom="60dp"
+            android:contentDescription="@null"
             android:src="@drawable/info"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,8 +77,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutQuestionToMeRCL"
-        android:layout_width="405dp"
-        android:layout_height="543dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:visibility="gone"
@@ -99,8 +100,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutQuestionToMeProgress"
-        android:layout_width="409dp"
-        android:layout_height="546dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="2dp"

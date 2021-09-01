@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class PostSearchResultFragment extends Fragment {
     private long timestamp2;
     Double userlat1,userlat2,userlng1,userlng2;
     Set singleBlockAndPostIDs;
+    ConstraintLayout layoutProgress, layoutContent, layoutInfo;
 
     ArrayList<String> newArrayList;
 
@@ -92,6 +94,9 @@ public class PostSearchResultFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutInfo = view.findViewById(R.id.resultLayoutInfo);
+        layoutProgress = view.findViewById(R.id.resultLayoutProgress);
+        layoutProgress.setVisibility(View.VISIBLE);
         recyclerView = view.findViewById(R.id.postSearchResultRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -113,6 +118,16 @@ public class PostSearchResultFragment extends Fragment {
                                 for(Block blockvar : list){
                                     if(!blockvar.getUserBlockerID().equals(postvar.getOwnerID())){
                                         posts.add(postvar);
+                                        if(posts.size()>0){
+                                            layoutProgress.setVisibility(View.GONE);
+                                            layoutInfo.setVisibility(View.GONE);
+                                            recyclerView.setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            layoutProgress.setVisibility(View.GONE);
+                                            layoutInfo.setVisibility(View.VISIBLE);
+                                        }
+
                                     }
                                 }
                             }
@@ -205,6 +220,15 @@ public class PostSearchResultFragment extends Fragment {
                                         posts.add(postvar);
                                         Log.d("Tag","postsSize "+ posts.size());
                                         Log.d("Tag","postOwnerID "+ postvar.getOwnerID());
+                                        if(posts.size()>0){
+                                            layoutProgress.setVisibility(View.GONE);
+                                            layoutInfo.setVisibility(View.GONE);
+                                            recyclerView.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            layoutProgress.setVisibility(View.GONE);
+                                            layoutInfo.setVisibility(View.VISIBLE);
+                                        }
                                     }
                                 }
                             }
