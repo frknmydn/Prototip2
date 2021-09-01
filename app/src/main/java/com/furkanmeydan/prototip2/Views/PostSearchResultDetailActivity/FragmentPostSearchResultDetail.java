@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -58,13 +59,17 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -88,6 +93,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
     ArrayList<Request> requestList;
     boolean isPostOutdated;
     BroadcastReceiver localBroadcastReceiver;
+    AppCompatButton btnDeletePost;
+    PopupWindow popupWindow;
 
 
     PopupWindow carPopup;
@@ -159,6 +166,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         carOptionalInfo = view.findViewById(R.id.txtCarOptionalInfo);
         carPic = view.findViewById(R.id.imageViewCarPic);
 
+        btnDeletePost = view.findViewById(R.id.btnSearchResultDetailDeletePost);
         postHeader = view.findViewById(R.id.txtSearchResultDetailHeader);
         postCity = view.findViewById(R.id.txtSearchResultDetailCity);
         postPassangerCount = view.findViewById(R.id.txtSearchResultDetailPasangerCount);
@@ -187,7 +195,111 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
         });
 
+        btnDeletePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                requestDAL.getAcceptedRequests(post.getPostID(), post.getOwnerID(), new RequestCallback() {
+                    @Override
+                    public void onRequestRetrievedNull() {
+                        super.onRequestRetrievedNull();
+                        postDAL.deletePost(post, new PostCallback() {
+                            @Override
+                            public void onPostDeleted() {
+                                super.onPostDeleted();
+                                Intent i = new Intent(activity,MainActivity.class);
+                                startActivity(i);
+                                activity.finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onRequestsRetrievedNotNull(List<Request> list) {
+                        super.onRequestsRetrievedNotNull(list);
+
+                        Thread t1 = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+
+
+                                    for(Request request: list){
+                                        URL url = null;
+
+                                        url = new URL("https://onesignal.com/api/v1/notifications");
+
+                                        HttpURLConnection con = null;
+
+                                        con = (HttpURLConnection)url.openConnection();
+
+                                        con.setUseCaches(false);
+                                        con.setDoOutput(true);
+                                        con.setDoInput(true);
+
+                                        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                                        con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
+
+                                        con.setRequestMethod("POST");
+
+
+                                        HttpURLConnection finalCon = con;
+                                        String jsonResponse;
+                                        String strJsonBody = "{"
+                                                +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
+                                                +   "\"include_external_user_ids\": [\""+request.getSenderID()+"\"],"
+                                                +   "\"channel_for_external_user_ids\": \"push\","
+                                                +   "\"data\": {\"foo\": \"bar\"},"
+                                                +   "\"contents\": {\"en\": \"İsteğinizin onaylandığı bir yolculuk ilan sahibi tarafından silinmiştir\"},"
+                                                +   "\"headings\": {\"en\": \"Bilgilendirme\"}"
+                                                + "}";
+
+                                        Log.d("Tag","strJsonBody:\n" + strJsonBody);
+
+                                        byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+                                        finalCon.setFixedLengthStreamingMode(sendBytes.length);
+
+                                        OutputStream outputStream = finalCon.getOutputStream();
+                                        outputStream.write(sendBytes);
+
+                                        int httpResponse = finalCon.getResponseCode();
+                                        Log.d("Tag","httpResponse: " + httpResponse);
+
+                                        if (  httpResponse >= HttpURLConnection.HTTP_OK
+                                                && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                                            Scanner scanner = new Scanner(finalCon.getInputStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        else {
+                                            Scanner scanner = new Scanner(finalCon.getErrorStream(), "UTF-8");
+                                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                                            scanner.close();
+                                        }
+                                        Log.d("Tag","jsonResponse:\n" + jsonResponse);
+                                    }
+
+
+
+
+                                } catch(Throwable t) {
+                                    Log.d("Tag","Yarra yedik");
+                                    t.printStackTrace();
+                                }
+
+                            }
+                        };
+                        t1.start();
+                        try {
+                            t1.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        });
 
 
         btnSendRequest.setOnClickListener(new View.OnClickListener() {
@@ -461,6 +573,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
             Log.d("TAG","Timestamp post," + post.getTimestamp());
             Log.d("TAG","Timestamp current," + currentTimestamp);
             if (activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
+                btnDeletePost.setVisibility(View.VISIBLE);
+                btnAddToWish.setVisibility(View.GONE);
+                btnSendRequest.setVisibility(View.GONE);
                 Log.d("TAG","İlk if içi");
                 if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
                     Log.d("TAG","İkinci if içi");
@@ -542,7 +657,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
             if (post.getWishArray().contains(activity.firebaseAuth.getCurrentUser().getUid())) {
                 btnAddToWish.setClickable(false);
                 btnAddToWish.setFocusable(false);
-                btnAddToWish.setText("Takip ediyorsunuz");
+                btnAddToWish.setTextSize(12);
+                btnAddToWish.setText("Takip ediliyor");
             }
 
             //zaman işlemleri

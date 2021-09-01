@@ -79,8 +79,6 @@ public class RequestDAL {
 
                     }
                 });
-
-
     }
 
     public void deleteRequestsOnBlock(String userid, String postOwnerID , final RequestCallback callback){
@@ -159,9 +157,6 @@ public class RequestDAL {
                 .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
                 .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
                 .document(requestID).delete().addOnCompleteListener(task -> callback.onRequestRejected());
-
-
-
     }
 
     public void getRequest(final String postID, final String postOwnerID, final RequestCallback callback){
