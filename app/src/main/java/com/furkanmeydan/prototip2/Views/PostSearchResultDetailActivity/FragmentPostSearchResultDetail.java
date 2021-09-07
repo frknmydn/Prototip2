@@ -201,6 +201,20 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                 requestDAL.getAcceptedRequests(post.getPostID(), post.getOwnerID(), new RequestCallback() {
                     @Override
+                    public void onRequestsRetrievedNull() {
+                        super.onRequestsRetrievedNull();
+                        postDAL.deletePost(post, new PostCallback() {
+                            @Override
+                            public void onPostDeleted() {
+                                super.onPostDeleted();
+                                Intent i = new Intent(activity,MainActivity.class);
+                                startActivity(i);
+                                activity.finish();
+                            }
+                        });
+                    }
+
+                    @Override
                     public void onRequestRetrievedNull() {
                         super.onRequestRetrievedNull();
                         postDAL.deletePost(post, new PostCallback() {
@@ -222,8 +236,6 @@ public class FragmentPostSearchResultDetail extends Fragment {
                             @Override
                             public void run() {
                                 try {
-
-
                                     for(Request request: list){
                                         URL url = null;
 

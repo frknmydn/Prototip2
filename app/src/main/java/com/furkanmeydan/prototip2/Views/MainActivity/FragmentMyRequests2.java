@@ -246,8 +246,6 @@ public class FragmentMyRequests2 extends Fragment {
                         layoutHistory.setVisibility(View.VISIBLE);
                         Log.d("TAG", "onTabSelected: 4 ");
                         break;
-
-
                 }
             }
 
@@ -303,11 +301,7 @@ public class FragmentMyRequests2 extends Fragment {
                 }
             }
         });
-
-
         Log.d("TAGGO", "getAcceptedRequests: " + requestListHistory.size());
-
-
 
     }
 
@@ -321,15 +315,12 @@ public class FragmentMyRequests2 extends Fragment {
                         for (Request request : list){
                             if(request.getPostTimestamp() >= currentTimestamp){
                                 waitingRequestList.add(request);
-
                             }
                         }
                         getPosts(waitingRequestList,2);
                     }
                 }
             });
-
-
     }
 
 
@@ -409,8 +400,6 @@ public class FragmentMyRequests2 extends Fragment {
                             }
 
                         }
-
-
                         if(i == requestListSize-1 || i == requestListSize){
                             if(acceptedPostList.size() == 0){
 
@@ -429,13 +418,6 @@ public class FragmentMyRequests2 extends Fragment {
                         }
                     }
                 });
-
-
-
             }
-
-
-
     }
-
 }
