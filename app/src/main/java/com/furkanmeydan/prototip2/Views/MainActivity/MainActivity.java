@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
                 localDataManager.setSharedPreference(MainActivity.this, "isServiceEnable", "0");
             }
+            localDataManager.clearSharedPreference(MainActivity.this);
             Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
             startActivity(i);
             this.finish();

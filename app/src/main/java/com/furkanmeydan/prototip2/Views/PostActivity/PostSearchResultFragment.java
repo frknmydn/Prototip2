@@ -69,7 +69,6 @@ public class PostSearchResultFragment extends Fragment {
         postActivity = (PostActivity) getActivity();
 
         if (getArguments() != null) {
-
             city = getArguments().getString("city");
             gender = getArguments().getString("gender");
             timestamp1 = getArguments().getLong("timestamp1");
@@ -80,6 +79,15 @@ public class PostSearchResultFragment extends Fragment {
             userlng2 = getArguments().getDouble("userlng2");
             direction = getArguments().getInt("direction");
 
+            Log.d("Tag", "timestamp1: "+timestamp1);
+            Log.d("Tag", "timestamp2: "+timestamp2);
+            Log.d("Tag", "city: "+city);
+            Log.d("Tag", "gender: "+gender);
+            Log.d("Tag", "direction: "+ direction);
+
+        }
+        else{
+            Log.d("TAG", "GETARGS NULL GELDİ ");
         }
     }
 
@@ -150,13 +158,14 @@ public class PostSearchResultFragment extends Fragment {
                 @Override
                 public void getPosts(List<Post> list) {
                     super.getPosts(list);
-                    final List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
-                    Log.d("Tag","FilteredListSize"+ filteredList.size());
+                    if(list.size() > 0){
+                        final List<Post> filteredList = postDAL.filterWithLTGLNG(list,userlat2,userlng2,userlat1,userlng1);
+                        Log.d("Tag","FilteredListSize"+ filteredList.size());
 
-                    blockDAL.getBlockedListForPosts(new BlockCallback() {
-                        @Override
-                        public void onListRetrieved(List<Block> list) {
-                            super.onListRetrieved(list);
+                        blockDAL.getBlockedListForPosts(new BlockCallback() {
+                            @Override
+                            public void onListRetrieved(List<Block> list) {
+                                super.onListRetrieved(list);
                             /*
                             ArrayList<String> blockedIDs = new ArrayList<>();
                             for(Block blockvar : list){
@@ -197,53 +206,63 @@ public class PostSearchResultFragment extends Fragment {
                             }
                             */
 
-                            Log.d("Tag","onListRetrieved Block içi ");
+                                Log.d("Tag","onListRetrieved Block içi ");
 
-                            if(list.size() > 0 ){
-                                Log.d("Tag","onListRetrievedBlock if içi ");
-                                for(Post postvar : filteredList){
-                                    boolean isBlocked = false;
-                                    Log.d("Tag","onListRetrievedBlock ilk for içi ");
-                                    Log.d("Tag","PostOwner "+postvar.getOwnerID());
-                                    Log.d("Tag","PostListSize "+filteredList.size());
-                                    for(Block blockvar : list){
-                                        Log.d("Tag","onListRetrievedBlock ikinci for içi ");
-                                        Log.d("Tag","Blocklist size "+list.size());
-                                        Log.d("Tag","BlockerID "+blockvar.getUserBlockerID());
-                                        if((blockvar.getUserBlockedID().equals(postvar.getOwnerID()))){
-                                            isBlocked = true;
-                                            Log.d("Tag","UserBlockedID equals OwnerID if içi ");
-                                            Log.d("Tag","BlockedID "+blockvar.getUserBlockedID());
+                                if(list.size() > 0 ){
+                                    Log.d("Tag","onListRetrievedBlock if içi ");
+                                    for(Post postvar : filteredList){
+                                        boolean isBlocked = false;
+                                        Log.d("Tag","onListRetrievedBlock ilk for içi ");
+                                        Log.d("Tag","PostOwner "+postvar.getOwnerID());
+                                        Log.d("Tag","PostListSize "+filteredList.size());
+                                        for(Block blockvar : list){
+                                            Log.d("Tag","onListRetrievedBlock ikinci for içi ");
+                                            Log.d("Tag","Blocklist size "+list.size());
+                                            Log.d("Tag","BlockerID "+blockvar.getUserBlockerID());
+                                            if((blockvar.getUserBlockedID().equals(postvar.getOwnerID()))){
+                                                isBlocked = true;
+                                                Log.d("Tag","UserBlockedID equals OwnerID if içi ");
+                                                Log.d("Tag","BlockedID "+blockvar.getUserBlockedID());
+                                            }
                                         }
-                                    }
-                                    if(!isBlocked){
-                                        posts.add(postvar);
-                                        Log.d("Tag","postsSize "+ posts.size());
-                                        Log.d("Tag","postOwnerID "+ postvar.getOwnerID());
-                                        if(posts.size()>0){
-                                            layoutProgress.setVisibility(View.GONE);
-                                            layoutInfo.setVisibility(View.GONE);
-                                            recyclerView.setVisibility(View.VISIBLE);
-                                        }
-                                        else {
-                                            layoutProgress.setVisibility(View.GONE);
-                                            layoutInfo.setVisibility(View.VISIBLE);
+                                        if(!isBlocked){
+                                            posts.add(postvar);
+                                            Log.d("Tag","postsSize "+ posts.size());
+                                            Log.d("Tag","postOwnerID "+ postvar.getOwnerID());
+                                            if(posts.size()>0){
+                                                layoutProgress.setVisibility(View.GONE);
+                                                layoutInfo.setVisibility(View.GONE);
+                                                recyclerView.setVisibility(View.VISIBLE);
+                                            }
+                                            else {
+                                                layoutProgress.setVisibility(View.GONE);
+                                                layoutInfo.setVisibility(View.VISIBLE);
+                                            }
                                         }
                                     }
                                 }
+                                else{
+                                    Log.d("Tag","onListRetrievedBlock else AddAll (Block Yok) ");
+                                    posts.addAll(filteredList);
+                                    layoutProgress.setVisibility(View.GONE);
+                                    layoutInfo.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                }
+
+
+                                resultAdapter.notifyDataSetChanged();
+
                             }
-                            else{
-                                Log.d("Tag","onListRetrievedBlock else AddAll (Block Yok) ");
-                                posts.addAll(filteredList);
-                            }
+                        });
 
+                        //Log.d("TagPostGetFragment", list.get(0).getDestination());
+                    }
+                    else{
+                        layoutProgress.setVisibility(View.GONE);
+                        layoutInfo.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
 
-                            resultAdapter.notifyDataSetChanged();
-
-                        }
-                    });
-
-                    //Log.d("TagPostGetFragment", list.get(0).getDestination());
 
                 }
             });

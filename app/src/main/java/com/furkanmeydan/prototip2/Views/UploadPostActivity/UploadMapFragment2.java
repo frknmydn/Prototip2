@@ -440,7 +440,6 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
             } else {
                 // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                googleMappo.clear();
 
 
                 Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
@@ -453,7 +452,6 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
             }
         } else {
 
-            googleMappo.clear();
 
 
             Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);

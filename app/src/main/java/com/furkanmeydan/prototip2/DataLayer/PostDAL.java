@@ -327,7 +327,6 @@ public class PostDAL {
          */
 
 
-
         firestore.collectionGroup(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS, 1)
                 .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY, cityString)
@@ -772,6 +771,20 @@ public class PostDAL {
                 });
 
     }
+
+    /*
+    public void checkParams(long timestamp1, long timestamp2, String gender,String city,int direction){
+        if(timestamp1 == null){
+
+        }
+
+    }
+
+    public void  checkParamsCoordinates(){
+
+    }
+
+     */
     public Bundle checkArgs(Timestamp timestamp1, Timestamp timestamp2, String genderString, String cityString, Context context) {
         String error = "";
 

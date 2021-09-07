@@ -43,6 +43,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.DataLayer.NotificationManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Post;
@@ -232,6 +233,30 @@ public class FragmentPostSearchResultDetail extends Fragment {
                     public void onRequestsRetrievedNotNull(List<Request> list) {
                         super.onRequestsRetrievedNotNull(list);
 
+                        Thread t1 = new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                                for(Request request : list){
+                                    NotificationManager notificationManager = new NotificationManager(request.getSenderID(),"İsteğinizin onaylandığı bir yolculuk ilan sahibi tarafından silinmiştir","Bilgilendirme");
+                                    try {
+                                        notificationManager.NotificationForNow();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+
+                            }
+                        };
+                        t1.start();
+                        try {
+                            t1.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        /*
                         Thread t1 = new Thread() {
                             @Override
                             public void run() {
@@ -307,6 +332,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        */
 
                     }
                 });
@@ -352,6 +378,31 @@ public class FragmentPostSearchResultDetail extends Fragment {
                                     public void onRequestSent() {
                                         super.onRequestSent();
 
+                                        Thread t1 = new Thread(){
+                                            @Override
+                                            public void run() {
+                                                super.run();
+                                                try {
+                                                    NotificationManager deneme = new NotificationManager(post.getOwnerID(), "Ilanlarinizdan birine istek gelmistir","Istek");
+                                                    deneme.NotificationForNow();
+
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        t1.start();
+                                        try {
+                                            t1.join();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        Intent i = new Intent(getContext(), MainActivity.class);
+                                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        startActivity(i);
+                                        activity.finish();
                                         /*
                                     try {
                                         JSONObject deneme = new JSONObject();
@@ -389,103 +440,86 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                                          */
 
-                                        Thread t1 = new Thread() {
-                                            @Override
-                                            public void run() {
-                                                try {
 
-                                                    String jsonResponse;
+//                                        Thread t1 = new Thread() {
+//                                            @Override
+//                                            public void run() {
+//                                                try {
+//
+//                                                    String jsonResponse;
+//
+//                                                    URL url = new URL("https://onesignal.com/api/v1/notifications");
+//                                                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+//                                                    con.setUseCaches(false);
+//                                                    con.setDoOutput(true);
+//                                                    con.setDoInput(true);
+//
+//                                                    con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+//                                                    con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
+//                                                    con.setRequestMethod("POST");
+//
+//                                                    String strJsonBody = "{"
+//                                                            +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
+//                                                            +   "\"include_external_user_ids\": [\""+post.getOwnerID()+"\"],"
+//                                                            +   "\"channel_for_external_user_ids\": \"push\","
+//                                                            +   "\"data\": {\"foo\": \"bar\"},"
+//                                                            +   "\"contents\": {\"en\": \"Aktif ilaniniza bir kullanici tarafindan istek gonderildi\"},"
+//                                                            +   "\"headings\": {\"en\": \"İstek\"}"
+//                                                            + "}";
+//                                                    /*
+//                                                    String[] sikis = new String[]{post.getOwnerID()};
+//                                                    JSONObject deneme = new JSONObject(strJsonBody);
+//                                                    deneme.put("include_external_user_ids", );
+//                                                    strJsonBody = deneme.toString();
+//
+//
+//                                                     */
+//                                                    Log.d("Tag","strJsonBody:\n" + strJsonBody);
+//
+//                                                    byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+//                                                    con.setFixedLengthStreamingMode(sendBytes.length);
+//
+//                                                    OutputStream outputStream = con.getOutputStream();
+//                                                    outputStream.write(sendBytes);
+//
+//                                                    int httpResponse = con.getResponseCode();
+//                                                    Log.d("Tag","httpResponse: " + httpResponse);
+//
+//                                                    if (  httpResponse >= HttpURLConnection.HTTP_OK
+//                                                            && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+//                                                        Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+//                                                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+//                                                        scanner.close();
+//                                                    }
+//                                                    else {
+//                                                        Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+//                                                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+//                                                        scanner.close();
+//                                                    }
+//                                                    Log.d("Tag","jsonResponse:\n" + jsonResponse);
+//
+//
+//
+//                                                } catch(Throwable t) {
+//                                                    Log.d("Tag","Yarra yedik");
+//                                                    t.printStackTrace();
+//                                                }
+//
+//                                            }
+//                                        };
+//                                        t1.start();
+//                                        try {
+//                                            t1.join();
+//                                        } catch (InterruptedException e) {
+//                                            e.printStackTrace();
+//                                        }
+//                                        Intent i = new Intent(getContext(), MainActivity.class);
+//                                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
+//                                        dialog.dismiss();
+//                                        startActivity(i);
+//                                        activity.finish();
 
-                                                    URL url = new URL("https://onesignal.com/api/v1/notifications");
-                                                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                                                    con.setUseCaches(false);
-                                                    con.setDoOutput(true);
-                                                    con.setDoInput(true);
 
-                                                    con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                                                    con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
-                                                    con.setRequestMethod("POST");
-
-                                                    String strJsonBody = "{"
-                                                            +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
-                                                            +   "\"include_external_user_ids\": [\""+post.getOwnerID()+"\"],"
-                                                            +   "\"channel_for_external_user_ids\": \"push\","
-                                                            +   "\"data\": {\"foo\": \"bar\"},"
-                                                            +   "\"contents\": {\"en\": \"Aktif ilaniniza bir kullanici tarafindan istek gonderildi\"},"
-                                                            +   "\"headings\": {\"en\": \"İstek\"}"
-                                                            + "}";
-                                                    /*
-                                                    String[] sikis = new String[]{post.getOwnerID()};
-                                                    JSONObject deneme = new JSONObject(strJsonBody);
-                                                    deneme.put("include_external_user_ids", );
-                                                    strJsonBody = deneme.toString();
-
-
-                                                     */
-                                                    Log.d("Tag","strJsonBody:\n" + strJsonBody);
-
-                                                    byte[] sendBytes = strJsonBody.getBytes("UTF-8");
-                                                    con.setFixedLengthStreamingMode(sendBytes.length);
-
-                                                    OutputStream outputStream = con.getOutputStream();
-                                                    outputStream.write(sendBytes);
-
-                                                    int httpResponse = con.getResponseCode();
-                                                    Log.d("Tag","httpResponse: " + httpResponse);
-
-                                                    if (  httpResponse >= HttpURLConnection.HTTP_OK
-                                                            && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
-                                                        Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
-                                                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                                                        scanner.close();
-                                                    }
-                                                    else {
-                                                        Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
-                                                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                                                        scanner.close();
-                                                    }
-                                                    Log.d("Tag","jsonResponse:\n" + jsonResponse);
-
-
-
-                                                } catch(Throwable t) {
-                                                    Log.d("Tag","Yarra yedik");
-                                                    t.printStackTrace();
-                                                }
-
-                                            }
-                                        };
-                                        t1.start();
-                                        try {
-                                            t1.join();
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        Intent i = new Intent(getContext(), MainActivity.class);
-                                        Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
-                                        dialog.dismiss();
-                                        startActivity(i);
-                                        activity.finish();
-
-
-
-                                    /*
-                                        try {
-
-                                            OneSignal.postNotification(new JSONObject("{'contents': {'en':'Aktif ilaniniza bir kullanici tarafindan istek gonderildi'}, " +
-                                                    "'include_external_user_ids': ['" + post.getOwnerID() + "']}"),
-
-                                                    null);
-                                            Intent i = new Intent(getContext(), MainActivity.class);
-                                            Toast.makeText(activity,"İstek gönderildi.",Toast.LENGTH_LONG).show();
-                                            dialog.dismiss();
-                                            startActivity(i);
-                                            activity.finish();
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            Toast.makeText(activity,"İstek gönderilirken bir hata meydana geldi.",Toast.LENGTH_LONG).show();
-                                        }
-                                        */
                                     }
                                 });
                     }

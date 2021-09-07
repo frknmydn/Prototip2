@@ -27,6 +27,8 @@ import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -92,6 +94,8 @@ public class HomeFragment extends Fragment {
         btnAddPost = view.findViewById(R.id.btnAddPostFragmentH);
         btnSearchPost = view.findViewById(R.id.btnSearchPost);
         carList = new ArrayList<>();
+
+        OneSignal.setExternalUserId(userid);
 
         btnAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +186,29 @@ public class HomeFragment extends Fragment {
         Log.d("TAGGO", "onViewCreated: carlist size 1 -- " + carList.size());
         if(carList.size()==0){
             carDAL.getMyCars(userid, new CarCallback() {
+                @Override
+                public void getMyCars(List<Car> cars) {
+                    super.getMyCars(cars);
+                    for(Car car : cars){
+                        //AsyncTask.execute(() -> appDatabase.carDao().insertAll(car));
+                        Thread t1 = new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                                appDatabase.carDao().insertAll(car);
+                            }
+                        };
+                        t1.start();
+                        try {
+                            t1.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Intent i = new Intent(mainActivity, UploadPostActivity.class);
+                    startActivity(i);
+                }
+
                 @Override
                 public void nullCar() {
                     super.nullCar();

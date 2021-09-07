@@ -154,7 +154,6 @@ public class UploadPostActivity extends AppCompatActivity {
 
                 try {
                     OSDeviceState device = OneSignal.getDeviceState();
-                    String oneSignalID = device.getUserId();
                     long timestamp = post.getTimestamp()-900L;
                     SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));

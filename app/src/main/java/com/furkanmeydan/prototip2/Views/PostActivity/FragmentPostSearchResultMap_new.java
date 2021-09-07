@@ -3,6 +3,8 @@ package com.furkanmeydan.prototip2.Views.PostActivity;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -19,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
@@ -43,8 +47,11 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 
 public class FragmentPostSearchResultMap_new extends Fragment implements OnMapReadyCallback {
@@ -56,17 +63,21 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     String cord3 = "";
     String cord4 = "";
     int counter = 0;
-    Button btnChangeFragment;
     private GoogleMap mMap;
     LocationManager locationManager;
     PostActivity activity;
     //Bundle bundle;
     LocalDataManager localDataManager;
 
+    ArrayList<String> addressArray;
+    List<Address> addressList;
+
     private MapView mapView;
     ImageButton btnClear;
     PlacesClient placesClient;
-
+    TextView txtMarkerStatus;
+    ImageView imgMarker;
+    Button btnZoomToMe,btnAddMarker;
 
 
     public FragmentPostSearchResultMap_new() {
@@ -80,12 +91,13 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
         activity = (PostActivity) getActivity();
         localDataManager = new LocalDataManager();
+        addressArray = new ArrayList<>();
         /*
         if(getArguments() != null){
             bundle = getArguments();
         }
-
          */
+
         if (activity != null) {
             Places.initialize(activity,"AIzaSyAkR63wvDhI3bukQYRSBxXtarR_e2G_t1I");
 
@@ -99,8 +111,8 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_post_search_result_map_new, container, false);
-        mapView = rootView.findViewById(R.id.MapViewResultNew);
+        View rootView = inflater.inflate(R.layout.fragment_upload_map2, container, false);
+        mapView = rootView.findViewById(R.id.mapViewUploadPost);
         mapView.onCreate(savedInstanceState);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -130,9 +142,16 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-            btnClear = view.findViewById(R.id.IBResultMapClear);
+            btnClear = view.findViewById(R.id.imageViewClearMapUploadPost);
             postDAL = new PostDAL();
-            btnChangeFragment = view.findViewById(R.id.btnChangeFragmentMap);
+
+            txtMarkerStatus = view.findViewById(R.id.txtMarkerStatus);
+            txtMarkerStatus.setText("Tahmini Kalkış Noktası");
+            imgMarker = view.findViewById(R.id.imgMarker);
+            btnZoomToMe = view.findViewById(R.id.btnZoomToMe);
+            btnAddMarker = view.findViewById(R.id.btnAddMarker);
+
+
 
 
 
@@ -184,12 +203,11 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
 
         locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+        btnAddMarker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onMapLongClick(LatLng latLng) {
-
-                addMarker(latLng);
-
+            public void onClick(View v) {
+                addMarker2(mMap.getCameraPosition().target);
             }
         });
 
@@ -244,6 +262,15 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
         });
 
          */
+        zoomOnMe();
+
+        btnZoomToMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomOnMe();
+            }
+        });
+
 
         btnClear.setOnClickListener(view -> {
             mMap.clear();
@@ -252,12 +279,122 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             localDataManager.removeSharedPreference(activity,"requestLat2");
             localDataManager.removeSharedPreference(activity,"requestLng1");
             localDataManager.removeSharedPreference(activity,"requestLng2");
+            addressArray.clear();
+            imgMarker.setVisibility(View.VISIBLE);
+            txtMarkerStatus.setText("Tahmini Kalkış Noktası");
+            txtMarkerStatus.setVisibility(View.VISIBLE);
 
         });
 
 
     }
 
+    public void zoomOnMe(){
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+            } else {
+                // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (lastLocation != null) {
+                    LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16));
+                }
+
+
+            }
+        } else {
+
+
+
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            if (lastLocation != null) {
+                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 14));
+            }
+
+
+        }
+    }
+    public void addMarker2(LatLng latLng) {
+        Log.d("TAG", "addMarker: " + "içine girildi");
+
+        String address = "";
+
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+        if (counter < 2) {
+            try {
+                addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                if (addressList != null && addressList.size() > 0) {
+                    if (addressList.get(0).getThoroughfare() != null && !addressList.get(0).getThoroughfare().equals("Unnamed Road")) {
+                        address += addressList.get(0).getThoroughfare();
+                        address += " " + addressList.get(0).getAdminArea();
+                        //address += addressList.get(0).getSubAdminArea();
+                        //address += addressList.get(0).getPostalCode();
+                        addressArray.add(address);
+
+                    } else {
+                        address += addressList.get(0).getAdminArea();
+                        addressArray.add(address);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("TAG", "addMarker2: EXCEPTION");
+            }
+
+            if (counter == 0) {
+                lat1 = latLng.latitude;
+                lng1 = latLng.longitude;
+
+                cord1 = lat1.toString();
+                cord2 = lng1.toString();
+
+
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLat1", lat1);
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLng1", lng1);
+                activity.bundle.putDouble("userlat1", lat1);
+                activity.bundle.putDouble("userlng1", lng1);
+                mMap.addMarker(new MarkerOptions().title("Biniş").position(latLng));
+                txtMarkerStatus.setText("Tahmini Varış Noktası");
+                addressArray.clear();
+
+
+            } else if (counter == 1) {
+                lat2 = latLng.latitude;
+                lng2 = latLng.longitude;
+
+                cord3 = lat2.toString();
+                cord4 = lng2.toString();
+
+
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLat2", lat2);
+                localDataManager.setSharedPreferenceForDouble(activity, "requestLng2", lng2);
+                activity.bundle.putDouble("userlat2",lat2);
+                activity.bundle.putDouble("userlng2",lng2);
+                mMap.addMarker(new MarkerOptions().title("İniş").position(latLng));
+
+                addressArray.clear();
+                txtMarkerStatus.setVisibility(View.GONE);
+                imgMarker.setVisibility(View.GONE);
+
+
+            }
+
+
+            counter++;
+
+
+        }
+
+
+
+    }
 
     public void addMarker(LatLng latLng) {
         Log.d("Tag", "addMarker: "+counter);
@@ -275,6 +412,8 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 activity.bundle.putDouble("userlat1",lat1);
                 activity.bundle.putDouble("userlng1",lng1);
                 mMap.addMarker(new MarkerOptions().title("Biniş").position(latLng));
+                txtMarkerStatus.setText("Tahmini Varış Noktası");
+                addressArray.clear();
 
 
             } else if (counter == 1) {
@@ -290,6 +429,10 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 activity.bundle.putDouble("userlat2",lat2);
                 activity.bundle.putDouble("userlng2",lng2);
                 mMap.addMarker(new MarkerOptions().title("İniş").position(latLng));
+
+                addressArray.clear();
+                txtMarkerStatus.setVisibility(View.GONE);
+                imgMarker.setVisibility(View.GONE);
 
 
             }

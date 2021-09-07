@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
@@ -72,27 +73,49 @@ public class PostActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //postSearchFragment.saveDetails();
+
                 double lat1 = bundle.getDouble("userlat1");
                 double lng1 = bundle.getDouble("userlng1");
                 double lat2 = bundle.getDouble("userlat2");
                 double lng2 = bundle.getDouble("userlng2");
+
+                Log.d("Tag", "lat1: "+lat1);
+                Log.d("Tag", "lng1: "+lng1);
+                Log.d("Tag", "lat2: "+lat2);
+                Log.d("Tag", "lng2: "+lng2);
+
+                /*
+                if(lat1 == 0d || lng1 == 0d || lat2 == 0d || lng2 == 0d){
+                    Toast.makeText(getApplicationContext(),"Lütfen haritada inis ve kalkis noktalarinizi belirtiniz",Toast.LENGTH_LONG).show();
+                }
+
+                else{
+                    int direction = postDAL.findDirection(lat1, lng1, lat2, lng2);
+                    bundle.putInt("direction", direction);
+
+                    //Kullanıcı istek gönderirken kullanmak için
+
+
+                    changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                }
+
+                 */
 
                 int direction = postDAL.findDirection(lat1, lng1, lat2, lng2);
                 bundle.putInt("direction", direction);
 
                 //Kullanıcı istek gönderirken kullanmak için
 
+                if(bundle.getString("gender") != null){
+                    changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                    searchTabLayout.setVisibility(View.GONE);
+                }
 
-                changeFragmentArgs(new PostSearchResultFragment(), bundle);
             }
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("Tag", "Activity onDestroy: LOL");
-    }
 
     public void changeFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -29,6 +29,29 @@
 
     </fragment>
 
+
+
+    <TextView
+        android:id="@+id/txtMarkerStatusSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/imgMarkerSearch"
+        app:layout_constraintEnd_toEndOf="@+id/imgMarkerSearch"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/imgMarkerSearch" />
+
+    <ImageView
+        android:id="@+id/imgMarkerSearch"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_map"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:contentDescription="@null"
         android:id="@+id/IBResultMapClear"
@@ -41,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@+id/MapViewResultNew" />
 
     <Button
-        android:id="@+id/btnChangeFragmentMap"
+        android:id="@+id/btnAddMarkerSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"

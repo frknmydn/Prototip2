@@ -26,6 +26,7 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.QuestionCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.NotificationManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.QuestionDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
@@ -153,15 +154,23 @@ public class FragmentRequestSenderProfile extends Fragment {
                     @Override
                     public void onRequestAccepted() {
                         super.onRequestAccepted();
-                        try {
-                            long timestamp = request.getPostTimestamp()-900L;
 
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
-                            String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
-                            Log.d("Tag","onesignal date: "+dateTime);
-                            //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+                        Thread t1 = new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
 
+                                try {
+                                    long timestamp = request.getPostTimestamp()-900L;
+
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));
+                                    String dateTime = dateCombinedFormat.format(date) + " GMT+0300";
+                                    Log.d("Tag","onesignal date: "+dateTime);
+                                    //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Gonderdiginiz isteklerinizden biri onaylandi'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+                                    NotificationManager deneme = new NotificationManager(request.getSenderID(),dateTime,"Gonderdiginiz isteklerinizden biri onaylandi","Onay");
+                                    deneme.NotificationForNow();
+                            /*
                             ///// DENEME DENEMEE DENEME DENEME
                             Thread t1 = new Thread() {
                                 @Override
@@ -188,14 +197,7 @@ public class FragmentRequestSenderProfile extends Fragment {
                                                 +   "\"contents\": {\"en\": \"Gonderdiginiz isteklerinizden biri onaylandi\"},"
                                                 +   "\"headings\": {\"en\": \"Onay\"}"
                                                 + "}";
-                                                    /*
-                                                    String[] sikis = new String[]{post.getOwnerID()};
-                                                    JSONObject deneme = new JSONObject(strJsonBody);
-                                                    deneme.put("include_external_user_ids", );
-                                                    strJsonBody = deneme.toString();
 
-
-                                                     */
                                         Log.d("Tag","strJsonBody:\n" + strJsonBody);
 
                                         byte[] sendBytes = strJsonBody.getBytes("UTF-8");
@@ -242,14 +244,7 @@ public class FragmentRequestSenderProfile extends Fragment {
                                                 +   "\"headings\": {\"en\": \"Hatirlatma\"},"
                                                 +   "\"send_after\": \""+dateTime+"\""
                                                 + "}";
-                                                    /*
-                                                    String[] sikis = new String[]{post.getOwnerID()};
-                                                    JSONObject deneme = new JSONObject(strJsonBody);
-                                                    deneme.put("include_external_user_ids", );
-                                                    strJsonBody = deneme.toString();
 
-
-                                                     */
                                         Log.d("Tag","strJsonBody:\n" + strJsonBody);
 
                                          sendBytes = strJsonBody.getBytes("UTF-8");
@@ -292,25 +287,10 @@ public class FragmentRequestSenderProfile extends Fragment {
                             }
 
 
+                            */
 
-
-
-
-
-
-                            Toast.makeText(activity,"İstek Onaylandı.",Toast.LENGTH_LONG).show();
-                            //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}").put("send_after",dateTime), null);
-
-
-
-
-
-
-
-
-
-
-
+                                    Toast.makeText(activity,"İstek Onaylandı.",Toast.LENGTH_LONG).show();
+                                    //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Hatirlatma: yolculuk saatinize 15 dakika kalmistir'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}").put("send_after",dateTime), null);
 
 
                             /*
@@ -318,10 +298,19 @@ public class FragmentRequestSenderProfile extends Fragment {
                             startActivity(i);
                             activity.finish();
                             */
-                            activity.changeFragment(new FragmentRequestsToMyPosts());
-                        } catch (Exception e) {
+                                    activity.changeFragment(new FragmentRequestsToMyPosts());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.d("Tag","onesignal date: YOH CATCHLEDİ");
+                                }
+                            }
+                        };
+
+                        t1.start();
+                        try {
+                            t1.join();
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
-                            Log.d("Tag","onesignal date: YOH CATCHLEDİ");
                         }
 
                     }
