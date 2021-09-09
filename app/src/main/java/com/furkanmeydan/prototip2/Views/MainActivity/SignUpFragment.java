@@ -276,9 +276,14 @@ public class SignUpFragment extends Fragment {
 
                     ImageDecoder.Source source = ImageDecoder.createSource(mainActivity.getContentResolver(), imageData);
                     selectedImage = ImageDecoder.decodeBitmap(source);
+
+                    selectedImage = resize(selectedImage,1920,1080);
+
                 } else {
 
                     selectedImage = MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver(), imageData);
+
+                    selectedImage = resize(selectedImage,1920,1080);
 
                 }
                 imageView.setImageBitmap(selectedImage);
@@ -289,6 +294,28 @@ public class SignUpFragment extends Fragment {
             }
 
 
+        }
+    }
+
+    private  Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > ratioBitmap) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            }
+            else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
         }
     }
 

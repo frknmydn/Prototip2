@@ -67,15 +67,15 @@
             android:id="@+id/layoutMyRequestAcceptedInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:background="#DEDFDF"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txtWishList"
+                android:id="@+id/txtAracYokPopUP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -94,17 +94,17 @@
                 tools:ignore="TextViewEdits" />
 
             <ImageView
-                android:contentDescription="@null"
                 android:id="@+id/imageView399"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
                 android:layout_marginEnd="310dp"
                 android:layout_marginBottom="60dp"
+                android:contentDescription="@null"
                 android:src="@drawable/info"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/txtWishList"
-                app:layout_constraintStart_toStartOf="@+id/txtWishList"
+                app:layout_constraintEnd_toEndOf="@+id/txtAracYokPopUP"
+                app:layout_constraintStart_toStartOf="@+id/txtAracYokPopUP"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,7 +136,7 @@
         android:id="@+id/consLayoutAwaiting"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -148,17 +148,16 @@
             android:id="@+id/layoutAwaitingInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:background="#DEDFDF"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.374">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txtfragmentRequestToMyPosts"
+                android:id="@+id/txtfragmentRequestAwaitingInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -166,7 +165,7 @@
                 android:background="#DEDFDF"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
-                android:text="Tarihi yaklaşan bir yolculuğa, onaylı katılma isteğiniz bulunmamaktadır."
+                android:text="Onaylanmayı bekleyen bir isteğiniz bulunmamaktadır."
                 android:textColor="#5C5C5C"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -177,16 +176,16 @@
                 tools:ignore="HardcodedText" />
 
             <ImageView
-                android:contentDescription="@null"
                 android:id="@+id/imageView3"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
                 android:layout_marginEnd="250dp"
+                android:contentDescription="@null"
                 android:src="@drawable/info"
                 android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/txtfragmentRequestToMyPosts"
-                app:layout_constraintEnd_toEndOf="@+id/txtfragmentRequestToMyPosts"
-                app:layout_constraintStart_toStartOf="@+id/txtfragmentRequestToMyPosts"
+                app:layout_constraintBottom_toTopOf="@+id/txtfragmentRequestAwaitingInfo"
+                app:layout_constraintEnd_toEndOf="@+id/txtfragmentRequestAwaitingInfo"
+                app:layout_constraintStart_toStartOf="@+id/txtfragmentRequestAwaitingInfo"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -248,14 +247,14 @@
             android:id="@+id/conslayoutMyRequestsHistoryInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txtWishList234"
+                android:id="@+id/txtfragmentRequestHistoryInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -264,7 +263,7 @@
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:inputType="textMultiLine|text|textImeMultiLine"
-                android:text="Cevaplanmayı bekleyen sorunuz bulunmamaktadır."
+                android:text="Katıldığınız bir yolculuk bulunmamaktadır."
                 android:textColor="#5C5C5C"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -274,18 +273,18 @@
                 tools:ignore="HardcodedText,TextViewEdits" />
 
             <ImageView
-                android:contentDescription="@null"
                 android:id="@+id/imageView6"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
                 android:layout_marginEnd="310dp"
                 android:layout_marginBottom="60dp"
+                android:contentDescription="@null"
                 android:src="@drawable/info"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/txtWishList234"
+                app:layout_constraintEnd_toEndOf="@+id/txtfragmentRequestHistoryInfo"
                 app:layout_constraintHorizontal_bias="0.422"
-                app:layout_constraintStart_toStartOf="@+id/txtWishList234"
+                app:layout_constraintStart_toStartOf="@+id/txtfragmentRequestHistoryInfo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -352,16 +351,13 @@
             android:id="@+id/layoutYaklasInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="150dp"
             android:background="#DEDFDF"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.355">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/txtfragmentRequestToMyPosts55"
@@ -383,11 +379,11 @@
                 tools:ignore="HardcodedText" />
 
             <ImageView
-                android:contentDescription="@null"
                 android:id="@+id/imageView354"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
                 android:layout_marginEnd="250dp"
+                android:contentDescription="@null"
                 android:src="@drawable/info"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/txtfragmentRequestToMyPosts55"

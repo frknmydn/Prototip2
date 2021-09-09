@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
     AppDatabase appDatabase;
     CarDAL carDAL;
     ArrayList<Car> carList;
+    Dialog popUpNoCar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -213,8 +215,15 @@ public class HomeFragment extends Fragment {
                 public void nullCar() {
                     super.nullCar();
                     if(carList.size() == 0){
-                        Toast.makeText(mainActivity,"Araç yok",Toast.LENGTH_LONG).show();
-                    }
+                        //Toast.makeText(mainActivity,"Araç yok",Toast.LENGTH_LONG).show();
+                        popUpNoCar = new Dialog(mainActivity);
+                        popUpNoCar.setContentView(R.layout.arac_yok_popup);
+                        popUpNoCar.show();
+                        Button btnGoToCarAddPage = popUpNoCar.findViewById(R.id.btnGoToAddCarPagePopUP);
+                        btnGoToCarAddPage.setOnClickListener(view112 -> {
+                            mainActivity.changeFragment(new FragmentMyCars());
+                            popUpNoCar.dismiss();
+                    });}
                 }
             });
         }

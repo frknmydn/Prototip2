@@ -772,6 +772,7 @@ public class PostDAL {
 
     }
 
+
     /*
     public void checkParams(long timestamp1, long timestamp2, String gender,String city,int direction){
         if(timestamp1 == null){

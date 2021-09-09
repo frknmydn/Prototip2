@@ -51,7 +51,7 @@
         app:layout_constraintVertical_bias="0.181">
 
         <TextView
-            android:id="@+id/txtWishList"
+            android:id="@+id/txtAracYokPopUP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -76,8 +76,8 @@
             android:layout_marginEnd="285dp"
             android:src="@drawable/info"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/txtWishList"
-            app:layout_constraintEnd_toEndOf="@+id/txtWishList"
-            app:layout_constraintStart_toStartOf="@+id/txtWishList" />
+            app:layout_constraintBottom_toTopOf="@+id/txtAracYokPopUP"
+            app:layout_constraintEnd_toEndOf="@+id/txtAracYokPopUP"
+            app:layout_constraintStart_toStartOf="@+id/txtAracYokPopUP" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

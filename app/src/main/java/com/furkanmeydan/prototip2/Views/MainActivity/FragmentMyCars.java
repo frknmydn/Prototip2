@@ -280,7 +280,6 @@ public class FragmentMyCars extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
             imageData = data.getData();
-            Double originalWidth, originalHeight, ratio;
 
             try {
 
@@ -293,7 +292,6 @@ public class FragmentMyCars extends Fragment {
 
                     selectedImage = resize(selectedImage,1024,720);
 
-                    imageData = getImageUri(mainActivity,selectedImage);
 
 
 
@@ -301,8 +299,8 @@ public class FragmentMyCars extends Fragment {
 
                     selectedImage = MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver(), imageData);
 
-                    selectedImage = Bitmap.createScaledBitmap(selectedImage,300,300,false);
-                    imageData = getImageUri(mainActivity,selectedImage);
+                    selectedImage = resize(selectedImage,1024,720);
+
 
                 }
                 imgViewCarPhoto.setImageBitmap(selectedImage);

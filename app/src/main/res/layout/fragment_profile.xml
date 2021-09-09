@@ -60,12 +60,12 @@
             tools:ignore="HardcodedText" />
 
         <ImageView
-            android:contentDescription="@null"
             android:id="@+id/ImageViewFragment"
             android:layout_width="150sp"
             android:layout_height="150sp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="44dp"
+            android:contentDescription="@null"
             app:layout_constraintBottom_toTopOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,12 +84,12 @@
             android:ems="10"
             android:gravity="center_horizontal|center_vertical"
             android:hint="Adınız Soyadınız"
+            android:importantForAutofill="no"
             app:layout_constraintBottom_toTopOf="@+id/EDTEmailFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ImageViewFragment"
-            tools:ignore="HardcodedText"
-            android:importantForAutofill="no" />
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/EDTEmailFragment"
@@ -100,13 +100,13 @@
             android:ems="10"
             android:gravity="center_horizontal|center_vertical"
             android:hint="E-mail Adresiniz"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/BirthdayFragment"
             app:layout_constraintEnd_toEndOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintStart_toStartOf="@+id/EDTNameSurnameFragment"
             app:layout_constraintTop_toBottomOf="@+id/EDTNameSurnameFragment"
-            tools:ignore="HardcodedText,TextFields"
-            android:importantForAutofill="no" />
+            tools:ignore="HardcodedText,TextFields" />
 
         <TextView
             android:id="@+id/BirthdayFragment"
@@ -149,10 +149,10 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="25dp"
-            android:text="Güncelle"
-            android:fontFamily="sans-serif-black"
-            android:textSize="16sp"
             android:background="#E1E1E1"
+            android:fontFamily="sans-serif-black"
+            android:text="Güncelle"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

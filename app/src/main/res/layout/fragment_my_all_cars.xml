@@ -68,11 +68,8 @@
         android:id="@+id/layoutMyAllCarsInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="150dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoToAddCarPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
