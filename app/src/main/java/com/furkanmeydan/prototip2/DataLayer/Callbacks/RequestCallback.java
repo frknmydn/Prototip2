@@ -52,4 +52,12 @@ public abstract class RequestCallback {
         public void onRequestsDeletedOnBlock(){
 
         }
+
+        public void onRequestDeleted(){
+
+        }
+
+        public void onRequestChecked(boolean flag){
+
+        }
 }

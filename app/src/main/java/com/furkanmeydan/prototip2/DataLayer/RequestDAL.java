@@ -2,13 +2,19 @@ package com.furkanmeydan.prototip2.DataLayer;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Request;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.Objects;
@@ -200,6 +206,85 @@ public class RequestDAL {
 
     }
 
+
+    // Kullanıcı postsearchresultdetail fragmentında isteği sil butonuna bastığı anda ilk bu metod çalışıyor
+    // Onaylı isteği var mı yok mu kontrolü yapılıyor
+    public void checkRequestDeletionStatus(String postID, String postOwnerID, RequestCallback callback){
+        currentUserID = firebaseAuth.getCurrentUser().getUid();
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID, currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() != null){
+                    if(task.getResult().size() > 0){
+                        List<Request> list = task.getResult().toObjects(Request.class);
+                        if(list.get(0).getStatus() == 1){
+                            boolean flag = true;
+                            callback.onRequestChecked(flag);
+                        }else if (list.get(0).getStatus() == 0){
+                            boolean flag = false;
+                            callback.onRequestChecked(flag);
+                        }
+
+                    }
+                }
+            }
+        });
+
+    }
+
+    //Eğer checkRequestDeletionStatus metodu true döndürürse bu metod çalışacak, bu metod çalışırken popup/dialog ekranına gerek var
+    public void deleteRequestIfConfirmed(String postID, String postOwnerID,String reason, RequestCallback callback){
+        currentUserID = firebaseAuth.getCurrentUser().getUid();
+
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID, currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0){
+                        List<Request> list = task.getResult().toObjects(Request.class);
+                            for(DocumentSnapshot ds : task.getResult().getDocuments()){
+                                DocumentReference dr = ds.getReference();
+                                dr.update(CollectionHelper.REQUEST_DELETIONRESON,reason);
+                            list.get(0).setPendingDeletion(reason);
+
+                        }
+                        callback.onRequestUpdated();
+                    }
+
+                }
+            }
+        });
+    }
+        //Eğer checkRequestDeletionStatus metodu false döndürürse bu metod çalışacak, bu metod çalışırken popup/dialog ekranına gerek yok
+    public void deleteRequestIfNotConfirmed(String postID, String postOwnerID,String reason,boolean flag, RequestCallback callback){
+        currentUserID = firebaseAuth.getCurrentUser().getUid();
+
+        firestore.collection(CollectionHelper.USER_COLLECTION)
+                .document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID, currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() !=null){
+                    if(task.getResult().size() > 0){
+                            for (DocumentSnapshot ds : task.getResult().getDocuments()) {
+                                ds.getReference().delete();
+                            }
+                            callback.onRequestDeleted();
+
+
+                    }
+
+                }
+            }
+        });
+    }
     public void getAcceptedRequests(String postID, String postOwnerID, final RequestCallback callback){
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)

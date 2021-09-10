@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
 
-    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText;
+    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText, pendingDeletion;
     Double lat1,lng1,lat2,lng2;
     long postTimestamp;
     int status; // 0--> bekliyor, -1--> ret , 1--> onaylanmış
@@ -122,5 +122,13 @@ public class Request implements Serializable {
 
     public int getOwnerConfirmed() {
         return ownerConfirmed;
+    }
+
+    public String getPendingDeletion() {
+        return pendingDeletion;
+    }
+
+    public void setPendingDeletion(String pendingDeletion) {
+        this.pendingDeletion = pendingDeletion;
     }
 }

@@ -66,6 +66,7 @@ public class CollectionHelper {
     final public static String REQUEST_LNG2 = "lng2";
     final public static String REQUEST_POSTOWNERCONFIRMED = "ownerConfirmed";
     final public static String REQUEST_SELFCONFIRMED = "selfConfirmed";
+    final public static String REQUEST_DELETIONRESON = "pendingDeletion";
 
 
     final public static String BLOCK_COLLECTION = "Blocks";

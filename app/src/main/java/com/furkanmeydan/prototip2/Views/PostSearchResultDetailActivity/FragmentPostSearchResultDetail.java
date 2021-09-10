@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -80,7 +83,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     carModel, carYear, carColor, carOptionalInfo;
     private ImageView carPic;
     private PostSearchResultDetailActivity activity;
-    Button btnSendRequest,btnAddToWish, btnStartService, btnEndService, btnLocationTracking;
+    Button btnSendRequest,btnAddToWish, btnStartService, btnEndService, btnLocationTracking,btnDeleteRequest;;
     LocalDataManager localDataManager;
     Double requestLat1, requestLng1, requestLat2, requestLng2;
     String senderID, senderName, senderImgURL, senderGender,senderEmail,senderBirthdate,senderOneSignalID, authID;
@@ -95,7 +98,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     boolean isPostOutdated;
     BroadcastReceiver localBroadcastReceiver;
     AppCompatButton btnDeletePost;
-    PopupWindow popupWindow;
+    NestedScrollView nestedScrollView;
 
 
     PopupWindow carPopup;
@@ -156,6 +159,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
         return inflater.inflate(R.layout.fragment_post_search_result_detail, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -180,6 +184,18 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnLocationTracking = view.findViewById(R.id.btnSearchResultDetailTrackLocation);
         // Scroll Element
         postDescription.setMovementMethod(new ScrollingMovementMethod());
+        nestedScrollView = view.findViewById(R.id.nestedScrollPostDetail);
+        btnDeleteRequest = view.findViewById(R.id.btnSearchResultDetailDeleteRequest);
+
+        nestedScrollView.setOnTouchListener((view15, motionEvent) -> {
+            postDescription.getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+        });
+
+        postDescription.setOnTouchListener((view14, motionEvent) -> {
+            postDescription.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
 
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -696,7 +712,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
                     btnSendRequest.setClickable(false);
                     btnSendRequest.setFocusable(false);
-                    btnSendRequest.setText("İstek gönderildi");
+                    btnSendRequest.setVisibility(View.INVISIBLE);
+                    btnDeleteRequest.setVisibility(View.VISIBLE);
                 }
             });
 
