@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.NotificationManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.Post;
@@ -163,8 +164,11 @@ public class UploadPostActivity extends AppCompatActivity {
                     Thread t1 = new Thread() {
                         @Override
                         public void run() {
+                            NotificationManager notificationManager = new NotificationManager(post.getOwnerID(),dateTime,"Yolculuk saatinize 15 dakika kalmistir","Hatirlatma");
                             try {
+                                notificationManager.NotificationForFuture();
 
+                                /*
                                 String jsonResponse;
 
                                 URL url = new URL("https://onesignal.com/api/v1/notifications");
@@ -211,6 +215,8 @@ public class UploadPostActivity extends AppCompatActivity {
                                 Log.d("Tag","jsonResponse:\n" + jsonResponse);
 
 
+
+                                 */
 
                             } catch(Throwable t) {
                                 Log.d("Tag","Yarra yedik");

@@ -1,230 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollAddCar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Views.MainActivity.FragmentMyCars">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Views.MainActivity.FragmentMyCars">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarTypeLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        tools:ignore="HardcodedText">
-
-        <AutoCompleteTextView
-            android:id="@+id/actwMyCarType"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Araç Tipi"
-            android:inputType="none"
-            android:padding="5dp"
-            android:textColor="#414141"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarBrandLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintEnd_toStartOf="@+id/MyCarModelLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MyCarTypeLayout"
-        tools:ignore="HardcodedText">
-
-        <AutoCompleteTextView
-            android:id="@+id/actwMyCarBrand"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/gray_circle_drawable"
-            android:fontFamily="sans-serif-light"
-            android:hint="Marka"
-            android:inputType="none"
-            android:padding="5dp"
-            android:textColor="#414141"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarModelLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/MyCarBrandLayout"
-        app:layout_constraintTop_toTopOf="@+id/MyCarBrandLayout"
-        tools:ignore="HardcodedText">
-
-        <AutoCompleteTextView
-            android:id="@+id/actwMyCarModel"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarTypeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            tools:ignore="HardcodedText">
+
+            <AutoCompleteTextView
+                android:id="@+id/actwMyCarType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="Araç Tipi"
+                android:inputType="none"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarBrandLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toStartOf="@+id/MyCarModelLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MyCarTypeLayout"
+            tools:ignore="HardcodedText">
+
+            <AutoCompleteTextView
+                android:id="@+id/actwMyCarBrand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gray_circle_drawable"
+                android:fontFamily="sans-serif-light"
+                android:hint="Marka"
+                android:inputType="none"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarModelLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/MyCarBrandLayout"
+            app:layout_constraintTop_toTopOf="@+id/MyCarBrandLayout"
+            tools:ignore="HardcodedText">
+
+            <AutoCompleteTextView
+                android:id="@+id/actwMyCarModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gray_circle_drawable"
+                android:fontFamily="sans-serif-light"
+                android:hint="Model"
+                android:inputType="none"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarYearLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/gray_circle_drawable"
-            android:fontFamily="sans-serif-light"
-            android:hint="Model"
-            android:inputType="none"
-            android:padding="5dp"
-            android:textColor="#414141"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toEndOf="@+id/MyCarBrandLayout"
+            app:layout_constraintStart_toStartOf="@+id/MyCarBrandLayout"
+            app:layout_constraintTop_toBottomOf="@+id/MyCarBrandLayout"
+            tools:ignore="HardcodedText">
 
+            <AutoCompleteTextView
+                android:id="@+id/actwMyCarYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gray_circle_drawable"
+                android:fontFamily="sans-serif-light"
+                android:hint="Model Yılı"
+                android:inputType="none"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarYearLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintEnd_toEndOf="@+id/MyCarBrandLayout"
-        app:layout_constraintStart_toStartOf="@+id/MyCarBrandLayout"
-        app:layout_constraintTop_toBottomOf="@+id/MyCarBrandLayout"
-        tools:ignore="HardcodedText">
-
-        <AutoCompleteTextView
-            android:id="@+id/actwMyCarYear"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarColourLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/gray_circle_drawable"
-            android:fontFamily="sans-serif-light"
-            android:hint="Model Yılı"
-            android:inputType="none"
-            android:padding="5dp"
-            android:textColor="#414141"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Renk"
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintEnd_toEndOf="@+id/MyCarModelLayout"
+            app:layout_constraintStart_toStartOf="@+id/MyCarModelLayout"
+            app:layout_constraintTop_toBottomOf="@+id/MyCarModelLayout"
+            tools:ignore="HardcodedText">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarColourLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        android:hint="Renk"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintBottom_toTopOf="@+id/MyCarOptionalInfoLayout"
-        app:layout_constraintEnd_toEndOf="@+id/MyCarModelLayout"
-        app:layout_constraintStart_toStartOf="@+id/MyCarModelLayout"
-        app:layout_constraintTop_toBottomOf="@+id/MyCarModelLayout"
-        tools:ignore="HardcodedText">
+            <EditText
+                android:id="@+id/actwMyCarColour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="sans-serif-light"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textPersonName"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/actwMyCarColour"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="textMultiLine|textPersonName"
-            android:fontFamily="sans-serif-light"
-            android:textColor="#414141"
-            android:textSize="16sp"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/MyCarOptionalInfoLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gray_circle_drawable"
-        android:textColorHint="#414141"
-        app:boxStrokeColor="#3D08CF"
-        app:layout_constraintBottom_toTopOf="@+id/btnSaveCar"
-        app:layout_constraintEnd_toEndOf="@+id/MyCarTypeLayout"
-        app:layout_constraintStart_toStartOf="@+id/MyCarYearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/MyCarYearLayout"
-        tools:ignore="HardcodedText">
-
-        <EditText
-            android:id="@+id/actwMyCarOptionalInfo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/MyCarOptionalInfoLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Eklemek İstediğiniz Bilgi Varsa Bu Alana Ekleyebilirsiniz."
-            android:importantForAutofill="no"
-            android:inputType="none|textMultiLine|textImeMultiLine"
-            android:padding="5dp"
-            android:textColor="#414141"
-            android:textSize="16sp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gray_circle_drawable"
+            android:textColorHint="#414141"
+            app:boxStrokeColor="#3D08CF"
+            app:layout_constraintBottom_toTopOf="@+id/btnSaveCar"
+            app:layout_constraintEnd_toEndOf="@+id/MyCarColourLayout"
+            app:layout_constraintStart_toStartOf="@+id/MyCarYearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/MyCarColourLayout"
+            tools:ignore="HardcodedText">
+
+            <EditText
+                android:id="@+id/actwMyCarOptionalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="Eklemek İstediğiniz Bilgi Varsa Bu Alana Ekleyebilirsiniz."
+                android:importantForAutofill="no"
+                android:inputType="none|textMultiLine|textImeMultiLine"
+                android:padding="5dp"
+                android:textColor="#414141"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSaveCar"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/deneme_button"
+            android:text="Ekle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="HardcodedText" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnSaveCar"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/deneme_button"
-        android:text="Ekle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/car_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="250dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/car_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

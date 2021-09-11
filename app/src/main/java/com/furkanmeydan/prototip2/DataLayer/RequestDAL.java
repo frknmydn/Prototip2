@@ -262,7 +262,7 @@ public class RequestDAL {
         });
     }
         //Eğer checkRequestDeletionStatus metodu false döndürürse bu metod çalışacak, bu metod çalışırken popup/dialog ekranına gerek yok
-    public void deleteRequestIfNotConfirmed(String postID, String postOwnerID,String reason,boolean flag, RequestCallback callback){
+    public void deleteRequestIfNotConfirmed(String postID, String postOwnerID,String reason, RequestCallback callback){
         currentUserID = firebaseAuth.getCurrentUser().getUid();
 
         firestore.collection(CollectionHelper.USER_COLLECTION)

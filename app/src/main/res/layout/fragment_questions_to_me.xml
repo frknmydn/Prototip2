@@ -9,14 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutMyRequestAcceptedInfo"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="150dp"
+        android:layout_height="wrap_content"
         android:background="#DEDFDF"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView31">
+        app:layout_constraintTop_toBottomOf="@+id/textView31"
+        app:layout_constraintVertical_bias="0.325">
 
         <TextView
             android:id="@+id/txtAracYokPopUP"
@@ -100,6 +101,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="2dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,10 +112,6 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

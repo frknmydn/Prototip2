@@ -65,11 +65,8 @@ public class MyPostFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         layoutContents = view.findViewById(R.id.myPostsContentsLayout);
-        layoutContents.setVisibility(View.GONE);
         layoutProgress = view.findViewById(R.id.myPostsProgressLayout);
-        layoutProgress.setVisibility(View.VISIBLE);
         layoutInfo = view.findViewById(R.id.consLayoutMyPosts);
-        layoutInfo.setVisibility(View.GONE);
 
         recyclerView = view.findViewById(R.id.myPostRCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,6 +104,7 @@ public class MyPostFragment extends Fragment {
                     postRCLAdapter.notifyDataSetChanged();
                 }else{
                     layoutProgress.setVisibility(View.GONE);
+                    layoutContents.setVisibility(View.GONE);
                     layoutInfo.setVisibility(View.VISIBLE);
                 }
             }

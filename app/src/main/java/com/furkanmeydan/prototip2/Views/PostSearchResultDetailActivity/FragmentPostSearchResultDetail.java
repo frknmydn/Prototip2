@@ -69,6 +69,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.security.acl.LastOwnerException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -356,6 +357,30 @@ public class FragmentPostSearchResultDetail extends Fragment {
         });
 
 
+        btnDeleteRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestDAL.checkRequestDeletionStatus(post.getPostID(), post.getOwnerID(), new RequestCallback() {
+                    @Override
+                    public void onRequestChecked(boolean flag) {
+                        super.onRequestChecked(flag);
+                        if(flag){
+
+                        }else{
+                            requestDAL.deleteRequestIfNotConfirmed(post.getPostID(), post.getOwnerID(), "DENEME LOL", new RequestCallback() {
+                                @Override
+                                public void onRequestDeleted() {
+                                    super.onRequestDeleted();
+                                    Toast.makeText(activity,"İSTEK SİLİNDİ",Toast.LENGTH_LONG).show();
+                                    btnDeleteRequest.setVisibility(View.INVISIBLE);
+                                    btnSendRequest.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
         btnSendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
