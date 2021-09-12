@@ -48,10 +48,10 @@ public class PostDAL {
         String description = post.getDescription();
         String destination = post.getDestination();
 
-        double fromLat = post.getFromLat();
-        double toLat = post.getToLat();
-        double fromLng = post.getFromLng();
-        double toLng = post.getToLng();
+        Double fromLat = post.getFromLat();
+        Double toLat = post.getToLat();
+        Double fromLng = post.getFromLng();
+        Double toLng = post.getToLng();
         String postID = UUID.randomUUID().toString();
 
         String postOwnerOneSignalID = localDataManager.getSharedPreference(context,"sharedOneSignalID",null);
@@ -71,11 +71,14 @@ public class PostDAL {
                 Toast.makeText(context, "Lütfen Kaç Yol Arkadaşı Alabileceğiniz Seçin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
             }
-            if (toLat == 0 || toLng == 0 || fromLat == 0 || fromLng == 0 || marker1City == null || marker2City == null) {
+
+
+            if (fromLat == null || fromLng == null || toLat == null || toLng == null || marker1City == null || marker2City == null) {
                 Toast.makeText(context, "Lütfen Haritadan Kalkış ve Varış Noktalarını Belirtin", Toast.LENGTH_LONG).show();
                 errors += "HATA";
 
             }
+
 
             if (citySharedPrefSpinner == null) {
                 Toast.makeText(context, "Lütfen İlanın Şehrini Seçiniz.", Toast.LENGTH_LONG).show();
@@ -129,7 +132,7 @@ public class PostDAL {
                 long secondsNowTimestamp = nowTimestamp.getSeconds();
                 long timestamp14Days = 1209600L;
                 if (timestamp < secondsNowTimestamp) {
-                    Toast.makeText(context, "Geçmişe İlan Veremezsiniz :)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Geçmişe İlan Veremezsiniz", Toast.LENGTH_LONG).show();
                     errors += "HATA";
                 }
 
@@ -143,6 +146,7 @@ public class PostDAL {
                 }
 
             }
+
 
 
             if (errors.isEmpty()) {
