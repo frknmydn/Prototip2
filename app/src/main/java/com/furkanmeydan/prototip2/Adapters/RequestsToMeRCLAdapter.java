@@ -1,7 +1,10 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -113,6 +116,16 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
             txtGender = itemView.findViewById(R.id.requestsToMeRowRCLGender);
             btnDecline = itemView.findViewById(R.id.btnrequestsToMeRowRCLDecline);
             txtRequestText = itemView.findViewById(R.id.requestsToMeRowRCLRequestText);
+
+            txtRequestText.setOnTouchListener(new View.OnTouchListener() {
+                @SuppressLint("ClickableViewAccessibility")
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    view.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            txtRequestText.setMovementMethod(new ScrollingMovementMethod());
 
         }
     }
