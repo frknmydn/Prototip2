@@ -17,157 +17,216 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView45"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Saat Aralığı"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView19"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView19"
-            app:layout_constraintTop_toBottomOf="@+id/textView26"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Şehir"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView19"
-            app:layout_constraintEnd_toStartOf="@+id/spinnerSearchCityFS"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <Spinner
-            android:id="@+id/spinnerSearchCityFS"
+        <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/spinner_shape"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView17"
-            app:layout_constraintTop_toTopOf="@+id/textView17" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="@string/cinsiyet"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView17"
-            app:layout_constraintStart_toStartOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:paddingLeft="25dp"
+                android:text="Şehir"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
 
-        <Spinner
-            android:id="@+id/spinnerSearchGenderFS"
+            <Spinner
+                android:id="@+id/spinnerSearchCityFS"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/spinner_shape" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:paddingLeft="25dp"
+                android:text="@string/cinsiyet"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerSearchGenderFS"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/spinner_shape" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/spinner_shape"
-            app:layout_constraintBottom_toTopOf="@+id/edtSearchDateFS"
-            app:layout_constraintEnd_toEndOf="@+id/spinnerSearchCityFS"
-            app:layout_constraintStart_toStartOf="@+id/spinnerSearchCityFS"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerSearchCityFS" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="@string/tarih"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView19"
-            app:layout_constraintStart_toStartOf="@+id/textView19"
-            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:paddingLeft="25dp"
+                android:text="@string/tarih"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/edtSearchDateFS"
+            <EditText
+                android:id="@+id/edtSearchDateFS"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/spinner_shape"
+                android:ems="10"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:hint="@string/tarih"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry,TextFields" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/spinner_shape"
-            android:ems="10"
-            android:focusable="false"
-            android:gravity="center_vertical"
-            android:hint="@string/tarih"
-            android:inputType="textPersonName"
-            android:paddingStart="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/spinnerSearchGenderFS"
-            app:layout_constraintStart_toStartOf="@+id/spinnerSearchGenderFS"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerSearchGenderFS"
-            tools:ignore="RtlSymmetry,TextFields"
-            android:importantForAutofill="no" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
-        <EditText
-            android:id="@+id/edtSearchTime1FS"
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:paddingLeft="25dp"
+                android:text="Saat Aralığı"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/edtSearchTime1FS"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/spinner_shape"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Başlangıç Saati"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:visibility="invisible"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="10dp"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center|center_vertical"
+                android:text="-"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/edtSearchTime2FS"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:background="@drawable/spinner_shape"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Bitiş Saati"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:visibility="invisible"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="7dp"
-            android:background="@drawable/spinner_shape"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="Başlangıç Saati"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:paddingStart="10dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toStartOf="@+id/textView29"
-            app:layout_constraintStart_toStartOf="@+id/edtSearchDateFS"
-            app:layout_constraintTop_toBottomOf="@+id/edtSearchDateFS"
-            tools:ignore="HardcodedText,RtlSymmetry" />
+            android:layout_marginEnd="1dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center|center_vertical"
-            android:text="-"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/edtSearchTime2FS"
-            app:layout_constraintStart_toEndOf="@+id/edtSearchTime1FS"
-            app:layout_constraintTop_toTopOf="@+id/edtSearchTime1FS"
-            tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BİLGİLENDİRME"
+                android:textColor="#DC8300"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edtSearchTime2FS"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="2dp"
-            android:background="@drawable/spinner_shape"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="Bitiş Saati"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:paddingStart="10dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/edtSearchDateFS"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/edtSearchTime1FS"
-            tools:ignore="HardcodedText,RtlSymmetry" />
+            <TextView
+                android:id="@+id/textView53"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="-İlana binmek istediğiniz şehir ile haritada seçtiğiniz noktaların aynı şehir içinde olması gerekmektedir. " />
+
+            <TextView
+                android:id="@+id/textView54"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="-Bu sayfadaki seçtiğiniz cinsiyet araç sahibinin cinsiyeti olmaktadır. Seçtiğiniz cinsiyete göre ilanlar listelenmektedir. " />
+
+            <TextView
+                android:id="@+id/textView56"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="-Size uygun minimum ve maksimum saat aralığı listelenmektedir. Örneğin saat 14.00'da yolculuğuna başlayacak bir ilan aramak isterseniz saat aralığını 13.00-15.00 olarak seçmelisiniz." />
+
+            <TextView
+                android:id="@+id/textView57"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="-Seçtiğiniz saat aralığına göre listelenen ilanlardaki saat ilan sahibinin kalkış saatidir. Trafiğe ve rotasındaki değişikliğine göre saat farklılık gösterebilir. " />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

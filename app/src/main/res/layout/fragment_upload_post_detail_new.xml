@@ -173,7 +173,7 @@
             android:id="@+id/UPDEDTDescriptionLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="292dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
@@ -181,8 +181,8 @@
             android:hint="Yolculuk hakkında detaylı bilgi"
             android:textColorHint="#414141"
             app:boxStrokeColor="#3D08CF"
-            app:layout_constraintBottom_toTopOf="@+id/layoutCar"
             app:layout_constraintEnd_toEndOf="@+id/UPDTimeLayout"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/UPDDateLayout"
             app:layout_constraintTop_toBottomOf="@+id/UPDDateLayout"
             tools:ignore="HardcodedText">
@@ -207,8 +207,8 @@
             android:layout_height="65dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/deneme_select_car"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/UPDEDTDescriptionLayout"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/UPDEDTDescriptionLayout"
             app:layout_constraintTop_toBottomOf="@+id/UPDEDTDescriptionLayout">
 
@@ -220,12 +220,87 @@
                 android:paddingTop="10dp"
                 android:text="Araç Seçiniz"
                 android:textColor="#414141"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutCar">
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BİLGİLENDİRME"
+                android:textColor="#E85729"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView59"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Yolculuğunuzu isimlendirirken kalkacağınız ve varacağınız yerleri belirtmeniz istenmektedir." />
+
+            <TextView
+                android:id="@+id/textView60"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Yolcu sayısını belirtirken siz hariç yanınızda kaç kişiyi alabileceğinizi belirtmelisiniz." />
+
+            <TextView
+                android:id="@+id/textView61"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Belirttiğiniz tarih ve saatte yolculuğunuzu gerçekleştirmekle sorumlusunuz. " />
+
+            <TextView
+                android:id="@+id/textView62"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Yolculuk hakkında detaylı bilgi verilirken:" />
+
+            <TextView
+                android:id="@+id/textView63"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="--Uğrayacağınız veya bekleyeceğiniz yerleri belirtmelisiniz" />
+
+            <TextView
+                android:id="@+id/textView64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="--Haritada görünmeyen bir konumdan geçecekseniz." />
+
+            <TextView
+                android:id="@+id/textView65"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="--Yolculuk boyunca aracınız içinde gerçekleşmesini istemediğiniz bir durum var ise (örn: sigara içmek)" />
+
+            <TextView
+                android:id="@+id/textView66"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="gibi ve benzeri durumları belirtmelisiniz." />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

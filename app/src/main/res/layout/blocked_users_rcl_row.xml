@@ -109,6 +109,7 @@
             android:text="PROFİLİ GÖR"
 
             />
+
         <Button
             android:id="@+id/btnUnBlockUser"
             android:layout_width="match_parent"
@@ -117,10 +118,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/imgUserRclRow"
+            android:backgroundTint="#0BA611"
             android:drawablePadding="2dp"
             android:text="ENGELİ KALDIR"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
 
     </RelativeLayout>
