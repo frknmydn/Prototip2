@@ -18,308 +18,6 @@
         android:background="#DDDCDC"
         tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchResultDetail">
 
-        <TextView
-            android:id="@+id/txtSearchResultDetailHeader"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="#BFC5F4"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            android:text="İLAN SAHİBİNİN PROFİLİ"
-            android:textColor="#403F3F"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/statik1"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Şehir"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailHeader"
-            app:layout_constraintTop_toBottomOf="@+id/txtSearchResultDetailHeader"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_horizontal|center_vertical"
-            android:text=":"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView21"
-            app:layout_constraintTop_toTopOf="@+id/statik1"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtCarOptionalInfo"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="225dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/txtCarModel"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/imageViewCarPic"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCarPic"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtSearchResultDetailCity"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#070707"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailHeader"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toTopOf="@+id/textView20"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtCarYear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/txtCarColor"
-            app:layout_constraintStart_toStartOf="@+id/txtCarModel"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarModel"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtCarColor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txtCarYear"
-            app:layout_constraintEnd_toEndOf="@+id/txtCarModel"
-            app:layout_constraintStart_toEndOf="@+id/txtCarYear"
-            app:layout_constraintTop_toTopOf="@+id/txtCarYear"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtCarBrand3"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailHeader"
-            app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailCity"
-            app:layout_constraintTop_toBottomOf="@+id/statik5"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtCarModel"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Şehir"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailHeader"
-            app:layout_constraintStart_toStartOf="@+id/txtCarBrand3"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarBrand3"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/statik2"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Boş Koltuk"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/statik1"
-            app:layout_constraintTop_toBottomOf="@+id/statik1"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_horizontal|center_vertical"
-            android:text=":"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView22"
-            app:layout_constraintTop_toTopOf="@+id/statik2"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtSearchResultDetailPasangerCount"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Boş Koltuk"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtCarOptionalInfo"
-            app:layout_constraintStart_toEndOf="@+id/textView21"
-            app:layout_constraintTop_toTopOf="@+id/textView21"
-            tools:ignore="HardcodedText,RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/statik3"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Zaman"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/statik2"
-            app:layout_constraintTop_toBottomOf="@+id/statik2"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_horizontal|center_vertical"
-            android:text=":"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView23"
-            app:layout_constraintTop_toTopOf="@+id/statik3"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtSearchResultDetailDateTime"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:text="Zaman"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailPasangerCount"
-            app:layout_constraintStart_toEndOf="@+id/textView22"
-            app:layout_constraintTop_toTopOf="@+id/textView22"
-            tools:ignore="HardcodedText,RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/statik4"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Açıklama"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/statik3"
-            app:layout_constraintTop_toBottomOf="@+id/statik3"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginStart="150dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_horizontal|center_vertical"
-            android:text=":"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/statik4"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/txtSearchResultDetailDescription"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="20dp"
-            android:background="#1434447E"
-            android:backgroundTint="#000000"
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingStart="10dp"
-            android:scrollbars="vertical"
-            android:text="Açıklama"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView23"
-            app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailDateTime"
-            app:layout_constraintStart_toEndOf="@+id/textView23"
-            app:layout_constraintTop_toTopOf="@+id/textView23"
-            tools:ignore="HardcodedText,RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/statik5"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical"
-            android:text="Araç Bilgisi"
-            android:textColor="#5C5C5C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statik4"
-            tools:ignore="HardcodedText" />
-
         <Button
             android:id="@+id/btnSearchResultDetailSendRequest"
             android:layout_width="0dp"
@@ -334,35 +32,31 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSearchResultDetailAddToWish"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarOptionalInfo"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
             app:layout_constraintVertical_bias="0.084"
             tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/btnSearchResultDetailDeleteRequest"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="25dp"
+            android:layout_width="159dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
             android:background="@drawable/deneme_button"
             android:fontFamily="sans-serif-black"
             android:text="ISTEGI SIL"
             android:textSize="16sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSearchResultDetailAddToWish"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarOptionalInfo"
-            app:layout_constraintVertical_bias="0.084"
+            app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailAddToWish"
             tools:ignore="HardcodedText" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSearchResultDetailDeletePost"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/deneme_button"
             android:backgroundTint="@color/design_default_color_error"
             android:fontFamily="sans-serif-black"
@@ -371,12 +65,9 @@
             android:textColor="#ffff"
             android:textSize="16sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarOptionalInfo"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
             tools:ignore="HardcodedText" />
 
         <Button
@@ -395,55 +86,411 @@
             tools:ignore="HardcodedText" />
 
         <Button
-            android:id="@+id/btnSearchResultDetailStartService"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:text="Yolculuğu Başlatabilirsiniz"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarOptionalInfo"
-            tools:ignore="HardcodedText" />
-
-        <Button
             android:id="@+id/btnSearchResultDetailEndService"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="20dp"
             android:text="Takip Sistemini Sonlandır."
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCarOptionalInfo"
-            tools:ignore="HardcodedText" />
-
-        <Button
-            android:id="@+id/btnSearchResultDetailTrackLocation"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:text="İlan Sahibini İzleyin"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/btnSearchResultDetailDeletePost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailDeletePost"
             tools:ignore="HardcodedText" />
 
-        <ImageView
-            android:id="@+id/imageViewCarPic"
+        <Button
+            android:id="@+id/btnSearchResultDetailTrackLocation"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/car_blue"
-            app:layout_constraintBottom_toBottomOf="@+id/txtCarYear"
-            app:layout_constraintEnd_toStartOf="@+id/txtCarBrand3"
-            app:layout_constraintStart_toStartOf="@+id/statik4"
-            app:layout_constraintTop_toTopOf="@+id/txtCarBrand3" />
+            android:layout_height="45dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="30dp"
+            android:text="İlan Sahibini İzleyin"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailDeletePost"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnSearchResultDetailStartService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="20dp"
+            android:text="Yolculuğu Başlatabilirsiniz"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
+            tools:ignore="HardcodedText" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutSehir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView67"
+                app:srcCompat="@drawable/ic_map" />
+
+            <TextView
+                android:id="@+id/statik1"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="72dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Şehir"
+                android:textColor="#5C5C5C"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView20"
+                app:layout_constraintStart_toEndOf="@+id/imageView11"
+                app:layout_constraintTop_toTopOf="@+id/imageView11"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginStart="72dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_horizontal|center_vertical"
+                android:text=":"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/statik1"
+                app:layout_constraintStart_toEndOf="@+id/statik1"
+                app:layout_constraintTop_toTopOf="@+id/statik1"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtSearchResultDetailCity"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="35dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_vertical"
+                android:text="Şehir"
+                android:textColor="#0822B3"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toEndOf="@+id/textView20"
+                app:layout_constraintTop_toTopOf="@+id/textView20"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/statik2"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:text="Boş Koltuk"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/statik1"
+                app:layout_constraintTop_toTopOf="@+id/imageView13"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginStart="36dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_horizontal|center_vertical"
+                android:text=":"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView20"
+                app:layout_constraintStart_toEndOf="@+id/statik2"
+                app:layout_constraintTop_toTopOf="@+id/statik2"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtSearchResultDetailPasangerCount"
+                android:layout_width="47dp"
+                android:layout_height="45dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Boş Koltuk"
+                android:textColor="#0822B3"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailCity"
+                app:layout_constraintTop_toTopOf="@+id/textView21"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView11"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView11"
+                app:layout_constraintTop_toBottomOf="@+id/imageView11"
+                app:srcCompat="@drawable/ic_baseline_event_seat_24" />
+
+            <TextView
+                android:id="@+id/statik3"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:text="Zaman"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/statik2"
+                app:layout_constraintTop_toTopOf="@+id/imageView14"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_horizontal|center_vertical"
+                android:text=":"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView21"
+                app:layout_constraintStart_toStartOf="@+id/textView21"
+                app:layout_constraintTop_toTopOf="@+id/statik3"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView13"
+                app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                app:srcCompat="@drawable/ic_clock" />
+
+            <TextView
+                android:id="@+id/txtSearchResultDetailDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Zaman"
+                android:textColor="#0822B3"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailPasangerCount"
+                app:layout_constraintTop_toTopOf="@+id/textView22"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/statik4"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:text="Açıklama"
+                android:textColor="#5C5C5C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/statik3"
+                app:layout_constraintTop_toTopOf="@+id/imageView15"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView14"
+                app:layout_constraintTop_toBottomOf="@+id/imageView14"
+                app:srcCompat="@drawable/ic_description" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_horizontal|center_vertical"
+                android:text=":"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView22"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView22"
+                app:layout_constraintTop_toTopOf="@+id/statik4"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtSearchResultDetailDescription"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_vertical"
+                android:scrollbars="vertical"
+                android:text="Açıklama"
+                android:textColor="#0822B3"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailDateTime"
+                app:layout_constraintTop_toTopOf="@+id/textView23"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/textView67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:text="İLAN BİLGİLERİ"
+                android:textColor="#2196F3"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutSehir">
+
+            <TextView
+                android:id="@+id/txtCarModel"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="model"
+                android:textColor="#0822B3"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtCarBrand3"
+                app:layout_constraintTop_toTopOf="@+id/txtCarBrand3"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/statik5"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_vertical"
+                android:text="Araç Bilgisi"
+                android:textColor="#2196F3"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtCarBrand3"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="ALFA ROMEO"
+                android:textColor="#0822B3"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imageViewCarPic"
+                app:layout_constraintTop_toTopOf="@+id/imageViewCarPic"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtCarOptionalInfo"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="Şehir"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCarPic"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtCarYear"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="10dp"
+                android:text="2015"
+                android:textColor="#0822B3"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtCarModel"
+                app:layout_constraintStart_toStartOf="@+id/txtCarModel"
+                app:layout_constraintTop_toTopOf="@+id/txtCarColor"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/imageViewCarPic"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/car_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/statik5" />
+
+            <TextView
+                android:id="@+id/txtCarColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="#1434447E"
+                android:backgroundTint="#000000"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="10dp"
+                android:text="LACİVERT"
+                android:textColor="#0822B3"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtCarBrand3"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/txtCarBrand3"
+                app:layout_constraintTop_toBottomOf="@+id/txtCarBrand3"
+                tools:ignore="HardcodedText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

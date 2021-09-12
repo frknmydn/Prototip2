@@ -146,7 +146,7 @@ public class myPostRecyclerAdapter extends RecyclerView.Adapter<myPostRecyclerAd
             super(itemView);
             txtDestination = itemView.findViewById(R.id.postRowDestination);
             txtDateTime = itemView.findViewById(R.id.postRowDate);
-            timeInfo = itemView.findViewById(R.id.postRowBtnDelete);
+            timeInfo = itemView.findViewById(R.id.postRowBtnDeletenew);
 
         }
     }

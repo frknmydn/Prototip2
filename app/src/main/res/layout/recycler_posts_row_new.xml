@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/postRowDestination" />
 
         <ImageView
-            android:id="@+id/postRowBtnDelete"
+            android:id="@+id/postRowBtnDeletenew"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -89,7 +89,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postRowDestination"
-            app:srcCompat="@drawable/car_blue" />
+            app:srcCompat="@android:drawable/presence_away" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
