@@ -6,18 +6,24 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
+
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Post;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
@@ -34,9 +40,13 @@ public class PostDAL {
     private String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
     LocalDataManager localDataManager = new LocalDataManager();
     LocalDataManager localDataManagerUser = new LocalDataManager();
+    int limit = 3;
 
+    public int getLimit() {
+        return limit;
+    }
 
-    public void uploadPost(String ownerId, Context context, Car car,Post post, PostCallback postCallback) {
+    public void uploadPost(String ownerId, Context context, Car car, Post post, PostCallback postCallback) {
 
         Timestamp nowTimestamp = Timestamp.now();
 
@@ -338,13 +348,15 @@ public class PostDAL {
                 .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
                 .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
                 .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .limit(limit)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
 
                         if (task.getResult() != null) {
                             List<Post> list = task.getResult().toObjects(Post.class);
                             System.out.println("Gelen liste boyutu: " + list.size());
-                            postCallback.getPosts(list);
+                            postCallback.getPosts(list,task);
 
                         }
                     }
@@ -474,13 +486,15 @@ public class PostDAL {
                 .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
                 .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
                 .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .limit(limit)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
 
                             List<Post> list = task.getResult().toObjects(Post.class);
                             System.out.println("Gelen liste boyutu: " + list.size());
-                            postCallback.getPosts(list);
+                            postCallback.getPosts(list, task);
 
                         }
                     }
@@ -775,7 +789,17 @@ public class PostDAL {
                 });
 
     }
+    public void executeQuery(Query query, PostCallback callback){
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult() != null){
+                    callback.onQueryExecuted(task.getResult().toObjects(Post.class), task);
+                }
+            }
+        });
 
+    }
 
     /*
     public void checkParams(long timestamp1, long timestamp2, String gender,String city,int direction){
@@ -827,6 +851,10 @@ public class PostDAL {
         }
 
 
+    }
+
+    public FirebaseFirestore getFirestore() {
+        return firestore;
     }
 }
 

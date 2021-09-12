@@ -1,6 +1,8 @@
 package com.furkanmeydan.prototip2.DataLayer.Callbacks;
 
 import com.furkanmeydan.prototip2.Models.Post;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public abstract class PostCallback {
 
     }
 
-    public void getPosts(List<Post> list){
+    public void getPosts(List<Post> list, Task<QuerySnapshot> task){
 
     }
 
@@ -43,6 +45,10 @@ public abstract class PostCallback {
     }
 
     public void deleteWishOnBlock(){
+
+    }
+
+    public void onQueryExecuted(List<Post> list, Task<QuerySnapshot> task){
 
     }
 
