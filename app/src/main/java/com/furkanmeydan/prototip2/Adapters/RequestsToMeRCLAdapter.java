@@ -39,7 +39,7 @@ public class RequestsToMeRCLAdapter extends RecyclerView.Adapter<RequestsToMeRCL
     @Override
     public RequestsToMeRCLAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.recycler_requests_to_me_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.recycler_requests_to_me_row_new,parent,false);
 
         return new RequestsToMeRCLAdapter.PostHolder(view);
     }

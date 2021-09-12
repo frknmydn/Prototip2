@@ -39,7 +39,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.accepted_requests_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.accepted_requests_row_new,parent,false);
 
         return new PostHolder(view);
     }

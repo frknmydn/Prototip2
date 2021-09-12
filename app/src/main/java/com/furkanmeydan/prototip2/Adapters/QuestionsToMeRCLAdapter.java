@@ -29,7 +29,7 @@ public class QuestionsToMeRCLAdapter extends RecyclerView.Adapter<QuestionsToMeR
     @Override
     public QuestionsToMeRCLAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.fragment_questions_to_me_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.fragment_questions_to_me_row_new,parent,false);
 
         return new QuestionsToMeRCLAdapter.PostHolder(view);
     }

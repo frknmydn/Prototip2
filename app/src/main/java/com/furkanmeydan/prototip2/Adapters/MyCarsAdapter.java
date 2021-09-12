@@ -53,7 +53,7 @@ public class MyCarsAdapter extends RecyclerView.Adapter<MyCarsAdapter.PostHolder
     @Override
     public MyCarsAdapter.PostHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.my_cars_rcl_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.my_cars_row_new,parent,false);
 
         return new MyCarsAdapter.PostHolder(view);
     }

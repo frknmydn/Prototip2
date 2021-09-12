@@ -24,14 +24,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.BlockDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.BlockCallback;
-import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.Views.MainActivity.FragmentRequestSenderProfile;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.furkanmeydan.prototip2.Views.MainActivity.ProfileFragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapter.PostHolder>{
@@ -50,7 +47,7 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<BlockedUsersAdapte
     @Override
     public BlockedUsersAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.users_rcl_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.blocked_users_rcl_row,parent,false);
 
         return new PostHolder(view);
     }

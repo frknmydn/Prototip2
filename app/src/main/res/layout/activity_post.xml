@@ -18,19 +18,29 @@
 
         <TextView
             android:id="@+id/textView42"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|left"
             android:text="ATLA"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="40sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView42"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView42"
+            app:layout_constraintTop_toTopOf="@+id/textView42"
+            app:srcCompat="@drawable/atla_logo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.tabs.TabLayout

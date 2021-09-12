@@ -37,7 +37,7 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
     public SearchResultRecyclerAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.post_search_result_rcl_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.post_search_result_rcl_row_new,parent,false);
 
         return new SearchResultRecyclerAdapter.PostHolder(view);
 

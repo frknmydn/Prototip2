@@ -32,7 +32,7 @@ public class MyWaitingRequestsAdapter extends RecyclerView.Adapter<MyWaitingRequ
     @Override
     public MyWaitingRequestsAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.post_search_result_rcl_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.post_search_result_rcl_row_new,parent,false);
 
         return new MyWaitingRequestsAdapter.PostHolder(view);
     }
