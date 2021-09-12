@@ -224,7 +224,7 @@ public class UploadPostDetailFragment extends Fragment {
 
 
 
-        //Doğum tarihi seçtirmek
+        //İlan tarihi seçtirmek
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -368,13 +368,13 @@ public class UploadPostDetailFragment extends Fragment {
         String time = (localDataManager.getSharedPreference(postActivity,"time",null));
         String date = (localDataManager.getSharedPreference(postActivity,"date",null));
 
-        cityString = localDataManager.getSharedPreference(postActivity,"city",null);
+        cityString = postActivity.postToPush.getCity();
         Log.d("TAG", "onResume: "+ cityString);
 
-        passengerCountString = (int)localDataManager.getSharedPreferenceForInt(postActivity,"passengercount",Integer.parseInt("-1"));
+        passengerCountString = postActivity.postToPush.getPassengerCount();
         Log.d("TAG", "onResume: " + passengerCountString);
-        String description = localDataManager.getSharedPreference(postActivity,"description",null);
-        String destination = localDataManager.getSharedPreference(postActivity,"destination",null);
+        String description = postActivity.postToPush.getDescription();
+        String destination = postActivity.postToPush.getDestination();
 
         //saat seçildiyse geri geldiğinde seçilmiş saatin timetext'inde görünmesi için
        if(date!=null){

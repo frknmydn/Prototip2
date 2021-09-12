@@ -418,6 +418,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         double sharedLng1 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_1", 0d);
         double sharedLat2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lat_2", 0d);
         double sharedLng2 = localDataManager.getSharedPreferenceForDouble(postActivity, "lng_2", 0d);
+
         Log.d("TAG SHARED ", String.valueOf(sharedLat1));
 
         if (sharedLat1 != 0 && sharedLat2 != 0 && sharedLng1 != 0 && sharedLng2 != 0) {
@@ -426,7 +427,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
             googleMappo.addMarker(new MarkerOptions().title("Kalkış").position(latlng1));
             LatLng latln2 = new LatLng(sharedLat2, sharedLng2);
             googleMappo.addMarker(new MarkerOptions().title("Varış").position(latln2));
-            counter = 1;
+            counter = 2;
             txtMarkerStatus.setVisibility(View.GONE);
             imgMarker.setVisibility(View.GONE);
         }

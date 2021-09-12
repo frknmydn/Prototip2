@@ -80,7 +80,7 @@ public class UploadPostActivity extends AppCompatActivity {
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        carPopup = new PopupWindow(inflater.inflate(R.layout.popup_select_car,null,false), ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        carPopup = new PopupWindow(inflater.inflate(R.layout.popup_select_car,null,false), ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,true);
         carPopup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupView = carPopup.getContentView();
 
