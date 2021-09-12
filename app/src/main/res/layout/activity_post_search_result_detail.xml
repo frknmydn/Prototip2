@@ -22,10 +22,11 @@
         android:id="@+id/postSearchResultDetailBottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="71dp"
-        android:background="#716F6F"
+        android:theme="@style/BottomNavigationTheme"
+        android:background="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation_bottom_menu" />
 

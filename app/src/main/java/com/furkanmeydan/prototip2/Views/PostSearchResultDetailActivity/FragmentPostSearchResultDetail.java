@@ -185,16 +185,22 @@ public class FragmentPostSearchResultDetail extends Fragment {
         btnLocationTracking = view.findViewById(R.id.btnSearchResultDetailTrackLocation);
         // Scroll Element
         postDescription.setMovementMethod(new ScrollingMovementMethod());
+        carOptionalInfo.setMovementMethod(new ScrollingMovementMethod());
         nestedScrollView = view.findViewById(R.id.nestedScrollPostDetail);
         btnDeleteRequest = view.findViewById(R.id.btnSearchResultDetailDeleteRequest);
 
         nestedScrollView.setOnTouchListener((view15, motionEvent) -> {
             postDescription.getParent().requestDisallowInterceptTouchEvent(false);
+            carOptionalInfo.getParent().requestDisallowInterceptTouchEvent(false);
             return false;
         });
 
         postDescription.setOnTouchListener((view14, motionEvent) -> {
             postDescription.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+        carOptionalInfo.setOnTouchListener((v, event) -> {
+            carOptionalInfo.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
         });
 
