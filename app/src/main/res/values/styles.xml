@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#0679D6</item>
+        <item name="colorPrimary">#2297F6</item>
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">@color/dahagri</item>
     </style>
@@ -27,7 +27,7 @@
     </style>
 
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/mtrl_textinput_default_box_stroke_color</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:colorForeground">@color/dahagri</item>
     </style>
 
