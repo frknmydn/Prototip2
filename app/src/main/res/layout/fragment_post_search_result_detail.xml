@@ -136,6 +136,7 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="1dp"
+            android:background="#ECE5E5"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -147,6 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:background="#ffff"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:paddingStart="20dp"
@@ -209,7 +211,6 @@
                     android:id="@+id/linearLayout7"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
-                    android:background="@drawable/alt_cizgi"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -231,6 +232,15 @@
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider10"
+                    android:layout_width="162dp"
+                    android:layout_height="1dp"
+                    android:background="#2297f6"
+                    app:layout_constraintBottom_toTopOf="@+id/txtSearchResultDetailDescription"
+                    app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailDescription"
+                    app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -248,7 +258,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
                     android:layout_marginTop="1dp"
-                    android:background="@drawable/alt_cizgi"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -256,8 +265,8 @@
 
                     <ImageView
                         android:id="@+id/imageView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
                         app:srcCompat="@drawable/ic_clock" />
 
                     <TextView
@@ -285,6 +294,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
                     tools:ignore="HardcodedText,RtlSymmetry" />
+
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="#2297f6"
+                    app:layout_constraintBottom_toTopOf="@+id/txtSearchResultDetailDateTime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailDateTime" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -301,7 +319,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="23sp"
                     android:layout_marginTop="1dp"
-                    android:background="@drawable/alt_cizgi"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -338,6 +355,15 @@
                     app:layout_constraintStart_toStartOf="@+id/linearLayout9"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
                     tools:ignore="HardcodedText" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="75dp"
+                    android:layout_height="1dp"
+                    android:background="#2297f6"
+                    app:layout_constraintBottom_toTopOf="@+id/txtSearchResultDetailCity"
+                    app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailCity"
+                    app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailCity" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -354,7 +380,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
-                    android:background="@drawable/alt_cizgi"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -392,6 +417,15 @@
                     app:layout_constraintStart_toStartOf="@+id/linearLayout10"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
                     tools:ignore="HardcodedText,RtlSymmetry" />
+
+                <View
+                    android:id="@+id/divider9"
+                    android:layout_width="101dp"
+                    android:layout_height="1dp"
+                    android:background="#2297f6"
+                    app:layout_constraintBottom_toTopOf="@+id/txtSearchResultDetailPasangerCount"
+                    app:layout_constraintEnd_toEndOf="@+id/txtSearchResultDetailPasangerCount"
+                    app:layout_constraintStart_toStartOf="@+id/txtSearchResultDetailPasangerCount" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
@@ -410,6 +444,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="#ECE5E5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -432,6 +467,7 @@
                 android:id="@+id/statik5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="#ffff"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center|center_vertical"
                 android:paddingStart="20dp"
@@ -521,6 +557,50 @@
                 app:layout_constraintTop_toBottomOf="@+id/statik5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearchResultDetailEndService">
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BİLGİLENDİRME"
+                android:textColor="#E85729"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Tarih ve saat bilgisi ilan sahibinin yolculuğuna başlayacağı zamanı göstermektedir. İlan sahibinin binmek istediğiniz noktaya gelmesi trafik durumu, rotada küçük değişiklik vb. durumlara göre değişebilmektedir. " />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-Kayıt ol butonuna bastıktan sonra ilan sahibine bir bilgilendirme mesajı gönderirsiniz. Bu mesaj içeriğinde ilan sahibinin sizi tanıyabilmesi için fiziksel özelliklerinizden bahsedebilirsiniz. Ayrıca binmek istediğiniz noktadaki çevrenin özelliğini belirtebilirsiniz. (Örn: abcd marketinin önünde bekliyor olacağım)" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-İstek gönderildikten sonra ilan sahibi sizi kabul ederse belirttiğiniz noktada anlaştığınız saatte bulunmakla sorumlusunuz." />
+
+            <TextView
+                android:id="@+id/textView67"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-İlanın saati yaklaştığında bu sayfada ilan sahibinin anlık konumunu takip edebilirsiniz. Sizin belirttiğiniz konuma gelmeyen ilan sahibini lütfen bize bildirin." />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
