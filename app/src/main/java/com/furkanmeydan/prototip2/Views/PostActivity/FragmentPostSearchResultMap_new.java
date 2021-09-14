@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     TextView txtMarkerStatus;
     ImageView imgMarker;
     Button btnZoomToMe,btnAddMarker;
+    AutocompleteSupportFragment autocompleteFragment;
 
 
     public FragmentPostSearchResultMap_new() {
@@ -179,9 +181,13 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             addMarker(latLng2);
         }
 
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getChildFragmentManager().findFragmentById(R.id.searchPostPlacesFragment);
-        if (autocompleteFragment != null) {
+        FragmentManager fm = getChildFragmentManager();
+
+        autocompleteFragment = (AutocompleteSupportFragment)
+                fm.findFragmentById(R.id.uploadPostPlacesFragment);
+
+        if(autocompleteFragment!=null) {
+
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ID, Place.Field.NAME));
 
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -189,8 +195,8 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
                 public void onPlaceSelected(@NonNull @NotNull Place place) {
                     String test = place.getAddress();
                     LatLng latLng = place.getLatLng();
-                    Log.d("Tag","Latlng "+ String.valueOf(latLng));
-                    Log.d("Tag","Address "+ String.valueOf(test));
+                    Log.d("Tag", "Latlng " + String.valueOf(latLng));
+                    Log.d("Tag", "Address " + String.valueOf(test));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
                 }
 
@@ -199,6 +205,8 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
                 }
             });
+
+
         }
 
 
