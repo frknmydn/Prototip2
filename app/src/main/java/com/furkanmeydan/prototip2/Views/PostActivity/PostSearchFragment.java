@@ -131,7 +131,8 @@ public class PostSearchFragment extends Fragment {
 
          */
         //city spinner
-        searchCitySpinnerAdapter = ArrayAdapter.createFromResource(view.getContext(),R.array.city_array, android.R.layout.simple_spinner_item);
+        searchCitySpinnerAdapter = ArrayAdapter.createFromResource(view.getContext(),R.array.city_array, R.layout.spinner_item_city);
+        //searchCitySpinnerAdapter = new ArrayAdapter<CharSequence>(postActivity,R.layout.spinner_item_city);
         searchCitySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSearchCity.setAdapter(searchCitySpinnerAdapter);
 
@@ -148,7 +149,7 @@ public class PostSearchFragment extends Fragment {
         });
 
         // gender spinner
-        searchGenderSpinnerAdapter = ArrayAdapter.createFromResource(view.getContext(),R.array.search_genders_array,android.R.layout.simple_spinner_item);
+        searchGenderSpinnerAdapter = ArrayAdapter.createFromResource(view.getContext(),R.array.search_genders_array,R.layout.spinner_item_city);
         searchGenderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSearchGender.setAdapter(searchGenderSpinnerAdapter);
         spnSearchGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

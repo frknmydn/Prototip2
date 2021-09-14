@@ -10,7 +10,6 @@
         android:id="@+id/btnConfirmUser"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="100dp"
         android:layout_marginBottom="236dp"
         android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
@@ -21,26 +20,8 @@
         app:layout_constraintEnd_toEndOf="@+id/btnSearchPost"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnSearchPost"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.37" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="#80FFECD0"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="@string/ana_sayfa"
-        android:textColor="#353535"
-        android:textColorHint="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnAddPostFragmentH"
@@ -50,7 +31,7 @@
         android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
         android:text="@string/lan_ekle"
-        android:textColor="#D3D3D3"
+        android:textColor="#ffff"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSearchPost"
         app:layout_constraintEnd_toEndOf="@+id/btnSearchPost"
@@ -66,7 +47,7 @@
         android:background="@drawable/deneme_button"
         android:fontFamily="sans-serif-black"
         android:text="@string/ilan_ara"
-        android:textColor="#D3D3D3"
+        android:textColor="#ffff"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

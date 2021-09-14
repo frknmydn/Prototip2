@@ -100,6 +100,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     BroadcastReceiver localBroadcastReceiver;
     AppCompatButton btnDeletePost;
     NestedScrollView nestedScrollView;
+    ImageView sendRequestPhoto, addToWishPhoto;
 
 
     PopupWindow carPopup;
@@ -177,9 +178,12 @@ public class FragmentPostSearchResultDetail extends Fragment {
         postCity = view.findViewById(R.id.txtSearchResultDetailCity);
         postPassangerCount = view.findViewById(R.id.txtSearchResultDetailPasangerCount);
         postTime = view.findViewById(R.id.txtSearchResultDetailDateTime);
+        sendRequestPhoto = view.findViewById(R.id.sendRequestPhoto);
+        addToWishPhoto = view.findViewById(R.id.addToWishPhoto);
         postDescription = view.findViewById(R.id.txtSearchResultDetailDescription);
         btnSendRequest = view.findViewById(R.id.btnSearchResultDetailSendRequest);
         btnAddToWish = view.findViewById(R.id.btnSearchResultDetailAddToWish);
+
         btnStartService = view.findViewById(R.id.btnSearchResultDetailStartService);
         btnEndService = view.findViewById(R.id.btnSearchResultDetailEndService);
         btnLocationTracking = view.findViewById(R.id.btnSearchResultDetailTrackLocation);
@@ -380,6 +384,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                                     Toast.makeText(activity,"İSTEK SİLİNDİ",Toast.LENGTH_LONG).show();
                                     btnDeleteRequest.setVisibility(View.INVISIBLE);
                                     btnSendRequest.setVisibility(View.VISIBLE);
+                                    sendRequestPhoto.setVisibility(View.VISIBLE);
                                 }
                             });
                         }
@@ -649,7 +654,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
         if(isPostOutdated){
             btnSendRequest.setVisibility(View.GONE);
+            sendRequestPhoto.setVisibility(View.GONE);
             btnAddToWish.setVisibility(View.GONE);
+            addToWishPhoto.setVisibility(View.GONE);
             btnLocationTracking.setVisibility(View.GONE);
             btnStartService.setVisibility(View.GONE);
             btnEndService.setVisibility(View.GONE);
@@ -668,7 +675,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
             if (activity.firebaseAuth.getCurrentUser().getUid().equals(activity.post.getOwnerID())) {
                 btnDeletePost.setVisibility(View.VISIBLE);
                 btnAddToWish.setVisibility(View.GONE);
+                addToWishPhoto.setVisibility(View.GONE);
                 btnSendRequest.setVisibility(View.GONE);
+                sendRequestPhoto.setVisibility(View.GONE);
                 Log.d("TAG","İlk if içi");
                 if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
                     Log.d("TAG","İkinci if içi");

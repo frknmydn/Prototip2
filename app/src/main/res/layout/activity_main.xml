@@ -11,12 +11,12 @@
         android:id="@+id/NavigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:menu="@menu/navigation_menu"
-        app:headerLayout="@layout/navigation_drawer_header"
-        android:background="@color/dahagri"
         android:layout_gravity="start"
+        android:background="@color/colorPrimary"
+        app:headerLayout="@layout/navigation_drawer_header"
+        app:itemIconTint="#fff"
         app:itemTextColor="#fff"
-        app:itemIconTint="#fff"/>
+        app:menu="@menu/navigation_menu" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:id="@+id/constraintLayout4"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="#FF3D08CF"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,31 +47,20 @@
 
             <TextView
                 android:id="@+id/textView42"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="112dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center|left"
                 android:text="ATLA"
                 android:textColor="#FFFFFF"
-                android:textSize="32sp"
+                android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/btnOpenDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/imageView7"
-                app:layout_constraintStart_toEndOf="@+id/btnOpenDrawable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/btnOpenDrawable"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="RtlHardcoded" />
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="75dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/atla_logo" />
 
             <TextView
                 android:id="@+id/textView43"
@@ -79,10 +68,9 @@
                 android:layout_height="wrap_content"
                 android:text="ATLA GİDELİM!"
                 android:textColor="@color/mtrl_textinput_default_box_stroke_color"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView7"
-                app:layout_constraintStart_toStartOf="@+id/imageView7"
-                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout

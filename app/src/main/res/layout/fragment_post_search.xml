@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Views.PostActivity.PostSearchFragment">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
+        android:background="#ECE5E5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,180 +23,119 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="52dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-black"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
+                android:gravity="bottom|center_vertical"
                 android:text="Şehir"
-                android:textColor="#5C5C5C"
+                android:textColor="#2297F6"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
             <Spinner
                 android:id="@+id/spinnerSearchCityFS"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/spinner_shape" />
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/spinner_shape"
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout3">
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-black"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
+                android:gravity="bottom|center"
                 android:text="@string/cinsiyet"
-                android:textColor="#5C5C5C"
+                android:textColor="#2297F6"
                 android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/spinnerSearchGenderFS"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/spinner_shape" />
+                android:background="@drawable/spinner_shape"
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout5"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+            app:layout_constraintHorizontal_bias="0.539"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <TextView
                 android:id="@+id/textView26"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
+                android:layout_gravity="center"
                 android:fontFamily="sans-serif-black"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
+                android:gravity="bottom|center_vertical"
                 android:text="@string/tarih"
-                android:textColor="#5C5C5C"
+                android:textColor="#2297F6"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtSearchDateFS"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
                 android:background="@drawable/spinner_shape"
                 android:ems="10"
                 android:focusable="false"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:hint="@string/tarih"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:paddingStart="10dp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry,TextFields" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-            <TextView
-                android:id="@+id/textView45"
-                android:layout_width="120dp"
-                android:layout_height="45dp"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
-                android:text="Saat Aralığı"
-                android:textColor="#5C5C5C"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <EditText
-                android:id="@+id/edtSearchTime1FS"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/spinner_shape"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Başlangıç Saati"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:visibility="invisible"
-                tools:ignore="HardcodedText,RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/textView29"
-                android:layout_width="10dp"
-                android:layout_height="45dp"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center|center_vertical"
-                android:text="-"
-                android:textColor="#5C5C5C"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <EditText
-                android:id="@+id/edtSearchTime2FS"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:background="@drawable/spinner_shape"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Bitiş Saati"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:visibility="invisible"
-                tools:ignore="HardcodedText,RtlSymmetry" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="150dp"
             android:layout_marginEnd="1dp"
+            android:background="#ffff"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
             <TextView
                 android:id="@+id/textView51"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#ffff"
                 android:gravity="center"
                 android:text="BİLGİLENDİRME"
                 android:textColor="#DC8300"
@@ -204,6 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="#ffff"
                 android:text="-İlana binmek istediğiniz şehir ile haritada seçtiğiniz noktaların aynı şehir içinde olması gerekmektedir. " />
 
             <TextView
@@ -211,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="#ffff"
                 android:text="-Bu sayfadaki seçtiğiniz cinsiyet araç sahibinin cinsiyeti olmaktadır. Seçtiğiniz cinsiyete göre ilanlar listelenmektedir. " />
 
             <TextView
@@ -218,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="#ffff"
                 android:text="-Size uygun minimum ve maksimum saat aralığı listelenmektedir. Örneğin saat 14.00'da yolculuğuna başlayacak bir ilan aramak isterseniz saat aralığını 13.00-15.00 olarak seçmelisiniz." />
 
             <TextView
@@ -225,8 +171,107 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="#ffff"
                 android:text="-Seçtiğiniz saat aralığına göre listelenen ilanlardaki saat ilan sahibinin kalkış saatidir. Trafiğe ve rotasındaki değişikliğine göre saat farklılık gösterebilir. " />
         </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center_horizontal|bottom"
+                android:text="Saat Aralığı"
+                android:textColor="#2297F6"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtSearchTime1FS"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_shape"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Başlangıç Saati"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:textSize="22sp"
+                    android:visibility="invisible"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="10dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center|center_vertical"
+                    android:text="-"
+                    android:textColor="#5C5C5C"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/edtSearchTime2FS"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_shape"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Bitiş Saati"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:textSize="22sp"
+                    android:visibility="invisible"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView68"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#ffff"
+            android:gravity="center"
+            android:text="Arama Kriterleri"
+            android:textColor="#2297F6"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider11"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="#2297f6"
+            android:backgroundTint="#2297f6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView68" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

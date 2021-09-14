@@ -5,7 +5,6 @@
     android:id="@+id/nestedScrollPostDetail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:fillViewport="true"
     android:isScrollContainer="false"
     android:scrollbars="vertical"
@@ -26,7 +25,7 @@
             android:layout_marginBottom="25dp"
             android:background="@drawable/deneme_button"
             android:fontFamily="sans-serif-black"
-            android:text="KAYIT OL"
+            android:text="İSTEK AT"
             android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -430,7 +429,7 @@
 
             <View
                 android:id="@+id/divider2"
-                android:layout_width="389dp"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="#2297F6"
                 android:backgroundTint="#2297F6"
@@ -548,7 +547,7 @@
 
             <View
                 android:id="@+id/divider6"
-                android:layout_width="391dp"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="#2297f6"
                 android:backgroundTint="#2297f6"
@@ -601,6 +600,26 @@
                 android:layout_height="wrap_content"
                 android:text="-İlanın saati yaklaştığında bu sayfada ilan sahibinin anlık konumunu takip edebilirsiniz. Sizin belirttiğiniz konuma gelmeyen ilan sahibini lütfen bize bildirin." />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/sendRequestPhoto"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSearchResultDetailSendRequest"
+            app:layout_constraintEnd_toEndOf="@+id/btnSearchResultDetailSendRequest"
+            app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailSendRequest"
+            app:srcCompat="@drawable/sent" />
+
+        <ImageView
+            android:id="@+id/addToWishPhoto"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSearchResultDetailAddToWish"
+            app:layout_constraintEnd_toEndOf="@+id/btnSearchResultDetailAddToWish"
+            app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailAddToWish"
+            app:srcCompat="@drawable/ic_star_" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
