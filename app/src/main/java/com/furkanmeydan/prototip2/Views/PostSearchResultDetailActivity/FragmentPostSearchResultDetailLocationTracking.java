@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
+import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -133,6 +136,20 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
                     SimpleDateFormat hourMinFormat = new SimpleDateFormat("HH:mm");
                     Date date = new Date(TimeUnit.SECONDS.toMillis(timestamp));;
                     String formattedHour = hourMinFormat.format(date);
+
+                    float[] distance = new float[2];
+                    Location.distanceBetween(lat,lng,post.getToLat(),post.getToLng(),distance);
+                    if(distance[0] <= 100){
+                        PostDAL postDAL = new PostDAL();
+                        postDAL.stopPost(post.getOwnerID(), post.getPostID(), new PostCallback() {
+                            @Override
+                            public void onPostUpdated() {
+                                super.onPostUpdated();
+                                post.setStatus(2);
+                                post.setHasStarted(0);
+                            }
+                        });
+                    }
 
                     Log.d("Tag","Formattan sonra zaman saat : " + formattedHour);
 

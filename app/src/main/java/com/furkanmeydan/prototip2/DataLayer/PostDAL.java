@@ -775,6 +775,20 @@ public class PostDAL {
 
     }
 
+    public void stopPost(String postOwnerID, String postID, final PostCallback callback){
+
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID).collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult() !=null){
+                DocumentReference dr = task.getResult().getReference();
+                dr.update(CollectionHelper.POST_HASSTARTED,0);
+                callback.onPostUpdated();
+            }
+        });
+
+
+    }
+
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
