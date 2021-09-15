@@ -15,6 +15,7 @@ import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.MapRouter.TaskLoadedCallback;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
     Post post;
     String currentUserID;
 
+    ConnectionChecker connectionChecker;
 
     BottomNavigationView navigationView1;
     FirebaseAuth firebaseAuth;
@@ -60,6 +63,8 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
     public void init(){
 
+        connectionChecker = new ConnectionChecker();
+
         firebaseAuth=FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser()!=null){
             currentUserID = firebaseAuth.getCurrentUser().getUid();
@@ -83,20 +88,32 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
     }
 
 
-    public void changeFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //fragmentTransaction.addToBackStack("PostCallback");
-        fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
-        fragmentTransaction.commit();
+    public void changeFragment(Fragment fragment) throws IOException, InterruptedException {
+        if(connectionChecker.isConnected()){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            //fragmentTransaction.addToBackStack("PostCallback");
+            fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
+            fragmentTransaction.commit();
+        }
+        else{
+            connectionChecker.showWindow(this);
+        }
+
     }
 
-    public void changeFragmentArgs(Fragment fragment,Bundle args){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(args);
-        fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
-        fragmentTransaction.commit();
+    public void changeFragmentArgs(Fragment fragment,Bundle args) throws IOException, InterruptedException {
+        if(connectionChecker.isConnected()){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragment.setArguments(args);
+            fragmentTransaction.replace(R.id.PostSearchResultContainer,fragment);
+            fragmentTransaction.commit();
+        }
+        else{
+            connectionChecker.showWindow(this);
+        }
+
     }
 
     public ArrayList<Request> approvedRequestsFragmentList(){

@@ -31,6 +31,7 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.LoginRegisterActivity.LoginRegisterActivity;
@@ -46,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageButton btnOpenDrawable;
     TextView txtHeader;
 
+
+    //Internet kontrol
+    ConnectionChecker connectionChecker;
     //Deneme yapıcam
     AppDatabase db;
 
@@ -131,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("Tag","OneSignalIDOriginal: "+oneSignalIDOriginal);
 
 
-
+        connectionChecker = new ConnectionChecker();
 
         userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -172,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -179,8 +185,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             changeFragment(new HomeFragment());
         }
         else if(item.getItemId()==R.id.profile){
-            firebaseFirestore.collection(CollectionHelper.USER_COLLECTION).document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
-                    .get().addOnCompleteListener(task -> {
+            try {
+                //internet bağlantısı kontrolü sağlanıyor
+                if(!connectionChecker.isConnected()){
+                    connectionChecker.showWindow(this);
+                }
+                else{
+                    firebaseFirestore.collection(CollectionHelper.USER_COLLECTION).
+                            document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())
+                            .get().addOnCompleteListener(task -> {
                         User user = Objects.requireNonNull(task.getResult()).toObject(User.class);
                         if(user !=null){
                             changeFragment(new ProfileFragment());
@@ -188,50 +201,137 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             changeFragment(new SignUpFragment());
                         }
                     });
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
 
 
         }
         else if(item.getItemId()==R.id.signOut){
-            firebaseAuth.signOut();
-            String serviceRunning = localDataManager.getSharedPreference(MainActivity.this, "isServiceEnable","0");
-            if(!serviceRunning.equals("0")) {
-                Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
-                serviceIntent.putExtra("action", "0");
-                ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
-                localDataManager.setSharedPreference(MainActivity.this, "isServiceEnable", "0");
+
+            try {
+                if(connectionChecker.isConnected()){
+                    firebaseAuth.signOut();
+                    String serviceRunning = localDataManager.getSharedPreference(MainActivity.this, "isServiceEnable","0");
+                    if(!serviceRunning.equals("0")) {
+
+
+                        Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
+                        serviceIntent.putExtra("action", "0");
+                        ContextCompat.startForegroundService(MainActivity.this, serviceIntent);
+                        localDataManager.setSharedPreference(MainActivity.this, "isServiceEnable", "0");
+                    }
+                    localDataManager.clearSharedPreference(MainActivity.this);
+                    Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
+                    startActivity(i);
+                    this.finish();
+                }
+                else{
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
             }
-            localDataManager.clearSharedPreference(MainActivity.this);
-            Intent i = new Intent(MainActivity.this, LoginRegisterActivity.class);
-            startActivity(i);
-            this.finish();
+
+
         }
         else if(item.getItemId()==R.id.questionsToMe){
-            changeFragment(new QuestionsToMeFragment());
+            try {
+                if (!connectionChecker.isConnected()) {
+                    changeFragment(new QuestionsToMeFragment());
+                }
+                else{
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         else if(item.getItemId()== R.id.myPosts){
-            changeFragment(new MyPostFragment());
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new MyPostFragment());
+
+                }
+                else{
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
         else if(item.getItemId() == R.id.requestsToMyPosts){
-            changeFragment(new FragmentRequestsToMyPosts());
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentRequestsToMyPosts());
+
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
         else if(item.getItemId() == R.id.RequestsISent){
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentMyRequests2());
 
-
-            changeFragment(new FragmentMyRequests2());
-
-
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
         else if(item.getItemId() == R.id.wish_list){
-            changeFragment(new FragmentWishList());
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentWishList());
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+
         }
         else if(item.getItemId() == R.id.blockedUsers){
-            changeFragment(new FragmentBlockList());
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentBlockList());
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
         else if(item.getItemId() == R.id.my_cars){
-            changeFragment(new FragmentMyAllCars());
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentMyAllCars());
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+
         }
         return true;
     }

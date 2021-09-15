@@ -13,10 +13,13 @@ import android.widget.Toast;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadMapFragment2;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostDetailFragment;
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.IOException;
 
 public class PostActivity extends AppCompatActivity {
     Button btnSearch;
@@ -26,18 +29,23 @@ public class PostActivity extends AppCompatActivity {
     Bundle bundle;
     PostDAL postDAL;
     FragmentPostSearchResultMap_new fragmentPostSearchResultMapNew;
+    ConnectionChecker connectionChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
+        connectionChecker = new ConnectionChecker();
         bundle = new Bundle();
         postDAL = new PostDAL();
         localDataManager = new LocalDataManager();
         postSearchFragment = new PostSearchFragment();
         fragmentPostSearchResultMapNew = new FragmentPostSearchResultMap_new();
-        changeFragment(postSearchFragment);
+        try {
+            changeFragment(postSearchFragment);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         btnSearch = findViewById(R.id.btnSearchPostNew);
         searchTabLayout = findViewById(R.id.tabLayoutPostSearch);
 
@@ -46,14 +54,20 @@ public class PostActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        changeFragment(postSearchFragment);
+                        try {
+                            changeFragment(postSearchFragment);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         fragmentPostSearchResultMapNew.counter = 0;
                         break;
                     case 1:
                         postSearchFragment.saveDetails();
-                        Log.d("Tag","Shared Pref Check "+localDataManager.getSharedPreferenceForLong(getApplicationContext(),"postSearchTimestamp",0L));
-                        Log.d("Tag","Shared Pref Check "+localDataManager.getSharedPreferenceForLong(getApplicationContext(),"postSearchTimestamp2",0L));
-                        changeFragment(fragmentPostSearchResultMapNew);
+                        try {
+                            changeFragment(fragmentPostSearchResultMapNew);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
 
@@ -108,7 +122,11 @@ public class PostActivity extends AppCompatActivity {
                 //Kullanıcı istek gönderirken kullanmak için
 
                 if(bundle.getString("gender") != null){
-                    changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                    try {
+                        changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     searchTabLayout.setVisibility(View.GONE);
                 }
 
@@ -117,23 +135,36 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    public void changeFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        //fragmentTransaction.addToBackStack("PostCallback");
-        fragmentTransaction.replace(R.id.consLayoutPostSearch,fragment);
-        fragmentTransaction.commit();
+    public void changeFragment(Fragment fragment) throws IOException, InterruptedException {
+
+        if(connectionChecker.isConnected()){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            //fragmentTransaction.addToBackStack("PostCallback");
+            fragmentTransaction.replace(R.id.consLayoutPostSearch,fragment);
+            fragmentTransaction.commit();
+        }
+        else{
+            connectionChecker.showWindow(this);
+        }
+
 
     }
 
-    public void changeFragmentArgs(Fragment fragment,Bundle args){
+    public void changeFragmentArgs(Fragment fragment,Bundle args) throws IOException, InterruptedException {
+        if(connectionChecker.isConnected()){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragment.setArguments(args);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.replace(R.id.consLayoutPostSearch,fragment);
+            fragmentTransaction.commit();
+        }
+        else{
+            connectionChecker.showWindow(this);
+        }
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(args);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.replace(R.id.consLayoutPostSearch,fragment);
-        fragmentTransaction.commit();
+
     }
 }
