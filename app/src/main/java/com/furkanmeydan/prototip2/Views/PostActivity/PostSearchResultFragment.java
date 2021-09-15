@@ -368,7 +368,7 @@ public class PostSearchResultFragment extends Fragment {
         }
 
 
-        //else {
+        else {
 
             postDAL.getPostsWithGender(timestamp1, timestamp2, gender, city, direction, new PostCallback() {
                 @Override
@@ -425,6 +425,7 @@ public class PostSearchResultFragment extends Fragment {
                                 Log.d("Tag","onListRetrieved Block içi ");
 
                                 if(list.size() > 0 ){
+                                    Log.d("Tag","Blocklu User Var ");
                                     Log.d("Tag","onListRetrievedBlock if içi ");
                                     for(Post postvar : filteredList){
                                         boolean isBlocked = false;
@@ -452,9 +453,13 @@ public class PostSearchResultFragment extends Fragment {
                                         layoutProgress.setVisibility(View.GONE);
                                         layoutInfo.setVisibility(View.GONE);
                                         recyclerView.setVisibility(View.VISIBLE);
-
-                                        resultAdapter.notifyDataSetChanged();
                                         lastVisible = task.getResult().getDocuments().get(task.getResult().size() - 1);
+
+                                    if(posts.size() <= postDAL.getLimit()){
+                                        Log.d("TAG", "POSTSIZE 4'TEN KÜÇÜK: ");
+                                        Log.d("TAG", "POSTS SIZE: " + posts.size());
+                                        getMoreData();
+                                        }
 
                                         RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
                                             @Override
@@ -595,7 +600,6 @@ public class PostSearchResultFragment extends Fragment {
                                         }
                                     };
                                     recyclerView.addOnScrollListener(onScrollListener);
-                                    resultAdapter.notifyDataSetChanged();
                                 }
 
 
@@ -615,10 +619,75 @@ public class PostSearchResultFragment extends Fragment {
 
                 }
             });
-        //}
+        }
 
         Log.d("TagSearchResult",city);
         Log.d("TagSearchResult",gender);
         Log.d("TagSearchResult", String.valueOf(timestamp1));Log.d("TagSearchResult", String.valueOf(timestamp2));
+    }
+
+    public void getMoreData(){
+        Log.d("TAG", "GETMOREDATA: ");
+        Log.d("TAG", "POSTS SIZE: " + posts.size());
+
+        Query query = postDAL.getFirestore().collectionGroup(CollectionHelper.POST_COLLECTION)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_STATUS, 1)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_CITY, city)
+                .whereEqualTo(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_GENDER, gender)
+                .whereEqualTo(CollectionHelper.POST_DIRECTION, direction)
+                .whereGreaterThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp1)
+                .whereLessThan(CollectionHelper.POSTSEARCH_COLLECTIONGROUP_TIMESTAMP, timestamp2)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .startAfter(lastVisible)
+                .limit(postDAL.getLimit());
+
+        postDAL.executeQuery(query, new PostCallback() {
+            @Override
+            public void onQueryExecuted(List<Post> list, Task<QuerySnapshot> task) {
+                super.onQueryExecuted(list, task);
+                ArrayList<Post> postsTemp = new ArrayList<>(list);
+
+                blockDAL.getBlockedListForPosts(new BlockCallback() {
+                    @Override
+                    public void onListRetrieved(List<Block> list) {
+                        super.onListRetrieved(list);
+                        if(list.size() > 0){
+                            Log.d("Tag","Blocklu User Var ");
+                            for(Post postvar : postsTemp){
+                                boolean isBlocked = false;
+                                Log.d("Tag","onListRetrievedBlock ilk for içi 2 ");
+                                Log.d("Tag","PostOwner "+postvar.getOwnerID());
+                                Log.d("Tag","PostListSize "+postsTemp.size());
+                                for(Block blockvar : list){
+                                    Log.d("Tag","onListRetrievedBlock ikinci for içi 2 ");
+                                    Log.d("Tag","Blocklist size 2 "+list.size());
+                                    Log.d("Tag","BlockerID 2 "+blockvar.getUserBlockerID());
+                                    if((blockvar.getUserBlockedID().equals(postvar.getOwnerID()))){
+                                        isBlocked = true;
+                                        Log.d("Tag","UserBlockedID equals OwnerID if içi 2 ");
+                                        Log.d("Tag","BlockedID 2 "+blockvar.getUserBlockedID());
+                                    }
+                                }
+                                if(!isBlocked){
+                                    posts.add(postvar);
+                                    Log.d("Tag","postsSize 2 "+ posts.size());
+                                    Log.d("Tag","postOwnerID 2 "+ postvar.getOwnerID());
+
+                                }
+                            }
+                        }else{
+                            Log.d("Tag", "blocklu user yok 2: ");
+                            posts.addAll(postsTemp);
+                        }
+                        lastVisible = task.getResult().getDocuments().get(task.getResult().size() - 1);
+                        if(posts.size() < postDAL.getLimit()){
+                            getMoreData();
+                        }else{
+                            resultAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

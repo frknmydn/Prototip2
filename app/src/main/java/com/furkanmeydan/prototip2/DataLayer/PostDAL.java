@@ -40,7 +40,11 @@ public class PostDAL {
     private String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
     LocalDataManager localDataManager = new LocalDataManager();
     LocalDataManager localDataManagerUser = new LocalDataManager();
-    int limit = 3;
+    int limit = 4;
+
+    public String getUserId() {
+        return userId;
+    }
 
     public int getLimit() {
         return limit;
@@ -513,11 +517,13 @@ public class PostDAL {
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,1)
                 .whereGreaterThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp - 10*60)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .limit(limit)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
                             List<Post> list = task.getResult().toObjects(Post.class);
-                            postCallback.getMyPosts(list);
+                            postCallback.getMyPosts(list,task);
                         }
 
 
@@ -533,11 +539,13 @@ public class PostDAL {
                 .collection(CollectionHelper.POST_COLLECTION)
                 //.whereEqualTo(CollectionHelper.POST_STATUS,2) Daha süresi geçen postların statusunu otomatik 2 yapma fonksiyonumuz yok
                 .whereLessThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .limit(limit)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
                             List<Post> list = task.getResult().toObjects(Post.class);
-                            postCallback.getMyPosts(list);
+                            postCallback.getMyPosts(list,task);
                         }
 
                     }
@@ -549,11 +557,13 @@ public class PostDAL {
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
                 .whereEqualTo(CollectionHelper.POST_STATUS,0)
+                .orderBy(CollectionHelper.POST_TIMESTAMP)
+                .limit(limit)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
                             List<Post> list = task.getResult().toObjects(Post.class);
-                            postCallback.getMyPosts(list);
+                            postCallback.getMyPosts(list,task);
                         }
 
 
@@ -692,7 +702,7 @@ public class PostDAL {
                      if(task.isSuccessful()){
                          if(task.getResult() !=null){
                              Post post = task.getResult().toObject(Post.class);
-                             callback.getPost(post);
+                             callback.getPost(post,task);
                          }
                      }
                  });
@@ -764,6 +774,7 @@ public class PostDAL {
 
 
     }
+
     public void decreasePassengerCount(String postID, String postOwnerID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
@@ -789,12 +800,17 @@ public class PostDAL {
                 });
 
     }
+
     public void executeQuery(Query query, PostCallback callback){
+        Log.d("Tag","executeQuery methodu içi ");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() != null){
+                if(task.isSuccessful() && task.getResult() != null && task.getResult().size() > 0){
+                    Log.d("Tag","executeQuery başarılı ");
                     callback.onQueryExecuted(task.getResult().toObjects(Post.class), task);
+                }else{
+                    Log.d("Tag","executeQuery methodu başarısız ");
                 }
             }
         });

@@ -2,6 +2,8 @@ package com.furkanmeydan.prototip2.DataLayer.Callbacks;
 
 import com.furkanmeydan.prototip2.Models.Post;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public abstract class PostCallback {
         
     }
 
-    public void getPost(Post post){
+    public void getPost(Post post, Task<DocumentSnapshot> task){
 
     }
 
@@ -32,7 +34,7 @@ public abstract class PostCallback {
 
     }
 
-    public void getMyPosts(List<Post> list){
+    public void getMyPosts(List<Post> list, Task<QuerySnapshot> task){
 
     }
 

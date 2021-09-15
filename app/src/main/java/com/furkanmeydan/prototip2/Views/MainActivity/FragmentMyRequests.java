@@ -136,10 +136,12 @@ public class FragmentMyRequests extends Fragment {
     }
 
     public void getPosts(ArrayList<Request> requestList, final int flag){
+        /*
         Log.d("Tag","getPosts");
         for(Request request : requestList){
             String postID = request.getPostID();
             String postOwnerID = request.getPostOwnerID();
+
 
 
             postDAL.getSinglePost(postOwnerID, postID, new PostCallback() {
@@ -163,6 +165,8 @@ public class FragmentMyRequests extends Fragment {
             });
         }
 
+
+         */
     }
 
 }

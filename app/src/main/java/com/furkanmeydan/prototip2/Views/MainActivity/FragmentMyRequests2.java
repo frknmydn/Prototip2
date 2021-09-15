@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 import com.furkanmeydan.prototip2.Adapters.MyAcceptedRequestsAdapter;
 import com.furkanmeydan.prototip2.Adapters.MyWaitingRequestsAdapter;
@@ -21,11 +22,16 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
+import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +73,13 @@ public class FragmentMyRequests2 extends Fragment {
 
     boolean hasMember;
     int i = 0;
+    int counter = 0;
 
     private TabLayout tabLayout;
+
+    DocumentSnapshot lastVisible;
+    boolean isScrolling = false;
+    boolean isLastItemReached = false;
 
 
     public FragmentMyRequests2() {
@@ -277,9 +288,13 @@ public class FragmentMyRequests2 extends Fragment {
 
 
                              // 0 - bekleyen kabul edilmiş, 1 - geçmiş kabul edilmiş, 2 - bekleyen onaylanmamış
-                        }if(request.getPostTimestamp() - currentTimestamp <= timestampMargin && request.getPostTimestamp() - currentTimestamp > 0){
+                        }
+                        if(request.getPostTimestamp() - currentTimestamp <= timestampMargin && request.getPostTimestamp() - currentTimestamp > 0){
                             oncomingRequestList.add(request);
-                            acceptedRequestList.add(request);
+                            if(!acceptedRequestList.contains(request)){
+                                acceptedRequestList.add(request);
+                            }
+
 
 
                         }
@@ -300,7 +315,7 @@ public class FragmentMyRequests2 extends Fragment {
                 }
             }
         });
-        Log.d("TAGGO", "getAcceptedRequests: " + requestListHistory.size());
+
 
     }
 
@@ -325,39 +340,99 @@ public class FragmentMyRequests2 extends Fragment {
 
     public void getPosts(ArrayList<Request> requestList, final int flag){
         i = 0;
-            for(Request request : requestList){
+            for(Request request : requestList) {
                 int requestListSize = requestList.size();
                 Log.d("TAG", "getPosts: requestlistsize: "+ requestListSize);
-                i+=1;
+                Log.d("TAG", "getPosts flag: " + flag);
                 hasMember = false;
                 String postID = request.getPostID();
                 String postOwnerID = request.getPostOwnerID();
 
                 postDAL.getSinglePost(postOwnerID, postID, new PostCallback() {
                     @Override
-                    public void getPost(Post post) {
-                        super.getPost(post);
-                        Log.d("TAG", "getPost: i = " + i);
+                    public void getPost(Post post, Task<DocumentSnapshot> task) {
+                        super.getPost(post, task);
+                        Log.d("TAG", "getPost: counter = " + counter);
+                        if(flag == 0) {
+                                if (post.getStatus() != 0) {
+                                    hasMember = true;
+                                    acceptedPostList.add(post);
+                                    Log.d("Tag", "AcceptedPostList size :" + acceptedPostList.size());
+                                    adapterAccepted.notifyDataSetChanged();
+                                    /*
+                                    counter++;
+                                    lastVisible = task.getResult();
+                                    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+                                        @Override
+                                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                            super.onScrollStateChanged(recyclerView, newState);
+                                            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                                                isScrolling = true;
+                                                Log.d("TAG", "onStateChanged: ");
+                                            }
+                                        }
 
-                        if(flag == 0){
-                            if(post.getStatus() != 0){
-                                hasMember = true;
-                                acceptedPostList.add(post);
-                                Log.d("Tag","AcceptedPostList size :" + acceptedPostList.size());
-                                adapterAccepted.notifyDataSetChanged();
+                                        @Override
+                                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                            super.onScrolled(recyclerView, dx, dy);
+                                            Log.d("TAG", "onScrolled: ");
+                                            LinearLayoutManager tempLinear = (LinearLayoutManager) recyclerView.getLayoutManager();
+                                            int firstVisibleItemPosition = tempLinear.findFirstVisibleItemPosition();
+                                            int visibleItemCount = tempLinear.getChildCount();
+                                            int totalItemCount = tempLinear.getItemCount();
 
-                                if(hasMember){
-                                    layoutAcceptedContent.setVisibility(View.VISIBLE);
-                                    layoutAcceptedInfo.setVisibility(View.GONE);
-                                }else{
+
+                                            if (isScrolling && (firstVisibleItemPosition + visibleItemCount == totalItemCount) && !isLastItemReached) {
+                                                isScrolling = false;
+                                                Log.d("TAG", "onScrolled inside if: ");
+
+                                                Query query = postDAL.getFirestore().collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                                                        .collection(CollectionHelper.POST_COLLECTION)
+                                                        .whereEqualTo(CollectionHelper.POST_OWNERID, post.getOwnerID())
+                                                        .orderBy(CollectionHelper.POST_TIMESTAMP)
+                                                        .startAfter(lastVisible)
+                                                        .limit(postDAL.getLimit());
+
+
+                                                postDAL.executeQuery(query, new PostCallback() {
+                                                    @Override
+                                                    public void onQueryExecuted(List<Post> list, Task<QuerySnapshot> task) {
+                                                        super.onQueryExecuted(list, task);
+                                                        Log.d("TAG", "onQueryExecuted: " + list.size());
+                                                        acceptedPostList.addAll(list);
+
+                                                        adapterAccepted.notifyDataSetChanged();
+
+                                                        lastVisible = task.getResult().getDocuments().get(task.getResult().size() - 1);
+                                                        if (task.getResult().size() < postDAL.getLimit()) {
+                                                            isLastItemReached = true;
+                                                            Log.d("TAG", "isLastItemReached: " + isLastItemReached);
+
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    };
+                                    RCLAccepted.addOnScrollListener(onScrollListener);
+                                    adapterAccepted.notifyDataSetChanged();
+
+
+
+                                     */
+                                    if (hasMember) {
+                                        layoutAcceptedContent.setVisibility(View.VISIBLE);
+                                        layoutAcceptedInfo.setVisibility(View.GONE);
+
+                                    } else {
+                                        layoutAcceptedContent.setVisibility(View.GONE);
+                                        layoutAcceptedInfo.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                                else {
                                     layoutAcceptedContent.setVisibility(View.GONE);
                                     layoutAcceptedInfo.setVisibility(View.VISIBLE);
                                 }
-                            }
-                            else{
-                                layoutAcceptedContent.setVisibility(View.GONE);
-                                layoutAcceptedInfo.setVisibility(View.VISIBLE);
-                            }
 
 
                         }else if(flag == 1){
@@ -447,5 +522,9 @@ public class FragmentMyRequests2 extends Fragment {
                     }
                 });
             }
+
+
+
+
     }
 }
