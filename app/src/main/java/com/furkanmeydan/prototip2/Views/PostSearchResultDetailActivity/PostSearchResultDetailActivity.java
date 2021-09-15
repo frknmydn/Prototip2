@@ -122,14 +122,24 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             public void onRequestsRetrievedNotNull(List<Request> list) {
                 super.onRequestsRetrievedNotNull(list);
                 requestList.addAll(list);
-                changeFragment(new FragmentPostSearchResultDetail());
+                try {
+                    changeFragment(new FragmentPostSearchResultDetail());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
 
             @Override
             public void onRequestsRetrievedNull() {
                 super.onRequestsRetrievedNull();
-                changeFragment(new FragmentPostSearchResultDetail());
+                try {
+                    changeFragment(new FragmentPostSearchResultDetail());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         return requestList;
@@ -141,25 +151,45 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             if(item.getItemId()==R.id.Details){
 
                 Toast.makeText(getApplicationContext(),"DET",Toast.LENGTH_LONG).show();
-                changeFragment(new FragmentPostSearchResultDetail());
+                try {
+                    changeFragment(new FragmentPostSearchResultDetail());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
             else if(item.getItemId()==R.id.Map){
                 Toast.makeText(getApplicationContext(),"MAP",Toast.LENGTH_LONG).show();
-                changeFragment(new FragmentPostSearchResultMap());
+                try {
+                    changeFragment(new FragmentPostSearchResultMap());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             else if(item.getItemId()==R.id.showProfile){
                 Toast.makeText(getApplicationContext(),"SHOW PROFILE",Toast.LENGTH_LONG).show();
-                changeFragment(new FragmentPostSearchPostOwner());
+                try {
+                    changeFragment(new FragmentPostSearchPostOwner());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             else if(item.getItemId()==R.id.Questions){
                 Toast.makeText(getApplicationContext(),"QUESTIONS",Toast.LENGTH_LONG).show();
-                changeFragment(new FragmentPostSearchResultQuestions());
+                try {
+                    changeFragment(new FragmentPostSearchResultQuestions());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             else if(item.getItemId()== R.id.Requests){
                 Toast.makeText(getApplicationContext(),"REQUESTS",Toast.LENGTH_LONG).show();
-                changeFragment(new FragmentPostSearchResultDetailAcceptedRequests());
+                try {
+                    changeFragment(new FragmentPostSearchResultDetailAcceptedRequests());
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             return true;

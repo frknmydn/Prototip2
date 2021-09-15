@@ -26,6 +26,7 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.PostCallback;
 import com.furkanmeydan.prototip2.DataLayer.NotificationManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
 import com.furkanmeydan.prototip2.Models.Car;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
@@ -38,6 +39,7 @@ import com.onesignal.OneSignal;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -62,6 +64,7 @@ public class UploadPostActivity extends AppCompatActivity {
     public TextView txtCarInfo;
     public Button btnAddPost;
     public Post postToPush;
+    ConnectionChecker connectionChecker;
 
 
     @Override
@@ -69,13 +72,17 @@ public class UploadPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         car = null;
         postToPush = new Post();
-
+        connectionChecker = new ConnectionChecker();
         uploadMapFragment2 = new UploadMapFragment2();
         uploadPostDetailFragment = new UploadPostDetailFragment();
 
         setContentView(R.layout.activity_upload_post_new);
         localDataManager = new LocalDataManager();
-        changeFragment(uploadPostDetailFragment);
+        try {
+            changeFragment(uploadPostDetailFragment);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         postDAL = new PostDAL();
         firebaseAuth= FirebaseAuth.getInstance();
         userId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
@@ -93,13 +100,21 @@ public class UploadPostActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        changeFragment(uploadPostDetailFragment);
+                        try {
+                            changeFragment(uploadPostDetailFragment);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("TAG", "onTabSelected: 1 ");
                         break;
 
                     case 1:
                         uploadPostDetailFragment.saveDetails();
-                        changeFragment(uploadMapFragment2);
+                        try {
+                            changeFragment(uploadMapFragment2);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("TAG", "onTabSelected: 2 ");
                         break;
                 }
@@ -122,23 +137,29 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
 
-    public void changeFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        //fragmentTransaction.addToBackStack("PostCallback");
-        fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment);
-        fragmentTransaction.commit();
+    public void changeFragment(Fragment fragment) throws IOException, InterruptedException {
+        if(connectionChecker.isConnected()){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            //fragmentTransaction.addToBackStack("PostCallback");
+            fragmentTransaction.replace(R.id.postUploadFrameLayout2,fragment);
+            fragmentTransaction.commit();
+        }
+        else{
+            connectionChecker.showWindow(this);
+        }
+
     }
 
 
-    public void AUPDetailFragment(View view){
+    public void AUPDetailFragment(View view) throws IOException, InterruptedException {
         changeFragment(new UploadPostDetailFragment());
         //onBackPressed();
     }
 
-    public void AUPMapFragment(View view){
+    public void AUPMapFragment(View view) throws IOException, InterruptedException {
         changeFragment(new UploadMapFragment2());
         //onBackPressed();
     }

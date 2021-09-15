@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.PostDAL;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
@@ -80,6 +81,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     ImageView imgMarker;
     Button btnZoomToMe,btnAddMarker;
     AutocompleteSupportFragment autocompleteFragment;
+    ConnectionChecker connectionChecker;
 
 
     public FragmentPostSearchResultMap_new() {
@@ -106,7 +108,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             placesClient = Places.createClient(activity);
         }
 
-
+        connectionChecker = new ConnectionChecker();
     }
 
     @Override
@@ -152,7 +154,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             imgMarker = view.findViewById(R.id.imgMarker);
             btnZoomToMe = view.findViewById(R.id.btnZoomToMe);
             btnAddMarker = view.findViewById(R.id.btnAddMarker);
-
+            connectionChecker.isLocationEnabled(activity);
 
 
 

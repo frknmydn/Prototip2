@@ -29,6 +29,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.google.android.gms.common.api.Status;
@@ -81,7 +82,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
     Button btnAddMarker,btnZoomToMe;
     TextView txtMarkerStatus;
     ImageView imgMarker;
-
+    ConnectionChecker connectionChecker;
 
     public UploadMapFragment2() {
         // Required empty public constructor
@@ -102,6 +103,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
         placesClient = Places.createClient(postActivity);
 
+        connectionChecker = new ConnectionChecker();
     }
 
 
@@ -141,7 +143,7 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
 
 
-
+        connectionChecker.isLocationEnabled(postActivity);
         localDataManager = new LocalDataManager();
         //postActivity.findViewById(R.id.btnUploadPostMap).setClickable(false);
         //postActivity.findViewById(R.id.btnUploadPostDetails).setClickable(true);

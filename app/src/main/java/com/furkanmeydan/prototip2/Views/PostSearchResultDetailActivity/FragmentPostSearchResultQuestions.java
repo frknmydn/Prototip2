@@ -22,6 +22,7 @@ import com.furkanmeydan.prototip2.Adapters.QuestionsRCLAdapter;
 import com.furkanmeydan.prototip2.R;
 import com.google.firebase.Timestamp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,13 @@ public class FragmentPostSearchResultQuestions extends Fragment {
             btnAskQuestion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    activity.changeFragment(new FragmentPostSearchResultAskQuestion());
+                    try {
+                        activity.changeFragment(new FragmentPostSearchResultAskQuestion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

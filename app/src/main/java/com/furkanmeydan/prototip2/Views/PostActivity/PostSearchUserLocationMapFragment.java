@@ -27,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+
 public class PostSearchUserLocationMapFragment extends Fragment {
 
     PostDAL postDAL;
@@ -101,8 +103,14 @@ public class PostSearchUserLocationMapFragment extends Fragment {
                 localDataManager.setSharedPreferenceForDouble(postActivity, "requestLng2", lng2);
 
 
-                postActivity.changeFragmentArgs(new PostSearchResultFragment(), bundle);
-            }
+                    try {
+                        postActivity.changeFragmentArgs(new PostSearchResultFragment(), bundle);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             });
 
             btnClear.setOnClickListener(view -> {

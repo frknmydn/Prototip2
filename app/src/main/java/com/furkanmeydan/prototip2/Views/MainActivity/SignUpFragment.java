@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.LocalDataManager;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.google.firebase.storage.FirebaseStorage;
@@ -64,7 +65,6 @@ public class SignUpFragment extends Fragment {
     private SimpleDateFormat dateFormat;
     private Calendar calendar;
 
-
     ArrayAdapter<CharSequence> spinnerAdapter;
 
 
@@ -75,6 +75,7 @@ public class SignUpFragment extends Fragment {
 
     Uri imageData;
     Bitmap selectedImage;
+    ConnectionChecker conChecker;
 
 
     public SignUpFragment() {
@@ -98,7 +99,7 @@ public class SignUpFragment extends Fragment {
         //Doğum tarihi seçmek için telefonun takvim uygulamasını açmak için
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         calendar = Calendar.getInstance();
-
+        conChecker = new ConnectionChecker();
 
     }
 
@@ -193,7 +194,11 @@ public class SignUpFragment extends Fragment {
 
             if (imageData != null) {
                 if(!genderString.equals("Cinsiyet")){
-                    uploadImage();
+                    try {
+                        uploadImage();
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else{
                     Toast.makeText(getActivity(), "Lütfen Cinsiyetinizi Belirtiniz.", Toast.LENGTH_LONG).show();
@@ -208,41 +213,56 @@ public class SignUpFragment extends Fragment {
     }
 
 
-    private void uploadImage() {
-        final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + "jpg";
-        storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
-            StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
-            imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
-                String imageURL = uri.toString();
-                uploadData(imageURL);
+    private void uploadImage() throws IOException, InterruptedException {
+        if(conChecker.isConnected()){
+            final String imageName = "images/" + Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid() + "jpg";
+            storageReference.child(imageName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
+                StorageReference imgURLref = FirebaseStorage.getInstance().getReference(imageName);
+                imgURLref.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String imageURL = uri.toString();
+                    uploadData(imageURL);
+                });
             });
-        });
+        }
+        else{
+            conChecker.showWindow(mainActivity);
+        }
+
     }
 
 
     private void uploadData(final String imageURL) {
 
+        try {
+            if(conChecker.isConnected()){
+                profileDAL.uploadProfile(nameSurnameString, eMailString, dateString, genderString, imageURL, getActivity(), new ProfileCallback() {
 
-        profileDAL.uploadProfile(nameSurnameString, eMailString, dateString, genderString, imageURL, getActivity(), new ProfileCallback() {
+                    @Override
+                    public void uploadProfile(User user) {
+                        super.uploadProfile(user);
 
-            @Override
-            public void uploadProfile(User user) {
-                super.uploadProfile(user);
-
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedNameSurname", user.getNameSurname());
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedEmail", user.getEmail());
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedBirthdate", user.getBirthDate());
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedGender", user.getGender());
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedImageURL", user.getProfilePicture());
-                localDataManagerUser.setSharedPreference(mainActivity, "sharedOneSignalID", user.getOneSignalID());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedNameSurname", user.getNameSurname());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedEmail", user.getEmail());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedBirthdate", user.getBirthDate());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedGender", user.getGender());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedImageURL", user.getProfilePicture());
+                        localDataManagerUser.setSharedPreference(mainActivity, "sharedOneSignalID", user.getOneSignalID());
 
 
 
-                Intent i = new Intent(mainActivity, MainActivity.class);
-                startActivity(i);
-                mainActivity.finish();
+                        Intent i = new Intent(mainActivity, MainActivity.class);
+                        startActivity(i);
+                        mainActivity.finish();
+                    }
+                });
             }
-        });
+            else{
+                conChecker.showWindow(mainActivity);
+            }
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
     // İlk defa galeriyi açınca izin isteme muhabbeti
