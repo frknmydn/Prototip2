@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.R;
@@ -26,6 +27,7 @@ public class ActivityOpeningPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         fuser = firebaseAuth.getCurrentUser();
         changeFragment(new OpeningPageLogoFragment());
+        Log.d("TAG", "onCreate: NEW ACTIVITY ");
 
 
 

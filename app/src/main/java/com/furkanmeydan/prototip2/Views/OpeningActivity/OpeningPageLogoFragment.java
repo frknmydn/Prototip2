@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,10 @@ import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class OpeningPageLogoFragment extends Fragment {
@@ -30,6 +38,8 @@ public class OpeningPageLogoFragment extends Fragment {
     ImageView imgLogo;
     TextView slogan;
     ProgressBar pg;
+    boolean flag = false;
+    boolean windowOpen = false;
 
 
     public OpeningPageLogoFragment() {
@@ -61,37 +71,71 @@ public class OpeningPageLogoFragment extends Fragment {
         pg = view.findViewById(R.id.progressBar8);
 
 
+        // Create an executor that executes tasks in the main thread.
+        Executor mainExecutor = ContextCompat.getMainExecutor(activityOpeningPage);
+
+        // Create an executor that executes tasks in a background thread.
+        ScheduledExecutorService backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
+
+        backgroundExecutor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                while (!flag) {
+                    try {
+                        checkConnection();
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    // Update UI on the main thread
+                    mainExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            // You code logic goes here.
+                            if (flag) {
+                                if (activityOpeningPage.fuser != null) {
+                                    Intent i = new Intent(activityOpeningPage, MainActivity.class);
+                                    startActivity(i);
+                                    activityOpeningPage.finish();
+                                    backgroundExecutor.shutdown();
+                                } else {
+                                    Intent i = new Intent(activityOpeningPage, LoginRegisterActivity.class);
+                                    startActivity(i);
+                                    activityOpeningPage.finish();
+                                    backgroundExecutor.shutdown();
+                                }
+
+                            } else {
+                                try {
+                                    if(!windowOpen){
+                                        connectionChecker.showWindow(activityOpeningPage);
+                                        windowOpen = true;
+                                    }
+
+                                    Log.d("TAG", "flag is false: ");
+                                } catch (IOException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
+
+                }
+            }
+        },2, TimeUnit.SECONDS);
+
+
 
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        try {
-            Thread.sleep(5500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void checkConnection() throws IOException, InterruptedException {
+        Log.d("TAG", "checkConnection: " + flag);
+        if(!flag){
+            flag = connectionChecker.isConnected();
         }
-        try {
-            if(connectionChecker.isConnected()){
-                if (activityOpeningPage.fuser != null) {
-                    Intent i = new Intent(activityOpeningPage, MainActivity.class);
-                    startActivity(i);
-                    activityOpeningPage.finish();
-                }
-                else{
-                    Intent i = new Intent(activityOpeningPage, LoginRegisterActivity.class);
-                    startActivity(i);
-                    activityOpeningPage.finish();
-                }
-            }
-            else{
-                connectionChecker.showWindow(activityOpeningPage);
-            }
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
 
-        }
     }
+
+
 }

@@ -137,10 +137,8 @@ public class MyOldPostsFragment extends Fragment {
                                 Query query = postDAL.getFirestore().collection(CollectionHelper.USER_COLLECTION)
                                         .document(postDAL.getUserId())
                                         .collection(CollectionHelper.POST_COLLECTION)
-                                        .whereEqualTo(CollectionHelper.POST_STATUS, 1)
-                                        .whereGreaterThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp - 10 * 60)
+                                        .whereLessThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp)
                                         .orderBy(CollectionHelper.POST_TIMESTAMP)
-                                        .startAfter(lastVisible)
                                         .limit(postDAL.getLimit());
 
                                 postDAL.executeQuery(query, new PostCallback() {
