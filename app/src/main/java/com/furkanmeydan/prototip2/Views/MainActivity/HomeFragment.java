@@ -157,6 +157,7 @@ public class HomeFragment extends Fragment {
             startActivity(i);
         });
 
+        btnConfirmUser.setVisibility(View.INVISIBLE);
         btnConfirmUser.setOnClickListener(view13 -> {
             //mainActivity.changeFragment(new FragmentConfirmUser());
             Intent i = new Intent(mainActivity, ActivityOpeningPage.class);
