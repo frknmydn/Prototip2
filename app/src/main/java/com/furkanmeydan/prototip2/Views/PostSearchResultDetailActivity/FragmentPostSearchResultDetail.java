@@ -647,7 +647,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     // Eğer API'dan request boş gelmiyor ise tracking sayfasına yönlendircek butonun visibility'sini açmak için
     public void tryRequest(){
 
-        String url = "https://carsharingapp.me/api/Positions/GetPositionByPostID/"+post.getPostID();
+        String url = "https://carsharingapp.me/api/Locations/"+post.getOwnerID()+"/Locations";
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 

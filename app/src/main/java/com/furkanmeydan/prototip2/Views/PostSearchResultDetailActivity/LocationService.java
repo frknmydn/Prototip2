@@ -85,7 +85,7 @@ public class LocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         queue = Volley.newRequestQueue(this);
-        url = "https://carsharingapp.me/api/Positions";
+        url = "https://carsharingapp.me/api/Locations";
 
 
 
@@ -237,11 +237,12 @@ public class LocationService extends Service {
 
                     try {
 
-                        jsonObject.put("postID",postID);
                         jsonObject.put("latitude",latitude);
                         jsonObject.put("longitude",longitude);
-                        jsonObject.put("timestamp",time);
                         jsonObject.put("carOwnerID",postOwnerID);
+                        jsonObject.put("timestamp",time);
+                        jsonObject.put("postID",postID);
+
 
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url, jsonObject, new Response.Listener<JSONObject>() {
                             @Override

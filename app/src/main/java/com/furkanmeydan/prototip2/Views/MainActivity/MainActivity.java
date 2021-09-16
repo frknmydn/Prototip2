@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId()==R.id.questionsToMe){
             try {
-                if (!connectionChecker.isConnected()) {
+                if (connectionChecker.isConnected()) {
                     changeFragment(new QuestionsToMeFragment());
                 }
                 else{
