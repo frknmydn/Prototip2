@@ -26,6 +26,7 @@ import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.Models.Car;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.OpeningActivity.ActivityOpeningPage;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
 import com.onesignal.OSDeviceState;
@@ -157,7 +158,10 @@ public class HomeFragment extends Fragment {
         });
 
         btnConfirmUser.setOnClickListener(view13 -> {
-            mainActivity.changeFragment(new FragmentConfirmUser());
+            //mainActivity.changeFragment(new FragmentConfirmUser());
+            Intent i = new Intent(mainActivity, ActivityOpeningPage.class);
+            startActivity(i);
+
         });
     }
 
