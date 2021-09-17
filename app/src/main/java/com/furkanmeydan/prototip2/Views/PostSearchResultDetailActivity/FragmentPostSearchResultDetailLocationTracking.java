@@ -58,6 +58,7 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
     Long timestamp;
     String latString,lngString;
     RequestQueue queue;
+    Timer timerRequest;
 
     public FragmentPostSearchResultDetailLocationTracking() {
         // Required empty public constructor
@@ -83,7 +84,7 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
 
         mapView.onResume();
 
-        Timer timerRequest = new Timer();
+        timerRequest = new Timer();
         timerRequest.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -114,7 +115,7 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
     public void tryRequest(){
         Log.d("Tag","TryRequest içi");
 
-        String url = "https://carsharingapp.me/api/Locations/"+post.getOwnerID()+"/Locations";
+        String url = "https://carsharingapp.me/api/Locations/"+post.getPostID()+"/postID";
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 
@@ -152,9 +153,9 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
                     }
 
                     Log.d("Tag","Formattan sonra zaman saat : " + formattedHour);
-
+                    googleMapLocations.clear();
                     googleMapLocations.addMarker(new MarkerOptions().position(latLngPosition).title(formattedHour).icon(BitmapFromVector(activity,R.drawable.ic_baseline_car_24)).alpha(1.0f));
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(latLngPosition).zoom(14).build();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(latLngPosition).zoom(18).build();
                     googleMapLocations.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     //Log.d("Tag","responseGetString" +response.getString("latitude"));
                     //Log.d("Tag","responseGetString"+response.getString("longitude"));
@@ -188,5 +189,11 @@ public class FragmentPostSearchResultDetailLocationTracking extends Fragment {
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timerRequest.cancel();
     }
 }

@@ -39,6 +39,9 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LocationService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
     public static final int TWO_MINUTES = 1000*60;
@@ -53,6 +56,7 @@ public class LocationService extends Service {
     LocalDataManager localDataManager;
 
     String ACTION_STOP_SERVICE= "STOP";
+
 
 
 
@@ -135,6 +139,7 @@ public class LocationService extends Service {
     }
 
     public boolean isBetterLocation(Location location,Location currentBestLocation){
+
         if(currentBestLocation == null){
             //Önceden bir konum yoksa her türlü yeni konum alınıyor
             return true;

@@ -634,6 +634,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 btnAddToWish.setClickable(false);
                 btnAddToWish.setFocusable(false);
                 btnAddToWish.setText("Takip ediyorsunuz");
+                addToWishPhoto.setVisibility(View.GONE);
             }
         });
     }
@@ -647,7 +648,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
     // Eğer API'dan request boş gelmiyor ise tracking sayfasına yönlendircek butonun visibility'sini açmak için
     public void tryRequest(){
 
-        String url = "https://carsharingapp.me/api/Locations/"+post.getOwnerID()+"/Locations";
+        String url = "https://carsharingapp.me/api/Locations/"+post.getPostID()+"/postID";
         Log.d("Tag","String url : " + url);
         JSONObject jsonObject = new JSONObject();
 
@@ -659,7 +660,8 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 Log.d("Tag", "current timestamp: "+ currentTimestamp);
                 Log.d("Tag", "response timestamp: "+ responseTimeStamp);
                 Log.d("Tag", "timestamp arası fark" + timestampDifference);
-                if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
+
+                if(timestampDifference <= 600 && post.getTimestamp() > currentTimestamp - 600){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
                     btnLocationTracking.setVisibility(View.VISIBLE);
                 }
             } catch (JSONException e) {
@@ -705,9 +707,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
         }
 
         else {
-            //Eğer kullanıcı post sahibiyse ve ilan saatine 3 dakikadan az süre kalmışsa
-            long threeMinutesMin = post.getTimestamp() - 180;
-            long threeMinutesMax = post.getTimestamp() + 180;
+            //Eğer kullanıcı post sahibiyse ve ilan saatine 10 dakikadan az süre kalmışsa
+            long threeMinutesMin = post.getTimestamp() - 600;
+            long threeMinutesMax = post.getTimestamp() + 600;
 
             Log.d("TAG","Timestamp outdated," + isPostOutdated);
             Log.d("TAG","Timestamp min," + threeMinutesMin);
@@ -720,6 +722,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 addToWishPhoto.setVisibility(View.GONE);
                 btnSendRequest.setVisibility(View.GONE);
                 sendRequestPhoto.setVisibility(View.GONE);
+                addToWishPhoto.setVisibility(View.GONE);
                 Log.d("TAG","İlk if içi");
                 if (localDataManager.getSharedPreference(activity, "isServiceEnable", null) == null || localDataManager.getSharedPreference(activity, "isServiceEnable", null).equals("0")) {
                     Log.d("TAG","İkinci if içi");
@@ -751,15 +754,29 @@ public class FragmentPostSearchResultDetail extends Fragment {
                                         super.onPostUpdated();
 
 
-                                        try {
-                                            for (Request request : activity.requestList) {
-                                                OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+                                        for (Request request : activity.requestList) {
+                                            Thread t1 = new Thread(){
+                                                @Override
+                                                public void run() {
+                                                    super.run();
+                                                    NotificationManager notificationManager = new NotificationManager(request.getSenderID(), "Kayit oldugunuz yolculuk baslamistir.","Bilgilendirme");
+                                                    //OneSignal.postNotification(new JSONObject("{'contents': {'en':'Kayit oldugunuz yolculuk baslamistir.'}, 'include_external_user_ids': ['" + request.getSenderID() + "']}"), null);
+                                                    try {
+                                                        notificationManager.NotificationForNow();
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            };
+                                            t1.start();
+                                            try {
+                                                t1.join();
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
                                             }
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
 
+                                        }
 
 
                                         Intent serviceIntent = new Intent(activity, LocationService.class);
@@ -817,6 +834,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                     btnSendRequest.setFocusable(false);
                     btnSendRequest.setVisibility(View.INVISIBLE);
                     btnDeleteRequest.setVisibility(View.VISIBLE);
+                    sendRequestPhoto.setImageResource(R.drawable.ic_baseline_close);
                 }
             });
 
@@ -825,6 +843,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 btnAddToWish.setFocusable(false);
                 btnAddToWish.setTextSize(12);
                 btnAddToWish.setText("Takip ediliyor");
+                addToWishPhoto.setVisibility(View.INVISIBLE);
             }
 
             //zaman işlemleri
