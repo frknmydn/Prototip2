@@ -659,9 +659,9 @@ public class FragmentPostSearchResultDetail extends Fragment {
                 Log.d("Tag", "current timestamp: "+ currentTimestamp);
                 Log.d("Tag", "response timestamp: "+ responseTimeStamp);
                 Log.d("Tag", "timestamp arası fark" + timestampDifference);
-                if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
+                //if(timestampDifference <= 180 && post.getTimestamp() > currentTimestamp - 180){ //işlemi post sahibi ilanı kapatmadığı sürece yapılması gerektiği için timestamp karşılaştırmsı.
                     btnLocationTracking.setVisibility(View.VISIBLE);
-                }
+                //}
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -695,13 +695,13 @@ public class FragmentPostSearchResultDetail extends Fragment {
 
 
         if(isPostOutdated){
-            btnSendRequest.setVisibility(View.GONE);
-            sendRequestPhoto.setVisibility(View.GONE);
-            btnAddToWish.setVisibility(View.GONE);
-            addToWishPhoto.setVisibility(View.GONE);
-            btnLocationTracking.setVisibility(View.GONE);
-            btnStartService.setVisibility(View.GONE);
-            btnEndService.setVisibility(View.GONE);
+            btnSendRequest.setVisibility(View.INVISIBLE);
+            sendRequestPhoto.setVisibility(View.INVISIBLE);
+            btnAddToWish.setVisibility(View.INVISIBLE);
+            addToWishPhoto.setVisibility(View.INVISIBLE);
+            btnLocationTracking.setVisibility(View.INVISIBLE);
+            btnStartService.setVisibility(View.INVISIBLE);
+            btnEndService.setVisibility(View.INVISIBLE);
         }
 
         else {
