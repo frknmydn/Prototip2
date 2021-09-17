@@ -89,13 +89,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="20dp"
             android:text="Takip Sistemini Sonlandır."
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnSearchResultDetailDeletePost"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
             tools:ignore="HardcodedText" />
 
         <Button
@@ -559,11 +560,11 @@
             android:id="@+id/linearLayout11"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="100dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
-            app:layout_constraintTop_toBottomOf="@+id/btnSearchResultDetailEndService">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
             <TextView
                 android:id="@+id/textView20"
