@@ -29,20 +29,30 @@ import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.OpeningActivity.ActivityOpeningPage;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
 
-
     private Button btnAddPost, btnSearchPost, btnConfirmUser;
     MainActivity mainActivity;
+
+    private FirebaseDatabase database;
+    public DatabaseReference myRef;
 
     Dialog dialog;
 
@@ -69,6 +79,12 @@ public class HomeFragment extends Fragment {
         carDAL = new CarDAL();
         appDatabase = Room.databaseBuilder(mainActivity,
                 AppDatabase.class, "carsDB").build();
+
+         database = FirebaseDatabase.getInstance();
+         myRef = database.getReference();
+
+
+
 
 
     }
@@ -101,8 +117,29 @@ public class HomeFragment extends Fragment {
         OneSignal.setExternalUserId(userid);
 
         btnAddPost.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(final View view) {
+
+                Log.d("TAGGAT","denicez denizcez");
+
+                myRef.setValue("mehaba").addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("TAGGAT","başarılı başarılı");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Log.d("TAGGAT","başarısız başarısız" + e.getMessage());
+
+                    }
+                });
+
+                Log.d("TAGGAT","denedik denedik ");
+
+
                 Log.d("Tag", "Onclick'e basıldı");
                 profileDAL.getProfile(userid, new ProfileCallback() {
                     @Override

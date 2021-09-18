@@ -43,7 +43,9 @@ dependencies {
 
 
     //firebase implemantation
-    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    //implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+    implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
