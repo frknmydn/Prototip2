@@ -7,23 +7,6 @@
     tools:context=".Views.MainActivity.HomeFragment">
 
     <Button
-        android:id="@+id/btnConfirmUser"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="236dp"
-        android:background="@drawable/deneme_button"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/kullanici_onayla"
-        android:textColor="#D3D3D3"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddPostFragmentH"
-        app:layout_constraintEnd_toEndOf="@+id/btnSearchPost"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnSearchPost"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
         android:id="@+id/btnAddPostFragmentH"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -53,6 +36,71 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutHomeConfirm"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView70"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BİLGİLENDİRME" />
+
+        <TextView
+            android:id="@+id/textView74"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eğer kullanıcırı onaylamazsanız ananızı sikeriz" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RCLHomeConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutHomeConfirmSender"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddPostFragmentH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHomeConfirm">
+
+        <TextView
+            android:id="@+id/textView75"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView76"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RCLHomeConfirmSender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 <!--
 android:background="#A66E6F81"

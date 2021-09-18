@@ -2,12 +2,13 @@ package com.furkanmeydan.prototip2.Views.MainActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.util.Log;
@@ -15,49 +16,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
+import com.furkanmeydan.prototip2.Adapters.confimUserRequestSenderAdapter;
+import com.furkanmeydan.prototip2.Adapters.confirmUserPostOwnerAdapter;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.AppDatabase;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.CarCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.CarDAL;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
+import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Car;
+import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.Views.OpeningActivity.ActivityOpeningPage;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.furkanmeydan.prototip2.Views.UploadPostActivity.UploadPostActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
 
-    private Button btnAddPost, btnSearchPost, btnConfirmUser;
+    private Button btnAddPost, btnSearchPost;
     MainActivity mainActivity;
-
-
+    LinearLayout confirmLayoutPostOwner;
+    LinearLayout confirmLayoutRequestSender;
+    RecyclerView rclConfirmPostOwner;
+    RecyclerView rclConfirmRequestSender;
+    ArrayList<Request> requestListPostOwnerConfirm;
+    ArrayList<Request> requestListRequestSenderConfirm;
+    confirmUserPostOwnerAdapter adapterConfirmUserPostOwner;
+    confimUserRequestSenderAdapter adapterConfirmUserRequestSender;
 
     Dialog dialog;
 
     String userid;
 
     ProfileDAL profileDAL;
+    RequestDAL requestDAL;
 
     AppDatabase appDatabase;
     CarDAL carDAL;
@@ -76,16 +77,19 @@ public class HomeFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         profileDAL = new ProfileDAL();
         carDAL = new CarDAL();
+        requestDAL = new RequestDAL();
         appDatabase = Room.databaseBuilder(mainActivity,
                 AppDatabase.class, "carsDB").build();
-
-
-
-
+        requestListPostOwnerConfirm = new ArrayList<>();
+        requestListRequestSenderConfirm = new ArrayList<>();
+        adapterConfirmUserPostOwner = new confirmUserPostOwnerAdapter(requestListPostOwnerConfirm,requestDAL,mainActivity,this);
+        adapterConfirmUserRequestSender = new confimUserRequestSenderAdapter(requestListPostOwnerConfirm,requestDAL,mainActivity,this);
 
 
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,17 +104,56 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-
         assert mainActivity != null;
         userid = Objects.requireNonNull(mainActivity.firebaseAuth.getCurrentUser()).getUid();
         Log.d("TAG", "userid " + userid);
 
-        btnConfirmUser =view.findViewById(R.id.btnConfirmUser);
         btnAddPost = view.findViewById(R.id.btnAddPostFragmentH);
         btnSearchPost = view.findViewById(R.id.btnSearchPost);
         carList = new ArrayList<>();
+
+        rclConfirmPostOwner = view.findViewById(R.id.RCLHomeConfirm);
+        confirmLayoutPostOwner = view.findViewById(R.id.layoutHomeConfirm);
+
+        rclConfirmPostOwner.setAdapter(adapterConfirmUserPostOwner);
+        rclConfirmPostOwner.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        confirmLayoutRequestSender = view.findViewById(R.id.layoutHomeConfirmSender);
+
+        rclConfirmRequestSender = view.findViewById(R.id.RCLHomeConfirmSender);
+
+        rclConfirmRequestSender.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        requestDAL.getConfirmUserForPostOwner(new RequestCallback() {
+            @Override
+            public void onRequestsRetrievedNotNull(List<Request> list) {
+                super.onRequestsRetrievedNotNull(list);
+                requestListPostOwnerConfirm.addAll(list);
+                adapterConfirmUserPostOwner.notifyDataSetChanged();
+                confirmLayoutPostOwner.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRequestsRetrievedNull() {
+                super.onRequestsRetrievedNull();
+                requestDAL.getConfirmUserForRequestSender(new RequestCallback() {
+                    @Override
+                    public void onRequestsRetrievedNotNull(List<Request> list) {
+                        super.onRequestsRetrievedNotNull(list);
+                        requestListRequestSenderConfirm.addAll(list);
+                        adapterConfirmUserRequestSender.notifyDataSetChanged();
+                        confirmLayoutRequestSender.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onRequestsRetrievedNull() {
+                        super.onRequestsRetrievedNull();
+
+                    }
+                });
+            }
+        });
+
 
         OneSignal.setExternalUserId(userid);
 
@@ -173,13 +216,7 @@ public class HomeFragment extends Fragment {
             startActivity(i);
         });
 
-        btnConfirmUser.setVisibility(View.INVISIBLE);
-        btnConfirmUser.setOnClickListener(view13 -> {
-            //mainActivity.changeFragment(new FragmentConfirmUser());
-            Intent i = new Intent(mainActivity, ActivityOpeningPage.class);
-            startActivity(i);
 
-        });
     }
 
     public void getCarsWithRoom() throws InterruptedException {

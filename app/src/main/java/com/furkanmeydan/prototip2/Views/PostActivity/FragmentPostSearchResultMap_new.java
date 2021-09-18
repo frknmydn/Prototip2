@@ -84,6 +84,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
     ConnectionChecker connectionChecker;
 
 
+
     public FragmentPostSearchResultMap_new() {
         // Required empty public constructor
     }
@@ -338,6 +339,7 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
 
         if (counter < 2) {
             try {
+
                 addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
 
                 if (addressList != null && addressList.size() > 0) {
@@ -356,6 +358,11 @@ public class FragmentPostSearchResultMap_new extends Fragment implements OnMapRe
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.d("TAG", "addMarker2: EXCEPTION");
+                try {
+                    connectionChecker.showWindow(activity);
+                } catch (IOException | InterruptedException ioException) {
+                    ioException.printStackTrace();
+                }
             }
 
             if (counter == 0) {

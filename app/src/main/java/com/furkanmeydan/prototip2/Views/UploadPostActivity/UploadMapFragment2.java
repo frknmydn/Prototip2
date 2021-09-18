@@ -234,6 +234,11 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                try {
+                    connectionChecker.showWindow(postActivity);
+                } catch (IOException | InterruptedException ioException) {
+                    ioException.printStackTrace();
+                }
             }
 
             if (counter == 0) {

@@ -17,50 +17,37 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
+import com.furkanmeydan.prototip2.Views.MainActivity.HomeFragment;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
-import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
-import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
+
 
 import java.util.ArrayList;
 
-public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.PostHolder> {
-
+public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimUserRequestSenderAdapter.PostHolder>{
     ArrayList<Request> acceptedRequest;
-    PostSearchResultDetailActivity activity;
     RequestDAL requestDAL;
-    MainActivity mainActivity;
+    MainActivity activity;
+    HomeFragment homeFragment;
 
-
-    public AcceptedRequestAdapter(ArrayList<Request> acceptedRequest, PostSearchResultDetailActivity activity) {
+    public confimUserRequestSenderAdapter(ArrayList<Request> acceptedRequest, RequestDAL requestDAL, MainActivity mainActivity, HomeFragment homeFragment) {
         this.acceptedRequest = acceptedRequest;
-        this.activity = activity;
-        this.requestDAL = new RequestDAL();
+        this.requestDAL = requestDAL;
+        this.activity = mainActivity;
+        this.homeFragment = homeFragment;
     }
-
-
 
     @NonNull
     @Override
-    public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public confimUserRequestSenderAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.accepted_requests_row_new,parent,false);
 
-        return new PostHolder(view);
+        return new confimUserRequestSenderAdapter.PostHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+    public void onBindViewHolder(@NonNull confimUserRequestSenderAdapter.PostHolder holder, int position) {
 
-        if(activity.getPost().getOwnerID().equals(activity.getCurrentUserID())){
-            for(Request request : acceptedRequest) {
-
-                if (request.getOwnerConfirmed() == 0) {
-                    holder.btnAcceptedRequestDeclineUser.setVisibility(View.VISIBLE);
-                    holder.btnAcceptedRequestConfirmUser.setVisibility(View.VISIBLE);
-                }
-            }
-
-        }
 
         holder.txtRequestSenderName.setText(acceptedRequest.get(position).getSenderName());
         holder.txtRequestSenderGender.setText(acceptedRequest.get(position).getSenderGender());
@@ -74,21 +61,40 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         holder.btnAcceptedRequestConfirmUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestDAL.confirmRequestAsPostOwner(acceptedRequest.get(position).getPostID(),
+                requestDAL.confirmRequestAsRequestSender(acceptedRequest.get(position).getPostID(),
                         acceptedRequest.get(position).getPostOwnerID(),
                         acceptedRequest.get(position).getRequestID(), new RequestCallback() {
-                    @Override
-                    public void onRequestUpdated() {
-                        super.onRequestUpdated();
-                        acceptedRequest.get(position).setOwnerConfirmed(1);
-                        activity.setRequestList(acceptedRequest);
+                            @Override
+                            public void onRequestUpdated() {
+                                super.onRequestUpdated();
 
-                        holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
-                        holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
-                    }
-                });
+                                acceptedRequest.get(position).setSelfConfirmed(1);
+
+                                holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
+                                holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                            }
+                        });
             }
         });
+        holder.btnAcceptedRequestDeclineUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestDAL.rejectRequestAsRequestSender(acceptedRequest.get(position).getPostID(),
+                        acceptedRequest.get(position).getPostOwnerID(),
+                        acceptedRequest.get(position).getRequestID(), new RequestCallback() {
+                            @Override
+                            public void onRequestUpdated() {
+                                super.onRequestUpdated();
+
+                                acceptedRequest.get(position).setSelfConfirmed(2);
+
+                                holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
+                                holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                            }
+                        });
+            }
+        });
+
     }
 
     @Override
@@ -111,6 +117,9 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
             txtRequestSenderGender = itemView.findViewById(R.id.txtAcceptedRequestGender);
             btnAcceptedRequestConfirmUser = itemView.findViewById(R.id.btnAcceptedRequestConfirmUser);
             btnAcceptedRequestDeclineUser = itemView.findViewById(R.id.btnAcceptedRequestDeclineUser);
+
+            btnAcceptedRequestDeclineUser.setVisibility(View.VISIBLE);
+            btnAcceptedRequestConfirmUser.setVisibility(View.VISIBLE);
 
         }
     }

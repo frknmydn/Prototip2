@@ -16,6 +16,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -148,6 +150,25 @@ public class RequestDAL {
                 .update(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,1)
                 .addOnCompleteListener(task -> callback.onRequestUpdated());
     }
+    public void rejectRequestAsPostOwner(String postID, String postOwnerID, String requestID, RequestCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .document(requestID)
+                .update(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,2)
+                .addOnCompleteListener(task -> callback.onRequestUpdated());
+    }
+
+    public void rejectRequestAsRequestSender(String postID, String postOwnerID, String requestID, RequestCallback callback){
+        firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
+                .collection(CollectionHelper.POST_COLLECTION)
+                .document(postID).collection(CollectionHelper.REQUEST_COLLECTION)
+                .document(requestID)
+                .update(CollectionHelper.REQUEST_SELFCONFIRMED,2)
+                .addOnCompleteListener(task -> callback.onRequestUpdated());
+    }
+
+
     public void acceptRequest(final String postID, final String postOwnerID, String requestID, final RequestCallback callback){
 
         firestore.collection(CollectionHelper.USER_COLLECTION)
@@ -302,5 +323,60 @@ public class RequestDAL {
                         }
                     }
                 });
+    }
+
+
+
+    public void getConfirmUserForPostOwner(final RequestCallback callback){
+        Long timestampNow = Timestamp.now().getSeconds();
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNER,currentUserID)
+                .whereEqualTo(CollectionHelper.REQUEST_POSTOWNERCONFIRMED,0)
+                .whereLessThan(CollectionHelper.REQUEST_POSTTIMESTAMP,timestampNow).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult()!=null){
+                    if(task.getResult().size()>0){
+                        List<Request> list = task.getResult().toObjects(Request.class);
+                        Log.d("Tag","callbackonrequestretrievedNOTNULL for confirmUserForPostOwner");
+                        callback.onRequestsRetrievedNotNull(list);
+                    }
+                    else {
+                        Log.d("Tag","callbackonrequestretrievedNULL for confirmUserForPostOwner");
+                        callback.onRequestsRetrievedNull();
+
+                    }
+                }
+            }
+        });
+    }
+
+
+    public void getConfirmUserForRequestSender(final RequestCallback callback){
+        Long timestampNow = Timestamp.now().getSeconds();
+        firestore.collectionGroup(CollectionHelper.REQUEST_COLLECTION)
+                .whereEqualTo(CollectionHelper.REQUEST_SENDERID,currentUserID)
+                .whereEqualTo(CollectionHelper.REQUEST_SELFCONFIRMED,0)
+                .whereLessThan(CollectionHelper.REQUEST_POSTTIMESTAMP,timestampNow).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && task.getResult()!=null){
+                    if(task.getResult().size()>0){
+                        List<Request> list = task.getResult().toObjects(Request.class);
+                        Log.d("Tag","callbackonrequestretrievedNOTNULL for confirmUserForPostOwner");
+                        callback.onRequestsRetrievedNotNull(list);
+                    }
+                    else {
+                        Log.d("Tag","callbackonrequestretrievedNULL for confirmUserForPostOwner");
+                        callback.onRequestsRetrievedNull();
+
+                    }
+                }
+            }
+        });
+    }
+
+    public String getCurrentUserID() {
+        return currentUserID;
     }
 }
