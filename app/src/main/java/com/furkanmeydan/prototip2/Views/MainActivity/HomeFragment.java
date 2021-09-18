@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment {
         adapterConfirmUserRequestSender = new confimUserRequestSenderAdapter(requestListPostOwnerConfirm,requestDAL,mainActivity,this);
 
 
-
     }
 
 
@@ -286,5 +285,21 @@ public class HomeFragment extends Fragment {
             });
         }
 
+    }
+
+    public ArrayList<Request> getRequestListPostOwnerConfirm() {
+        return requestListPostOwnerConfirm;
+    }
+
+    public void setRequestListPostOwnerConfirm(ArrayList<Request> requestListPostOwnerConfirm) {
+        this.requestListPostOwnerConfirm = requestListPostOwnerConfirm;
+    }
+
+    public ArrayList<Request> getRequestListRequestSenderConfirm() {
+        return requestListRequestSenderConfirm;
+    }
+
+    public void setRequestListRequestSenderConfirm(ArrayList<Request> requestListRequestSenderConfirm) {
+        this.requestListRequestSenderConfirm = requestListRequestSenderConfirm;
     }
 }

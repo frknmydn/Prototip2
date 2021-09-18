@@ -17,7 +17,6 @@ import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.furkanmeydan.prototip2.R;
-import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
 import com.furkanmeydan.prototip2.Views.PostActivity.PostActivity;
 import com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity.PostSearchResultDetailActivity;
 
@@ -28,7 +27,6 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     ArrayList<Request> acceptedRequest;
     PostSearchResultDetailActivity activity;
     RequestDAL requestDAL;
-    MainActivity mainActivity;
 
 
     public AcceptedRequestAdapter(ArrayList<Request> acceptedRequest, PostSearchResultDetailActivity activity) {
@@ -36,8 +34,6 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         this.activity = activity;
         this.requestDAL = new RequestDAL();
     }
-
-
 
     @NonNull
     @Override

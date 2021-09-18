@@ -69,13 +69,14 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
                                 super.onRequestUpdated();
 
                                 acceptedRequest.get(position).setSelfConfirmed(1);
-
+                                homeFragment.setRequestListRequestSenderConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
                             }
                         });
             }
         });
+
         holder.btnAcceptedRequestDeclineUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

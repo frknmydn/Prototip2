@@ -69,7 +69,7 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
                             public void onRequestUpdated() {
                                 super.onRequestUpdated();
                                 acceptedRequest.get(position).setOwnerConfirmed(1);
-
+                                homeFragment.setRequestListPostOwnerConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
                             }

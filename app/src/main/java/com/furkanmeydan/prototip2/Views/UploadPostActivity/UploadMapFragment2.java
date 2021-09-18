@@ -218,20 +218,22 @@ public class UploadMapFragment2 extends Fragment implements OnMapReadyCallback {
 
                 addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
 
+                while(addressArray.size() == 0){
+                    if (addressList != null && addressList.size() > 0) {
+                        if (addressList.get(0).getThoroughfare() != null && !addressList.get(0).getThoroughfare().equals("Unnamed Road")) {
+                            address += addressList.get(0).getThoroughfare();
+                            address += " " + addressList.get(0).getAdminArea();
+                            //address += addressList.get(0).getSubAdminArea();
+                            //address += addressList.get(0).getPostalCode();
+                            addressArray.add(address);
 
-                if (addressList != null && addressList.size() > 0) {
-                    if (addressList.get(0).getThoroughfare() != null && !addressList.get(0).getThoroughfare().equals("Unnamed Road")) {
-                        address += addressList.get(0).getThoroughfare();
-                        address += " " + addressList.get(0).getAdminArea();
-                        //address += addressList.get(0).getSubAdminArea();
-                        //address += addressList.get(0).getPostalCode();
-                        addressArray.add(address);
-
-                    } else {
-                        address += addressList.get(0).getAdminArea();
-                        addressArray.add(address);
+                        } else {
+                            address += addressList.get(0).getAdminArea();
+                            addressArray.add(address);
+                        }
                     }
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 try {
