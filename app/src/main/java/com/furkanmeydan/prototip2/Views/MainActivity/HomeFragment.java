@@ -51,8 +51,7 @@ public class HomeFragment extends Fragment {
     private Button btnAddPost, btnSearchPost, btnConfirmUser;
     MainActivity mainActivity;
 
-    private FirebaseDatabase database;
-    public DatabaseReference myRef;
+
 
     Dialog dialog;
 
@@ -80,8 +79,7 @@ public class HomeFragment extends Fragment {
         appDatabase = Room.databaseBuilder(mainActivity,
                 AppDatabase.class, "carsDB").build();
 
-         database = FirebaseDatabase.getInstance();
-         myRef = database.getReference();
+
 
 
 
@@ -122,25 +120,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(final View view) {
 
-                Log.d("TAGGAT","denicez denizcez");
-
-                myRef.setValue("mehaba").addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("TAGGAT","başarılı başarılı");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-                        Log.d("TAGGAT","başarısız başarısız" + e.getMessage());
-
-                    }
-                });
-
-                Log.d("TAGGAT","denedik denedik ");
-
-
-                Log.d("Tag", "Onclick'e basıldı");
                 profileDAL.getProfile(userid, new ProfileCallback() {
                     @Override
                     public void getUser(User user) {
