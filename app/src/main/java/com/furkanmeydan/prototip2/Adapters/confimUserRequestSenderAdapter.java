@@ -72,6 +72,7 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
                                 homeFragment.setRequestListRequestSenderConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                                notifyDataSetChanged();
                             }
                         });
             }
@@ -88,9 +89,10 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
                                 super.onRequestUpdated();
 
                                 acceptedRequest.get(position).setSelfConfirmed(2);
-
+                                homeFragment.setRequestListRequestSenderConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                                notifyDataSetChanged();
                             }
                         });
             }

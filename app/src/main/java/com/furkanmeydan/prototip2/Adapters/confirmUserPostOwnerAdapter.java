@@ -72,6 +72,7 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
                                 homeFragment.setRequestListPostOwnerConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                                notifyDataSetChanged();
                             }
                         });
             }
@@ -86,9 +87,10 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
                             public void onRequestUpdated() {
                                 super.onRequestUpdated();
                                 acceptedRequest.get(position).setOwnerConfirmed(2);
-
+                                homeFragment.setRequestListPostOwnerConfirm(acceptedRequest);
                                 holder.btnAcceptedRequestDeclineUser.setVisibility(View.GONE);
                                 holder.btnAcceptedRequestConfirmUser.setVisibility(View.GONE);
+                                notifyDataSetChanged();
                             }
                         });
             }
@@ -117,7 +119,8 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
             btnAcceptedRequestDeclineUser = itemView.findViewById(R.id.btnAcceptedRequestDeclineUser);
 
 
-
+            btnAcceptedRequestDeclineUser.setVisibility(View.VISIBLE);
+            btnAcceptedRequestConfirmUser.setVisibility(View.VISIBLE);
         }
     }
 }
