@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
+import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
+import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.furkanmeydan.prototip2.Views.MainActivity.HomeFragment;
 import com.furkanmeydan.prototip2.Views.MainActivity.MainActivity;
@@ -26,12 +29,14 @@ import java.util.ArrayList;
 public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimUserRequestSenderAdapter.PostHolder>{
     ArrayList<Request> acceptedRequest;
     RequestDAL requestDAL;
+    ProfileDAL profileDAL;
     MainActivity activity;
     HomeFragment homeFragment;
 
-    public confimUserRequestSenderAdapter(ArrayList<Request> acceptedRequest, RequestDAL requestDAL, MainActivity mainActivity, HomeFragment homeFragment) {
+    public confimUserRequestSenderAdapter(ArrayList<Request> acceptedRequest, RequestDAL requestDAL,ProfileDAL profileDAL, MainActivity mainActivity, HomeFragment homeFragment) {
         this.acceptedRequest = acceptedRequest;
         this.requestDAL = requestDAL;
+        this.profileDAL = profileDAL;
         this.activity = mainActivity;
         this.homeFragment = homeFragment;
     }
@@ -48,16 +53,22 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
     @Override
     public void onBindViewHolder(@NonNull confimUserRequestSenderAdapter.PostHolder holder, int position) {
 
+        for(Request request : acceptedRequest){
+            profileDAL.getProfile(request.getPostOwnerID(), new ProfileCallback() {
+                @Override
+                public void getUser(User user) {
+                    super.getUser(user);
+                    holder.txtRequestSenderName.setText(user.getNameSurname());
+                    holder.txtRequestSenderGender.setText(user.getGender());
+                    holder.txtRequestSenderBirthdate.setText(user.getBirthDate());
 
-        holder.txtRequestSenderName.setText(acceptedRequest.get(position).getSenderName());
-        holder.txtRequestSenderGender.setText(acceptedRequest.get(position).getSenderGender());
-        holder.txtRequestSenderBirthdate.setText(acceptedRequest.get(position).getSenderBirthdate());
+                    Glide.with(activity.getApplicationContext()).load(user.getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+                            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                            .into(holder.imgRequestSenderPic);
+                }
+            });
 
-        Glide.with(activity.getApplicationContext()).load(acceptedRequest.get(position)
-                .getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                .into(holder.imgRequestSenderPic);
-
+    }
         holder.btnAcceptedRequestConfirmUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

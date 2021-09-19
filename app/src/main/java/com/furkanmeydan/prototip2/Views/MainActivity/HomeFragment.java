@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
         requestListPostOwnerConfirm = new ArrayList<>();
         requestListRequestSenderConfirm = new ArrayList<>();
         adapterConfirmUserPostOwner = new confirmUserPostOwnerAdapter(requestListPostOwnerConfirm,requestDAL,mainActivity,this);
-        adapterConfirmUserRequestSender = new confimUserRequestSenderAdapter(requestListPostOwnerConfirm,requestDAL,mainActivity,this);
+        adapterConfirmUserRequestSender = new confimUserRequestSenderAdapter(requestListRequestSenderConfirm,requestDAL,profileDAL,mainActivity,this);
 
 
     }
@@ -120,6 +120,7 @@ public class HomeFragment extends Fragment {
         confirmLayoutRequestSender = view.findViewById(R.id.layoutHomeConfirmSender);
 
         rclConfirmRequestSender = view.findViewById(R.id.RCLHomeConfirmSender);
+        rclConfirmRequestSender.setAdapter(adapterConfirmUserRequestSender);
 
         rclConfirmRequestSender.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -135,21 +136,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRequestsRetrievedNull() {
                 super.onRequestsRetrievedNull();
-                requestDAL.getConfirmUserForRequestSender(new RequestCallback() {
-                    @Override
-                    public void onRequestsRetrievedNotNull(List<Request> list) {
-                        super.onRequestsRetrievedNotNull(list);
-                        requestListRequestSenderConfirm.addAll(list);
-                        adapterConfirmUserRequestSender.notifyDataSetChanged();
-                        confirmLayoutRequestSender.setVisibility(View.VISIBLE);
-                    }
 
-                    @Override
-                    public void onRequestsRetrievedNull() {
-                        super.onRequestsRetrievedNull();
+            }
+        });
 
-                    }
-                });
+        requestDAL.getConfirmUserForRequestSender(new RequestCallback() {
+            @Override
+            public void onRequestsRetrievedNotNull(List<Request> list) {
+                super.onRequestsRetrievedNotNull(list);
+                requestListRequestSenderConfirm.addAll(list);
+                adapterConfirmUserRequestSender.notifyDataSetChanged();
+                confirmLayoutRequestSender.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRequestsRetrievedNull() {
+                super.onRequestsRetrievedNull();
+
             }
         });
 

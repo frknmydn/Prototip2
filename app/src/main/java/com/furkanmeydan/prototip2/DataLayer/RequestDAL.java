@@ -363,11 +363,11 @@ public class RequestDAL {
                 if(task.isSuccessful() && task.getResult()!=null){
                     if(task.getResult().size()>0){
                         List<Request> list = task.getResult().toObjects(Request.class);
-                        Log.d("Tag","callbackonrequestretrievedNOTNULL for confirmUserForPostOwner");
+                        Log.d("Tag","callbackonrequestretrievedNOTNULL for confirmUserRequestSender");
                         callback.onRequestsRetrievedNotNull(list);
                     }
                     else {
-                        Log.d("Tag","callbackonrequestretrievedNULL for confirmUserForPostOwner");
+                        Log.d("Tag","callbackonrequestretrievedNULL for confirmUserRequestSender");
                         callback.onRequestsRetrievedNull();
 
                     }
