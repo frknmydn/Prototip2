@@ -1,19 +1,26 @@
 package com.furkanmeydan.prototip2.Adapters;
 //confirmUserPostOwnerAdapter
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
 import com.furkanmeydan.prototip2.Models.Request;
@@ -54,10 +61,21 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
         holder.txtRequestSenderGender.setText(acceptedRequest.get(position).getSenderGender());
         holder.txtRequestSenderBirthdate.setText(acceptedRequest.get(position).getSenderBirthdate());
 
-        Glide.with(activity.getApplicationContext()).load(acceptedRequest.get(position)
-                .getSenderImage()).apply(RequestOptions.skipMemoryCacheOf(true))
+        Glide.with(activity.getApplicationContext()).load(acceptedRequest.get(position).getSenderImage()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                holder.imagePB.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        }).apply(RequestOptions.skipMemoryCacheOf(true))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                .into(holder.imgRequestSenderPic);
+                .into(holder.imgRequestSenderPic);;
+
 
         holder.btnAcceptedRequestConfirmUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +125,7 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
         ImageView imgRequestSenderPic;
         TextView txtRequestSenderName, txtRequestSenderBirthdate, txtRequestSenderGender;
         Button btnAcceptedRequestConfirmUser, btnAcceptedRequestDeclineUser;
+        ProgressBar imagePB;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +136,7 @@ public class confirmUserPostOwnerAdapter extends RecyclerView.Adapter<confirmUse
             txtRequestSenderGender = itemView.findViewById(R.id.txtAcceptedRequestGender);
             btnAcceptedRequestConfirmUser = itemView.findViewById(R.id.btnAcceptedRequestConfirmUser);
             btnAcceptedRequestDeclineUser = itemView.findViewById(R.id.btnAcceptedRequestDeclineUser);
+            imagePB = itemView.findViewById(R.id.acceptedRowPB);
 
 
             btnAcceptedRequestDeclineUser.setVisibility(View.VISIBLE);

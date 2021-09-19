@@ -1,18 +1,25 @@
 package com.furkanmeydan.prototip2.Adapters;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
@@ -62,7 +69,18 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
                     holder.txtRequestSenderGender.setText(user.getGender());
                     holder.txtRequestSenderBirthdate.setText(user.getBirthDate());
 
-                    Glide.with(activity.getApplicationContext()).load(user.getProfilePicture()).apply(RequestOptions.skipMemoryCacheOf(true))
+                    Glide.with(activity.getApplicationContext()).load(user.getProfilePicture()).listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            holder.imagePB.setVisibility(View.INVISIBLE);
+                            return false;
+                        }
+                    }).apply(RequestOptions.skipMemoryCacheOf(true))
                             .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                             .into(holder.imgRequestSenderPic);
                 }
@@ -121,6 +139,7 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
         ImageView imgRequestSenderPic;
         TextView txtRequestSenderName, txtRequestSenderBirthdate, txtRequestSenderGender;
         Button btnAcceptedRequestConfirmUser, btnAcceptedRequestDeclineUser;
+        ProgressBar imagePB;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
@@ -131,7 +150,7 @@ public class confimUserRequestSenderAdapter extends RecyclerView.Adapter<confimU
             txtRequestSenderGender = itemView.findViewById(R.id.txtAcceptedRequestGender);
             btnAcceptedRequestConfirmUser = itemView.findViewById(R.id.btnAcceptedRequestConfirmUser);
             btnAcceptedRequestDeclineUser = itemView.findViewById(R.id.btnAcceptedRequestDeclineUser);
-
+            imagePB = itemView.findViewById(R.id.acceptedRowPB);
             btnAcceptedRequestDeclineUser.setVisibility(View.VISIBLE);
             btnAcceptedRequestConfirmUser.setVisibility(View.VISIBLE);
 

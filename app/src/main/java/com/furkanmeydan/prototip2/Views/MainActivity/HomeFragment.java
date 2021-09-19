@@ -1,11 +1,13 @@
 package com.furkanmeydan.prototip2.Views.MainActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +66,7 @@ public class HomeFragment extends Fragment {
     CarDAL carDAL;
     ArrayList<Car> carList;
     Dialog popUpNoCar;
+    NestedScrollView nestedScrollView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,6 +102,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -121,8 +125,26 @@ public class HomeFragment extends Fragment {
 
         rclConfirmRequestSender = view.findViewById(R.id.RCLHomeConfirmSender);
         rclConfirmRequestSender.setAdapter(adapterConfirmUserRequestSender);
+        nestedScrollView = view.findViewById(R.id.nestedLayoutHome);
 
         rclConfirmRequestSender.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        nestedScrollView.setOnTouchListener((view15, motionEvent) -> {
+            rclConfirmRequestSender.getParent().requestDisallowInterceptTouchEvent(false);
+            rclConfirmPostOwner.getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+        });
+
+        rclConfirmRequestSender.setOnTouchListener((view14, motionEvent) -> {
+            rclConfirmRequestSender.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+
+        rclConfirmPostOwner.setOnTouchListener((view14, motionEvent) -> {
+            rclConfirmPostOwner.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+
 
         requestDAL.getConfirmUserForPostOwner(new RequestCallback() {
             @Override

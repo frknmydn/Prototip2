@@ -1,107 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/nestedLayoutHome"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Views.MainActivity.HomeFragment">
 
-    <Button
-        android:id="@+id/btnAddPostFragmentH"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/deneme_button"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/lan_ekle"
-        android:textColor="#ffff"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSearchPost"
-        app:layout_constraintEnd_toEndOf="@+id/btnSearchPost"
-        app:layout_constraintStart_toStartOf="@+id/btnSearchPost" />
-
-    <Button
-        android:id="@+id/btnSearchPost"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/deneme_button"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/ilan_ara"
-        android:textColor="#ffff"
-        android:textSize="16sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutContainerHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/layoutHomeConfirm"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView70"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layoutHomeConfirm"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="BİLGİLENDİRME" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circular_background_gray2"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView74"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView70"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BİLGİLENDİRME"
+                android:textColor="#E85729"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView74"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="Kullanıcı yolculuğunuza eşlik ettiyse lütfen aşağıdan onaylayın." />
+
+            <TextView
+                android:id="@+id/textView72"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eğer kullanıcı yolculuğunuza katılmaydıysa lütfen bildirin" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RCLHomeConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHomeConfirmSender"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Eğer kullanıcırı onaylamazsanız ananızı sikeriz" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circular_background_gray2"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddPostFragmentH"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHomeConfirm">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RCLHomeConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/textView75"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BİLGİLENDİRME"
+                android:textColor="#E85729"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView76"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eğer araç sahibine eşlik ettiyseniz lütfen araç sahibini onaylayın." />
 
-    <LinearLayout
-        android:id="@+id/layoutHomeConfirmSender"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="60dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddPostFragmentH"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHomeConfirm">
+            <TextView
+                android:id="@+id/textView73"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eğer araç sahibinin yolculuğuna eşlik edemediyseniz lütfen araç sahibini bildirin." />
 
-        <TextView
-            android:id="@+id/textView75"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RCLHomeConfirmSender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView76"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+        <Button
+            android:id="@+id/btnSearchPost"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/deneme_button"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/ilan_ara"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RCLHomeConfirmSender"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnAddPostFragmentH"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/deneme_button"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/lan_ekle"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSearchPost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHomeConfirmSender" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
 <!--
 android:background="#A66E6F81"
 -->
