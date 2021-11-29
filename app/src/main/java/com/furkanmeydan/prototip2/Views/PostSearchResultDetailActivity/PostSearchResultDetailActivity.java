@@ -150,7 +150,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             if(item.getItemId()==R.id.Details){
 
-                Toast.makeText(getApplicationContext(),"DET",Toast.LENGTH_LONG).show();
                 try {
                     changeFragment(new FragmentPostSearchResultDetail());
                 } catch (IOException | InterruptedException e) {
@@ -159,7 +158,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
             }
             else if(item.getItemId()==R.id.Map){
-                Toast.makeText(getApplicationContext(),"MAP",Toast.LENGTH_LONG).show();
                 try {
                     changeFragment(new FragmentPostSearchResultMap());
                 } catch (IOException | InterruptedException e) {
@@ -167,7 +165,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
                 }
             }
             else if(item.getItemId()==R.id.showProfile){
-                Toast.makeText(getApplicationContext(),"SHOW PROFILE",Toast.LENGTH_LONG).show();
                 try {
                     changeFragment(new FragmentPostSearchPostOwner());
                 } catch (IOException | InterruptedException e) {
@@ -175,7 +172,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
                 }
             }
             else if(item.getItemId()==R.id.Questions){
-                Toast.makeText(getApplicationContext(),"QUESTIONS",Toast.LENGTH_LONG).show();
                 try {
                     changeFragment(new FragmentPostSearchResultQuestions());
                 } catch (IOException | InterruptedException e) {
@@ -184,7 +180,6 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
             }
 
             else if(item.getItemId()== R.id.Requests){
-                Toast.makeText(getApplicationContext(),"REQUESTS",Toast.LENGTH_LONG).show();
                 try {
                     changeFragment(new FragmentPostSearchResultDetailAcceptedRequests());
                 } catch (IOException | InterruptedException e) {

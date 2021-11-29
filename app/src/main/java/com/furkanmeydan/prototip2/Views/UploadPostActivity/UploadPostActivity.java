@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -172,8 +175,10 @@ public class UploadPostActivity extends AppCompatActivity {
             @Override
             public void onPostAdded(Post post) {
                 super.onPostAdded(post);
-                Toast.makeText(getApplicationContext(),"Başarılı",Toast.LENGTH_LONG).show();
 
+
+                //dialog.setContentView(R.layout.popup_fill_profile);
+                //dialog.show();
                 try {
                     OSDeviceState device = OneSignal.getDeviceState();
                     long timestamp = post.getTimestamp()-900L;
@@ -188,56 +193,6 @@ public class UploadPostActivity extends AppCompatActivity {
                             NotificationManager notificationManager = new NotificationManager(post.getOwnerID(),dateTime,"Yolculuk saatinize 15 dakika kalmistir","Hatirlatma");
                             try {
                                 notificationManager.NotificationForFuture();
-
-                                /*
-                                String jsonResponse;
-
-                                URL url = new URL("https://onesignal.com/api/v1/notifications");
-                                HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                                con.setUseCaches(false);
-                                con.setDoOutput(true);
-                                con.setDoInput(true);
-
-                                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                                con.setRequestProperty("Authorization", "Basic ODkxMDQwZTQtNDJiMS00Y2IzLTgwNGYtMjExNTFhZGEwNWFl");
-                                con.setRequestMethod("POST");
-
-                                String strJsonBody = "{"
-                                        +   "\"app_id\": \"f374fb5a-1e58-45e9-9f0e-acf96f92c166\","
-                                        +   "\"include_external_user_ids\": [\""+userId+"\"],"
-                                        +   "\"channel_for_external_user_ids\": \"push\","
-                                        +   "\"data\": {\"foo\": \"bar\"},"
-                                        +   "\"contents\": {\"en\": \"Yolculuk saatinize 15 dakika kalmistir\"},"
-                                        +   "\"headings\": {\"en\": \"Hatirlatma\"}"
-                                        + "}";
-
-                                Log.d("Tag","strJsonBody:\n" + strJsonBody);
-
-                                byte[] sendBytes = strJsonBody.getBytes("UTF-8");
-                                con.setFixedLengthStreamingMode(sendBytes.length);
-
-                                OutputStream outputStream = con.getOutputStream();
-                                outputStream.write(sendBytes);
-
-                                int httpResponse = con.getResponseCode();
-                                Log.d("Tag","httpResponse: " + httpResponse);
-
-                                if (  httpResponse >= HttpURLConnection.HTTP_OK
-                                        && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
-                                    Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
-                                    jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                                    scanner.close();
-                                }
-                                else {
-                                    Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
-                                    jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                                    scanner.close();
-                                }
-                                Log.d("Tag","jsonResponse:\n" + jsonResponse);
-
-
-
-                                 */
 
                             } catch(Throwable t) {
                                 Log.d("Tag","Yarra yedik");
@@ -256,10 +211,23 @@ public class UploadPostActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Log.d("Tag","onesignal CATCHLEDİ LMAO");
                 }
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                AUPClearSharedPref();
-                startActivity(i);
-                finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(UploadPostActivity.this);
+                builder.setTitle("BAŞARILI");
+                builder.setMessage("Oluşturduğunuz ilan başarılı şekilde yüklenmiştir");
+                builder.setIcon(R.drawable.ic_green_check);
+                builder.setCancelable(false);
+                builder.setPositiveButton("Kapat", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        AUPClearSharedPref();
+                        startActivity(i);
+                        finish();
+                    }
+                });
+                builder.show();
+
             }
         });
 

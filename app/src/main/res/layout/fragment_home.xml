@@ -30,7 +30,7 @@
             android:layout_marginEnd="15dp"
             android:background="@drawable/circular_background_gray2"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -55,11 +55,11 @@
 
             <TextView
                 android:id="@+id/textView72"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Eğer kullanıcı yolculuğunuza katılmaydıysa lütfen bildirin" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -76,9 +76,10 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/circular_background_gray2"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/btnAddPostFragmentH"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,19 +97,19 @@
 
             <TextView
                 android:id="@+id/textView76"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Eğer araç sahibine eşlik ettiyseniz lütfen araç sahibini onaylayın." />
 
             <TextView
                 android:id="@+id/textView73"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Eğer araç sahibinin yolculuğuna eşlik edemediyseniz lütfen araç sahibini bildirin." />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -138,7 +139,6 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/deneme_button"
@@ -148,8 +148,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/btnSearchPost"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutHomeConfirmSender" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

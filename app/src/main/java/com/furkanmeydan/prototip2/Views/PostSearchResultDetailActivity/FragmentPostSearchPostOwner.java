@@ -77,7 +77,7 @@ public class FragmentPostSearchPostOwner extends Fragment {
         txtGender = view.findViewById(R.id.postSearchPostOwnerGender);
         txtBirthday = view.findViewById(R.id.postSearchPostOwnerBD);
         imageView = view.findViewById(R.id.postSearchPostOwnerImageView);
-        layoutDetail = view.findViewById(R.id.constraintLayout2);
+        layoutDetail = view.findViewById(R.id.searchProfileConsLayoutContent);
         layoutProgress = view.findViewById(R.id.searchProfileConsLayout);
         progressBar = view.findViewById(R.id.searchResultProgress);
         nonShow = view.findViewById(R.id.btnBlockUserProfile);

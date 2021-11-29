@@ -69,13 +69,13 @@
 
     <ProgressBar
         android:id="@+id/progressBarBlock"
-        style="?android:attr/progressBarStyle"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progressbar_style"
         android:layout_width="125sp"
         android:layout_height="125sp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnUnBlockUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtUserRclName"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toTopOf="@+id/txtUserRclName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

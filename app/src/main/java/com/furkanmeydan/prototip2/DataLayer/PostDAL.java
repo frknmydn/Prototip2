@@ -1,5 +1,6 @@
 package com.furkanmeydan.prototip2.DataLayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.furkanmeydan.prototip2.Models.CollectionHelper;
 import com.furkanmeydan.prototip2.Models.Post;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +31,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.JsonObject;
 
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,8 +199,18 @@ public class PostDAL {
 
                  */
                 firestore.collection(CollectionHelper.USER_COLLECTION).document(userId)
-                        .collection(CollectionHelper.POST_COLLECTION).document(postID).set(post);
-                postCallback.onPostAdded(post);
+                        .collection(CollectionHelper.POST_COLLECTION).document(postID).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        postCallback.onPostAdded(post);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+
+                    }
+                });
             }
 
 

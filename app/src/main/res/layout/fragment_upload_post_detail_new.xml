@@ -253,30 +253,35 @@
                 android:id="@+id/textView59"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="-Yolculuğunuzu isimlendirirken kalkacağınız ve varacağınız yerleri belirtmeniz istenmektedir." />
 
             <TextView
                 android:id="@+id/textView60"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="-Yolcu sayısını belirtirken siz hariç yanınızda kaç kişiyi alabileceğinizi belirtmelisiniz." />
 
             <TextView
                 android:id="@+id/textView61"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="-Belirttiğiniz tarih ve saatte yolculuğunuzu gerçekleştirmekle sorumlusunuz. " />
 
             <TextView
                 android:id="@+id/textView62"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="-Yolculuk hakkında detaylı bilgi verilirken:" />
 
             <TextView
                 android:id="@+id/textView63"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:paddingLeft="10dp"
                 android:text="--Uğrayacağınız veya bekleyeceğiniz yerleri belirtmelisiniz" />
 
@@ -284,6 +289,7 @@
                 android:id="@+id/textView64"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:paddingLeft="10dp"
                 android:text="--Haritada görünmeyen bir konumdan geçecekseniz." />
 
@@ -291,6 +297,7 @@
                 android:id="@+id/textView65"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:paddingLeft="10dp"
                 android:text="--Yolculuk boyunca aracınız içinde gerçekleşmesini istemediğiniz bir durum var ise (örn: sigara içmek)" />
 
@@ -298,6 +305,7 @@
                 android:id="@+id/textView66"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="gibi ve benzeri durumları belirtmelisiniz." />
         </LinearLayout>
 

@@ -68,7 +68,7 @@
 
     </FrameLayout>
 
-    <android.widget.Button
+    <Button
         android:id="@+id/btnUploadPostNew"
         android:layout_width="0dp"
         android:layout_height="35dp"

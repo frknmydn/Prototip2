@@ -79,6 +79,9 @@ public class CollectionHelper {
     final public static String CAR_COLLECTION_carID = "CarID";
 
 
+    final public static String MESSAGE_COLLECTION = "message";
+
+
 
 
 

@@ -7,10 +7,10 @@
     tools:context=".Views.PostSearchResultDetailActivity.FragmentPostSearchPostOwner">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/searchProfileConsLayoutContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +32,13 @@
             tools:ignore="RtlSymmetry" />
 
         <ImageView
-            android:contentDescription="@null"
             android:id="@+id/postSearchPostOwnerImageView"
             android:layout_width="150sp"
             android:layout_height="150sp"
             android:layout_marginStart="131dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="130dp"
+            android:contentDescription="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -165,7 +165,8 @@
 
         <ProgressBar
             android:id="@+id/searchResultProgress"
-            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progressbar_style"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="50dp"

@@ -197,7 +197,8 @@
 
             <ProgressBar
                 android:id="@+id/progressBar6"
-                style="?android:attr/progressBarStyle"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progressbar_style"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="100dp"
@@ -334,7 +335,8 @@
 
             <ProgressBar
                 android:id="@+id/progressBar5"
-                style="?android:attr/progressBarStyle"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progressbar_style"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="100dp"

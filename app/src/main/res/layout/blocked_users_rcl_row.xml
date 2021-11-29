@@ -44,7 +44,8 @@
             android:src="@drawable/ic_car" />
         <ProgressBar
             android:id="@+id/progressBarBlock"
-            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progressbar_style"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_alignParentTop="true"

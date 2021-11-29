@@ -155,10 +155,7 @@ public class PostSearchFragment extends Fragment {
         spnSearchGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getItemAtPosition(i).toString().equals("Cinsiyet")){
-                    Toast.makeText(postActivity,"Cinsiyet içi ",Toast.LENGTH_LONG).show();
-                }
-                else{
+                if(!adapterView.getItemAtPosition(i).toString().equals("Cinsiyet")){
                     genderString= adapterView.getItemAtPosition(i).toString();
                 }
             }

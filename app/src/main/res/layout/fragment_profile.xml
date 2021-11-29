@@ -20,7 +20,8 @@
 
         <ProgressBar
             android:id="@+id/progressBarPF"
-            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progressbar_style"
             android:layout_width="194dp"
             android:layout_height="196dp"
             app:layout_constraintBottom_toBottomOf="parent"

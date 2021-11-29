@@ -105,7 +105,7 @@ public class FragmentUserProfileBlock extends Fragment {
         txtGender = view.findViewById(R.id.postSearchPostOwnerGender);
         txtBirthday = view.findViewById(R.id.postSearchPostOwnerBD);
         imageView = view.findViewById(R.id.postSearchPostOwnerImageView);
-        layoutDetail = view.findViewById(R.id.constraintLayout2);
+        layoutDetail = view.findViewById(R.id.searchProfileConsLayoutContent);
         layoutProgress = view.findViewById(R.id.searchProfileConsLayout);
         btnBlock = view.findViewById(R.id.btnBlockUserProfile);
         getProfileData();
