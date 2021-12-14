@@ -58,6 +58,7 @@ public class FragmentPostSearchPostOwner extends Fragment {
         activity = (PostSearchResultDetailActivity) getActivity();
         //ownerId = activity.post.get
         ownerId= activity.post.getOwnerID();
+        userProfile = activity.userProfile;
         profileDAL = new ProfileDAL();
 
     }
@@ -92,13 +93,6 @@ public class FragmentPostSearchPostOwner extends Fragment {
 
     public void getProfileData(){
         Log.d("Tag","PostSearchactivity getProfiledata içerisi");
-
-        profileDAL.getProfile(ownerId, new ProfileCallback() {
-            @Override
-            public void getUser(User user) {
-                super.getUser(user);
-                Log.d("Tag","PostSearchactivity getUser içerisi");
-                userProfile = user;
                 txtNameSurname.setText(userProfile.getNameSurname());
                 txtBirthday.setText(userProfile.getBirthDate());
                 txtGender.setText(userProfile.getGender());
@@ -117,9 +111,5 @@ public class FragmentPostSearchPostOwner extends Fragment {
                 }).apply(RequestOptions.skipMemoryCacheOf(true))
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
 
-
-
-            }
-        });
     }
 }

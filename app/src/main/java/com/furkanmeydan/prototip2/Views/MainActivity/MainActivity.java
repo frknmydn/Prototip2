@@ -333,6 +333,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        else if(item.getItemId() == R.id.myChats){
+            try {
+                if(connectionChecker.isConnected()){
+                    changeFragment(new FragmentChatList());
+                }
+                else {
+                    connectionChecker.showWindow(this);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
         return true;
     }
 

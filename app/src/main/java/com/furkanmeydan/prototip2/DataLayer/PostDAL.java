@@ -35,6 +35,7 @@ import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -538,7 +539,7 @@ public class PostDAL {
         firestore.collection(CollectionHelper.USER_COLLECTION)
                 .document(userId)
                 .collection(CollectionHelper.POST_COLLECTION)
-                .whereEqualTo(CollectionHelper.POST_STATUS,1)
+                .whereIn(CollectionHelper.POST_STATUS,new ArrayList<>(Arrays.asList(1,3)))
                 .whereGreaterThan(CollectionHelper.POST_TIMESTAMP, currentTimestamp - 10*60)
                 .orderBy(CollectionHelper.POST_TIMESTAMP)
                 .limit(limit)

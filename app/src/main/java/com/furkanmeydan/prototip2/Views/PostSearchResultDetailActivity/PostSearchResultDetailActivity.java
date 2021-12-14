@@ -1,16 +1,28 @@
 package com.furkanmeydan.prototip2.Views.PostSearchResultDetailActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.furkanmeydan.prototip2.DataLayer.Callbacks.ProfileCallback;
 import com.furkanmeydan.prototip2.DataLayer.ProfileDAL;
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.RequestCallback;
 import com.furkanmeydan.prototip2.DataLayer.RequestDAL;
@@ -18,6 +30,7 @@ import com.furkanmeydan.prototip2.MapRouter.TaskLoadedCallback;
 import com.furkanmeydan.prototip2.Models.ConnectionChecker;
 import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
+import com.furkanmeydan.prototip2.Models.User;
 import com.furkanmeydan.prototip2.R;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,6 +52,8 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
     ArrayList<Request> requestList;
     RequestDAL requestDAL;
+
+    User userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +100,8 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
         navigationView1.bringToFront();
 
         requestList = approvedRequestsFragmentList();
+
+        getProfileData();
     }
 
 
@@ -244,5 +261,16 @@ public class PostSearchResultDetailActivity extends AppCompatActivity implements
 
     public String getCurrentUserID() {
         return currentUserID;
+    }
+
+    public void getProfileData(){
+        profileDAL.getProfile(post.getOwnerID(), new ProfileCallback() {
+            @Override
+            public void getUser(User user) {
+                super.getUser(user);
+                Log.d("Tag","PostSearchactivity getUser içerisi");
+                userProfile = user;
+            }
+        });
     }
 }

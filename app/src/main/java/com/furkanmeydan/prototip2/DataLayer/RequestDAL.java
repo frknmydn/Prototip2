@@ -35,11 +35,11 @@ public class RequestDAL {
     public void sendRequest(String senderID, String senderName, String senderGender, String senderImage,
                             String senderBirthdate, String senderEmail, String postID, String postOwnerID,
                             Double lat1, Double lng1, Double lat2, Double lng2, String postHeader,
-                            String requestText,String oneSignalID,String ownerOneSignalID,long postTimestamp,
+                            String requestText,String oneSignalID,String ownerOneSignalID,long postTimestamp,String postOwnerName,String postOwnerProfilePicture,
                             final RequestCallback callback){
 
         String requestID = UUID.randomUUID().toString();
-        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,0,0,postHeader, requestText,postTimestamp);
+        Request request = new Request(requestID,senderID,senderName,senderGender,senderImage,senderBirthdate,senderEmail,postID,postOwnerID,lat1,lng1,lat2,lng2,0,0,0,postHeader, requestText,postTimestamp,postOwnerName,postOwnerProfilePicture);
         firestore.collection(CollectionHelper.USER_COLLECTION).document(postOwnerID)
 
                 .collection(CollectionHelper.POST_COLLECTION).document(postID)

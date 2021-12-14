@@ -430,7 +430,7 @@ public class FragmentPostSearchResultDetail extends Fragment {
                         try {
                             if(conChecker.isConnected()){
                                 requestDAL.sendRequest(senderID, senderName, senderGender, senderImgURL, senderBirthdate, senderEmail, post.getPostID(),
-                                        post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(),senderOneSignalID,post.getOwnerOneSignalID(),post.getTimestamp(), new RequestCallback() {
+                                        post.getOwnerID(), requestLat1, requestLng1, requestLat2, requestLng2,post.getDestination(),txtRequestText.getText().toString(),senderOneSignalID,post.getOwnerOneSignalID(),post.getTimestamp(),activity.userProfile.getNameSurname(),activity.userProfile.getProfilePicture(), new RequestCallback() {
                                             @Override
                                             public void onRequestSent() {
                                                 super.onRequestSent();

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
 
-    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText, pendingDeletion;
+    String requestID,senderID,senderName, senderGender, senderImage, senderBirthdate, senderEmail, postID, postOwnerID, postHeader, requestText, pendingDeletion,postOwnerName,postOwnerProfilePicture;
     Double lat1,lng1,lat2,lng2;
     long postTimestamp;
     int status; // 0--> bekliyor, -1--> ret , 1--> onaylanmış
@@ -16,7 +16,7 @@ public class Request implements Serializable {
 
     public Request(String requestID, String senderID, String senderName, String senderGender,
                    String senderImage, String senderBirthdate, String senderEmail, String postID,
-                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, int selfConfirmed, int ownerConfirmed, String postHeader, String requestText,long postTimestamp) {
+                   String postOwnerID, Double lat1, Double lng1, Double lat2, Double lng2, int status, int selfConfirmed, int ownerConfirmed, String postHeader, String requestText,long postTimestamp,String postOwnerName,String postOwnerProfilePicture) {
         this.requestID = requestID;
         this.senderID = senderID;
         this.senderName = senderName;
@@ -36,6 +36,8 @@ public class Request implements Serializable {
         this.postTimestamp = postTimestamp;
         this.selfConfirmed = selfConfirmed;
         this.ownerConfirmed = ownerConfirmed;
+        this.postOwnerName = postOwnerName;
+        this.postOwnerProfilePicture = postOwnerProfilePicture;
     }
 
     public void setSelfConfirmed(int selfConfirmed) {
@@ -126,6 +128,22 @@ public class Request implements Serializable {
 
     public String getPendingDeletion() {
         return pendingDeletion;
+    }
+
+    public String getPostOwnerName() {
+        return postOwnerName;
+    }
+
+    public void setPostOwnerName(String postOwnerName) {
+        this.postOwnerName = postOwnerName;
+    }
+
+    public String getPostOwnerProfilePicture() {
+        return postOwnerProfilePicture;
+    }
+
+    public void setPostOwnerProfilePicture(String postOwnerProfilePicture) {
+        this.postOwnerProfilePicture = postOwnerProfilePicture;
     }
 
     public void setPendingDeletion(String pendingDeletion) {
