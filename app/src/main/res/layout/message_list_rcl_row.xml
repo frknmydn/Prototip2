@@ -61,7 +61,7 @@
 
         <!--Text View to display Course Name-->
         <TextView
-            android:id="@+id/txtUserRclName"
+            android:id="@+id/txtUserChatRclName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

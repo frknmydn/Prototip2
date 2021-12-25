@@ -3,6 +3,7 @@ package com.furkanmeydan.prototip2.DataLayer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.executor.TaskExecutor;
 
 import com.furkanmeydan.prototip2.DataLayer.Callbacks.MessageCallback;
 import com.furkanmeydan.prototip2.Models.CollectionHelper;
@@ -11,6 +12,7 @@ import com.furkanmeydan.prototip2.Models.Post;
 import com.furkanmeydan.prototip2.Models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

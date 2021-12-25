@@ -1,6 +1,7 @@
 package com.furkanmeydan.prototip2.Adapters;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHolder> {
     ArrayList<Request> userList;
@@ -49,7 +53,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.message_list_rcl_row,parent,false);
 
-        return new PostHolder(view);
+        return new ChatListAdapter.PostHolder(view);
     }
 
     @Override
@@ -61,7 +65,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
     public void onBindViewHolder(@NonNull @NotNull PostHolder holder, int position) {
 
 
-        if(userList.get(position).getSenderID().equals(auth.getUid())){
+        if(userList.get(position).getSenderID().equals(auth.getCurrentUser().getUid())){
 
             Glide.with(mainActivity.getApplicationContext()).load(userList.get(position).getPostOwnerProfilePicture()).listener(new RequestListener<Drawable>() {
                 @Override
@@ -101,15 +105,24 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
 
         holder.postHeader.setText(userList.get(position).getPostHeader());
 
-        holder.postTime.setText("ssda");
-        holder.postDate.setText("deneme bir iki");
+        SimpleDateFormat dateCombinedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Date date = new Date(TimeUnit.SECONDS.toMillis(userList.get(position).getPostTimestamp()));
+
+        String dateTime = dateCombinedFormat.format(date);
+        String[] dateStringArray = dateTime.split(" ");
+        String dateDate = dateStringArray[0];
+        String dateTimeTime = dateStringArray[1];
+        holder.postTime.setText(dateTimeTime);
+        holder.postDate.setText(dateDate);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("request",userList.get(position));
                 //Burada bundle oluşturup konuşulacak sayfada DB'ye gitmesi gereken bilgileri göndermek gerekiyor.
-                mainActivity.changeFragment(new FragmentChat());
+                mainActivity.changeFragmentArgs(new FragmentChat(),bundle);
             }
         });
 
@@ -127,7 +140,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
         public PostHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             userImage = itemView.findViewById(R.id.imgUserRclRowMessage);
-            userName = itemView.findViewById(R.id.txtUserRclName);
+            userName = itemView.findViewById(R.id.txtUserChatRclName);
             postHeader = itemView.findViewById(R.id.txtMessageRowPostHeader);
             postDate = itemView.findViewById(R.id.txtMessageRowPostDate);
             postTime = itemView.findViewById(R.id.txtMessageRowPostTime);
