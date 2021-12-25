@@ -337,6 +337,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             try {
                 if(connectionChecker.isConnected()){
                     changeFragment(new FragmentChatList());
+
+
                 }
                 else {
                     connectionChecker.showWindow(this);

@@ -152,4 +152,7 @@
     <string name="cinsiyet">Cinsiyet</string>
     <string name="tarih">Tarih</string>
     <string name='araç_yok'>Eklediğiniz bir araç bulunmamaktadır</string>
+    <string name="ilanbilgileri"><u>IlanBilgileri</u>
+    </string>
+
 </resources>
