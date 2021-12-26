@@ -40,6 +40,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
     MessageDAL messageDAL;
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
+
     public ChatListAdapter(ArrayList<Request> userList, MainActivity mainActivity, MessageDAL messageDAL) {
         this.userList = userList;
         this.mainActivity = mainActivity;
@@ -59,6 +60,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.PostHo
     @Override
     public int getItemViewType(int position) {
         return super.getItemViewType(position);
+
     }
 
     @Override

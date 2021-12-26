@@ -52,26 +52,7 @@ public class FragmentChatList extends Fragment {
         profilesForOwner = new ArrayList<>();
         resultList = new ArrayList<>();
         activity = (MainActivity) getActivity();
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_list, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         chatListAdapter = new ChatListAdapter(profilesForOwner,activity,messageDAL);
-        recyclerView = view.findViewById(R.id.RCLFragmentChatList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(chatListAdapter);
-
         messageDAL.getProfilesForRequestSender(new MessageCallback() {
             @Override
             public void onProfilesLoaded(List<Request> users) {
@@ -89,6 +70,27 @@ public class FragmentChatList extends Fragment {
                 Log.d("TAG List", "onViewCreated: " + "profilesForOwner.size()");
             }
         });
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_chat_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        recyclerView = view.findViewById(R.id.RCLFragmentChatList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(chatListAdapter);
+
+
 
 
 
